@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Java基础知识面试复习 | Rick</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1576593189828">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="http://localhost:4000">
+        <img src="http://localhost:4000/images/avatar.png?v=1576593189828" class="site-logo">
+        <h1 class="site-title">Rick</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="http://localhost:4000/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="http://localhost:4000/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="http://localhost:4000/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="http://localhost:4000/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Java基础知识面试复习</h2>
+            <div class="post-date">2019-12-17</div>
+            
+            <div class="post-content">
+              <h3 id="1-面向对象和面向过程的区别">1. 面向对象和面向过程的区别</h3>
+<ul>
+<li><strong>面向过程性能高，因为类调用时需要实例化，开销比较大，比较消耗资源</strong></li>
+<li><strong>面向过程没有面向对象易维护、易复用、易扩展(封装、继承、多态)</strong></li>
+</ul>
+<h3 id="2-jvm">2. JVM</h3>
+<ul>
+<li>Java虚拟机（JVM）是运行 Java 字节码的虚拟机。<strong>JVM有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节码，它们都会给出相同的结果</strong>。字节码和不同系统的 JVM 实现是 Java 语言“一次编译，随处可以运行”的关键所在。</li>
+</ul>
+<h3 id="3-构造器constructor-是否可被-override">3. 构造器Constructor 是否可被 override?</h3>
+<ul>
+<li>继承的时候我们就知道父类的私有属性和构造方法并不能被继承，所以 Constructor 也就<strong>不能被 override（重写）</strong>,但是<strong>可以 overload（重载）</strong>,所以你可以看到一个类中有多个构造函数的情况。</li>
+</ul>
+<h3 id="4-java面向对象三大特性封装-继承-多态">4. Java面向对象三大特性：封装、继承、多态</h3>
+<ul>
+<li>封装：封装把一<strong>个对象的属性私有化</strong>，同时<strong>提供一些可以被外界访问的属性的方法</strong>，如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。</li>
+</ul>
+<h3 id="5-string-stringbuffer-和-stringbuilder-的区别是什么-string-为什么是不可变的">5. String StringBuffer 和 StringBuilder 的区别是什么? String 为什么是不可变的?</h3>
+<ul>
+<li>String类中：private <strong>final</strong> char value[]  ---&gt;不可变</li>
+<li>StringBuilder 与 StringBuffer 的构造方法都是<strong>调用父类构造方法也就是 AbstractStringBuilder 实现</strong>的</li>
+<li>StringBuffer 对方法<strong>加了同步锁或者对调用的方法加了同步锁(synchronized)</strong>，所以是线程安全的。StringBuilder 并没有对方法进行加同步锁，所以是非线程安全的</li>
+</ul>
+<h3 id="6-接口和抽象类区别">6. 接口和抽象类区别</h3>
+<ul>
+<li>接口的方法<strong>默认是 public</strong>，所有方法在接口中不能有实现(Java 8 开始接口方法可以有默认实现），<strong>而抽象类可以有非抽象的方法。</strong></li>
+<li>接口中<strong>除了static、final变量，不能有其他变量</strong>，而抽象类中则不一定。</li>
+<li>一个类可以实现多个接口，<strong>但只能实现一个抽象类</strong>。接口自己本身可以通过extends关键字扩展多个接口。</li>
+<li>在JDK8中，接口也可以定义静态方法，可以直接用接口名调用。实现类和实现是不可以调用的。如果同时实现两个接口，接口中定义了一样的默认方法，则必须重写，不然会报错。</li>
+</ul>
+<h3 id="7-对象实体和对象引用有何区别">7. 对象实体和对象引用有何区别？</h3>
+<ul>
+<li>new创建对象实例（<strong>对象实例在堆内存中</strong>），<strong>对象引用指向对象实例</strong>（对象引用存放在栈内存中）。一个对象引用可以指向0个或1个对象（一根绳子可以不系气球，也可以系一个气球）;<strong>一个对象可以有n个引用指向它</strong>（可以用n条绳子系住一个气球）。</li>
+</ul>
+<h3 id="8-实例方法和静态方法有何不同">8. 实例方法和静态方法有何不同？</h3>
+<ul>
+<li>浅层次：在外部调用<strong>静态方法时，可以使用&quot;类名.方法名&quot;的方式</strong>，<strong>也可以使用&quot;对象名.方法名&quot;的方式</strong>。而实例方法只有后面这种方式。也就是说，<strong>调用静态方法可以无需创建对象。（静态方法的调用不依赖于对象）</strong></li>
+<li>JVM深层次：类的静态方法，静态变量是在类装载的时候装载的，这时候还没有产生对象**。静态变量 存放在 Java 内存区域的方法区**</li>
+<li>static关键字使用场景
+<ol>
+<li><strong>修饰成员变量和成员方法:</strong> 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。调用格式：<code>类名.静态变量名</code> <code>类名.静态方法名()</code></li>
+<li><strong>静态代码块:</strong> 静态代码块定义在类中方法外, <strong>静态代码块在非静态代码块之前执行(静态代码块—&gt;非静态代码块—&gt;构造方法)。 该类不管创建多少对象，静态代码块只执行一次.</strong></li>
+<li><strong>静态内部类（static修饰类的话只能修饰内部类）：</strong> 静态内部类与非静态内部类之间存在一个最大的区别: 非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围类，但是静态内部类却没有。没有这个引用就意味着：1. 它的创建是不需要依赖外围类的创建。2. 它不能使用任何外围类的非static成员变量和方法。</li>
+<li><strong>静态导包(用来导入类中的静态资源，1.5之后的新特性):</strong> 格式为：<code>import static</code> 这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法。</li>
+</ol>
+</li>
+</ul>
+<h3 id="9-线程-程序-进程">9. 线程、程序、进程</h3>
+<ul>
+<li>
+<p>进程</p>
+<pre><code>- 定义：
+	1、一个正在执行的程序
+	2、系统运行程序的基本单位
+	3、一个进程可由进程控制块(PCB包含：标识符、状态、优先级、程序计数器、内存指针、上下文数据、IO信息等)的数据结构来控制
+	
+</code></pre>
+<p>进程状态</p>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zrtw49tuj30s40bm0y5.jpg" alt="image-20191217155307260"></figure>
+<ul>
+<li>
+<p>新建态：线程被创建，PCB被创建出来但还未加载到内存</p>
+</li>
+<li>
+<p>就绪态：进程已经加载到内存，已经做好了准备，等待CPU进行调度</p>
+</li>
+<li>
+<p>运行态：得到CPU的调度，进程正在执行</p>
+</li>
+<li>
+<p>阻塞态：进程因为某些事件需要停止执行(IO操作等)</p>
+</li>
+<li>
+<p>退出态：操作系统从可执行进程组中释放该进程，要么自己停止，要么因为某种原因被取消运行</p>
+<p>Java中</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zscph8rfj31ba0u0dzc.jpg" alt="image-20191217161118329" style="zoom:80%;" />
+</li>
+</ul>
+</li>
+<li>
+<p>线程:一个进程在其执行的过程中可以产生多个线程。与进程<strong>不同的是同类的多个线程共享同一块内存空间和一组系统资源</strong>系统在产生一个线程，或是在<strong>各个线程之间作切换工作时，负担要比进程小得多</strong>，也正因为如此，线程也被称为轻量级进程</p>
+<p>操作系统隐藏 Java虚拟机（JVM）中的 READY 和 RUNNING 状态，它只能看到 RUNNABLE 状态</p>
+</li>
+</ul>
+<h3 id="10-final关键字">10. final关键字</h3>
+<ul>
+<li>
+<p>可作用在变量、方法、类</p>
+</li>
+<li>
+<p>final作用在基本数据类型上：数值一旦初始化便不能随意更改；final作用在引用型变量：初始化之后不能再指向其他的对象</p>
+</li>
+<li>
+<p>final作用在类上--&gt;该类不能被继承，所有的成员方法默认为final</p>
+</li>
+<li>
+<p>final作用在方法上：</p>
+<ul>
+<li>把方法锁定，防止任何继承类修改它的含义</li>
+</ul>
+</li>
+<li>
+<p>类中的private修饰的方法默认添加有final关键字</p>
+</li>
+</ul>
+<h3 id="11-java中异常">11. Java中异常</h3>
+<ul>
+<li>
+<p>层次图</p>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztjy5yx9j31a20py7nz.jpg" alt="image-20191217165252832"></figure>
+</li>
+<li>
+<p><strong>Error（错误）:是程序无法处理的错误</strong>，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。</p>
+</li>
+<li>
+<p><strong>Exception（异常）:是程序本身可以处理的异常</strong>。Exception 类有一个重要的子类 <strong>RuntimeException</strong>。RuntimeException 异常由Java虚拟机抛出。<strong>NullPointerException</strong>（要访问的变量没有引用任何对象时，抛出该异常）、<strong>ArithmeticException</strong>（算术运算异常，一个整数除以0时，抛出该异常）和 <strong>ArrayIndexOutOfBoundsException</strong> （下标越界异常）。</p>
+</li>
+<li>
+<p><strong>异常和错误的区别：异常能被程序本身处理，错误是无法处理。</strong></p>
+</li>
+</ul>
+<h4 id="trycatchfianlly">try/catch/fianlly</h4>
+<ul>
+<li><strong>try 块：</strong> 用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。</li>
+<li><strong>catch 块：</strong> 用于处理try捕获到的异常。</li>
+<li><strong>finally 块：</strong> 无论是否捕获或处理异常，finally块里的语句都会被执行。<strong>当在try块或catch块中遇到return 语句时，finally语句块将在方法返回之前被执行。</strong></li>
+<li>finally语句块不会被执行的情况：
+<ol>
+<li>在finally语句块第一行发生了异常。 因为在其他行，finally块还是会得到执行</li>
+<li>在前面的代码中用了System.exit(int)已退出程序。 exit是带参函数 ；若该语句在异常语句之后，finally会执行</li>
+<li>程序所在的线程死亡。</li>
+<li>关闭CPU。</li>
+</ol>
+</li>
+</ul>
+<h3 id="12深拷贝浅拷贝">12.深拷贝/浅拷贝</h3>
+<ol>
+<li>
+<p><strong>浅拷贝</strong>：对基本数据类型进行值传递，引用类型的属性复制，复制栈中的变量 和 变量指向堆内存中的对象的指针，不复制堆内存中的对象。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztvk9ybgj30u00uyack.jpg" alt="image-20191217170403217" style="zoom:50%;" />
+</li>
+<li>
+<p><strong>深拷贝</strong>：对基本数据类型进行值传递，引用类型的属性复制，复制栈中的变量 和 变量指向堆内存中的对象的指针和堆内存中的对象。（在堆中创建了新的对象）</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztxcys4pj30u00v5gnt.jpg" alt="image-20191217170540653" style="zoom:50%;" />
+</li>
+</ol>
+<h3 id="13-sleep和wait方法的区别和共同点">13. sleep()和wait()方法的区别和共同点</h3>
+<ul>
+<li>
+<p>最主要的区别在于：<strong>sleep 方法没有释放锁，而 wait 方法释放了锁</strong> 。</p>
+</li>
+<li>
+<p>Wait 通常被用于线程间交互/通信，sleep 通常被用于暂停执行。</p>
+</li>
+<li>
+<p>wait() 方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象上的 notify() 或者 notifyAll() 方法。sleep() 方法执行完成后，线程会自动苏醒。或者可以使用 wait(long timeout)超时后线程会自动苏醒。</p>
+</li>
+<li>
+<p>共同点：<strong>都可以暂停线程的执行</strong></p>
+</li>
+</ul>
+<h3 id="14-为什么我们调用-start-方法时会执行-run-方法为什么我们不能直接调用-run-方法">14. 为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？</h3>
+<ul>
+<li>new 一个 Thread，线程进入了新建状态;<strong>调用 start() 方法，会启动一个线程并使线程进入了就绪状态</strong>，当分配到时间片后就可以开始运行了。 <strong>start() 会执行线程的相应准备工作，然后自动执行 run() 方法</strong>的内容</li>
+<li>直接执行 run() 方法，会把 run 方法<strong>当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它</strong></li>
+</ul>
+<h3 id="15-反射">15. 反射</h3>
+<ol>
+<li>
+<p>对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。---&gt;<strong>反射就是把java类中的各种成分映射成一个个的Java对象</strong></p>
+<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zuj06enpj31gm0lkn56.jpg" alt="image-20191217172633390"></figure>
+</li>
+<li>
+<p>反射优势：运行期类型的判断，动态加载类，提高代码灵活度。</p>
+</li>
+<li>
+<p>应用：</p>
+<ul>
+<li>JDBC 连接数据库时使用 <code>Class.forName()</code>通过反射加载数据库的驱动程序</li>
+<li>Spring XML配置方法进行装在Bean</li>
+</ul>
+</li>
+</ol>
+<h3 id="16-java线程内存模型">16. Java线程内存模型</h3>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zv84vidnj30wd0u0dqz.jpg" alt="image-20191217175041005" style="zoom:50%;" />
+<ul>
+<li>
+<p>线程私有</p>
+<ol>
+<li>程序计数器---&gt;**为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。**程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</li>
+<li>虚拟机栈---&gt;<strong>其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。</strong> （实际上，Java虚拟机栈是由一个个栈帧组成，而每个栈帧中都拥有：局部变量表、操作数栈、动态链接、方法出口信息。）</li>
+<li>本地方法栈---&gt;和虚拟机栈所发挥的作用非常相似，区别是： <strong>虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务</strong></li>
+</ol>
+</li>
+<li>
+<p>线程共有：</p>
+<ol>
+<li>
+<p>堆：ava 堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。</strong></p>
+<ul>
+<li>新生代(1/3)
+<ul>
+<li>Eden(8/10)</li>
+<li>From Survivor(1/10)</li>
+<li>To Survivor(1/10)</li>
+</ul>
+</li>
+<li>老年代(2/3)</li>
+<li>永久代---&gt;JDK1.8<strong>移除整个永久代，取而代之的是一个叫元空间（Metaspace）的区域（永久代使用的是JVM的堆内存空间，而元空间使用的是物理内存，直接受到本机的物理内存限制）</strong></li>
+</ul>
+</li>
+<li>
+<p>方法区</p>
+<p><strong>方法区与 Java 堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</strong></p>
+<ul>
+<li>运行时常量池：<strong>运行时常量池是方法区的一部分</strong>。Class 文件中除了有类的版本、字段、方法、接口等描述信息外，还有常量池信息（用于存放编译期生成的各种字面量和符号引用）</li>
+</ul>
+</li>
+<li>
+<p>直接内存</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="17-hotspot虚拟机对象揭秘">17. HotSpot虚拟机对象揭秘</h3>
+<h4 id="对象创建过程">对象创建过程</h4>
+<ul>
+<li>
+<p>类加载检查</p>
+<pre><code>虚拟机遇到一条 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到这个类的符号引用，并且检查这个符号引用代表的类是否已被加载过、解析和初始化过。如果没有，那必须先执行相应的类加载过程。
+</code></pre>
+</li>
+<li>
+<p>申请内存</p>
+<ul>
+<li>
+<p>指针碰撞</p>
+<p>用于堆内存比较规整</p>
+</li>
+<li>
+<p>空闲列表</p>
+<p>用于堆内存比较零散</p>
+<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zyoumlhkj31nk0eiq6w.jpg" alt="image-20191217195035011"></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>成员变量赋予默认值</p>
+</li>
+<li>
+<p>调用初始化方法</p>
+<ul>
+<li>成员变量按顺序调用</li>
+<li>初始化成员变量</li>
+<li>构造方法调用</li>
+</ul>
+</li>
+</ul>
+<h4 id="对象内存布局">对象内存布局</h4>
+<p>和虚拟机有关</p>
+<p>以HotSpot为例</p>
+<ul>
+<li>
+<p>对象头markWord</p>
+<ul>
+<li><strong>存储对象自身的自身运行时数据(哈希码、GC分代年龄、锁状态标志等等)</strong></li>
+<li>类型指针----&gt;指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是那个类的实例。</li>
+</ul>
+</li>
+<li>
+<p>实例数据(对象的成员变量)</p>
+</li>
+<li>
+<p>补齐(因为Hotspot虚拟机的自动内存管理系统要求对象<strong>起始地址必须是8字节的整数倍</strong>)</p>
+</li>
+</ul>
+<h4 id="对象的访问定位">对象的访问定位</h4>
+<ol>
+<li>使用句柄</li>
+<li>直接指针</li>
+</ol>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="http://localhost:4000/post/java-ji-chu-fu-xi-1">
+                  <h3 class="post-title">
+                    Java基础复习1
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
