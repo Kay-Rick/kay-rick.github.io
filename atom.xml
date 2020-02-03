@@ -1,26 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://rick.github.io</id>
     <title>Rick</title>
-    <updated>2019-12-17T14:33:25.974Z</updated>
+    <updated>2020-02-03T07:08:36.635Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
-    <rights>All rights reserved 2019, Rick</rights>
+    <link rel="alternate" href="https://rick.github.io"/>
+    <link rel="self" href="https://rick.github.io/atom.xml"/>
+    <subtitle>Stay Foolish</subtitle>
+    <logo>https://rick.github.io/images/avatar.png</logo>
+    <icon>https://rick.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[实习面经]]></title>
+        <id>https://rick.github.io/post/shi-xi-mian-jing</id>
+        <link href="https://rick.github.io/post/shi-xi-mian-jing">
+        </link>
+        <updated>2020-02-03T07:00:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>为了准备学院大三下学期6个月的实习，自己投递了一些公司的Java的开发岗并参加了面试，主要有百度、SAP、新浪微博、京东数科... 由于我大一大二的时候并没有真正地接触到技术，所做的项目也是少之又少，也就局限于学院里安排的一些课程设计，从准备简历到投简历到再修改简历再面试来来回回折腾了不少次，踩过的坑也算是引以为戒。接下来我主要从<strong>简历制作、准备面试、面试真题、经验教训</strong>这几个方面来说（实习生的身份）</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>为了准备学院大三下学期6个月的实习，自己投递了一些公司的Java的开发岗并参加了面试，主要有百度、SAP、新浪微博、京东数科... 由于我大一大二的时候并没有真正地接触到技术，所做的项目也是少之又少，也就局限于学院里安排的一些课程设计，从准备简历到投简历到再修改简历再面试来来回回折腾了不少次，踩过的坑也算是引以为戒。接下来我主要从<strong>简历制作、准备面试、面试真题、经验教训</strong>这几个方面来说（实习生的身份）</p>
+<!--more-->
+<h2 id="简历制作">简历制作</h2>
+<p>简历看似是一个简单的事情，但是对于求职来说是至关重要的一环，因为简历制作的好坏决定着你能否经过HR的筛选拿到面试的资格以及决定着面试过程中面试官提问的大多数问题。我主要提供一个简历的制作思路</p>
+<ul>
+<li>个人信息：姓名、年龄、<strong>联系方式、邮箱</strong>、住址、<strong>个人博客、GitHub地址</strong>(做的好的话，绝对的加分点)等</li>
+<li>*** 专业技能**：
+<ul>
+<li>无论是实习生还是将来找工作，都慎用**&quot;精通&quot;**二字</li>
+<li>有的同学可能不知道该怎样写自己的技能点，就用短短的一句比如“<strong>熟悉Java开发</strong>”就描述完了，那么这样的简历太过笼统肯定是缺少亮点的，即使有可能你确实很厉害，但也有可能拿不到面试的资格。如果没有思路，可以<strong>去招聘网站去看下具体投递岗位的技能需求</strong>，<strong>适当地</strong>包装技能，可以将技能点进一步细化。比如“熟悉Java开发”我就可以延伸到：Java基础较好、熟悉Java并发编程、IO模型、深入理解集合框架等等。我这里只是简单举个例子，具体情况根据个人掌握的程度来进行确定。<strong>包装上去的技能点一定要能经地住面试官的提问，很难的问题也许不会，但基础性的问题一定要非常熟悉</strong></li>
+</ul>
+</li>
+<li>教育背景：学校+专业。如果在校成绩较好，也可列一些具体的数据上去，作为在校生这也算是一个亮点</li>
+<li>获奖经历：奖学金、比赛获奖等等 如果比赛比较突出专业性的技能，可以稍作详细描述，这也是绝对的加分点</li>
+<li>*** 项目经验**
+<ul>
+<li>尽量写和你要应聘岗位相关的项目经历，不一定要写上去所有的项目，如果某个项目你觉得自己说不清楚的话就不要写上去，有的面试官会很关心项目问题，问的很深，所以**“不熟悉的项目慎重”**</li>
+<li>写上去的项目进行包装：项目背景可不用介绍，介绍这个项目实现的功能，<strong>你在这个项目中负责哪一部分的开发？用了什么技术解决了什么问题？达到了怎样的预期效果？</strong>（如果有<strong>具体的数据做支撑将会更棒</strong>）你对于这个项目的思考？(这个可以不用具体写在简历上，当面试官让你谈这个项目的时候也许会问到你，如果遇到某种场景，这个项目可以应对吗？如果不可以又有哪些办法解决？这个要有个心理准备)</li>
+<li><strong>不过分包装</strong>，作为实习生的身份，面试官也能理解我们在学校项目经历的不足，如果你的基础知识及技能足够好的话，那也是OK的</li>
+</ul>
+</li>
+<li>自我评价：简短的一段自我评价，最好有具体例子做支撑</li>
+</ul>
+<p>简历不用太长，1-2页即可，PDF格式</p>
+<p>实习的话，投递简历渠道推荐几个：BOSS直聘、牛客网、实习僧以及找人内推会比较快而且知道简历处理的进度</p>
+<p>总结一点： <strong>适当包装，切忌过度包装</strong></p>
+<h2 id="准备面试">准备面试</h2>
+<p>当投递完简历后，一定要保证<strong>手机在正常工作日时间的通畅</strong>，一般自己联系企业，会有HR给你打电话约面试的时间，面试的形式主要是：视频面试、电话面试、现场面试(一般是本地的公司会约你现场面试)在约好具体面试时间后，就要开始面试的准备</p>
+<h3 id="复习">复习</h3>
+<p>具体岗位的不同，复习方法也有所区别，我们去看实习招聘岗位的分布情况，主要是算法研发岗、前后端研发岗、测试岗等。作为一个实习生(在校)主要复习的思路主要有：</p>
+<ul>
+<li>
+<p>数据结构与算法</p>
+<p>​	重中之重，无论是什么岗位(算法、研发、测试等)都会进行考察，常见的一些算法要能够手写出来</p>
+<p>​	常见面试题：数组、链表、树遍历算法、DFS、BFS、查找、排序等</p>
+</li>
+<li>
+<p>计算机网络(前端开发和后端开发必问)</p>
+<p>​	常见面试题：TCP、UDP区别、 TCP三次握手、四次挥手流程及为什么三次为什么四次？DNS协议相关...</p>
+</li>
+<li>
+<p>操作系统基础</p>
+<p>​	常见面试题：主要是涉及到并发编程的话，处理机的调度(进程、线程、死锁等)常问...</p>
+</li>
+<li>
+<p>数据库原理(后端开发必问，前端开发偶有问到)</p>
+<p>​	常见面试题：数据库索引、数据库范式、数据库事务管理(ACID)、SQL优化思路...</p>
+</li>
+<li>
+<p>投递具体岗位的技能要求，这里有一点，岗位上明确要求的技能基本都会被问到，所以要做一些针对性复习，然后这时可以<strong>去GitHub或者牛客网再找找面经看看</strong></p>
+</li>
+<li>
+<p>项目，在这里复习项目中的技能点我觉得是很有必要的，因为和面试官谈论项目问题时，大多数面试官就会以你当前的项目中的技能点进行发问</p>
+</li>
+<li>
+<p>测试岗位有必要将软件工程再好好复习一遍</p>
+</li>
+</ul>
+<p>对于公共基础课的复习，这里分享一个公众号文章可以进行适当突击--&gt;<a href="https://mp.weixin.qq.com/s/ZqLPc2ja72qyfV2n-0mYSA">Click</a></p>
+<h3 id="面试流程">面试流程</h3>
+<p>一般实习的话，面试3轮（2轮技术面试+1轮HR面试）</p>
+<p>这里主要谈论技术性面试</p>
+<p>面试流程主要是</p>
+<ul>
+<li>1-2分钟自我介绍</li>
+<li>面试官从项目说起，让你介绍你的项目，这期间面试官会提问</li>
+<li>基础知识和技能的提问，一般10个问题左右</li>
+<li>如果是视频面试和现场面试，有很大可能性现场出算法题目让你写代码（尤其想去字节跳动的话，每轮面试都会有算法题目，做不出来基本是一票否决的），电话面试也不排除让你进行描述</li>
+<li>面试结束前，面试官都会问：你还有什么要问我的吗？(这个问题提前做点准备就好)这里推荐大家看一下--&gt; <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/essential-content-for-interview/PreparingForInterview/%E9%9D%A2%E8%AF%95%E5%AE%98-%E4%BD%A0%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E8%A6%81%E9%97%AE%E6%88%91.md">Click</a></li>
+</ul>
+<h2 id="面试真题">面试真题</h2>
+<p>由于我接到的面试都是Java开发相关的，我主要对面试中遇到的<strong>CS公共基础课和Java相关知识</strong>进行总结</p>
+<h3 id="数据结构与算法篇">数据结构与算法篇</h3>
+<ul>
+<li>B树和B+树的区别（新浪微博）</li>
+<li>你了解哪些排序算法？算法的思想、时间复杂度、空间复杂度？（京东数科）</li>
+<li>LeetCode第1题及第15题：两数之和及三数之和问题（新浪微博）</li>
+</ul>
+<h3 id="计算机网络篇">计算机网络篇</h3>
+<ul>
+<li>TCP三次握手、四次挥手流程？为什么三次，为什么四次？（新浪微博、百度）</li>
+<li>TCP和UDP区别，有TCP为什么还要有UDP？（百度、京东数科）</li>
+<li>TCP粘包和拆包问题有了解吗？（新浪微博）</li>
+<li>TCP是怎样保持连接的？（京东数科）</li>
+</ul>
+<h3 id="操作系统篇">操作系统篇</h3>
+<ul>
+<li>并发编程中死锁有了解吗？死锁产生的条件是什么？你在项目中是怎样解除避免和解除死锁的？（百度）</li>
+<li>进程的都有哪些状态？怎么转换的？（新浪微博）</li>
+<li>Linux下文件的操作命令（京东数科）</li>
+</ul>
+<h3 id="数据库篇">数据库篇</h3>
+<ul>
+<li>数据库范式了解吗？在项目中怎么运用的？会出现什么问题？（新浪微博、SAP、京东数科）</li>
+<li>MySQL中编码遇到过什么问题吗？为什么不选UTF-8编码选UTF-8mb4？（SAP）</li>
+<li>MySQL数据库索引？底层是怎么实现的？（京东数科、新浪微博）</li>
+<li>MySQL中存储引擎InnoDB和MyISAM有什么区别？分别用于什么场景？（新浪微博）</li>
+<li>数据库事务有了解吗？事务的隔离级别？你在项目中使用的隔离级别是什么？（新浪微博）</li>
+<li>SQL优化有什么思路？（新浪微博）</li>
+<li>项目中使用到外键了吗？外键作用？使用外键要注意些什么问题？（新浪微博）</li>
+<li>除了MySQL数据库你还用到哪些数据库？Redis数据库和MySQL数据库的区别？（新浪微博）</li>
+<li>现场出题设计一个数据库表（百度）</li>
+</ul>
+<h3 id="java篇">Java篇</h3>
+<ul>
+<li>类和对象的区别？（百度）</li>
+<li>单例设计模式了解吗？有几种写法？手写一个单例设计模式（百度）</li>
+<li>讲讲<em>static</em>关键字和<em>final</em>关键字（百度）</li>
+<li><em>synchronized</em>关键字是怎么用的？底层实现有了解吗？还有用过其他的锁吗？（百度）</li>
+<li><em>BIO、NIO、AIO</em>区别有哪些？项目中有用到吗？<em>Netty</em>？（百度、新浪微博）</li>
+<li>接口和抽象类的区别？什么时候用接口，什么时候用抽象类？接口可以继承接口吗？（京东数科）</li>
+<li><em>HashMap</em>和<em>HashTable</em>的区别是什么？（京东数科）</li>
+<li><em>ConcurrentHashMap</em>和<em>HashMap</em>的区别是什么？<em>ConcurrentHashMap</em>为什么线程安全？（新浪微博）</li>
+<li>HashMap和HashSet的区别？HashSet是如何检查重复的？（新浪微博）</li>
+<li><em>Java</em>中线程的状态？*join()、yield()*方法是干什么？（新浪微博）</li>
+<li><em>Object</em>类下有哪些方法？（京东数科）</li>
+<li>字符串&quot;<em>123</em>&quot;转换成整型<em>123</em>的<em>API</em>是什么？整型<em>123</em>转换成字符串“<em>123</em>”的API又是什么？（京东数科）</li>
+<li>创建线程有几种方式？分别是怎么做的？（京东数科、新浪微博）</li>
+<li>线程池用过吗？如何创建一个线程池？其中各个参数的含义是什么？为什么要用线程池？coreSize？（新浪微博）</li>
+<li><em>synchronized、ReentrantLock</em>区别？（京东数科）</li>
+<li><em>CountDownLatch</em>和<em>Semaphore</em>用过吗？他们的区别是什么？<em>CountDownLatch</em>应用场景？比如现在要让第5个线程等待前4个线程执行完毕再执行，具体怎么做？（新浪微博）</li>
+<li>使用<em>synchronized</em>来实现单缓冲区的生产者消费者模型的代码思路？（新浪微博）</li>
+<li><em>JVM</em>有了解吗？<em>JVM</em>中参数<code>–Xms</code>和<code>-Xmx</code>是什么意思？（新浪微博）</li>
+<li>设计模式有了解过哪些？单例设计模式知道哪几种写法？策略设计模式了解吗？你在项目中用到了哪些设计模式？（京东数科、新浪微博）</li>
+<li><em>Spring</em>中依赖注入有几种方式？怎么做的？（京东数科）</li>
+<li><em>Spring</em>框架中有哪些组件了解吗？分别做什么的？（新浪微博）</li>
+<li><em>SpringMVC</em>的这种<em>MVC</em>模式了解吗？他的工作原理是什么？用到了哪些设计模式？（京东数科、百度）</li>
+<li><em>SpringMVC</em>中要接受用户传来的参数要怎么做？<em>REST</em>的风格呢？（新浪微博）</li>
+<li><em>Spring</em>中<em>bean</em>的创建过程了解吗？（新浪微博）</li>
+<li><em>SpringBoot</em>和<em>SpringMVC</em>的区别和联系是什么？了解<em>SpringBoot</em>的启动流程吗？<em>SpringBoot</em>自动配置是如何实现的？（新浪微博）</li>
+<li>权限验证<em>Spring Security</em>了解吗？ <em>JPA</em>会用吗？（SAP）</li>
+</ul>
+<h2 id="经验教训">经验教训</h2>
+<p>​		由于这是我第一次求职的经历，从简历这一步开始就踩了很多的坑，技能描述简略，泛泛而谈，项目描述草率，没有任何一点的包装，就拿去投了很多家公司，基本都石沉大海，在几位学长的指导下修改了简历，又重新投递。我之前确实没有做过什么技术，又不甘愿去做测开，所以也是从这个学期开始才决定做Java后端的开发，很多东西也都是现学，在学技术这期间我不时地后悔大一大二没好好做技术，自己是在还债，恰逢学校的事情又很多，然后整个一个学期压力都蛮大的，我到现在都还清楚地记得等待每一个面试电话时自己心中焦灼的心情。</p>
+<p>​		每一次的面试对我来说都是一次成长，放下心中的浮躁，踏踏实实地做事情。最后感谢<a href="https://github.com/zjs1224522500">顺佬</a>对我Java学习的指导、俊佬对我简历的指导、谢导提供的实习信息及京东对我的肯定</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java基础知识面试复习]]></title>
-        <id>http://localhost:4000/post/java-ji-chu-zhi-shi-mian-shi-fu-xi</id>
-        <link href="http://localhost:4000/post/java-ji-chu-zhi-shi-mian-shi-fu-xi">
+        <id>https://rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi</id>
+        <link href="https://rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi">
         </link>
         <updated>2019-12-17T14:32:32.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="1-面向对象和面向过程的区别">1. 面向对象和面向过程的区别</h3>
+        <summary type="html"><![CDATA[<h1 id="java基础知识面试复习">Java基础知识面试复习</h1>
+<h3 id="1-面向对象和面向过程的区别">1. 面向对象和面向过程的区别</h3>
 <ul>
 <li><strong>面向过程性能高，因为类调用时需要实例化，开销比较大，比较消耗资源</strong></li>
 <li><strong>面向过程没有面向对象易维护、易复用、易扩展(封装、继承、多态)</strong></li>
 </ul>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="java基础知识面试复习">Java基础知识面试复习</h1>
+<h3 id="1-面向对象和面向过程的区别">1. 面向对象和面向过程的区别</h3>
+<ul>
+<li><strong>面向过程性能高，因为类调用时需要实例化，开销比较大，比较消耗资源</strong></li>
+<li><strong>面向过程没有面向对象易维护、易复用、易扩展(封装、继承、多态)</strong></li>
+</ul>
+<!--more-->
 <h3 id="2-jvm">2. JVM</h3>
 <ul>
 <li>Java虚拟机（JVM）是运行 Java 字节码的虚拟机。<strong>JVM有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节码，它们都会给出相同的结果</strong>。字节码和不同系统的 JVM 实现是 Java 语言“一次编译，随处可以运行”的关键所在。</li>
@@ -53,7 +207,7 @@
 <h3 id="8-实例方法和静态方法有何不同">8. 实例方法和静态方法有何不同？</h3>
 <ul>
 <li>浅层次：在外部调用<strong>静态方法时，可以使用&quot;类名.方法名&quot;的方式</strong>，<strong>也可以使用&quot;对象名.方法名&quot;的方式</strong>。而实例方法只有后面这种方式。也就是说，<strong>调用静态方法可以无需创建对象。（静态方法的调用不依赖于对象）</strong></li>
-<li>JVM深层次：类的静态方法，静态变量是在类装载的时候装载的，这时候还没有产生对象**。静态变量 存放在 Java 内存区域的方法区**</li>
+<li>JVM深层次：类的静态方法，静态变量是在<strong>类装载的时候装载的</strong>，这时候还没有产生对象**。静态变量 存放在 Java 内存区域的方法区**</li>
 <li>static关键字使用场景
 <ol>
 <li><strong>修饰成员变量和成员方法:</strong> 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。调用格式：<code>类名.静态变量名</code> <code>类名.静态方法名()</code></li>
@@ -200,6 +354,7 @@
 </li>
 </ol>
 <h3 id="16-java线程内存模型">16. Java线程内存模型</h3>
+<h4 id="多线程运行下内存模型">多线程运行下内存模型</h4>
 <img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zv84vidnj30wd0u0dqz.jpg" alt="image-20191217175041005" style="zoom:50%;" />
 <ul>
 <li>
@@ -214,7 +369,7 @@
 <p>线程共有：</p>
 <ol>
 <li>
-<p>堆：ava 堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。</strong></p>
+<p>堆：Java 堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。</strong></p>
 <ul>
 <li>新生代(1/3)
 <ul>
@@ -238,6 +393,50 @@
 <p>直接内存</p>
 </li>
 </ol>
+</li>
+</ul>
+<h4 id="常见垃圾回收算法">常见垃圾回收算法</h4>
+<p><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6.md</a></p>
+<ul>
+<li>
+<p><strong>如何判断对象已经死亡</strong></p>
+<ul>
+<li>
+<p>引用计数法----&gt;<strong>不能解决循环引用问题</strong></p>
+<p>​		给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加 1；当引用失效，计数器就减 1；任何时候计数器为 0 的对象就是不可能再被使用的。<strong>实现简单，效率高</strong></p>
+</li>
+<li>
+<p>GC Roots(可达性分析算法)</p>
+<p>​	<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jh9u01jj30s60jmafy.jpg" alt="image-20191223122314902" style="zoom:50%;" /></p>
+<p>从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，<strong>则证明此对象是不可用的</strong>。</p>
+<p>可作为GC Roots的：<strong>线程栈变量、静态变量、常量池、JNI指针</strong></p>
+</li>
+</ul>
+</li>
+<li>
+<p>常见垃圾回收算法</p>
+<ul>
+<li>
+<p><strong>标记清除(Mark and sweep)</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jopo2u0j30vy0oyae1.jpg" alt="image-20191223123026324" style="zoom: 50%;" />
+<p>首先标记出所有需要回收的对象，<strong>在标记完成后统一回收所有被标记的对象</strong>----&gt;问题：位置不连续产生碎片</p>
+</li>
+<li>
+<p><strong>拷贝算法</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jq7761fj30vs0p0q7r.jpg" alt="image-20191223123151261" style="zoom:50%;" />
+<p>它可以将<strong>内存分为大小相同的两块，每次使用其中的一块</strong>。当这一块的内存使用完后，就将还存活的对象复制到另一块去，<strong>然后再把使用的空间一次清理掉</strong>。这样就使每次的内存回收都是对内存区间的一半进行回收。<strong>没有碎片，效率高，连续</strong>------&gt;<strong>问题：浪费内存</strong></p>
+</li>
+<li>
+<p><strong>标记-压缩(标记整理)</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jtlfwr9j313e0lygqa.jpg" alt="image-20191223123507134" style="zoom:50%;" />
+<p>标记过程仍然与“标记-清除”算法一样，<strong>但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动</strong>，然后直接清理掉端边界以外的内存。<strong>没有碎片</strong>---&gt;<strong>问题：浪费内存</strong></p>
+</li>
+<li>
+<p><strong>分代收集</strong></p>
+<p>这种算法没有什么新的思想，<strong>只是根据对象存活周期的不同将内存分为几块</strong>。一般将 java 堆分为<strong>新生代和老年代</strong>，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
+<p><strong>比如在新生代中，每次收集都会有大量对象死去，所以可以选择复制算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</strong></p>
+</li>
+</ul>
 </li>
 </ul>
 <h3 id="17-hotspot虚拟机对象揭秘">17. HotSpot虚拟机对象揭秘</h3>
@@ -268,9 +467,15 @@
 <li>
 <p>调用初始化方法</p>
 <ul>
-<li>成员变量按顺序调用</li>
-<li>初始化成员变量</li>
-<li>构造方法调用</li>
+<li>
+<p>成员变量按顺序调用</p>
+</li>
+<li>
+<p>初始化成员变量</p>
+</li>
+<li>
+<p>构造方法调用</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -294,816 +499,770 @@
 </ul>
 <h4 id="对象的访问定位">对象的访问定位</h4>
 <ol>
-<li>使用句柄</li>
-<li>直接指针</li>
+<li>
+<p>使用句柄：Java堆中将会划分出一块内存来作为句柄池</p>
+<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0tr5oz9tj314i0jo46h.jpg" alt="image-20191218134522761"></figure>
+</li>
+<li>
+<p>直接指针： Java 堆对象的布局中就必须考虑如何放置访问类型数据的相关信息</p>
+<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0tsb9nsdj315i0k8jyq.jpg" alt="image-20191218134627510"></figure>
+</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java基础复习1]]></title>
-        <id>http://localhost:4000/post/java-ji-chu-fu-xi-1</id>
-        <link href="http://localhost:4000/post/java-ji-chu-fu-xi-1">
-        </link>
-        <updated>2019-10-28T11:33:43.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="基础内容复习">基础内容复习</h1>
-<p>注：参考了微信公众号<strong>Hollis</strong>的部分内容</p>
-<h2 id="目录">目录</h2>
-<ul>
-<li>内部类
-<ul>
-<li>静态内部类</li>
-<li>非静态内部类</li>
-<li>匿名内部类</li>
-</ul>
-</li>
-<li>包装类</li>
-<li>常用类
-<ul>
-<li>Date</li>
-<li>Calendar</li>
-<li>Math</li>
-<li>Random</li>
-<li>...</li>
-</ul>
-</li>
-<li>String、StringBuffer、StringBuilder的区别</li>
-<li>Java中的传参机制</li>
-<li>Error、Exception、RuntimeException
-<ul>
-<li>三者之间关系</li>
-<li>自定义异常</li>
-<li>NoClassDefFoundError和ClassNotFoundException有什么区别？</li>
-</ul>
-</li>
-<li>equals和==的区别</li>
-<li>equals和HashCode</li>
-</ul>
-<hr>
-<h3 id="内部类">内部类</h3>
-<ul>
-<li>
-<p><strong>(非)静态内部类测试代码如下</strong></p>
-<pre><code class="language-Java">public class TestInnerClass {
-
-	public static void main(String[] args) {
-		Face f = new Face();
-		//非静态内部类，必须要先创建外部类，再创建内部类
-    	Face.Nose n = f.new Nose();
-    	n.breath();
-		//静态内部类，不必先创建外部类再创建内部类
-		Face.Ear e = new Face.Ear();    
-    	e.listen();
-	}	
-	}
-
-	class Face{
-	// 外部类的属性
-	String type = &quot;瓜子脸&quot;;
-	static String color = &quot;Red&quot;;
-
-	/**
-   * 非静态内部类：必须要先创建外部类，再创建内部类，可以看成是一个对象的成员属性
- 	*/
-	class Nose{
-    	//内部类不能定义成static的方法和属性
-    	String type;
-    	void breath(){
-        	System.out.println(Face.this.type);  //内部类可以调用外部类的内容
-       	 System.out.println(&quot;呼吸&quot;);
-    	}
-	}
-
-/**
- * 静态内部类：当一个静态内部类存在，并不一定存在对应的外部类对象
- */
-static class Ear{
-    //静态内部类的实例方法不能直接访问外部类的实例方法，因为外部类不一定存在
-    void listen(){
-        System.out.println(color); //可访问内部类的静态属性
-        System.out.println(&quot;听&quot;);
-    }
-}
-}
-</code></pre>
-</li>
-</ul>
-<p>输出结果如下</p>
-<blockquote>
-<p>从结果我们可以看出：<br>
-内部类既可以访问自身的数据域，也可以访问他的外围类对象的数据域(如：<strong>Face.this.type</strong>)<br>
-编写内部类构造器这一方面，可以使用语法<br>
-<strong>outerObject.new InnerClass(Construction parm);</strong> 例如 <strong>Face.Nose n = f.new Nose();</strong><br>
-特别注意:内部类不能有static方法<br>
-局部类不能用public或private访问说明符进行，它的作用域被限制在声明这个局部类的块中--&gt;优势:对外部世界可以完全隐藏起来</p>
-</blockquote>
-<ul>
-<li><strong>匿名内部类</strong><br>
-将局部内部类进一步深入，假如只创建这个类的一个对象，就不必命名了，这种类被称为“匿名内部类”<br>
-详细用法--&gt;<a href="https://blog.csdn.net/hellocsz/article/details/81974251">Click</a></li>
-</ul>
-<h3 id="包装类">包装类</h3>
-<blockquote>
-<p>java中的数据类型int，double等不是对象，无法通过向上转型获取到Object提供的方法，而像String却可以，只因为String是一个对象而不是一个类型。基本数据类型由于这样的特性，导致无法参与转型，泛型，反射等过程。为了弥补这个缺陷，java提供了包装类。<br>
-具体内容Click-&gt;<a href="https://blog.csdn.net/weixin_40739833/article/details/80093527">here</a></p>
-</blockquote>
-<h3 id="常用类">常用类</h3>
-<ul>
-<li>
-<p>Date()类</p>
-<pre><code class="language-Java">  public class TestDate {
-  	public static void main(String[] args) {
-      	Date d = new Date(2000);    
-      	System.out.println(d);//Thu Jan 01 08:00:02 CST 1970
-      	System.out.println(d.getTime());//2000
-
-      	Date d2 = new Date();
-      	System.out.println(d2.getTime());//1569572482084
-      	System.out.println(d2.after(d));//true
-  	}
-  }
-</code></pre>
-</li>
-<li>
-<p>Calendar类</p>
-<pre><code class="language-Java">  public class TestCalendar {
-  	public static void main(String[] args) {
-
-  		//获得日期相关元素
-  		Calendar calendar = new GregorianCalendar(2999,10,9,22,10,50);
-  		int year = calendar.get(Calendar.YEAR);
-  		int month = calendar.get(Calendar.MONTH);  //获得月份
-  		int weekday = calendar.get(Calendar.DAY_OF_WEEK); //星期几
-
-  		//System.out.println(year);
-  		//System.out.println(month);  //0-11表示对应的月份，0是1月...
-  		//System.out.println(weekday); //1-7 1-&gt;星期天
-
-  		//设置日期相关元素
-  		Calendar calendar2 = new GregorianCalendar();
-  		//System.out.println(calendar2);  //不传参数，默认打印出今天的日期
-  		calendar2.set(Calendar.YEAR,2020);
-  		//System.out.println(calendar2);
-  		//日期的计算
-  		Calendar calendar3 = new GregorianCalendar();
-  		calendar3.add(Calendar.YEAR,-100);//将该时间向前100年，第一个参数控制加减的是年/月/日，第二参数控制加减的大小
-  		//System.out.println(calendar3);
-
-  		//日期对象和时间对象的转换
-  		Date date = calendar3.getTime();
-  		Calendar calendar4 = new GregorianCalendar();
-  		calendar4.setTime(new Date());
-  		printCalendar(calendar4);
-  	}
-
-  	//打印日期的方法进行封装
-  	private static void printCalendar(Calendar calendar){
-  		int year = calendar.get(Calendar.YEAR);
-  		int month = calendar.get(Calendar.MONTH) + 1;
-  		int date = calendar.get(Calendar.DAY_OF_MONTH);
-  		int dayWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-  		String dayWeek2 = dayWeek == 0 ? &quot;日&quot; :dayWeek + &quot;&quot;;  //对星期进行处理
-  		int hour = calendar.get(Calendar.HOUR);
-  		int minute = calendar.get(Calendar.MINUTE);
-  		int second = calendar.get(Calendar.SECOND);
-
-  		System.out.println(year + &quot;年&quot; + month + &quot;月&quot; + date + &quot;日&quot; + hour + &quot;时&quot; + minute + &quot;分&quot; + second + &quot;秒&quot;
-  							+ &quot;  周&quot; + dayWeek2);
-  	}
-  }
-</code></pre>
-</li>
-<li>
-<p>DateFormat类</p>
-<pre><code class="language-Java">  import java.text.DateFormat;
-  import java.text.ParseException;
-  import java.text.SimpleDateFormat;
-  import java.util.Date;
-
-  /**
-  * @Author: Rick
-  * @Date: 2019/1/28 18:38
-  * @Description: 测试时间对象和字符串之间的互相转换
-  *                DateFormat抽象类的SimpleDateFormat实现类的使用
-  */
-  public class TestDateFormat {
-
-  	public static void main(String[] args) throws ParseException {
-
-  		//把时间对象按照“格式字符串指定的格式”转成相应的字符串
-  		DateFormat df = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);  // SimpleDateFormat()是DateFormat()的子类
-  		String str = df.format(new Date(4000000));
-  		System.out.println(str);  //   打印已经转化成了的字符串 1970-01-01 09:06:40
-
-  		//把字符串按照“格式字符串指定的格式”转成相应的时间对象
-  		DateFormat df2 = new SimpleDateFormat(&quot;yyyy年MM月dd日hh时mm分ss秒&quot;);
-  		Date date = df2.parse(&quot;2019年01月28日18时54分40秒&quot;);
-  		System.out.println(date);  //打印字符串转换成的日期  Mon Jan 28 18:54:40 CST 2019
-
-  		//测试其他的格式字符。比如:利用D，获得本时间对象是所处年份的第几天
-  		DateFormat df3 = new SimpleDateFormat(&quot;D&quot;);
-  		String str3 = df3.format(new Date());
-  		System.out.println(str3);  //29
-  	}
-  }
-</code></pre>
-</li>
-<li>
-<p>Math类</p>
-<pre><code class="language-Java">  public class TestMath {
-  	public static void main(String[] args) {
-  		//取整相关操作
-  		System.out.println(Math.ceil(3.2));   //4.0
-  		System.out.println(Math.floor(3.2));  //3.0
-  		System.out.println(Math.round(3.2));  //3
-  		System.out.println(Math.round(3.8));  //4
-
-  		//绝对值、开方、幂的操作
-  		System.out.println(Math.abs(-45));  //45
-  		System.out.println(Math.sqrt(64));  //8.0
-  		System.out.println(Math.pow(5,2));  //25.0
-  		System.out.println(Math.pow(2,5));  //32.0
-
-  		//常量
-  		System.out.println(Math.PI);  //3.141592653589793
-  		System.out.println(Math.E);   //2.718281828459045
-
-  		//随机数
-  		System.out.println(Math.random()); // [0,1)之间的随机数
-  	}
-  }
-</code></pre>
-</li>
-<li>
-<p>Random类</p>
-<pre><code class="language-Java">  public class TestRandom {
-  	public static void main(String[] args) {
-  		Random rand = new Random();
-  		System.out.println(rand.nextDouble());  //随机生成[0,1)之间的double类型的数据
-  		System.out.println(rand.nextInt());     //随机生成int类型允许范围之内的整型数据
-  		System.out.println(rand.nextFloat());   //随机生成[0,1)之间的float类型的数据
-  		System.out.println(rand.nextBoolean()); //随机生成false或true
-  		System.out.println(rand.nextInt(10));  //随机生成[0,10)之间的int类型的数据
-  		System.out.println(20 + rand.nextInt(10));  //随机生成[20,30)之间的int类型的数据
-  		System.out.println(20 + (int)(rand.nextDouble() * 10));  //随机生成[20,30)之间的int类型的数据,较为复杂
-  	}
-  }
-</code></pre>
-</li>
-</ul>
-<h3 id="string-stringbuffer-stringbuilder">String、StringBuffer、StringBuilder</h3>
-<ul>
-<li>
-<p>String常见问题</p>
-<ul>
-<li>
-<p><a href="https://mp.weixin.qq.com/s/VBFDIHhPg0MJ-L9DpzbiWw">创建几个对象和intern()方法</a></p>
-</li>
-<li>
-<p><a href="https://mp.weixin.qq.com/s/dr6nCAd0NRdU1CdYYB7cNA">String可能导致内存泄漏</a></p>
-</li>
-<li>
-<p>String长度为什么不可变?</p>
-<p>简单的来说：String类中使用final关键字字符数组保存字符串 <strong>private final char value[]</strong>，所以String对象是不可以变的</p>
-</li>
-</ul>
-</li>
-<li>
-<p>StringBuffer和StringBuilder</p>
-<p>StringBuffer和Stringbuilder都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串 <strong>char [] value</strong>但是没有用final关键字修饰，所以这两种对象都是可变的</p>
-</li>
-<li>
-<p>三者之间的比较<br>
-<strong>1.线程安全性</strong></p>
-<p>String 中的对象是不可变的，也就可以理解为常量，线程安全。<br>
-<font color=#F08080><strong>AbstractStringBuilder</strong></font> 是StringBuilder 与 StringBuffer 的公共父类，定义了一些字符串的基本操作，如 expandCapacity、append、insert、indexOf 等公共方法。<br>
-<font color = #F08080>StringBuffer</font> 对方法<strong>加了同步锁</strong>或者对调用的方法加了同步锁，所以是<font color = #F08080>线程安全</font>的。<font color = #F08080>StringBuilder</font> 并没有对方法进行加同步锁，所以是<font color = #F08080>非线程安全</font></p>
-<p><strong>2.性能</strong></p>
-<p>每次对 String 类型<strong>进行改变</strong>的时候，都会生成一个<strong>新的 String 对象</strong>，然后将指针指向新的 String 对象。StringBuffer 每次都会对 StringBuffer 对象本身进行操作，而不是生成新的对象并改变对象引用。<strong>相同情况下使用 StringBuilder 相比使用 StringBuffer 仅能获得 10%~15% 左右的性能提升，但却要冒多线程不安全的风险。</strong></p>
-<p><strong>3.对于三者使用的总结</strong></p>
-<p>操作少量的数据 = <kbd>String</kbd><br>
-<em><strong>单线程</strong></em> 操作字符串缓冲区下操作大量数据 = <kbd>StringBuilder</kbd><br>
-<em><strong>多线程</strong></em> 操作字符串缓冲区下操作大量数据 = <kbd>StringBuffer</kdb></p>
-</li>
-</ul>
-<h3 id="java中的传参机制">Java中的传参机制</h3>
-<p>首先回顾一下在程序设计语言中有关将参数传递给方法（或函数）的一些专业术语。<strong>按值调用(call by value)表示方法接收的是调用者提供的值</strong>，而按<strong>引用调用（call by reference)表示方法接收的是调用者提供的变量地址</strong>。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。 它用来描述各种程序设计语言（不只是Java)中方法参数传递方式。</p>
-<p><strong>Java程序设计语言总是采用按值调用</strong>。也就是说，方法得到的是<font color = #00BFFF>所有参数值的一个拷贝</font>，也就是说，方法不能修改传递给它的任何参数变量的内容。</p>
-<p>参考文章(一 为什么 Java 中只有值传递？) ---&gt;  <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/%E7%AC%AC%E4%B8%80%E5%91%A8%EF%BC%882018-8-7%EF%BC%89.md">Click</a></p>
-<h3 id="error-exception-runtimeexception">Error、Exception、RuntimeException</h3>
-<p>首先搞清楚他们三者之间的关系，<strong>Error和Exception都继承自Throwable，而RuntimeException继承Exception。在Java中只有Throwable类型的实例才可被抛出或捕获</strong></p>
-<p>Error类层次结构描述了Java运行时系统内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。</p>
-<p>在设计Java程序时，需要关注Exception的层次结构。这个层次结构又分解为两个分支：一个分支派生于RuntimeException；另一个分支包含其他异常。<strong>程序错误导致的异常属于RuntimeException；而程序本身没有问题，但像I/O错误这类问题导致的异常属于其他异常。</strong></p>
-<p>其中常见的RuntimeException有：</p>
-<ul>
-<li>NullPointerException：见的最多了，其实很简单，一般都是在null对象上调用方法了</li>
-<li>NumberFormatException：继承IllegalArgumentException，字符串转换为数字时出现。比如int i= Integer.parseInt(&quot;ab3&quot;);</li>
-<li>ArrayIndexOutOfBoundsException:数组越界。比如 int[] a=new int[3]; int b=a[3];</li>
-<li>StringIndexOutOfBoundsException：字符串越界。比如 String s=&quot;hello&quot;; char c=s.chatAt(6);</li>
-<li>ClassCastException:类型转换错误。比如 Object obj=new Object(); String s=(String)obj;</li>
-<li>ArithmeticException：算术错误，典型的就是0作为除数的时候。</li>
-<li>IllegalArgumentException：非法参数，在把字符串转换成数字的时候经常出现的一个异常，我们可以在自己的程序中好好利用这个异常。</li>
-</ul>
-<p>Error类或RuntimeException类的所有异常称为<font color = #F08080>非受查异常</font>，所有其他的异常称为<font color = #F08080>受查异常</font></p>
-<p><strong>如何声明异常</strong></p>
-<p>如果遇到了无法处理的情况，那么Java方法可以抛出异常。<br>
-例如：</p>
-<pre><code class="language-Java">   public FileInputStream(String name) throws FileNotFoundException
-</code></pre>
-<p>这个声明表示这个构造器将根据给定的String参数产生一个FileInputStream对象，但也有可能抛出一个FileNotFoundException异常。如果发生了这种糟糕的情况，构造器将不会初始化一个新的FileInputStream对象，而是抛出一个FileNotFoundException类对象。如果这个方法真的抛出了这样一个异常对象，运行时系统就会开始搜索异常处理器，以便知道如何处理FileNotFoundException对象。</p>
-<p>什么时候使用throws子句声明异常？<strong>通常有以下几种情况</strong></p>
-<ul>
-<li>调用一个受查异常的方法，例如FileInputStream构造器</li>
-<li>程序运行过程中发生错误</li>
-<li>程序出现错误</li>
-<li>Java虚拟机和运行时库出现内部错误</li>
-</ul>
-<p><font color = red>警告</font>  如果在子类中覆盖了一个超类的方法，子类方法中声明的受查异常不能比超类方法中声明的异常更加通用(也就是说：子类方法中可以抛出更特定的异常，或者根本不抛出任何异常)</p>
-<p><strong>如何抛出异常</strong></p>
-<p>首先看一个例子</p>
-<pre><code class="language-Java">	String readData(Scanner in) throws EOFException
-	{
-		...
-		while(...)
-		{
-			if(!in.hasNext())
-			{
-				if(n &lt; len)
-					throw new EOFException();
-			}
-			...
-		}
-		return s;
-	}
-</code></pre>
-<p>因此我们可以看到，对于一个已经存在的异常类，将其抛出很容易<br>
-1.找到一个合适的异常类<br>
-2.创建这个类的一个对象<br>
-3.将对象抛出<br>
-<font color = red>throw和throws关键字对比</font></p>
-<p>1、throw用在方法体内，上面代码显示了，是直接在main方法体内，throws用在方法声明后面，表示再抛出异常，由该方法的调用者来处理。<br>
-2、<em><strong>throw是具体向外抛异常的，抛出的是一个异常实例</strong></em>，throws声明了是哪种类型的异常，使它的调用者可以捕获这个异常<br>
-3、<em><strong>throw如果执行了，那么一定是抛出了某种异常了，throws表示可能出现，但不一定抛出了异常。</strong></em><br>
-4、同时出现的时候，throws出现在函数头、throw出现在函数体，两种不会由函数去处理，真正的处理由函数的上层调用处理</p>
-<br>
-<p><strong>自定义异常</strong></p>
-<p>2种自定义异常的方法</p>
-<pre><code class="language-Java">
-/**
- * @Author: Rick
- * @Date: 2019/1/30 17:30
- * @Description: 自定义异常方式
- */
-public class Test02 {
-    public static void main(String[] args) {
-        Person p = new Person();
-        p.setAge(-10);
-    }
-}
-
-class Person{
-    private int age;
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        if(age &lt; 0){
-            try {
-                throw new IllegalException(&quot;年龄不能为负&quot;);
-            } catch (IllegalException e) {
-                e.printStackTrace();
-            }
-        }
-        this.age = age;
-    }
-}
-
-
-//自己定义异常
-// 方式1继承RuntimeException,可以不用在代码中try/catch进行异常处理,遇到异常,程序中断
-class IllegalException extends RuntimeException{
-    public IllegalException(){
-
-    }
-
-    public IllegalException(String msg){
-        super(msg);
-    }
-}
-
-//方式2继承Exception,必须在代码中对异常进行try/catch处理,这样才能通过编译
-class IllegalException extends Exception {
-    public IllegalException() {
-
-    }
-
-    public IllegalException(String msg) {
-        super(msg);
-    }
-}
-</code></pre>
-<p>结果如下：</p>
-<pre><code>Rick_03_Exception.IllegalException: 年龄不能为负
-	at Rick_03_Exception.Person.setAge(Test02.java:25)
-	at Rick_03_Exception.Test02.main(Test02.java:11)
-
-Process finished with exit code 0
-</code></pre>
-<p><strong>NoClassDefFoundError和ClassNotFoundException有什么区别？</strong></p>
-<p><kbd>NoClassDefFoundError</kbd>是当Java虚拟机或ClassLoader实例试图加载某个类，但无法找到该类的定义时抛出此异常<br>
-<kbd>ClassNotFoundException</kbd>是当应用程序试图调用Class.forName(String)通过字符串名加载类，而找不到该类定义时抛出的异常。</p>
-<h3 id="equals和的区别">equals()和==的区别</h3>
-<p><font color = red>== </font>: 它的作用是判断两个对象的地址是不是相等。即，判断两个对象是不是同一个对象(<strong>基本数据类型 == 比较的是值，引用数据类型 == 比较的是内存地址</strong>)。</p>
-<p><font color = red>equals() </font>: equals用来比较的是两个对象的内容是否相等，由于<strong>所有的类都是继承自java.lang.Object类的</strong>，所以适用于所有对象，如果没有对该方法进行覆盖的话，调用的仍然是Object类中的方法，而Object中的equals方法返回的却是==的判断。请看Object类中equals方法的源码：</p>
-<pre><code class="language-Java">public boolean equals(Object obj) {
-    return (this == obj);
-}
-</code></pre>
-<p>我们来看一个例子：</p>
-<pre><code class="language-Java">public class Test01 {
-    public static void main(String[] args) {
-    Person p1 = new Person(&quot;Rick&quot;,1001);
-    Person p2 = new Person(&quot;Rick&quot;, 1001);
-    System.out.println(p1.equals(p2)); 		//false
-    }
-}
-
-class Person{
-    String name;
-    int ID;
-
-    public Person() {
-    }
-
-    public Person(String name, int ID) {
-        this.name = name;
-        this.ID = ID;
-    }
-}
-
-</code></pre>
-<p>这里由于没有重写继承java.lang.Object类中的equals()方法，我们比较的是这两个对象的地址(==方法)因此出现的是false</p>
-<p>我们再<strong>重写equals()方法</strong>看下测试结果：</p>
-<pre><code class="language-Java">public class Test02 {
-    public static void main(String[] args) {
-        Student stu1 = new Student(&quot;Rick&quot;,20);
-        Student stu2 = new Student(&quot;Rick&quot;,20);
-        System.out.println(stu1.equals(stu2));      //true
-        System.out.println(stu1 == stu2);       //false
-    }
-}
-
-class Student{
-    String name;
-    int age;
-
-    public Student() {
-    }
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    /**
-     * 重写equals()方法
-     * @param obj
-     * @return
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (this == obj)
-            return true;
-        if (this.getClass() != obj.getClass())
-            return false;
-
-        Student stu = (Student)obj;
-        return (name.equals(stu.name) &amp;&amp; age == stu.age);
-    }
-}
-</code></pre>
-<p>实际上我们再String类型中使用的equals()方法，已经是被重写过了--&gt;<a href="https://www.cnblogs.com/Eason-S/p/5524837.html">参考博文</a></p>
-<pre><code class="language-Java">public class test1 {
-    public static void main(String[] args) {
-        String a = new String(&quot;ab&quot;); // a 为一个引用
-        String b = new String(&quot;ab&quot;); // b为另一个引用,对象的内容一样
-        String aa = &quot;ab&quot;; // 放在常量池中
-        String bb = &quot;ab&quot;; // 从常量池中查找
-        if (aa == bb) // true
-            System.out.println(&quot;aa==bb&quot;);
-        if (a == b) // false，非同一对象
-            System.out.println(&quot;a==b&quot;);
-        if (a.equals(b)) // true
-            System.out.println(&quot;aEQb&quot;);
-        if (42 == 42.0) { // true
-            System.out.println(&quot;true&quot;);
-        }
-    }
-}
-</code></pre>
-<p>在这里我们特别注意创建字符串String时</p>
-<p>String s=&quot;abce&quot;是一种非常特殊的形式,<strong>new 有本质的区别。它是java中唯一不需要new 就可以产生对象的途径</strong>。以String s=&quot;abce&quot;形式赋值在java中叫<strong>直接量</strong>它是在常量池中而不是像new一样放在压缩堆中。这种形式的字符串，在JVM内部发生字符串拘留，即当声明这样的一个字符串后，JVM会在常量池中先查找有有没有一个值为&quot;abcd&quot;的对象,如果有,就会把它赋给当前引用.即原来那个引用和现在这个引用指点向了同一对象,如果没有,则在常量池中新创建一个&quot;abcd&quot;,下一次如果有String s1 = &quot;abcd&quot;;又会将s1指向&quot;abcd&quot;这个对象,即以这形式声明的字符串,只要值相等,任何多个引用都指向同一对象.<br>
-　　<strong>而String s = new String(&quot;abcd&quot;);和其它任何对象一样.每调用一次就产生一个对象，只要它们调用。</strong></p>
-<h3 id="hashcode和equals区别">HashCode()和equals()区别</h3>
-<p>推荐阅读：<a href="https://www.cnblogs.com/skywang12345/p/3324958.html">Java hashCode() 和 equals()的若干问题解答</a></p>
-<p><strong>hashCode() 的作用是获取哈希码，也称为散列码；它实际上是返回一个int整数</strong> 。这个哈希码的作用是确定该对象在哈希表中的索引位置。</p>
-<p><strong>hashCode() 定义在JDK的Object.java中，这就意味着Java中的任何类都包含有hashCode() 函数</strong>。<br>
-虽然，每个Java类都包含hashCode() 函数。但是，仅仅当创建并某个“类的散列表”(关于“散列表”见下面说明)时，该类的hashCode() 才有用(作用是：确定该类的每一个对象在散列表中的位置；其它情况下(例如，创建类的单个对象，或者创建类的对象数组等等)，类的hashCode() 没有作用。<br>
-上面的散列表，指的是：Java集合中本质是散列表的类，如HashMap，Hashtable，HashSet。</p>
-<p><strong>HashCode()和equals()的关系</strong></p>
-<p>我们以 <em><strong>类的用途</strong></em> 来将“hashCode() 和 equals()的关系”分2种情况来说明。</p>
+<p><strong>使用句柄来访问的最大好处是 reference 中存储的是稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。使用直接指针访问方式最大的好处就是速度快，它节省了一次指针定位的时间开销。</strong></p>
+<h4 id="string类和常量池">String类和常量池</h4>
 <ol>
 <li>
-<p>#第一种 不会创建“类对应的散列表”<br>
-这里所说的“不会创建类对应的散列表”是说：<font color = #F08080>我们不会在HashSet, Hashtable, HashMap等等这些本质是散列表的数据结构中，用到该类。</font>例如，不会创建该类的HashSet集合。在这种情况下，<strong>该类的“hashCode() 和 equals() ”没有半毛钱关系的！</strong></p>
-<pre><code class="language-Java"> import java.util.*;
- import java.lang.Comparable;
-
- /**
- * @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
- *
- * @author skywang
- * @emai kuiwu-wang@163.com
- */
- public class NormalHashCodeTest{
- 	
- 	public static void main(String[] args) {
- 	// 新建2个相同内容的Person对象，
- 	// 再用equals比较它们是否相等
- 	Person p1 = new Person(&quot;eee&quot;, 100);
- 	Person p2 = new Person(&quot;eee&quot;, 100);
- 	Person p3 = new Person(&quot;aaa&quot;, 200);
- 	System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
- 	System.out.printf(&quot;p1.equals(p3) : %s; p1(%d) p3(%d)\n&quot;, p1.equals(p3), p1.hashCode(), p3.hashCode());
- 	
- 	}
-
- 	/**
- 	* @desc Person类。
- 	*/
- 	private static class Person {
- 		int age;
- 		String name;
-
- 		public Person(String name, int age) {
- 			this.name = name;
- 			this.age = age;
- 		}
-
- 		public String toString() {
- 			return name + &quot; - &quot; +age;
- 		}
-
- 		/** 
- 		* @desc 覆盖equals方法 
- 		*/  
- 		public boolean equals(Object obj){  
- 			if(obj == null){  
- 				return false;  
- 			}  
- 			
- 			//如果是同一个对象返回true，反之返回false  
- 			if(this == obj){  
- 				return true;  
- 			}  
- 			
- 			//判断是否类型相同  
- 			if(this.getClass() != obj.getClass()){  
- 				return false;  
- 			}  
- 			
- 			Person person = (Person)obj;  
- 			return name.equals(person.name) &amp;&amp; age==person.age;  
- 		} 
- 	}
- }
+<p>String对象的两种创建方式</p>
+<pre><code class="language-Java">     String str1 = &quot;abcd&quot;;
+     String str2 = new String(&quot;abcd&quot;);
+     System.out.println(str1==str2);//false
 </code></pre>
-<p>得到结果如下：</p>
-<pre><code> p1.equals(p2) : true; p1(1169863946) p2(1901116749)
- p1.equals(p3) : false; p1(1169863946) p3(2131949076)
-</code></pre>
-<p>从结果也可以看出：<strong>p1和p2相等的情况下，hashCode()也不一定相等。</strong><br>
-<br></p>
+<p>第一种方式是在常量池中拿对象，第二种方式是直接在堆内存空间创建一个新的对象。（只要使用了new方法，则一定会在堆内存区域创建新的对象）</p>
+<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0u00la52j312q0hyq4p.jpg" alt="image-20191218135354038"></figure>
 </li>
 <li>
-<p>#第二种 会创建“类对应的散列表”<br>
-这里所说的“会创建类对应的散列表”是说：<strong>我们会在HashSet, Hashtable, HashMap等等这些本质是散列表的数据结构中，用到该类。例如，会创建该类的HashSet集合。</strong></p>
-<p>在这种情况下，该类的“hashCode() 和 equals() ”是有关系的：<br>
-1)、如果两个对象相等，那么它们的hashCode()值一定相同。<br>
-这里的相等是指，通过equals()比较两个对象时返回true。<br>
-2)、如果两个对象hashCode()相等，它们并不一定相等。<br>
-因为在散列表中，hashCode()相等，即两个键值对的哈希值相等。然而哈希值相等，并不一定能得出键值对相等。补充说一句：“两个不同的键值对，哈希值相等”，这就是哈希冲突<br>
-我们来看一个例子：</p>
-<pre><code class="language-Java">import java.util.*;
-import java.lang.Comparable;
-
-/**
-* @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
-*
-* @author skywang
-* @emai kuiwu-wang@163.com
-*/
-public class ConflictHashCodeTest1{
-
-	public static void main(String[] args) {
-		// 新建Person对象，
-		Person p1 = new Person(&quot;eee&quot;, 100);
-		Person p2 = new Person(&quot;eee&quot;, 100);
-		Person p3 = new Person(&quot;aaa&quot;, 200);
-
-		// 新建HashSet对象 
-		HashSet set = new HashSet();
-		set.add(p1);
-		set.add(p2);
-		set.add(p3);
-
-		// 比较p1 和 p2， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
-		// 打印set
-		System.out.printf(&quot;set:%s\n&quot;, set);
-	}
-
-	/**
-	* @desc Person类。
-	*/
-	private static class Person {
-		int age;
-		String name;
-
-		public Person(String name, int age) {
-			this.name = name;
-			this.age = age;
-		}
-
-		public String toString() {
-			return &quot;(&quot;+name + &quot;, &quot; +age+&quot;)&quot;;
-		}
-
-		/** 
-		* @desc 覆盖equals方法 
-		*/  
-		@Override
-		public boolean equals(Object obj){  
-			if(obj == null){  
-				return false;  
-			}  
-			
-			//如果是同一个对象返回true，反之返回false  
-			if(this == obj){  
-				return true;  
-			}  
-			
-			//判断是否类型相同  
-			if(this.getClass() != obj.getClass()){  
-				return false;  
-			}  
-			
-			Person person = (Person)obj;  
-			return name.equals(person.name) &amp;&amp; age==person.age;  
-		} 
-	}
-}
+<p>String类型的常量池</p>
+<ul>
+<li>
+<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中。</p>
+</li>
+<li>
+<p>如果不是用双引号声明的 String 对象，可以使用 String 提供的 intern 方法。String.intern() 是一个 Native 方法，它的作用是：<strong>如果运行时常量池中已经包含一个等于此 String 对象内容的字符串，则返回常量池中该字符串的引用</strong>；如果没有，<strong>则在常量池中创建与此 String 内容相同的字符串，并返回常量池中创建的字符串的引用。</strong></p>
+<pre><code class="language-java">	String s1 = new String(&quot;计算机&quot;);
+	String s2 = s1.intern();
+	String s3 = &quot;计算机&quot;;
+	System.out.println(s2);//计算机
+	System.out.println(s1 == s2);//false，因为一个是堆内存中的String对象一个是常量池中的String对象，
+	System.out.println(s3 == s2);//true，因为两个都是常量池中的String对象
 </code></pre>
-<p>我们看到结果：</p>
-<pre><code>p1.equals(p2) : true; p1(1169863946) p2(1690552137)
-set:[(eee, 100), (eee, 100), (aaa, 200)]
+</li>
+<li>
+<p>字符串拼接</p>
+<pre><code class="language-java">			String str1 = &quot;str&quot;;
+		  String str2 = &quot;ing&quot;;
+		  
+		  String str3 = &quot;str&quot; + &quot;ing&quot;;//常量池中的对象
+		  String str4 = str1 + str2; //在堆上创建的新的对象	  
+		  String str5 = &quot;string&quot;;//常量池中的对象
+		  System.out.println(str3 == str4);//false
+		  System.out.println(str3 == str5);//true
+		  System.out.println(str4 == str5);//false
 </code></pre>
-<p><strong>结果分析：</strong></p>
- <br>
- 我们重写了Person的equals()。但是，很奇怪的发现：HashSet中仍然有重复元素：p1 和 p2。为什么会出现这种情况呢？
- <br>
- <font color = red>这是因为虽然p1 和 p2的内容相等，但是它们的hashCode()不等；所以，HashSet在添加p1和p2的时候，认为它们不相等。</font>
- <br>
- <br>
- 下面我们同时覆盖equals() 和 hashCode()方法   
-<pre><code class="language-Java">	import java.util.*;
-import java.lang.Comparable;
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0u4luznqj30u00v9djq.jpg" alt="image-20191218135818700" style="zoom:50%;" />
+</li>
+</ul>
+</li>
+<li>
+<p>String str = new String(&quot;abc&quot;); 这句话创建了几个对象？</p>
+<p><strong>2个</strong>  先有<strong>字符串&quot;abc&quot;放入常量池</strong>，然后 <strong>new 了一份字符串&quot;abc&quot;放入Java堆</strong>(字符串常量&quot;abc&quot;在编译期就已经确定放入常量池，而 Java 堆上的&quot;abc&quot;是在运行期初始化阶段才确定)，然后 Java 栈的 str1 指向Java堆上的&quot;abc&quot;。</p>
+<p>验证：</p>
+<pre><code class="language-java">		String s1 = new String(&quot;abc&quot;);// 堆内存的地址值
+		String s2 = &quot;abc&quot;;
+		System.out.println(s1 == s2);// 输出false,因为一个是堆内存，一个是常量池的内存，故两者是不同的。
+		System.out.println(s1.equals(s2));// 输出true
+</code></pre>
+</li>
+</ol>
+<h4 id="8种基本类型的包装类和常量池">8种基本类型的包装类和常量池</h4>
+<ul>
+<li>
+<p><strong>Java 基本类型的包装类的大部分都实现了常量池技术，即Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></p>
+</li>
+<li>
+<p><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></p>
+</li>
+</ul>
+<p>验证：</p>
+<pre><code class="language-java">		Integer i1 = 33;
+		Integer i2 = 33;
+		System.out.println(i1 == i2);// 输出true
+		Integer i11 = 333;
+		Integer i22 = 333;
+		System.out.println(i11 == i22);// 输出false
+		Double i3 = 1.2;
+		Double i4 = 1.2;
+		System.out.println(i3 == i4);// 输出false
+</code></pre>
+<ul>
+<li>深入理解包装类的装箱拆箱</li>
+</ul>
+<pre><code class="language-java">	Integer i1 = 40;
+  Integer i2 = 40;
+  Integer i3 = 0;
+  Integer i4 = new Integer(40);
+  Integer i5 = new Integer(40);
+  Integer i6 = new Integer(0);
+  
+  System.out.println(&quot;i1=i2   &quot; + (i1 == i2));
+  System.out.println(&quot;i1=i2+i3   &quot; + (i1 == i2 + i3));
+  System.out.println(&quot;i1=i4   &quot; + (i1 == i4));
+  System.out.println(&quot;i4=i5   &quot; + (i4 == i5));
+  System.out.println(&quot;i4=i5+i6   &quot; + (i4 == i5 + i6));   
+  System.out.println(&quot;40=i5+i6   &quot; + (40 == i5 + i6));    
+</code></pre>
+<p>输出结果：</p>
+<pre><code>i1=i2   true
+i1=i2+i3   true
+i1=i4   false
+i4=i5   false
+i4=i5+i6   true
+40=i5+i6   true
+</code></pre>
+<ol>
+<li>
+<p>Integer i1=40；Java 在编译的时候会直接将代码封装成Integer i1=Integer.valueOf(40);，从而<strong>使用常量池中的对象</strong>。</p>
+</li>
+<li>
+<p>Integer i4 = new Integer(40);这种情况下<strong>会创建新的对象</strong>。</p>
+</li>
+<li>
+<p>语句i4 == i5 + i6，<strong>因为+这个操作符不适用于Integer对象，首先i5和i6进行自动拆箱操作，进行数值相加</strong>，即i4 == 40。<strong>然后Integer对象无法与数值进行直接比较，所以i4自动拆箱转为int值40</strong>，最终这条语句转为40 == 40进行数值比较。</p>
+</li>
+</ol>
+<h3 id="18-什么是上下文切换">18. 什么是上下文切换？</h3>
+<p>​		多线程编程中一般<strong>线程的个数都大于 CPU 核心的个数</strong>，而<strong>一个 CPU 核心在任意时刻只能被一个线程使用</strong>，为了让这些线程都能得到有效执行，CPU 采取的策略是为<strong>每个线程分配时间片并轮转的形式</strong>。当一个线程的时间片用完的时候就会<strong>重新处于就绪状态让给其他线程使用</strong>，这个过程就属于一次上下文切换。</p>
+<p>​		总结说：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+<h3 id="19-线程死锁避免死锁">19. 线程死锁？避免死锁？</h3>
+<p>​		多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。</p>
+<h4 id="产生死锁的必要条件">产生死锁的必要条件</h4>
+<ul>
+<li><strong>互斥条件</strong>：该资源任意一个时刻只由一个线程占用。</li>
+<li><strong>请求与保持条件</strong>：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li><strong>不剥夺条件</strong>:线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。</li>
+<li><strong>循环等待条件</strong>:若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+</ul>
+<h4 id="如何避免死锁">如何避免死锁</h4>
+<ul>
+<li>
+<p>破坏互斥条件：<strong>没有办法破坏</strong>，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）</p>
+</li>
+<li>
+<p>破坏请求和保持条件：一次性申请所有的资源（银行家算法）</p>
+</li>
+<li>
+<p>破坏不剥夺条件：占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。</p>
+</li>
+<li>
+<p>破坏循环等待条件：靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。</p>
+</li>
+</ul>
+<h4 id="写一产生死锁的程序">写一产生死锁的程序</h4>
+<pre><code class="language-java">public class DeadLockDemo {
+    private static Object resource1 = new Object();//资源 1
+    private static Object resource2 = new Object();//资源 2
 
-/**
-* @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
-*
-* @author skywang
-* @emai kuiwu-wang@163.com
-*/
-public class ConflictHashCodeTest2{
+    public static void main(String[] args) {
+        new Thread(() -&gt; {
+            synchronized (resource1) {
+                System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                try {
+                    Thread.sleep(1000);  //
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource2&quot;);
+                synchronized (resource2) {
+                    System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                }
+            }
+        }, &quot;线程 1&quot;).start();
 
-	public static void main(String[] args) {
-		// 新建Person对象，
-		Person p1 = new Person(&quot;eee&quot;, 100);
-		Person p2 = new Person(&quot;eee&quot;, 100);
-		Person p3 = new Person(&quot;aaa&quot;, 200);
-		Person p4 = new Person(&quot;EEE&quot;, 100);
-
-		// 新建HashSet对象 
-		HashSet set = new HashSet();
-		set.add(p1);
-		set.add(p2);
-		set.add(p3);
-
-		// 比较p1 和 p2， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
-		// 比较p1 和 p4， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p4) : %s; p1(%d) p4(%d)\n&quot;, p1.equals(p4), p1.hashCode(), p4.hashCode());
-		// 打印set
-		System.out.printf(&quot;set:%s\n&quot;, set);
-	}
-
-	/**
-	* @desc Person类。
-	*/
-	private static class Person {
-		int age;
-		String name;
-
-		public Person(String name, int age) {
-			this.name = name;
-			this.age = age;
-		}
-
-		public String toString() {
-			return name + &quot; - &quot; +age;
-		}
-
-		/** 
-		* @desc重写hashCode 
-		*/  
-		@Override
-		public int hashCode(){  
-			int nameHash =  name.toUpperCase().hashCode();
-			return nameHash ^ age;
-		}
-
-		/** 
-		* @desc 覆盖equals方法 
-		*/  
-		@Override
-		public boolean equals(Object obj){  
-			if(obj == null){  
-				return false;  
-			}  
-			
-			//如果是同一个对象返回true，反之返回false  
-			if(this == obj){  
-				return true;  
-			}  
-			
-			//判断是否类型相同  
-			if(this.getClass() != obj.getClass()){  
-				return false;  
-			}  
-			
-			Person person = (Person)obj;  
-			return name.equals(person.name) &amp;&amp; age==person.age;  
-		} 
+        new Thread(() -&gt; {
+            synchronized (resource2) {
+                System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource1&quot;);
+                synchronized (resource1) {
+                    System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                }
+            }
+        }, &quot;线程 2&quot;).start();
     }
 }
 </code></pre>
-<p>运行结果</p>
-<pre><code>p1.equals(p2) : true; p1(68545) p2(68545)
-p1.equals(p4) : false; p1(68545) p4(68545)
-set:[aaa - 200, eee - 100]
+<p>输出：</p>
+<pre><code>Thread[线程 1,5,main]get resource1
+Thread[线程 2,5,main]get resource2
+Thread[线程 1,5,main]waiting get resource2
+Thread[线程 2,5,main]waiting get resource1
 </code></pre>
-<p><strong>结果分析：</strong></p>
-<p>这下，equals()生效了，HashSet中没有重复元素。<br>
-比较p1和p2，我们发现：它们的hashCode()相等，通过equals()比较它们也返回true。所以，p1和p2被视为相等。<br>
-比较p1和p4，我们发现：虽然它们的hashCode()相等；但是，通过equals()比较它们返回false。所以，p1和p4被视为不相等。</p>
+<p>线程 A 通过 <code>synchronized (resource1)</code>获得 resource1 的监视器锁，然后通过<code>Thread.sleep(1000);</code>让线程 A 休眠 1s 为的是让<strong>线程 B 得到执行然后获取到 resource2 的监视器锁</strong>。线程 A 和线程 B 休眠结束了都开始企图请求获取对方的资源，然后这<strong>两个线程就会陷入互相等待的状态</strong>，这也就产生了死锁。</p>
+<ul>
+<li>
+<p>如何破坏这段代码的死锁？----&gt;靠<strong>按序申请资源来预防。按某一顺序申请资源</strong>，释放资源则反序释放。破坏循环等待条件。</p>
+<pre><code class="language-java">new Thread(() -&gt; {
+            synchronized (resource1) {
+                System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource2&quot;);
+                synchronized (resource2) {
+                    System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                }
+            }
+        }, &quot;线程 2&quot;).start();
+</code></pre>
+<p><strong>线程 1 首先获得到 resource1 的监视器锁,这时候线程 2 就获取不到了</strong>。然后线程 1 再去获取 resource2 的监视器锁，可以获取到。<strong>然后线程 1 释放了对 resource1、resource2 的监视器锁的占用，线程 2 获取到就可以执行了</strong>。这样就破坏了破坏循环等待条件，因此避免了死锁。</p>
+</li>
+</ul>
+<h3 id="20-乐观锁和悲观锁">20. 乐观锁和悲观锁</h3>
+<h4 id="何为乐观锁-悲观锁">何为乐观锁、悲观锁</h4>
+<ul>
+<li>
+<p>乐观锁</p>
+<p>总是<strong>假设最好</strong>的情况，每次去拿数据的时候都<strong>认为别人不会修改</strong>，所以<strong>不会上锁</strong>，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，<strong>乐观锁适用于多读的应用类型，这样可以提高吞吐量</strong></p>
+</li>
+<li>
+<p>悲观锁</p>
+<p>总是<strong>假设最坏</strong>的情况，每次去拿数据的时候都<strong>认为别人会修改</strong>，所以每次在拿数据的时候都<strong>会上锁</strong>，这样别人想拿这个数据就会阻塞直到它拿到锁（<strong>共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程</strong>）。<strong>一般多写的场景下用悲观锁就比较合适。</strong>----&gt;synchronized ReentrantLock就是悲观锁的思想，传统的关系型数据库里边就用到了很多这种锁机制，比如<strong>行锁，表锁等，读锁，写锁</strong>等</p>
+</li>
+</ul>
+<h4 id="乐观锁实现方式">乐观锁实现方式</h4>
+<ul>
+<li>
+<p>版本号控制</p>
+<p>​		一般是在数据表中<strong>加上一个数据版本号version字段</strong>，<strong>表示数据被修改的次数</strong>，当数据被修改时，version值会加一。当线程<strong>A要更新数据值时，在读取数据的同时也会读取version值</strong>，在<strong>提交更新时，若刚才读取到的version值为当前数据库中的version值相等时才更新</strong>，否则重试更新操作，直到更新成功。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga1xidusg9j31h00hmgu1.jpg" alt="image-20191219124054387"></figure>
+<ul>
+<li>
+<p>CAS算法</p>
+<p>即<strong>compare and swap（比较与交换）</strong>，是一种有名的<strong>无锁算法</strong>。无锁编程，即不使用锁的情况下实现多线程之间的变量同步，也就是在没有线程被阻塞的情况下实现变量的同步，所以也叫非阻塞同步（Non-blocking Synchronization）。<strong>CAS算法</strong>涉及到三个操作数</p>
+<p>​		需要读写的内存值V</p>
+<p>​		进行比较的值A</p>
+<p>​		拟写入的新值B</p>
+<p>当且仅当 V 的值等于 A时，CAS通过原子方式用新值B来更新V的值，否则不会执行任何操作（比较和替换是一个原子操作）。一般情况下是一个<strong>自旋操作</strong>，即<strong>不断的重试</strong>。</p>
+</li>
+</ul>
+<h4 id="乐观锁缺点">乐观锁缺点</h4>
+<ul>
+<li>
+<p><strong>ABA问题</strong>：如果一个变量V初次读取的时候是A值，并且在准备赋值的时候检查到它仍然是A值，那我们就能说明它的值没有被其他线程修改过了吗？很明显是不能的，因为在这段时间它的值可能被改为其他值，然后又改回A，那CAS操作就会误认为它从来没有被修改过。这个问题被称为CAS操作的 <strong>&quot;ABA&quot;问题。</strong></p>
+<p>解决ABA问题办法----&gt;引入版本号控制</p>
+</li>
+<li>
+<p>循环时间长CPU开销大：<strong>自旋CAS（也就是不成功就一直循环执行直到成功）如果长时间不成功，会给CPU带来非常大的执行开销。</strong></p>
+</li>
+<li>
+<p><strong>只能保证一个共享变量的原子操作</strong>：CAS机制所保证的只是一个变量的原子性操作，而不能保证整个代码块的原子性。但是从 JDK 1.5开始，提供了<code>AtomicReference类</code>来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作.所以我们可以使用锁或者利用<code>AtomicReference类</code>把多个共享变量合并成一个共享变量来操作。</p>
+</li>
+</ul>
+<h4 id="cas和synchronized的使用场景">CAS和Synchronized的使用场景</h4>
+<p><strong>简单的来说CAS适用于写比较少的情况下（多读场景，冲突一般较少），synchronized适用于写比较多的情况下（多写场景，冲突一般较多）</strong></p>
+<p>​		对于资源竞争较少（线程冲突较轻）的情况，<strong>使用synchronized同步锁进行线程阻塞和唤醒切换以及用户态内核态间的切换操作额外浪费消耗cpu资源</strong>；而<strong>CAS基于硬件实现，不需要进入内核</strong>，不需要切换线程，操作自旋几率较少，因此可以获得更高的性能。</p>
+<p>​		Java并发编程这个领域中synchronized关键字一直都是元老级的角色，很久之前很多人都会称它为 <strong>“重量级锁”</strong> 。但是，在JavaSE 1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的 <strong>偏向锁</strong> 和 <strong>轻量级锁</strong> 以及其它<strong>各种优化</strong>之后变得在某些情况下并不是那么重了。synchronized的底层实现主要依靠 <strong>Lock-Free</strong> 的队列，基本思路是 <strong>自旋后阻塞</strong>，<strong>竞争切换后继续竞争锁</strong>，<strong>稍微牺牲了公平性，但获得了高吞吐量</strong>。在线程冲突较少的情况下，可以获得和CAS类似的性能；而线程冲突严重的情况下，性能远高于CAS。</p>
+<h3 id="21synchronizedreentrantlocklock">21.Synchronized,ReentrantLock,Lock</h3>
+<h4 id="synchronized关键字用法">synchronized关键字用法</h4>
+<ol>
+<li><strong>修饰一个代码块</strong>，被修饰的代码块称为同步语句块，其作用的范围是大括号{}括起来的代码，<strong>作用的对象是调用这个代码块的对象</strong></li>
+</ol>
+<p>​		<strong>Demo1 ---&gt;理解synchronized关键字锁的是对象</strong></p>
+<pre><code class="language-java">class SyncThread implements Runnable {
+   private static int count;
+
+   public SyncThread() {
+      count = 0;
+   }
+
+   public  void run() {
+      synchronized(this) {
+         for (int i = 0; i &lt; 5; i++) {
+            try {
+               System.out.println(Thread.currentThread().getName() + &quot;:&quot; + (count++));
+               Thread.sleep(100);
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
+         }
+      }
+   }
+
+   public int getCount() {
+      return count;
+   }
+}
+
+
+
+
+</code></pre>
+<p>调用结果1：</p>
+<pre><code class="language-java">// main方法调用----&gt;一个对象
+SyncThread syncThread = new SyncThread();
+Thread thread1 = new Thread(syncThread, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+结果：
+SyncThread1:0
+SyncThread1:1
+SyncThread1:2
+SyncThread1:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread2:7
+SyncThread2:8
+SyncThread2:9
+
+</code></pre>
+<p>调用结果2：</p>
+<pre><code class="language-java">// main方法调用----&gt;两个对象的时候
+SyncThread syncThread1 = new SyncThread();
+SyncThread syncThread2 = new SyncThread();
+Thread thread1 = new Thread(syncThread1, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread2, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+
+SyncThread1:0
+SyncThread2:1
+SyncThread1:2
+SyncThread2:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread1:7
+SyncThread1:8
+SyncThread2:9
+
+</code></pre>
+<p>这时创建了<strong>两个SyncThread的对象syncThread1和syncThread2，线程thread1执行的是syncThread1对象中的synchronized代码(run)，而线程thread2执行的是syncThread2对象中的synchronized代码(run)</strong>；我们知道synchronized锁定的是对象，这时会有<strong>两把锁</strong>分别锁定syncThread1对象和syncThread2对象，而这两把锁是互不干扰的，不形成互斥，所以两个线程可以同时执行。</p>
+<p><strong>一个线程访问一个对象的synchronized代码块时，别的线程可以访问该对象的非synchronized代码块而不受阻塞</strong></p>
+<p>​		<strong>Demo2---&gt;指定某个对象加锁</strong></p>
+<pre><code class="language-java">/**
+ * 银行账户类
+ */
+class Account {
+   String name;
+   float amount;
+
+   public Account(String name, float amount) {
+      this.name = name;
+      this.amount = amount;
+   }
+   //存钱
+   public  void deposit(float amt) {
+      amount += amt;
+      try {
+         Thread.sleep(100);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+   }
+   //取钱
+   public  void withdraw(float amt) {
+      amount -= amt;
+      try {
+         Thread.sleep(100);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public float getBalance() {
+      return amount;
+   }
+}
+
+/**
+ * 账户操作类
+ */
+class AccountOperator implements Runnable{
+   private Account account;
+   public AccountOperator(Account account) {
+      this.account = account;
+   }
+
+   public void run() {
+      synchronized (account) {
+         account.deposit(500);
+         account.withdraw(500);
+         System.out.println(Thread.currentThread().getName() + &quot;:&quot; + account.getBalance());
+      }
+   }
+}
+
+// main方法进行调用
+Account account = new Account(&quot;zhang san&quot;, 10000.0f);
+AccountOperator accountOperator = new AccountOperator(account);
+
+final int THREAD_NUM = 5;
+Thread threads[] = new Thread[THREAD_NUM];
+for (int i = 0; i &lt; THREAD_NUM; i ++) {
+   threads[i] = new Thread(accountOperator, &quot;Thread&quot; + i);
+   threads[i].start();
+}
+
+</code></pre>
+<p>调用结果：</p>
+<pre><code>Thread3:10000.0
+Thread2:10000.0
+Thread1:10000.0
+Thread4:10000.0
+Thread0:10000.0
+</code></pre>
+<ol start="2">
+<li><strong>修饰一个方法</strong>，被修饰的方法称为同步方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象</li>
+</ol>
+<p>Synchronized修饰一个方法很简单，就是在方法的前面加synchronized，public synchronized void method(){//todo}; synchronized修饰方法和修饰一个代码块类似，<strong>只是作用范围不一样，修饰代码块是大括号括起来的范围，而修饰方法范围是整个函数。</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5k9ll02vj30x80u0430.jpg" alt="image-20191222160453297" style="zoom:50%;" />
+<p>虽然可以使用synchronized来定义方法，但synchronized并不属于方法定义的一部分，因此，synchronized关键字不能被继承。<strong>如果在父类中的某个方法使用了synchronized关键字，而在子类中覆盖了这个方法，在子类中的这个方法默认情况下并不是同步的</strong>，而必须显式地在<strong>子类的这个方法中加上synchronized关键字才可以</strong>。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5kcdlrp3j30tg0l476y.jpg" alt="image-20191222160736255" style="zoom:50%;" />
+<ol start="3">
+<li>
+<p><strong>修饰一个静态的方法</strong>，其作用的范围是整个静态方法，作用的对象是这个类的所有对象</p>
+<p>Demo：synchronized关键字修饰静态方法</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>http://localhost:4000/post/hello-gridea</id>
-        <link href="http://localhost:4000/post/hello-gridea">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<pre><code class="language-java">/**
+ * 同步线程
+ */
+class SyncThread implements Runnable {
+   private static int count;
+
+   public SyncThread() {
+      count = 0;
+   }
+
+   public synchronized static void method() {
+      for (int i = 0; i &lt; 5; i ++) {
+         try {
+            System.out.println(Thread.currentThread().getName() + &quot;:&quot; + (count++));
+            Thread.sleep(100);
+         } catch (InterruptedException e) {
+            e.printStackTrace();
+         }
+      }
+   }
+
+   public synchronized void run() {
+      method();
+   }
+}
+
+// main方法中的调用
+SyncThread syncThread1 = new SyncThread();
+SyncThread syncThread2 = new SyncThread();
+Thread thread1 = new Thread(syncThread1, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread2, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+</code></pre>
+<p>调用结果：</p>
+<pre><code>SyncThread1:0
+SyncThread1:1
+SyncThread1:2
+SyncThread1:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread2:7
+SyncThread2:8
+SyncThread2:9
+</code></pre>
+<p>syncThread1和syncThread2是SyncThread的两个对象，但在thread1和thread2并发执行时却保持了线程同步。这是因为run中调用了静态方法method，<strong>而静态方法是属于类的，所以syncThread1和syncThread2相当于用了同一把锁。</strong></p>
+<ol start="4">
+<li><strong>修饰一个类</strong>其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象。</li>
+</ol>
+<pre><code class="language-java">class ClassName {
+   public void method() {
+      synchronized(ClassName.class) {
+         // todo
+      }
+   }
+}
+</code></pre>
+<p><strong>synchronized作用于一个类T时，是给这个类T加锁，T的所有对象用的是同一把锁</strong></p>
+<h4 id="synchronized底层实现">synchronized底层实现</h4>
+<ul>
+<li>进入执行synchronized代码块： monitorenter：count++</li>
+<li>释放：monitorexit： count--；</li>
+<li>线程判断计数器是否是0，如果是0表示当前锁空闲，可以进行占用，反之就等待</li>
+</ul>
+<h4 id="synchronized的性能优化问题">synchronized的性能优化问题</h4>
+<p>参考：http://www.pianshen.com/article/13827882/</p>
+<ul>
+<li>
+<p>JDK1.6之前----&gt;重量级锁</p>
+<p>​		<strong>Synchronized是通过对象内部的一个叫做监视器锁（monitor）来实现的</strong>。但是监视器锁本质又是依赖于底层的操作系统的Mutex Lock来实现的。而**操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized效率低的原因。**因此，这种依赖于操作系统Mutex Lock所实现的锁我们称之为“重量级锁”。JDK中对Synchronized做的种种优化，其核心都是为了减少这种重量级锁的使用</p>
+</li>
+<li>
+<p>JDK1.6之后---&gt;进行了优化</p>
+<p>​		锁的升级过程如下：**<em>*锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁*<em><strong>。(对象头中锁的状态是2个字节)随着锁的竞争，锁可以从</strong>偏向锁升级到轻量级锁，再升级的重量级锁</em></em>（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级</p>
+<ul>
+<li>
+<p><strong>自旋锁优化----&gt;自适应自旋锁</strong></p>
+<p>​		**频繁的阻塞和唤醒对CPU来说是一件负担很重的工作,所谓自旋锁，就是让该线程等待一段时间，不会被立即挂起，看持有锁的线程是否会很快释放锁。**怎么等待呢？执行一段无意义的循环即可（自旋),如果持有锁的线程很快就释放了锁，那么自旋的效率就非常好</p>
+<p>​		JDK 1.6引入了更加聪明的自旋锁，即***自适应自旋锁***。所谓自适应就意味着自旋的次数不再是固定的，它是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。它怎么做呢？**线程如果自旋成功了，那么下次自旋的次数会更加多，因为虚拟机认为既然上次成功了，那么此次自旋也很有可能会再次成功，那么它就会允许自旋等待持续的次数更多。**反之，<strong>如果对于某个锁，很少有自旋能够成功的，那么在以后要或者这个锁的时候自旋的次数会减少甚至省略掉自旋过程，以免浪费处理器资源。</strong></p>
+</li>
+<li>
+<p><strong>锁消除</strong></p>
+<p>​		锁消除<strong>是Java虚拟机在JIT编译时</strong>，通过对运行上下文的扫描，<strong>去除不可能存在共享资源竞争的锁，通过锁消除，可以节省毫无意义的请求锁时间</strong>。就是JVM会检测到不可能存在共享数据竞争，JVM会进行锁的消除(StringBuffer,Vector,HashTable)</p>
+</li>
+<li>
+<p><strong>锁粗化</strong></p>
+<p>​		将连续的加锁 精简到只加一次锁。</p>
+<pre><code class="language-java">public class StringBufferTest {
+    StringBuffer stringBuffer = new StringBuffer();
+ 
+    public void append(){
+        stringBuffer.append(&quot;a&quot;);
+        stringBuffer.append(&quot;b&quot;);
+        stringBuffer.append(&quot;c&quot;);
+    }
+}
+</code></pre>
+<p>​		这里<strong>每次调用stringBuffer.append方法都需要加锁和解锁</strong>，如果虚拟机检测到有一系列连串的对同一个对象加锁和解锁操作，就会将其合并成一次范围更大的加锁和解锁操作，<strong>即在第一次append方法时进行加锁，最后一次append方法结束后进行解锁。</strong></p>
+</li>
+<li>
+<p><strong>轻量级锁</strong></p>
+<p><strong>无竞争的条件下，通过CAS消除同步互斥</strong>多个线程交替同步执行的情况，没有竞争</p>
+</li>
+<li>
+<p><strong>偏向锁</strong></p>
+<p>无竞争条件下，消除整个互斥同步，<strong>连CAS都不做(只有一个线程执行同步)</strong></p>
+<p>​		引入偏向锁是为了在<strong>无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径</strong>，因为轻量级锁的获取及释放<strong>依赖多次CAS原子指令，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令</strong>（由于一旦出现<strong>多线程竞争的情况就必须撤销偏向锁</strong>，所以偏向锁的撤销操作的性能损耗必须小于节省下来的CAS原子指令的性能消耗）。</p>
+<p>​		偏向锁只有<strong>遇到其他线程尝试竞争偏向锁时</strong>，持有偏向锁的线程才会释放锁，线程不会主动去释放偏向锁。</p>
+<figure data-type="image" tabindex="9"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5m43mnzij316c0e80vr.jpg" alt="image-20191222170850243"></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="lock">Lock</h4>
+<figure data-type="image" tabindex="10"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5m8g1y7bj31ik0mi78d.jpg" alt="image-20191222171301152"></figure>
+<p>​		Lock实现和synchronized不一样，<strong>后者是一种悲观锁，它胆子很小，它很怕有人和它抢吃的，所以它每次吃东西前都把自己关起来</strong>。而<strong>Lock呢底层其实是CAS乐观锁的体现，它无所谓，别人抢了它吃的，它重新去拿吃的就好啦，所以它很乐观</strong>。</p>
+<p>Lock接口的源码：</p>
+<pre><code class="language-java">public interface Lock {
+
+    /**
+     * Acquires the lock.
+     */
+    void lock();
+
+    /**
+     * Acquires the lock unless the current thread is
+     * {@linkplain Thread#interrupt interrupted}.
+     */
+    void lockInterruptibly() throws InterruptedException;
+
+    /**
+     * Acquires the lock only if it is free at the time of invocation.
+     */
+    boolean tryLock();
+
+    /**
+     * Acquires the lock if it is free within the given waiting time and the
+     * current thread has not been {@linkplain Thread#interrupt interrupted}.
+     */
+    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
+
+    /**
+     * Releases the lock.
+     */
+    void unlock();
+	
+}
+
+</code></pre>
+<h4 id="reentrantlock">ReentrantLock</h4>
+<p><strong>ReentrantLock是Lock的一个具体实现类</strong></p>
+<pre><code class="language-java">import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class LockTest {
+	private Lock lock = new ReentrantLock();
+
+	//需要参与同步的方法
+	private void method(Thread thread){
+		lock.lock();
+		try {
+			System.out.println(&quot;线程名&quot;+thread.getName() + &quot;获得了锁&quot;);
+		}catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			System.out.println(&quot;线程名&quot;+thread.getName() + &quot;释放了锁&quot;);
+			lock.unlock();
+		}
+	}
+	
+	public static void main(String[] args) {
+		LockTest lockTest = new LockTest();
+		
+		//线程1
+		Thread t1 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				lockTest.method(Thread.currentThread());
+			}
+		}, &quot;t1&quot;);
+		
+		Thread t2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				lockTest.method(Thread.currentThread());
+			}
+		}, &quot;t2&quot;);
+		
+		t1.start();
+		t2.start();
+	}
+}
+//执行情况： 线程名t1获得了锁
+//         线程名t1释放了锁
+//         线程名t2获得了锁
+//         线程名t2释放了锁
+
+</code></pre>
+<h4 id="reentrantlock和synchronized用法区别">ReentrantLock和synchronized用法区别</h4>
+<ul>
+<li>用ReentrantlLock保护代码块一定要在finally块里面释放锁，synchronized不需要，JVM自动帮助我们释放</li>
+</ul>
+<pre><code class="language-java">Lock lock = new ReentrantLock();
+lock.lock();
+try { 
+  // update object state
+}
+finally {
+  lock.unlock(); 
+}
+</code></pre>
+<ul>
+<li>
+<p>性能区别</p>
+<p>在Synchronized优化以前，synchronized的性能是比ReenTrantLock差很多的，但是自从Synchronized引入了偏向锁，轻量级锁（自旋锁）后，两者的性能就差不多了，在两种方法都可用的情况下，官方甚至建议使用synchronized，其实synchronized的优化我感觉就借鉴了ReenTrantLock中的CAS技术。都是试图在用户态就把加锁问题解决，避免进入内核态的线程阻塞。</p>
+</li>
+<li>
+<p>功能区别</p>
+<p>便利性：很明显<strong>Synchronized的使用比较方便简洁</strong>，并且<strong>由编译器去保证锁的加锁和释放，而ReenTrantLock需要手工声明来加锁和释放锁</strong>，为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁。</p>
+<p>锁的细粒度和灵活度：很明显ReenTrantLock优于Synchronized</p>
+</li>
+<li>
+<p>相关使用场景</p>
+<ul>
+<li>竞争资源不是很激烈，偶有同步---&gt;synchronized</li>
+<li>同步激烈，synchronized性能急剧下降---&gt;ReentrantLock</li>
+</ul>
+</li>
+<li>
+<p>我们什么时候才应该使用 <code>ReentrantLock</code> 呢？</p>
+<p>​		<strong>在确实需要一些 synchronized 所没有的特性的时候</strong>，比如<strong>时间锁等候、可中断锁等候、无块结构锁、多个条件变量或者锁投票(ReentrantLock的独有魅力)</strong>。 <code>ReentrantLock</code> 还具有可伸缩性的好处，应当在高度争用的情况下使用它，但是请记住，大多数 synchronized 块几乎从来没有出现过争用，所以可以把高度争用放在一边。我建议用 synchronized 开发，直到确实证明 synchronized 不合适，而不要仅仅是假设如果使用 <code>ReentrantLock</code> “性能会更好”。</p>
+</li>
+</ul>
+<h3 id="23java多线程3中实现方式">23.Java多线程3中实现方式</h3>
+<h4 id="继承thread类实现多线程">继承Thread类实现多线程</h4>
+<p>继承Thread类的方法尽管被我列为一种多线程实现方式，但Thread本质上也是实现了Runnable接口的一个实例，它代表一个线程的实例，并且，启动线程的唯一方法就是通过Thread类的start()实例方法。start()方法是一个native方法，它将启动一个新线程，并执行run()方法。这种方式实现多线程很简单，通过自己的类直接extend Thread，并复写run()方法，就可以启动新线程并执行自己定义的run()方法。</p>
+<pre><code class="language-java">public class MyThread extends Thread {
+　　public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　}
+}
+</code></pre>
+<p>在合适的地方启动线程</p>
+<pre><code class="language-java">MyThread myThread1 = new MyThread();
+MyThread myThread2 = new MyThread();
+myThread1.start();
+myThread2.start();
+</code></pre>
+<h4 id="实现runnable接口实现多线程">实现Runnable接口实现多线程</h4>
+<p>如果自己的类已经extends另一个类，就无法直接extends Thread，此时，必须实现一个Runnable接口，如下：</p>
+<pre><code class="language-java">public class MyThread extends OtherClass implements Runnable {
+　　public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　}
+}
+</code></pre>
+<p>启动MyThread</p>
+<pre><code class="language-java">MyThread myThread = new MyThread();
+Thread thread = new Thread(myThread);
+thread.start();
+</code></pre>
+<p>事实上，当传入一个Runnable target参数给Thread后，Thread的run()方法就会调用target.run()，参考JDK源代码：</p>
+<pre><code class="language-java">public void run() {
+　　if (target != null) {
+　　 target.run();
+　　}
+}
+</code></pre>
+<h4 id="使用executorservice-callable-future实现有返回结果的多线程">使用ExecutorService、Callable、Future实现有返回结果的多线程</h4>
+<p>Executor框架是指java 5中引入的一系列并发库中与executor相关的一些功能类，其中包括线程池，Executor，Executors，ExecutorService，CompletionService，Future，Callable等。他们的关系为：</p>
+<p>并发编程的一种编程方式是把任务拆分为一些列的小任务，即Runnable，然后在提交给一个Executor执行，<strong>Executor.execute(Runnalbe)</strong> 。Executor在执行时使用内部的线程池完成操作。</p>
+<ul>
+<li><strong>创建线程池</strong></li>
+</ul>
+<p>Executors类，提供了<strong>一系列工厂方法用于创先线程池</strong>，返回的线程池都实现了ExecutorService接口。</p>
+<p><strong>public static ExecutorService newFixedThreadPool(int nThreads)</strong></p>
+<p>创建固定数目线程的线程池。</p>
+<p><strong>public static ExecutorService newCachedThreadPool()</strong></p>
+<p>创建一个可缓存的线程池，调用<code>execute</code> 将重用以前构造的线程（如果线程可用）。如果现有线程没有可用的，则创建一个新线程并添加到池中。终止并从缓存中移除那些已有 60 秒钟未被使用的线程。</p>
+<p><strong>public static ExecutorService newSingleThreadExecutor()</strong></p>
+<p>创建一个单线程化的Executor。</p>
+<p><strong>public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize)</strong></p>
+<p>创建一个支持定时及周期性的任务执行的线程池，多数情况下可用来替代Timer类。</p>
+<pre><code class="language-java">Executor executor = Executors.newFixedThreadPool(10);  
+Runnable task = new Runnable() {  
+    @Override  
+    public void run() {  
+        System.out.println(&quot;task over&quot;);  
+    }  
+};  
+executor.execute(task);  
+  
+executor = Executors.newScheduledThreadPool(10);  
+ScheduledExecutorService scheduler = (ScheduledExecutorService) executor;  
+scheduler.scheduleAtFixedRate(task, 10, 10, TimeUnit.SECONDS);
+</code></pre>
+<ul>
+<li><strong>ExecutorService生命周期</strong></li>
+</ul>
+<p>ExecutorService<strong>扩展了Executor并添加了一些生命周期管理的方法</strong>。一个Executor的生命周期有三种状态，<strong>运行</strong> ，<strong>关闭</strong> ，<strong>终止</strong> 。Executor创建时处于运行状态。<strong>当调用ExecutorService.shutdown()后，处于关闭状态，isShutdown()方法返回true</strong>。这时，不应该再想Executor中添加任务，所有已添加的任务执行完毕后，Executor处于终止状态，isTerminated()返回true。</p>
+<p>如果Executor处于关闭状态，往Executor提交任务会抛出unchecked exception RejectedExecutionException。</p>
+<pre><code class="language-java">ExecutorService executorService = (ExecutorService) executor;  
+while (!executorService.isShutdown()) {  
+    try {  
+        executorService.execute(task);  
+    } catch (RejectedExecutionException ignored) {  
+          
+    }  
+}  
+executorService.shutdown();  
+</code></pre>
+<ul>
+<li>使用Callable，Future返回结果</li>
+</ul>
+<p>Future<V>代表一个异步执行的操作，通过get()方法可以获得操作的结果，如果异步操作还没有完成，则，get()会使当前线程阻塞。<strong>FutureTask<V>实现了Future<V>和Runable<V>。Callable代表一个有返回值的操作</strong>。</p>
+<pre><code class="language-java">Callable&lt;Integer&gt; func = new Callable&lt;Integer&gt;(){  
+    public Integer call() throws Exception {  
+        System.out.println(&quot;inside callable&quot;);  
+        Thread.sleep(1000);  
+        return new Integer(8);  
+    }         
+};        
+FutureTask&lt;Integer&gt; futureTask  = new FutureTask&lt;Integer&gt;(func);  
+Thread newThread = new Thread(futureTask);  
+newThread.start();  
+  
+try {  
+    System.out.println(&quot;blocking here&quot;);  
+    Integer result = futureTask.get();  
+    System.out.println(result);  
+} catch (InterruptedException ignored) {  
+} catch (ExecutionException ignored) {  
+}
+</code></pre>
 ]]></content>
     </entry>
 </feed>
