@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://rick.github.io</id>
+    <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-02-03T07:08:36.635Z</updated>
+    <updated>2020-02-03T07:26:31.012Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://rick.github.io"/>
-    <link rel="self" href="https://rick.github.io/atom.xml"/>
+    <link rel="alternate" href="https://kay-rick.github.io"/>
+    <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
     <subtitle>Stay Foolish</subtitle>
-    <logo>https://rick.github.io/images/avatar.png</logo>
-    <icon>https://rick.github.io/favicon.ico</icon>
+    <logo>https://kay-rick.github.io/images/avatar.png</logo>
+    <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
     <entry>
         <title type="html"><![CDATA[实习面经]]></title>
-        <id>https://rick.github.io/post/shi-xi-mian-jing</id>
-        <link href="https://rick.github.io/post/shi-xi-mian-jing">
+        <id>https://kay-rick.github.io/post/shi-xi-mian-jing</id>
+        <link href="https://kay-rick.github.io/post/shi-xi-mian-jing">
         </link>
         <updated>2020-02-03T07:00:47.000Z</updated>
         <summary type="html"><![CDATA[<p>为了准备学院大三下学期6个月的实习，自己投递了一些公司的Java的开发岗并参加了面试，主要有百度、SAP、新浪微博、京东数科... 由于我大一大二的时候并没有真正地接触到技术，所做的项目也是少之又少，也就局限于学院里安排的一些课程设计，从准备简历到投简历到再修改简历再面试来来回回折腾了不少次，踩过的坑也算是引以为戒。接下来我主要从<strong>简历制作、准备面试、面试真题、经验教训</strong>这几个方面来说（实习生的身份）</p>
@@ -157,8 +157,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Java基础知识面试复习]]></title>
-        <id>https://rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi</id>
-        <link href="https://rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi">
+        <id>https://kay-rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi</id>
+        <link href="https://kay-rick.github.io/post/java-ji-chu-zhi-shi-mian-shi-fu-xi">
         </link>
         <updated>2019-12-17T14:32:32.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="java基础知识面试复习">Java基础知识面试复习</h1>
