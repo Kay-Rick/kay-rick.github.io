@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>C/C++基础整理(一)  | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/0082zybply1gboa0boul9j30zm0c6wqz.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">C/C++基础整理(一) </h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-07 23:45:19" itemprop="datePublished" pubdate="">2020-02-07</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>在已经学习过C语⾔的前提下，学习C++并使⽤它刷算法的学习成本非常低～<br>
+这里做一点C语言重点总结和部分C++特性（C++向下兼容C，因此C语言的语法在C++中同样适用）以便于刷算法</p>
+</blockquote>
+<!-- more -->
+<h2 id="数据类型">数据类型</h2>
+<h3 id="基本数据类型">基本数据类型</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">取值范围</th>
+<th style="text-align:center">大致范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">-2<sup>31 </sup> ~  +(2<sup>31</sup>-1)</td>
+<td style="text-align:center">-2 ×10 <sup>9</sup> ~ 2 ×10 <sup>9</sup></td>
+</tr>
+<tr>
+<td style="text-align:center">long long</td>
+<td style="text-align:center">-2<sup>63</sup> ~ (2<sup>63</sup>-1)</td>
+<td style="text-align:center">-9 ×10 <sup>18</sup> ~ 9 ×10 <sup>18</sup></td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">-2<sup>128</sup> ~ +2<sup>128</sup></td>
+<td style="text-align:center">实际精度6~7位</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">-2<sup>1024</sup> ~ +2<sup>1024</sup></td>
+<td style="text-align:center">实际精度15~16位</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">-128 ~ +127</td>
+<td style="text-align:center">-128 ~ +127</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">0(false) or 1(true)</td>
+<td style="text-align:center">0(false) or 1(true)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>对于整型的使用，绝对值在**10<sup>9</sup>**范围内整数可定义为<code>int</code>型</p>
+</li>
+<li>
+<p>对于浮点型，尽量不要使用float，<strong>全部使用</strong><code>double</code>来存储</p>
+</li>
+<li>
+<p>字符型</p>
+<ul>
+<li>字符常量（必须是单个字符）必须用单引号标注      'a'</li>
+<li>字符常量使用<strong>ASCII码</strong>统一编码，0-9、A-Z、a-z等都是可显示字符，它们的<strong>ASCII</strong>码分别是48<sub>57、65</sub>90、97~122，须记住<strong>小写字母比大写字母的ASCII码大32</strong></li>
+</ul>
+</li>
+<li>
+<p>布尔型 头文件加**<code>stdbool.h</code>**</p>
+<p>bool 变量量有两个值， <code>false</code> 和<code>true</code> ，以前⽤用C语⾔的时候都是⽤<code>int</code> 的0 和1 表示<code>false</code> 和<code>true</code>的，现在C++⾥面引⼊了这个叫做<code>bool</code> （布尔）的变量，而且<strong>C++把所有⾮非零值解释为</strong><code>true</code> ，零值解释为<code>false</code> 所以直接赋值一个数字给<code>bool</code>变量也是可以的～它会自动根据int 值是不是零来决定给<code>bool</code>变量赋值<code>true</code> 还是<code>false</code></p>
+<pre><code class="language-c++">bool flag = true;
+bool flag2 = -2; 		// flag2为true
+bool flag3 = 0; 		// flag3为false
+</code></pre>
+</li>
+<li>
+<p>符号常量和const常量</p>
+<pre><code class="language-c++">#define pi 3.14
+const double pi = 3.14
+</code></pre>
+</li>
+</ul>
+<h3 id="字符串">字符串</h3>
+<h4 id="c中的字符串">C中的字符串</h4>
+<ul>
+<li>没有单独一种数据类型可以存储，<strong>只能用字符数组方式 ** 字符串常量可以作为初值赋给字符数组，并使用</strong>%s**格式输出</li>
+</ul>
+<pre><code class="language-c++">char str[20] = &quot;Hello&quot;;
+printf(&quot;%s&quot;,str);
+</code></pre>
+<ul>
+<li>
+<p><code>&lt;string.h&gt;</code>头文件中常用API</p>
+<ul>
+<li>
+<p><code>strlen(str)</code>	得到字符数组中<strong>第一个\0前面的字符个数</strong>，注意字符串的存储方式</p>
+</li>
+<li>
+<p><code>strcmp(str1, str2)</code>   返回两个字符串大小的比较结果</p>
+<p>比较原则：<strong>字典序</strong></p>
+<p>str1[0···k-1] == str2[0···k-1]、str1[k] &lt; str[k]，那么就说str1的字典序小于str2</p>
+<p>str1 &lt; str2  返回负整数</p>
+<p>str1 = str2  返回0</p>
+<p>str1 &gt; str2  返回正整数</p>
+</li>
+<li>
+<p><code>strcpy(str1, str2)</code>  把字符数组2复制给字符数组1，这里复制包括结束符\0</p>
+</li>
+<li>
+<p><code>strcat(str1, str2)</code>  把字符数组2接到字符数组1后面</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+
+int main(void){
+  	char str1[10], str2[10];
+  	gets(str1);
+  	gets(str2);
+  	int len = strlen(str1);
+  	int cmp = strcmp(str1, str2);
+  	strcpy(str1, str2);
+  	strcat(str1, str2);
+  	return 0;
+}
+</code></pre>
+<h4 id="c中字符串string类">C++中字符串string类</h4>
+<p>以前⽤用<code>char[]</code> 的⽅方式处理理字符串串很繁琐，现在有了<code>string</code> 类，定义、拼接、输出、处理理都更更加简单啦～不过<code>string</code>只能⽤用<code>cin</code> 和<code>cout</code> 处理，无法用<code>scanf</code> 和<code>printf</code> 处理</p>
+<pre><code class="language-c++">string s = &quot;hello world&quot;; // 赋值字符串串
+string s2 = s;
+string s3 = s + s2; 			// 字符串串拼接直接⽤用+号就可以
+string s4;
+cin &gt;&gt; s4; 								// 读⼊入字符串串
+cout &lt;&lt; s; 								// 输出字符串串
+</code></pre>
+<ul>
+<li>string类中常用API
+<ul>
+<li><code>str.length()</code>	  获取<code>str</code>的长度  <strong>有几个字符就是长度多少</strong>，不存在<code>char[]</code>⾥面的什么末尾的结束符之类的</li>
+<li><code>str.substr()</code>      截取字符串</li>
+<li>⽤用<code>cin</code> 读⼊入字符串串的时候，是以空格为分隔符的，如果想要读入一整⾏的字符串，就需要⽤用<code>getline</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-c++">string s; // 定义⼀一个空字符串串s
+getline(cin, s); // 读取⼀一⾏行行的字符串串，包括空格
+cout &lt;&lt; s.length(); // 输出字符串串s的⻓长度
+string s2 = s.substr(4); // 表示从下标4开始⼀一直到结束
+string s3 = s.substr(5, 3); // 表示从下标5开始，3个字符
+</code></pre>
+<p>string中一些更加详细的用法在C++标准模板库STL中再做详细整理</p>
+<h2 id="输入输出">输入输出</h2>
+<h3 id="scanf-printf">scanf()、printf()</h3>
+<pre><code class="language-c++">int n;
+char str[10];
+scanf(&quot;%d&quot;, &amp;n);
+scanf(&quot;%s&quot;, str);		//  ！！！
+printf(&quot;%d&quot;, n);
+</code></pre>
+<ul>
+<li>
+<p><strong>数组名称本身就代表了这个数组第一个元素的地址，所以不需要再加取地址运算符，再scanf()中，除了char数组整个输入的情况下不加&amp;之外，其他变量类型都需要加&amp;</strong></p>
+</li>
+<li>
+<p>格式控制</p>
+<ul>
+<li>%md  可以使不足m位的int型以m位进行<strong>右对齐</strong>输出，高位<strong>空格补齐</strong></li>
+<li>%0d   不足m位时，前面<strong>高位补0</strong></li>
+<li>%.mf   浮点数保留m位输出  四舍五入用round()函数</li>
+<li>%c   char</li>
+<li>%s   char[]</li>
+<li>%lld long long</li>
+</ul>
+</li>
+<li>
+<p><strong>scanf的双引号的内容其实就是整个输入，只不过把数据换成它们对应的格式符并把变量的地址按次序写在后面而已</strong></p>
+</li>
+<li>
+<p>除了%c外，scanf对其他格式控制符(如%d)的输入是以<strong>空白符(空格、换行等)为结束标志</strong>的，**%c是可以读入空格和换行的  **我们看下面两个例子</p>
+</li>
+</ul>
+<pre><code class="language-c++">#include &lt;stdio.h&gt;
+
+int main(int argc, char const *argv[])
+{
+		char str[10];
+		scanf(&quot;%s&quot;, str);
+		printf(&quot;%s\n&quot;, str);
+		return 0;
+}
+</code></pre>
+<p>输入</p>
+<pre><code>abcd efg
+</code></pre>
+<p>输出</p>
+<pre><code>abcd
+</code></pre>
+<pre><code class="language-c++">#include &lt;stdio.h&gt;
+
+int main(int argc, char const *argv[])
+{
+    int a;
+    char str[10];
+    char c;
+    scanf(&quot;%d%c%s&quot;,&amp;a, &amp;c, str);
+    printf(&quot;a = %d, c = %c, str = %s\n&quot;,a, c, str);
+    return 0;
+}
+</code></pre>
+<p>输入</p>
+<pre><code>1 a bcd
+</code></pre>
+<p>输出</p>
+<pre><code>a = 1, c =  , str = a
+</code></pre>
+<h3 id="getchar-putchar">getchar()、putchar()</h3>
+<p>注意：<code>getchar()</code>可接受换行符(Enter)和空格符(Space)</p>
+<pre><code class="language-c++">#include &lt;stdio.h&gt;
+
+int main(int argc, char const *argv[])
+{
+    char c1, c2, c3;
+    c1 = getchar();
+    c2 = getchar();
+    c3 = getchar();
+    putchar(c1);
+    putchar(c2);
+    putchar(c3);
+    return 0;
+}
+</code></pre>
+<p>输入1</p>
+<pre><code>abc
+</code></pre>
+<p>输出1</p>
+<pre><code>abc
+</code></pre>
+<p>输入2</p>
+<pre><code>a b c
+</code></pre>
+<p>输出2</p>
+<pre><code>a b
+</code></pre>
+<p>输入3</p>
+<pre><code>a
+b
+</code></pre>
+<p>输出3</p>
+<pre><code>a
+b
+</code></pre>
+<h3 id="gets-puts">gets()、puts()</h3>
+<p><code>gets()</code>用来输入一行字符串并将其存放于一维数组中， <code>gets()</code>识别**换行符<code>\n</code>**作为输入结束</p>
+<p><code>puts()</code>用来输出一行字符串，<strong>并紧跟一个换行</strong></p>
+<pre><code class="language-c++">#include &lt;stdio.h&gt;
+
+int main(int argc, char const *argv[])
+{
+    char str[10];
+    gets(str);
+    puts(str);
+    return 0;	
+}
+</code></pre>
+<p>输入</p>
+<pre><code>abc def
+</code></pre>
+<p>输出</p>
+<pre><code>abc def
+</code></pre>
+<p><strong>!!字符数组存放方式</strong></p>
+<p>由于字符数组是由若干个char类型的元素组成，因此字符数组的每一位都是一个char字符，<strong>末尾都有一个空字符\0表示存放的字符串结尾</strong></p>
+<p><strong>空字符\0在使用gets获scanf输入字符串时会自动添加在输入的字符串后面，并且占用一个字符位、puts和printf就是通过识别\0作为字符串的结尾来输出的</strong></p>
+<ul>
+<li>特别提醒</li>
+</ul>
+<p><strong>开辟字符串数组的时候千万要记得字符数组的长度一定要比实际存储字符串长度至少多1(\0)</strong></p>
+<p>适用scanf函数的%s格式或者gets函数输入字符串时，可不用担心\0的问题，<strong>但如果适用getchar()一定要在输入的每个字符串后面加入\0</strong></p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+int main(void){
+    char str[15];
+    for(int i = 0; i &lt; 3; i++){
+      str[i] = getchar();
+    }
+    puts(str);
+    return 0;
+}
+</code></pre>
+<p>输入</p>
+<pre><code>abc
+</code></pre>
+<p>输出</p>
+<pre><code>abc?@w??
+</code></pre>
+<p>以上结果是《算法笔记》里面输出结果，但在我的Mac里跑出来却没有乱码，目前还不清楚是否为clang++编译器的原因</p>
+<h3 id="cin-cout">cin、cout</h3>
+<p>cin与cout是C++中输入与输出函数，需添加头文件</p>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+using namespace std;
+</code></pre>
+<p>可不指定格式，也不需要加取地址运算符&amp;，可在后面继续扩展</p>
+<pre><code class="language-c++">cin &gt;&gt; n &gt;&gt; db &gt;&gt; c &gt;&gt; str;
+cout &lt;&lt; n &lt;&lt; &quot;hello&quot; &lt;&lt; db &lt;&lt; str &lt;&lt; endl;		// endl表示换行
+cout &lt;&lt; n &lt;&lt; &quot; &quot; &lt;&lt; str;	//输出中间没有空格要自己进行补全
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+int main(void){
+      int a;
+      char c;
+      double db;
+      char str[10];
+      cin &gt;&gt; a &gt;&gt; c &gt;&gt; db &gt;&gt; str;
+      cout&lt;&lt; a &lt;&lt; c &lt;&lt; db &lt;&lt; str &lt;&lt; endl;
+      return 0;
+}
+</code></pre>
+<p>输入1</p>
+<pre><code>123 a 3.14 Rick
+</code></pre>
+<p>输出1</p>
+<pre><code>123a3.14Rick
+</code></pre>
+<p>输入2</p>
+<pre><code>123a3.14Rick
+</code></pre>
+<p>输出2</p>
+<pre><code>123a3.14Rick
+</code></pre>
+<p><strong>对算法考试而言：并不推荐使用<code>cin</code>和<code>cout</code>来进行输入和输出，因为他们在输入/输出大量数据的情况下表现非常糟糕，推荐使用<code>scanf</code>和<code>printf</code>进行函数的输入和输出</strong></p>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/ph4YXj2Iu" rel="tag">C</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/jJmi_bqwwy" rel="tag">C++</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/shi-xi-mian-jing" rel="next"> 实习面经</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
