@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-02-07T16:26:22.273Z</updated>
+    <updated>2020-02-08T06:08:19.833Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -71,7 +71,7 @@
 </table>
 <ul>
 <li>
-<p>对于整型的使用，绝对值在**10<sup>9</sup>**范围内整数可定义为<code>int</code>型</p>
+<p>对于整型的使用，<strong>绝对值在10<sup>9</sup>范围内</strong>整数可定义为<code>int</code>型</p>
 </li>
 <li>
 <p>对于浮点型，尽量不要使用float，<strong>全部使用</strong><code>double</code>来存储</p>
@@ -84,7 +84,7 @@
 </ul>
 </li>
 <li>
-<p>布尔型 头文件加**<code>stdbool.h</code>**</p>
+<p>布尔型 头文件加<code>stdbool.h</code></p>
 <p>bool 变量量有两个值， <code>false</code> 和<code>true</code> ，以前⽤用C语⾔的时候都是⽤<code>int</code> 的0 和1 表示<code>false</code> 和<code>true</code>的，现在C++⾥面引⼊了这个叫做<code>bool</code> （布尔）的变量，而且<strong>C++把所有⾮非零值解释为</strong><code>true</code> ，零值解释为<code>false</code> 所以直接赋值一个数字给<code>bool</code>变量也是可以的～它会自动根据int 值是不是零来决定给<code>bool</code>变量赋值<code>true</code> 还是<code>false</code></p>
 <pre><code class="language-c++">bool flag = true;
 bool flag2 = -2; 		// flag2为true
@@ -101,7 +101,7 @@ const double pi = 3.14
 <h3 id="字符串">字符串</h3>
 <h4 id="c中的字符串">C中的字符串</h4>
 <ul>
-<li>没有单独一种数据类型可以存储，<strong>只能用字符数组方式 ** 字符串常量可以作为初值赋给字符数组，并使用</strong>%s**格式输出</li>
+<li>没有单独一种数据类型可以存储，**只能用字符数组方式 ** 字符串常量可以作为初值赋给字符数组，并使用%s格式输出</li>
 </ul>
 <pre><code class="language-c++">char str[20] = &quot;Hello&quot;;
 printf(&quot;%s&quot;,str);
@@ -196,17 +196,17 @@ printf(&quot;%d&quot;, n);
 <p><strong>scanf的双引号的内容其实就是整个输入，只不过把数据换成它们对应的格式符并把变量的地址按次序写在后面而已</strong></p>
 </li>
 <li>
-<p>除了%c外，scanf对其他格式控制符(如%d)的输入是以<strong>空白符(空格、换行等)为结束标志</strong>的，**%c是可以读入空格和换行的  **我们看下面两个例子</p>
+<p>除了%c外，scanf对其他格式控制符(如%d)的输入是以<strong>空白符(空格、换行等)为结束标志</strong>的，%c <strong>是可以读入空格和换行的</strong>我们看下面两个例子</p>
 </li>
 </ul>
 <pre><code class="language-c++">#include &lt;stdio.h&gt;
 
 int main(int argc, char const *argv[])
 {
-		char str[10];
-		scanf(&quot;%s&quot;, str);
-		printf(&quot;%s\n&quot;, str);
-		return 0;
+	char str[10];
+	scanf(&quot;%s&quot;, str);
+	printf(&quot;%s\n&quot;, str);
+	return 0;
 }
 </code></pre>
 <p>输入</p>
