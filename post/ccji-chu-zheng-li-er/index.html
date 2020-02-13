@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>C/C++基础整理(二） | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/0082zybply1gboa0boul9j30zm0c6wqz.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">C/C++基础整理(二）</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-13 19:49:08" itemprop="datePublished" pubdate="">2020-02-13</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>接着上一篇C/C++整理的第二部分，本篇主要涉及到的是函数、指针部分</p>
+</blockquote>
+<p>本篇推荐阅读博客：</p>
+<p><a href="https://blog.csdn.net/liusicheng2008_liu/article/details/80412586">深入理解char * ,char ** ,char a[] ,char *a[]的区别</a></p>
+<p><a href="https://blog.csdn.net/soonfly/article/details/51131141">让你不再害怕指针——C指针详解(经典,非常详细)</a></p>
+<p><a href="https://www.zhihu.com/question/31412436/answer/683820765">对于递归有没有什么好的理解方法？</a></p>
+<h2 id="函数">函数</h2>
+<h3 id="定义函数">定义函数</h3>
+<pre><code>返回类型 函数名 ( 形式参数 ){
+	声明
+	语句
+}
+</code></pre>
+<p><strong>细节问题：</strong></p>
+<ul>
+<li>
+<p><strong>函数无法返回数组。</strong></p>
+</li>
+<li>
+<p>指定返回类型是void型说明函数没有返回值。</p>
+</li>
+<li>
+<p>在<strong>C89</strong>中，如果忽略返回类型，那么会假定函数返回值的类型是<code>int</code>型</p>
+</li>
+<li>
+<p>在<strong>C99</strong>中，忽略返回类型是非法的。</p>
+</li>
+</ul>
+<h3 id="全局变量-局部变量-值传递的传参方式">全局变量、局部变量、值传递的传参方式</h3>
+<blockquote>
+<p>全局变量是指在定义之后的所有程序段内部都有效的变量（定义在所有函数之前）</p>
+<p>局部变量定义在函数内部，且只在函数内部生效，函数结束时局部变量销毁</p>
+</blockquote>
+<p><strong>值传递</strong>：</p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+void change(int x){
+    x = x + 1;
+}
+
+int main(void){
+    int x = 10;
+    change(x);
+    printf(&quot;%d&quot;,x);		//	10
+    return 0;
+}
+</code></pre>
+<p>从结果分析：</p>
+<p>当在主函数中定义了<code>x</code>以后，将其作为<code>change()</code>函数的参数传入，并令<code>x</code>加1，但是最后输出时<code>x</code>却仍然是10，这是因为<code>change()</code>函数的参数<code>x</code>为局部变量，仅在函数内部生效，通过<code>change(x)</code>传递进去的<code>x</code>其实只是传进去的一个<strong>副本</strong>，也即<code>change</code>函数的参数<code>x</code>和<code>main</code>函数里的<code>x</code>其实是作用于两个不同函数的不同变量（虽然名字相同），取成不同的名字也是可以的。这种传递参数的方式称为<strong>值传递</strong></p>
+<h3 id="数组作为函数参数">数组作为函数参数</h3>
+<p>函数的参数也可以是数组，且数组作为参数时，参数中数组的第一维不需要填写长度（<strong>如果是二维数组，那么第二维需要填写长度</strong>）</p>
+<p>数组作为参数时，在函数的调用中对数组元素的修改等同于是对原数组元素的修改（<strong>这与普通的局部变量不同，具体原因：数组传参时实际上传递的是数组第一个元素的地址，指针部分详谈</strong>）</p>
+<p><strong>注意：虽然数组可以作为参数，但是却不允许作为返回类型出现，如果想要返回数组，只能将返回的数组作为参数传入</strong></p>
+<h3 id="函数递归调用">函数递归调用</h3>
+<p>递归就是函数自己调自己的过程初学递归，对于递归一直难于理解，这里推荐的一篇文章</p>
+<p><a href="https://www.zhihu.com/question/31412436/answer/683820765">对于递归有没有什么好的理解方法？</a></p>
+<h2 id="指针">指针</h2>
+<blockquote>
+<p>在计算机内存中，每个字节（理解为房间）都会有一个地址（可理解为房间号），即变量的存储位置，计算机就是通过地址找到某个变量的，<strong>变量的地址一般指它占用的字节中第一个字节存放的地址</strong>，一个<code>int</code>型的变量的地址就是它占用的4Byte当中第一个字节的地址</p>
+<p>指针就是变量的地址，指针变量：<strong>用于存放指针</strong></p>
+</blockquote>
+<p>指针在C语言中是较为难理解的一部分，这里只是做一些基础总结，推荐两篇博客</p>
+<p>一个房间号“<strong>指向</strong>”一个房间，对应到计算机上就是一个地址“<strong>指向</strong>”一个变量，在C语言中用“指针”来表示内存地址，可以理解为：<strong>指针就是变量的地址（指针是一个unsigned类型的整数）</strong>  获取变量地址就是通过取地址运算符&amp;，只要在变量前面加上&amp;，就表示变量的地址</p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+int main(void){
+    int a = 5;
+    int *p1 = &amp;a;
+    double pi = 3.14;
+    double *p2 = &amp;pi;
+    printf(&quot;%d\n&quot;,sizeof(p1));		//	4
+    printf(&quot;%d\n&quot;,sizeof(p2));		//	4
+    return 0;
+}
+</code></pre>
+<p>从输出的结果我们可以看出：<strong>指针是一个<code>unsigned</code>类型的整数</strong>，并不会因为指针指向的是<code>double</code>(8Byte)，对应指针变量分配空间变成8Byte</p>
+<h3 id="定义-初始化指针变量">定义、初始化指针变量</h3>
+<pre><code class="language-c++">基本类型 *指针变量名
+int *p1;		//	在使用指针变量 p 之前对其进行初始化是至关重要的
+int a;
+int *p2 = &amp;a; 	// 一般是把变量的地址取出来，然后赋给对应类型的指针变量
+</code></pre>
+<ul>
+<li>
+<p><strong>指针变量前面必须有“</strong> ***** <strong>”</strong>，表示该变量的类型为指针型变量。</p>
+</li>
+<li>
+<p>定义指针变量时必须指定基本类型，基类型表明了该指针变量所指向的变量类型。</p>
+</li>
+<li>
+<p><code>int *</code>是指针变量的类型，而后面的<code>p</code>才是变量名，用来存储地址，<code>&amp;a</code>是赋值给<code>p</code>而不是<code>*p</code>，也就是<strong>星号是类型的一部分</strong></p>
+</li>
+<li>
+<p>间接寻址运算符 <code>*</code>  访问到指针所指的对象，可以把 <code>*</code> 理解为一把开启房间的钥匙，将其放在<code>p</code>的前面,这样<code>*p</code>就可以把房间打开，然后获取变量<code>a</code>的值</p>
+<pre><code class="language-c++">int a =5;
+int *p = &amp;a;
+printf(&quot;%d\n&quot;, *p);		// 5
+
+//	对变量使用&amp;运算符产生指向变量的指针，而对指针使用*运算符则可以返回到原始变量
+j = *&amp;i;   				/* same as j = i; */
+//	只要p指向i，*p就是i的别名,*p拥有和i相同的值,改变*p的值，同时也会改变i的值
+</code></pre>
+</li>
+<li>
+<p>将间接寻址运算符应用于未初始化的指针变量，会导致未定义的行为，对 *p 进行赋值则更加危险</p>
+<pre><code class="language-c++">int *p;
+printf(&quot;%d&quot;, *p);   /*** WRONG ***/
+
+int *p;
+*p = 1;   			/*** WRONG ***/
+</code></pre>
+</li>
+<li>
+<p>指针变量的值可以是<strong>普通变量的地址</strong>，也可以是<strong>数组的地址</strong>或<strong>数组元素的地址</strong></p>
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gbv0f1fjphj30nr0ex74t.jpg" alt="image-20200212210331685" style="zoom:50%;" />
+</li>
+<li>
+<p><strong>任意数量的指针变量都可以指向同一个对象</strong></p>
+</li>
+</ul>
+<h3 id="指针赋值与运算">指针赋值与运算</h3>
+<p>指针赋值</p>
+<pre><code class="language-c++">p = q;			//	指针赋值语句	结果：指针q与p指向相同的位置
+*p = *q;		//	不会指向同一变量，下图所示
+</code></pre>
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gbv0e0wqr4j30g50huwf5.jpg" alt="image-20200213194210095" style="zoom:50%;" />
+<p>指针加减法   ==&gt;  常用于数组中</p>
+<p>对于一个<code>int *</code> 类型的变量<code>p</code>来说，<code>p + 1</code> 是指 <code>p</code> 所指的<code>int</code>型变量的下一个<code>int</code>型变量地址，这里所谓的**“下一个”是跨越了一整个<code>int</code>型（<code>sizeof(int)</code>个Byte  ==&gt; 4Byte）**</p>
+<h3 id="指针变量作为函数参数">指针变量作为函数参数</h3>
+<p>指针类型可以作为函数参数的类型，**这时视为把变量的地址传入函数，如果在函数中对这个地址中的元素进行改变，原先的数据就会确实地被改变 ==&gt; 地址传递 **</p>
+<p>用一个例子来理解： 使用指针交换两个数</p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+void swap(int *p1, int *p2){
+	int temp;
+	temp = *p1;
+	*p1 = *p2;
+	*p2 = temp;
+}
+
+int main(void){
+    int a = 1, b = 2;
+    int *p1 = &amp;a, *p2 = &amp;b;
+    swap(p1, p2);       // only 指针名
+    printf(&quot;a = %d, b = %d&quot;, *p1, *p2);		// a = 2, b = 1
+    return 0;
+}
+</code></pre>
+<p>上述代码中，把<code>&amp;a</code>（<code>a</code>的地址）和<code>&amp;b</code>（<code>b</code>的地址）作为参数传入，使得<code>swap</code>函数中<code>int*</code>类型指针变量<code>a</code>存放<code>&amp;a</code>、指针变量<code>b</code>存放&amp;b。这时，<code>swap</code>函数中的<code>a</code>和<code>b</code>都是地址，而 <code>*a</code>和 <code>*b</code>就是地址中存放的数据，可以“看成”是<code>int</code>型变量，接下来就进行正常交换</p>
+<p>我们再来看几个<strong>错误交换的例子</strong></p>
+<pre><code class="language-c++">// 值传递并不能对数据产生实质影响
+void swap1(int p1, int p2){
+    int temp = p1;
+    p1 = p2;
+    p2 = temp;
+}
+
+// 很多人认为*temp、*p1、*p2都可以“看作”int型变量，可这样交换，但这里的错误是因为temp没有初始化，存放的地址是随机的
+void swap2(int *p1, int *p2){
+    int *temp;		
+    *temp = *p1;
+    *p1 = *p2;
+    *p2 = *temp;
+}
+
+// 这里的错误是因为直接把这个地址进行交换，我们之前说过地址其实是一个“无符号整型”的数，其本身和普通变量一样只是“值传递”，对地址本身进行修改其实跟之前对传入的普通变量进行交换的函数是一样的作用，都只是副本，没法对数据产生实质性影响 ==&gt; 解决方法：指针的引用
+void swap3(int *p1, int *p2){
+    int *temp = p1;
+    p1 = p2;
+    p2 = temp;
+}
+</code></pre>
+<p>用<code>const</code>保护参数</p>
+<p>当传递指向变量x的指针给一个函数f时，<strong>通常意味着x的值将被修改f(&amp;x)</strong>;然而有的时候，f 可能仅仅需要对x的值进行检查，而不需要对其进行修改。可以使用<code>const</code>关键字确保函数不会修改指针参数所指向的对象</p>
+<pre><code class="language-c++">// 如果函数中的语句试图修改 *p 的值，编译器能够捕获此类错误。
+void f(const int *p){
+	*p = 0;   /*** WRONG ***/
+}
+</code></pre>
+<h3 id="指针作为返回值">指针作为返回值</h3>
+<pre><code class="language-c++">int *max(int *a, int *b){
+	if (*a &gt; *b)
+	   return a;
+	else
+	   return b;
+}
+
+int main(void){
+  	int *p, i, j;
+	...
+	p = max(&amp;i, &amp;j);
+}
+</code></pre>
+<p><strong>注意：不要返回指向自动局部变量的指针，一旦函数返回，局部变量将不复存在</strong></p>
+<h3 id="指针与数组">指针与数组</h3>
+<p>在C语言中，<strong>数组名称也作为数组的首地址使用</strong></p>
+<pre><code class="language-c++">*a = 7;  		 	 /* stores 7 in a[0] */
+*(a + 1) = 12;  	 /* stores 12 in a[1] */
+
+// 数组遍历
+for (p = &amp;a[0]; p &lt; &amp;a[N]; p++)
+	sum += *p;
+
+// 可以简化为如下形式：
+for (p = a; p &lt; a + N; p++)
+	sum += *p;
+
+// 尽管数组名可以用作指针，但不能对其赋值，试图使其指向其它位置会导致错误发生：
+while (*a != 0)
+  	a++;           /*** WRONG ***/
+
+</code></pre>
+<p>通常情况下，<code>a + i</code>和 <code>&amp;a[i]</code>是等同的，均表示指向数组 <code>a</code>中元素<code>i</code>的指针<br>
+同样地，<code>*(a+i)</code> 与<code>a[i]</code>也是等同的，均表示数组<code>a</code> 中的元素 <code>i</code>自身</p>
+<p>如果指针<code>p</code>指向数组<code>a</code>的元素，则可以通过对指针<code>p</code>进行指针算术运算（或地址算术运算）访问数组<code>a</code>中其他元素：C语言支持三种类型的指针算术运算（且仅有这三种类型）</p>
+<ul>
+<li>
+<p><strong>指针加上整数</strong></p>
+<p>如果 <code>p</code>指向数组元素<code>a[i]</code>，则<code>p + j</code>指向数组元素 <code>a[i + j]</code></p>
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gbv0fpv8x6j30pj0dvmxp.jpg" alt="image-20200213194350262" style="zoom:50%;" />
+</li>
+<li>
+<p><strong>指针减去整数</strong></p>
+<p>如果<code>p</code> 指向<code>a[i]</code>，则<code>p - j</code>指向<code>a[i - j]</code></p>
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gbv0g8kelsj30pk0dzwf0.jpg" alt="image-20200213194420453" style="zoom:50%;" />
+</li>
+<li>
+<p><strong>两个指针相减  ==&gt; 针对指向同一数组</strong></p>
+<p>当两个指针相减时，结果为<strong>指针之间的距离</strong>（以数组元素的个数作为度量）。<br>
+如果<code>p</code>指向<code>a[i]</code> ，<code>q</code>指向<code>a[j]</code>，则 <code>p – q</code>等于<code>i – j</code></p>
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gbv0gl7zrnj30q607uq37.jpg" alt="image-20200213194440774" style="zoom:50%;" />
+</li>
+</ul>
+<h3 id="指针引用c特性">指针引用(C++特性)</h3>
+<p><strong>引用：不使用指针、不产生副本达到修改传入参数的目的  ==&gt; 对引用变量的操作就是对原变量的操作</strong></p>
+<p>注意：要把引用的<code>&amp;</code>和取地址符<code>&amp;</code>区分开，<strong>引用并不是取地址的意思</strong></p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+int main(void){
+    int x = 2;
+    change(x);
+    printf(&quot;%d\n&quot;,x);		//	1
+    return 0;
+}
+
+void change(int &amp;x){
+    x = 1;
+}
+</code></pre>
+<p>我们在上面写过一个通过将传递至交换来达到交换两个变量的效果，但是失败了=&gt;[swap3()](# 指针变量作为函数参数)，这是因为对指针变量本身的修改无法作用到原指针变量上，那么就可以使用<strong>指针的引用</strong>来实现这个效果</p>
+<pre><code class="language-c++">#include&lt;stdio.h&gt;
+
+int main(void){
+    int a = 1, b = 2;
+    int *p1 = &amp;a, *p2 = &amp;b;
+    swap(p1, p2);
+//	swap(&amp;a, &amp;b);		/*** WRONG 由于引用是产生变量的别名，因此常量不可使用 ***/		
+    printf(&quot;a = %d, b = %d\n&quot;,*p1, *p2);	// a = 2, b = 1
+    return 0;
+}
+
+void swap(int* &amp;p1, int* &amp;p2){
+    int* temp = p1;
+    p1 = p2;
+    p2 = temp;
+}
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/ph4YXj2Iu/" rel="tag">C</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/jJmi_bqwwy/" rel="tag">C++</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/U-6HRLQLq/" rel="tag">总结</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/ccji-chu-zheng-li-yi/" rel="next"> C/C++基础整理(一) </a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
