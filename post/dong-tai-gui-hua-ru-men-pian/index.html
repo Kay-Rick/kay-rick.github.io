@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>动态规划(入门篇) | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/0082zybply1gc6mfnlm0nj31dm0kwx6p.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">动态规划(入门篇)</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-23 20:46:24" itemprop="datePublished" pubdate="">2020-02-23</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<h2 id="什么是动态规划问题">什么是动态规划问题？</h2>
+<p><a href="https://mp.weixin.qq.com/s/Gswf1P6n0Gh9NkVBzDc1zg">通过金矿故事介绍动态规划（上）</a></p>
+<p><a href="https://mp.weixin.qq.com/s/P9AOcnjK10siUITIiOr7BQ">通过金矿故事介绍动态规划（下）</a></p>
+<p>通过金矿故事我们可以了解到动态规划问题是一种用来解决一类<strong>最优化问题</strong>的算法思想，就是将一个复杂的问题分解成若干个子问题，通过<strong>综合子问题的最优解来得到原来问题的最优解</strong>。</p>
+<p>解决动态规划问题的核心在于：<strong>找到重复子问题，记住之前做的事</strong></p>
+<br>
+<h2 id="如何理解动态规划中的概念">如何理解动态规划中的概念？</h2>
+<br>
+<h3 id="重叠子问题">重叠子问题</h3>
+<blockquote>
+<p>如果一个问题可以被分解为若干个子问题，且这些子问题会重复出现，那么就称这个问题拥有“重叠子问题”，动态规划通过记录重叠子问题的解，来使下次碰到相同的子问题时直接使用之前记录的结果，依次避免大量重复计算。因此，一个问题必须拥有重叠子问题，才能使用动态规划去解决</p>
+</blockquote>
+<p>我们从熟悉的斐波那契数列来理解重叠子问题</p>
+<p>初学者在接触斐波那契数列的时候，可能一般的写法是这样的：</p>
+<pre><code class="language-c++">int F(int n){
+  if(n == 0 || n == 1) return 1;
+  else return F(n - 1) + F(n - 2);
+}
+</code></pre>
+<p>这里就是<strong>不断地分解问题为子问题   ==&gt;  动态规划问题必须要满足</strong></p>
+<p>然而实际上，这个递归会涉及到很多重复的计算。</p>
+<img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6eq02kwpj30tc0kgtai.jpg" alt="image-20200223161917205" style="zoom:50%;" />
+<br>
+<p>当<code>n = 5</code>的时候，可以得到<code>F(5) = F(4) + F(3)</code>，接下来在计算<code>F(4)</code>的时候，又会有<code>F(4) = F(3) + F(2)</code>，这个时候我发现<code>F(3)</code>被重复计算，可以推知，如果<code>n</code>非常大，重复计算的次数将难以想象，实际复杂度会达到<strong>O(2<sup>n</sup>)</strong></p>
+<p>为了避免重复计算，我们可以开辟一个一维数组<code>dp</code>，保存已经计算过的结果，用<code>dp[n</code>]记录<code>F(n)</code>的结果，并用<code>dp[n] = -1</code> 表示当前还没有被计算过 ==&gt; 就是我们说的<strong>做备忘录，记住之前做的事</strong></p>
+<pre><code class="language-c++">int dp[MAXN];
+
+int F(int n){
+  if(n == 0 || n == 1) return 1;		// 递归边界
+  if(dp[n] != -1) return dp[n];			// 已经计算过，直接返回结果
+  else{
+    dp[n] = F(n - 1) + F(n - 2);
+    return dp[n];
+  }
+}
+</code></pre>
+<br>
+<h3 id="最优子结构">最优子结构</h3>
+<p>我们通过<strong>数塔问题</strong>来理解&quot;最优子结构&quot;这个概念</p>
+<img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6gwrqvm1j30pu0ikq58.jpg" alt="image-20200223173450683" style="zoom:50%;" />
+<p>其中第一层有一个数字，第二层有两个数字······第n层有n个数字，现在从第一层走到第n层，每次只能走向下一层连接的两个数字中的一个，问：最后路径上所有数字相加后得到的和最大是多少？</p>
+<p>如果按照题目描述，我们可以用二维数组<code>f</code>，其中<code>f[i][j]</code> 存放第<code>i</code>层的第<code>j</code>个数字，那么<code>f[1][1] = 5,f[2][1] = 8 ··· f[5][5] = 4</code>此时，如果我们尝试穷举所有路径，然后记录路径上数字和的最大值，那么由于每层中每个数字都有两个分支，时间复杂度为O(2 <sup>n</sup>)，这样的时间复杂度显然是我们不可以接受的</p>
+<p><strong>基于上面的考虑，我们不妨令<code>dp[i][j]</code> 表示从第i行第j个数字出发的到达最底层所有路径中能得到的最大和</strong></p>
+<p>我们可以归纳得到一个信息：如果要求出<code>dp[i][j]</code>，那么一定要先求出它的两个子问题，从位置<code>(i + 1, j)</code>到达最底层的最大和<code>dp[i + 1][j]</code>和 位置<code>(i + 1,j + 1)</code>到达最底层的最大和<code>dp[i + 1][j + 1]</code> ，即进行一次决策</p>
+<center><b>dp[i][j] = max(dp [i + 1][j] ,dp [i + 1][j + 1] ) + f[i][j]</b></center>
+<p><code>dp[i][j]</code>称为<strong>问题的状态</strong>，上面的式子称为<strong>状态转移方程</strong></p>
+<p>我们可以发现，状态<code>dp[i][j]</code>只与第<code>i + 1</code>层状态有关，而与其他层状态无关，那么这样的转移什么时候能够结束呢？我们可以发现在数塔的最后一层的<code>dp</code>值总是等于元素本身</p>
+<p>这样就可以从最底层各位置的<code>dp</code>值开始，不断地往上求出每一层各位置的<code>dp</code>值，最后就会得到我们想要的<code>dp[1][1]</code></p>
+<p>分析到这里，我们的问题基本得到解决，在这个过程中我们发现解决问题的关键在找到<strong>状态转移的方程</strong>，如果一个问题的最优解可以由其子问题的最优解有效地构造出来，那么称这个问题拥有<strong>最优子结构</strong></p>
+<p><strong>一个问题必须拥有重叠子问题和最优子结构，才能使用动态规划，</strong></p>
+<br>
+<h3 id="子问题独立">子问题独立</h3>
+<p>想一想上面数塔问题中，我们在分解成重叠子问题的时候，状态<code>dp[i][j]</code>只与第<code>i + 1</code>层状态有关，而与其他层状态无关，这里就是子问题独立</p>
+<br>
+<h3 id="边界">边界</h3>
+<p>当我们找到数塔问题的状态转移方程，那么这样的转移什么时候能够结束呢？我们可以发现在数塔的最后一层的<code>dp</code>值总是等于元素本身，在这个时候就可以进行返回了，这里就是我们所说的边界</p>
+<br>
+<h2 id="如何解决动态规划问题">如何解决动态规划问题？</h2>
+<p>当我们理解了动态规划中的一些重要概念以后，解决动态规划问题可以按下面的步骤去思考</p>
+<ul>
+<li>构造问题所对应的过程</li>
+<li>思考过程的最后一个步骤，看看有哪些选择情况</li>
+<li>找到最后一步的子问题，确保符合**“子问题重叠”，把子问题中不相同的地方设置为参数**</li>
+<li><strong>使得子问题符合“最优子结构”</strong></li>
+<li><strong>找到边界，考虑边界的各种处理方式</strong></li>
+<li>确保满足“子问题独立”，一般而言，如果我们是在多个子问题中选择一个作为实施方案，而不会同时实施多个方案，那么子问题就是独立的</li>
+<li><strong>考虑如何做备忘录</strong></li>
+<li>分析所需时间是否满足要求</li>
+<li><strong>写出转移方程式</strong></li>
+</ul>
+<br>
+<p>我们再进一步提炼，得到解题中最为重要的<strong>四步法</strong></p>
+<blockquote>
+<ul>
+<li>问题拆解，找到问题之间的具体联系</li>
+<li>状态定义</li>
+<li>递推方程推导</li>
+<li>实现</li>
+</ul>
+</blockquote>
+<p>我们按照这四个步骤来实现数塔问题</p>
+<br>
+<ul>
+<li>
+<p>问题拆解</p>
+<p>这里的总问题是求出最大的路径和，路径是这里的分析重点，路径是由一个个元素组成的，<code>[i][j]</code> 位置的元素，经过这个元素的路径肯定也会经过 <code>[i - 1][j]</code> 或者 <code>[i - 1][j - 1]</code>，因此经过一个元素的路径和可以通过这个元素上面的一个或者两个元素的路径和得到。</p>
+<p>也就是我们要求得<code>[1][1]</code>位置元素一定会经过<code>[2][1]</code>或者<code>[2][2]</code>，这样每一步递推下去，我们就会得到最终最大的路径和。</p>
+</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>状态定义</p>
+<p>状态的定义一般会和问题需要求解的答案联系在一起，这里其实有两种方式，一种是考虑路径从上到下，另外一种是考虑路径从下到上，因为元素的值是不变的，所以路径的方向不同也不会影响最后求得的路径和，如果是从上到下，你会发现，在考虑下面元素的时候，起始元素的路径只会从<code>[i - 1][j]</code> 获得，每行当中的最后一个元素的路径只会从 <code>[i - 1][j - 1]</code> 获得，中间二者都可，这样不太好实现，<strong>因此这里考虑从下到上的方式</strong>，状态的定义就变成了 “<strong>最后一行元素到当前元素的最大路径和</strong>”，对于 <code>[0][0]</code> 这个元素来说，最后状态表示的就是我们的最终答案。</p>
+</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>递推方程</p>
+<pre><code>dp[i][j] = max(dp[i + 1][j] ,dp[i + 1][j + 1] ) + f[i][j]
+</code></pre>
+<br>
+</li>
+<li>
+<p>实现</p>
+<p>这里初始化时，我们需要将最后一行的元素填入状态数组中，然后就是按照前面分析的策略，从下到上计算即可</p>
+</li>
+</ul>
+<pre><code class="language-c++">/*
+ * @Author: Rick
+ * @Email: Kay_Rick@outlook.com
+ * @Date: 2020-02-23 20:23:31
+ * @Last Modified by: Rick
+ * @Last Modified time: 2020-02-23 20:41:05
+ * @Description: 动态规划 数塔问题
+ */
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+const int maxn = 1000;
+int f[maxn][maxn], dp[maxn][maxn];
+
+int main(void){
+    int n;  // 层数
+    scanf(&quot;%d&quot;, &amp;n);
+    // 输入数塔
+    for (int i = 1; i &lt;= n; i++)
+    {
+        for (int j = 1; j &lt;= i; j++)
+        {
+            scanf(&quot;%d&quot;, &amp;f[i][j]);
+        }
+    }
+    // 最后一行元素填入状态数组 ==&gt; 边界
+    for (int k = 1; k &lt;= n; k++)
+    {
+        dp[n][k] = f[n][k];
+    }
+    // 从第n-1层不断往上计算出dp[i][j]
+    for (int i = n - 1; i &gt;= 1; i--)
+    {
+        for (int j = 1; j &lt;= i; j++)
+        {
+            // 状态转移方程
+            dp[i][j] = max(dp[i + 1][j], dp[i + 1][j + 1]) + f[i][j];
+        }
+    }
+    printf(&quot;%d\n&quot;, dp[1][1]);
+    return 0;
+}
+</code></pre>
+<p>输入：</p>
+<pre><code>5
+5
+8 3
+12 7 16
+4 10 11 6
+9 5 3 9 4
+</code></pre>
+<p>输出：</p>
+<pre><code>44
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/o8ralOQ3K/" rel="tag">动态规划</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/I7ONPRk58e/" rel="tag">算法</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/ccji-chu-zheng-li-san/" rel="next"> C/C++基础整理(三)</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
