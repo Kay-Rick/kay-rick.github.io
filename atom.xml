@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-02-24T06:00:23.961Z</updated>
+    <updated>2020-02-28T16:41:26.524Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,833 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[Spring、SpringMVC、MyBatis整合]]></title>
+        <id>https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/</id>
+        <link href="https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/">
+        </link>
+        <updated>2020-02-28T16:18:00.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>这篇文章不会教你Spring、SpringMVC、MyBatis具体的知识，而是教你如何整合这3大框架快速上手进行开发</p>
+</blockquote>
+<p>整合的项目已同步至GitHub  ==&gt; <a href="https://github.com/Kay-Rick/SSM_Strat">Click</a></p>
+<p>环境：</p>
+<ul>
+<li>JDK12 (建议JDK1.8)</li>
+<li>maven-3.6.3</li>
+<li>Tomcat 9.0.24</li>
+<li>MySQL 5.7.29</li>
+<li>Spring：5.0.2.RELEASE</li>
+<li>spring-web：5.0.2.RELEASE</li>
+<li>MyBatis：3.4.5</li>
+</ul>
+<p>架构：</p>
+<ul>
+<li>Spring 作为业务层，整合 SpringMVC 和 MyBatis，处理数据</li>
+<li>SpringMVC 作为表现层，显示数据</li>
+<li>MyBatis 作为持久层，与数据库交互</li>
+</ul>
+<p>常用网站：</p>
+<p><a href="https://mvnrepository.com">maven仓库</a></p>
+<p><a href="https://mybatis.org/mybatis-3/">MyBatis官方文档</a></p>
+<h2 id="创建maven项目">创建Maven项目</h2>
+<p>根据maven提供的archetype选择webapp</p>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj85r0zxj314f0lggp5.jpg" alt="image-20200228232831452" loading="lazy"></figure>
+<p>项目名称：可以自己命名，这里统一为SpringMVC</p>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj8rfylwj314f0lgwfh.jpg" alt="image-20200228232909755" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj93srkpj314f0lgt9e.jpg" alt="image-20200227215902509" loading="lazy"></figure>
+<p>在这里我们选择自己安装的maven目录和<code>setting.xml</code>的配置文件，最好在自己的<code>setting.xml</code>文件中配置阿里云的镜像，否则下载jar包会非常缓慢</p>
+<pre><code class="language-xml">&lt;mirrors&gt;
+     &lt;mirror&gt;
+     	&lt;id&gt;nexus-aliyun&lt;/id&gt;
+     	&lt;name&gt;Nexus aliyun&lt;/name&gt;
+     	&lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
+     	&lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
+     &lt;/mirror&gt;
+&lt;/mirrors&gt;
+</code></pre>
+<p>项目创建完成后，在右下角点 <code>Enable Auto-Import</code>，这样IDE就会自动为我们导jar包</p>
+<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj9imcomj30qq093aak.jpg" alt="image-20200228232949756" loading="lazy"></figure>
+<h2 id="配置工作区目录">配置工作区目录</h2>
+<p>创建完的Maven项目目录是这样的结构，接下来我们要进行完善</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjaxh0edj30c30b10sy.jpg" alt="image-20200227220609312" loading="lazy">在</p>
+<p>main目录下，创建<code>java</code>和<code>resource</code></p>
+<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjba9ze1j30bj04f3yd.jpg" alt="image-20200227220748872" loading="lazy"></figure>
+<p>如果因为IDE版本问题，创建目录没有提示的情况下，就创建两个普通的目录取名<code>java</code>和<code>resource</code>，然后右击创建出的目录，对应<code>java</code>文件夹是<code>Source Root</code>，<code>resource</code>文件夹是<code>Resources Root</code></p>
+<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjbmijcyj30mx0s10vz.jpg" alt="image-20200227220954878" loading="lazy"></figure>
+<p>在<code>java</code>目录下面创建这样几个包 <code>Controller</code>控制器所在包、<code>dao</code>数据库访问接口包、<code>entity</code>对应<code>JavaBean</code>所在包，<code>Service</code>对应一些业务逻辑编写</p>
+<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjbyg4apj30ar09smxa.jpg" alt="image-20200227221521712" loading="lazy"></figure>
+<h2 id="配置pomxml文件">配置pom.xml文件</h2>
+<p>配置<code>properties</code>下面的目录，方便我们对依赖<code>jar</code>包版本的管理</p>
+<pre><code class="language-xml">&lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;spring.version&gt;5.0.2.RELEASE&lt;/spring.version&gt;
+    &lt;slf4j.version&gt;1.6.6&lt;/slf4j.version&gt;
+    &lt;log4j.version&gt;1.2.12&lt;/log4j.version&gt;
+    &lt;mysql.version&gt;5.1.6&lt;/mysql.version&gt;
+    &lt;mybatis.version&gt;3.4.5&lt;/mybatis.version&gt;
+    &lt;jackson.version&gt;2.9.8&lt;/jackson.version&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>配置<code>dependencies</code></p>
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- spring --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+      &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+      &lt;version&gt;1.6.8&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-tx&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+      &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.12&lt;/version&gt;
+      &lt;scope&gt;compile&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;mysql&lt;/groupId&gt;
+      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+      &lt;version&gt;${mysql.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+      &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+      &lt;version&gt;2.5&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+      &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+      &lt;version&gt;2.0&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;jstl&lt;/groupId&gt;
+      &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+      &lt;version&gt;1.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- log start --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;log4j&lt;/groupId&gt;
+      &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+      &lt;version&gt;${log4j.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+      &lt;version&gt;${slf4j.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+      &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+      &lt;version&gt;${slf4j.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- log end --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+      &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+      &lt;version&gt;${mybatis.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+      &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+      &lt;version&gt;1.3.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;c3p0&lt;/groupId&gt;
+      &lt;artifactId&gt;c3p0&lt;/artifactId&gt;
+      &lt;version&gt;0.9.1.2&lt;/version&gt;
+      &lt;type&gt;jar&lt;/type&gt;
+      &lt;scope&gt;compile&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!-- json begin --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+        &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+        &lt;version&gt;${jackson.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+	&lt;dependency&gt;
+      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+      &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+      &lt;version&gt;${jackson.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+      &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
+      &lt;version&gt;${jackson.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- json end --&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="配置resource和webxml">配置resource和Web.xml</h2>
+<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjdhfnmhj30wf0mmn0m.jpg" alt="image-20200227222330196" loading="lazy"></figure>
+<p>在<code>resource</code>目录下创建2个<code>xml</code>文件和1个<code>properties</code>的文件，分别是：</p>
+<p><code>ApplicationContext.xml</code>   ===&gt;  Spring的配置文件</p>
+<p><code>log4j.properties</code>  ===&gt;  日志的相关配置</p>
+<p><code>springmvc.xml</code>	===&gt;   SpringMVC的配置文件</p>
+<figure data-type="image" tabindex="9"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjedyz78j30b002zq2t.jpg" alt="image-20200227222437061" loading="lazy"></figure>
+<h3 id="applicationcontextxml">ApplicationContext.xml</h3>
+<p><strong>根据自己配置需要修改部分请一定看注释</strong></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
+
+    &lt;!--配置扫描注解，进行依赖注入--&gt;
+    &lt;context:component-scan base-package=&quot;com.rick&quot;&gt;
+        &lt;!-- 配置要忽略的注解Controller交给SpringMVC去控制 --&gt;
+        &lt;context:exclude-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;
+    &lt;/context:component-scan&gt;
+
+    &lt;!--Spring整合MyBatis--&gt;
+    
+    &lt;!-- 配置数据源 根据自己的mysql具体数据库进行配置，我这里对应的ssm数据库，root用户，密码 257098 --&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
+        &lt;property name=&quot;driverClass&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot;/&gt;
+        &lt;property name=&quot;user&quot; value=&quot;root&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;257098&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置 SqlSession 工厂 --&gt;
+    &lt;bean id=&quot;sqlSessionFactoryBean&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;!-- 引入数据源 --&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 配置 Dao 接口所在类--&gt;
+    &lt;!-- 根据自己dao包所在位置进行配置 --&gt;
+    &lt;bean id=&quot;mapperScanner&quot; class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+        &lt;property name=&quot;basePackage&quot; value=&quot;com.rick.dao&quot;/&gt;
+    &lt;/bean&gt;
+	
+&lt;/beans&gt;
+</code></pre>
+<h3 id="log4jproperties">log4j.properties</h3>
+<p>直接复制</p>
+<pre><code class="language-properties"># Set root category priority to INFO and its only appender to CONSOLE.
+#log4j.rootCategory=INFO, CONSOLE            debug   info   warn error fatal
+log4j.rootCategory=info, CONSOLE, LOGFILE
+
+# Set the enterprise logger category to FATAL and its only appender to CONSOLE.
+log4j.logger.org.apache.axis.enterprise=FATAL, CONSOLE
+
+# CONSOLE is set to be a ConsoleAppender using a PatternLayout.
+log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
+log4j.appender.CONSOLE.layout.ConversionPatern=%d{ISO8601} %-6r [%15.15t] %-5p %30.30c %x - %m\n
+t
+# LOGFILE is set to be a File appender using a PatternLayout.
+log4j.appender.LOGFILE=org.apache.log4j.FileAppender
+log4j.appender.LOGFILE.File=d:\axis.log
+log4j.appender.LOGFILE.Append=true
+log4j.appender.LOGFILE.layout=org.apache.log4j.PatternLayout
+log4j.appender.LOGFILE.layout.ConversionPattern=%d{ISO8601} %-6r [%15.15t] %-5p %30.30c %x - %m\n
+</code></pre>
+<h3 id="springmvcxml">springmvc.xml</h3>
+<p><strong>有部分需自己修改看注释</strong></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;!-- 扫描Controller的注解 ==&gt; 对应自己的包 --&gt;
+    &lt;context:component-scan base-package=&quot;com.rick&quot;&gt;
+        &lt;!-- 只扫描 controller--&gt;
+        &lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;
+    &lt;/context:component-scan&gt;
+
+    &lt;!-- 配置视图解析器 --&gt;
+    &lt;bean id=&quot;internalResourceViewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/pages/&quot;/&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!-- 开启对SpringMVC注解的支持 --&gt;
+    &lt;mvc:annotation-driven/&gt;
+
+&lt;/beans&gt;
+</code></pre>
+<h3 id="webxml">web.xml</h3>
+<pre><code class="language-xml">&lt;!DOCTYPE web-app PUBLIC
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;
+ &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot; &gt;
+
+&lt;web-app&gt;
+  &lt;display-name&gt;Archetype Created Web Application&lt;/display-name&gt;
+
+  &lt;context-param&gt;
+    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+    &lt;param-value&gt;classpath:ApplicationContext.xml&lt;/param-value&gt;
+  &lt;/context-param&gt;
+  &lt;!-- 将过滤器配置在servlet前面，否则IDE会报错 --&gt;
+  &lt;!-- 配置过滤器，解决中文乱码问题--&gt;
+  &lt;filter&gt;
+    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;!-- 字符集初始化为 UTF-8 --&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;encoding&lt;/param-name&gt;
+      &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+  &lt;/filter&gt;
+
+  &lt;filter-mapping&gt;
+    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+  &lt;/filter-mapping&gt;
+
+  &lt;!-- 配置 spring 的监听器，默认只加载 WEB-INF 目录下的 applicationContext.xml 配置文件 --&gt;
+  &lt;listener&gt;
+    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+
+  &lt;!-- 配置DispatcherServlet前端控制器--&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;!-- 加载 springmvc.xml --&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+      &lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;!-- 启动服务器，加载该servlet --&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+
+&lt;/web-app&gt;
+
+</code></pre>
+<p>在配置web.xml的时候这里注意几个点根据自己的命名来确定：</p>
+<figure data-type="image" tabindex="10"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjgbyo7jj316505zdgi.jpg" alt="image-20200228134733041" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjgj60v9j31dh0dwjtl.jpg" alt="image-20200228134902457" loading="lazy"></figure>
+<h2 id="创建数据库表-实体类">创建数据库表、实体类</h2>
+<p>在MySQL数据库管理工具中运行以下SQL创建数据库（该数据库定义了主键递增）</p>
+<pre><code class="language-sql">CREATE DATABASE ssm;
+USE ssm;
+CREATE TABLE user(
+	id int primary key auto_increment,
+	name varchar(20),
+	age int 
+);
+INSERT INTO user(name,age) VALUES('aaa',12);
+INSERT INTO user(name,age) VALUES('bbb',34);
+INSERT INTO user(name,age) VALUES('ccc',56);
+</code></pre>
+<h3 id="entity">entity</h3>
+<p>在entity包下创建User类</p>
+<pre><code class="language-java">package com.rick.entity;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 13:55
+ * @Description:
+ */
+public class User {
+    private Integer id;
+    private String name;
+    private Integer age;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;User{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, age=&quot; + age +
+                '}';
+    }
+}
+</code></pre>
+<h3 id="dao">dao</h3>
+<p>dao包下创建数据库访问接口UserDao，并声明注解 @Repository交由Spring进行管理，声明@Mapper 对应MyBatis的SqlMapper</p>
+<pre><code class="language-java">package com.rick.dao;
+
+import com.rick.entity.User;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 13:58
+ * @Description:
+ */
+@Repository
+@Mapper
+public interface UserDao {
+
+    @Insert(&quot;insert into user(name,age) values(#{name},#{age})&quot;)
+    public void insertUser(User user);
+
+    @Select(&quot;select * from user&quot;)
+    public List&lt;User&gt; queryAll();
+}
+
+</code></pre>
+<h3 id="service">Service</h3>
+<p><code>Service</code>包下面创建接口<code>UserService</code>和实现类<code>UserServiceImp</code></p>
+<figure data-type="image" tabindex="12"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjhbsv6tj30bc02wa9x.jpg" alt="image-20200228140845755" loading="lazy"></figure>
+<p><code>UserService</code>中定义逻辑接口</p>
+<pre><code class="language-java">package com.rick.Service;
+
+import com.rick.entity.User;
+
+import java.util.List;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 14:04
+ * @Description:
+ */
+public interface UserService {
+    public void insertUser(User user);
+    public List&lt;User&gt; queryAll();
+}
+</code></pre>
+<p>实现类<code>UserServiceImp</code>声明注解<code>@Service</code>交由Spring管理</p>
+<pre><code class="language-java">package com.rick.Service.ServiceImp;
+
+import com.rick.Service.UserService;
+import com.rick.dao.UserDao;
+import com.rick.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 14:06
+ * @Description:
+ */
+@Service
+public class UserServiceImp implements UserService {
+    @Autowired
+    private UserDao userDao;
+
+    @Override
+    public void insertUser(User user) {
+        userDao.insertUser(user);
+        System.out.println(&quot;插入User后：&quot;);
+        System.out.println(userDao.queryAll());
+    }
+
+    @Override
+    public List&lt;User&gt; queryAll() {
+        System.out.println(&quot;Service查询全部数据：&quot;);
+        System.out.println(userDao.queryAll());
+        return userDao.queryAll();
+    }
+}
+</code></pre>
+<h3 id="controller">Controller</h3>
+<p><code>UserController</code>声明注解 <code>@Controller</code>交由Spring管理，该类下面第一级路由信息<code>@RequestMapping(&quot;/User&quot;) @ResponseBody</code>使方法的返回的数据为<code>JSON</code>格式</p>
+<pre><code class="language-java">package com.rick.Controller;
+
+import com.rick.Service.ServiceImp.UserServiceImp;
+import com.rick.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 14:15
+ * @Description:
+ */
+@Controller
+@RequestMapping(&quot;/User&quot;)
+@ResponseBody
+public class UserController {
+    @Autowired
+    private UserServiceImp userServiceImp;
+
+    @RequestMapping(&quot;/insert&quot;)
+    public String insertUser(User user){
+        userServiceImp.insertUser(user);
+        return user.toString();
+    }
+
+    @RequestMapping(&quot;/getAll&quot;)
+    public String getAll(){
+        return userServiceImp.queryAll().toString();
+    }
+}
+</code></pre>
+<h2 id="配置tomcat服务器">配置Tomcat服务器</h2>
+<figure data-type="image" tabindex="13"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjijiamvj30d301zt8i.jpg" alt="image-20200228142306310" loading="lazy"></figure>
+<figure data-type="image" tabindex="14"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjiso3gxj30gn0ny0u3.jpg" alt="image-20200228142331031" loading="lazy"></figure>
+<figure data-type="image" tabindex="15"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjj1oiixj311d0ni0ti.jpg" alt="image-20200228142443115" loading="lazy"></figure>
+<p>选择Artifact</p>
+<figure data-type="image" tabindex="16"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjjepvs3j30b603dq2r.jpg" alt="image-20200228142458910" loading="lazy"></figure>
+<figure data-type="image" tabindex="17"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjjm8eewj30gk0h7mxe.jpg" alt="image-20200228142550819" loading="lazy"></figure>
+<p>在这里可以配置整个这个SpringMVC项目的URL，默认是<code>http://localhost:8080/SpringMVC_war/</code></p>
+<figure data-type="image" tabindex="18"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjk3n0pcj30pp0ef3ym.jpg" alt="image-20200228142613317" loading="lazy"></figure>
+<figure data-type="image" tabindex="19"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkb0vimj30pn0k4gmj.jpg" alt="image-20200228142748311" loading="lazy"></figure>
+<h2 id="启动项目">启动项目</h2>
+<figure data-type="image" tabindex="20"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkijhzej30mu05g0st.jpg" alt="image-20200228143009892" loading="lazy"></figure>
+<p>启动后先是自动跳转到<code>index.jsp</code>页面下</p>
+<figure data-type="image" tabindex="21"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkpf113j30ka06udfy.jpg" alt="image-20200228143555807" loading="lazy"></figure>
+<h3 id="查询">查询</h3>
+<p>根据自己配置的路由信息即可进行查询，这里就以<code>JSON</code>数据的格式返回</p>
+<figure data-type="image" tabindex="22"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkwqx1ej30s904p0sx.jpg" alt="image-20200228143724347" loading="lazy"></figure>
+<h3 id="插入">插入</h3>
+<p>由于我们定义了自增主键id，因此插入数据库中的数据<code>id</code>是根据数据库自增的，并不是<code>null</code></p>
+<figure data-type="image" tabindex="23"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjl6ek34j30ml04cwem.jpg" alt="image-20200228144522652" loading="lazy"></figure>
+<blockquote>
+<p>至此，一个SSM的项目就可以运行起来，但仍有一功能不够完善，还需一些额外配置</p>
+</blockquote>
+<h2 id="异常处理">异常处理</h2>
+<p>在项目下创建一个存放自定义异常处理类的包 <code>Exception</code>和<code>config</code></p>
+<figure data-type="image" tabindex="24"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjmj4543j30bn05q747.jpg" alt="image-20200228153208748" loading="lazy"></figure>
+<p>在<code>Exception</code>包下面创建异常处理类信息</p>
+<pre><code class="language-java">package com.rick.Exception;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 15:12
+ * @Description: 定义异常信息
+ */
+public class SysException extends Exception {
+    private String message;
+
+    public SysException(String message) {
+        this.message = message;
+    }
+
+    public SysException() {
+        
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
+</code></pre>
+<p><code>config</code>包下面创建类进行异常统一处理跳转</p>
+<pre><code class="language-java">package com.rick.config;
+
+import com.rick.Exception.SysException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 15:33
+ * @Description: 统一异常处理
+ */
+@Component
+public class MyExceptionResolver implements HandlerExceptionResolver {
+    @Override
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        SysException se = null;
+        if (e instanceof SysException){
+            se = (SysException)e;
+        }else {
+            se = new SysException(&quot;系统正在维护中&quot;);
+        }
+        System.out.println(se.getMessage());
+        ModelAndView mv = new ModelAndView();
+        mv.addObject(&quot;errorMsg&quot;,se.getMessage());
+        // 指定跳转到 WEB-INF/pages/error.jsp
+        mv.setViewName(&quot;error&quot;);
+        return  mv;
+    }
+}
+</code></pre>
+<p>创建<code>error.jsp</code></p>
+<figure data-type="image" tabindex="25"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjo21vuwj30b604lt8n.jpg" alt="image-20200228155033517" loading="lazy"></figure>
+<pre><code class="language-jsp">&lt;%--
+  Created by IntelliJ IDEA.
+  User: Rick
+  Date: 2020/2/28
+  Time: 15:38
+  To change this template use File | Settings | File Templates.
+--%&gt;
+&lt;%--不忽略EL表达式--%&gt;
+&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; isELIgnored=&quot;false&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Error&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Error&lt;/h1&gt;
+    &lt;h2&gt;${errorMsg}&lt;/h2&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>在<code>springmvc.xml</code>中配置异常处理器</p>
+<pre><code class="language-xml">&lt;!-- 对应自己写的异常类 --&gt; 
+&lt;bean id=&quot;sysException&quot; class=&quot;com.rick.Exception.SysException&quot;/&gt;
+</code></pre>
+<p>当我们<code>Controller</code>中方法在调用时抛出异常就会被捕获</p>
+<pre><code class="language-java">@RequestMapping(&quot;/hello&quot;)
+public void hello(){
+    int a = 10/0;
+    System.out.println(a);
+}
+</code></pre>
+<figure data-type="image" tabindex="26"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjoaslz6j30jk05l74d.jpg" alt="image-20200228160859287" loading="lazy"></figure>
+<h2 id="配置过滤器和拦截器">配置过滤器和拦截器</h2>
+<p>通过SpringMVC配置过滤器放行静态资源</p>
+<figure data-type="image" tabindex="27"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjoocqmrj30a204za9z.jpg" alt="image-20200228172146426" loading="lazy"></figure>
+<p>在<code>springmvc.xml</code>中进行配置</p>
+<pre><code class="language-xml">&lt;!--配置哪些资源不拦截--&gt;
+&lt;mvc:resources mapping=&quot;/js/**&quot; location=&quot;/js/&quot;/&gt;
+&lt;mvc:resources mapping=&quot;/images/**&quot; location=&quot;/images/&quot;/&gt;
+&lt;mvc:resources mapping=&quot;/css/**&quot; location=&quot;/css/&quot;/&gt;
+</code></pre>
+<p><strong>配置拦截器（AOP思想）</strong></p>
+<p>在<code>config</code>包下面创建<code>MyInterceptor</code></p>
+<pre><code class="language-java">package com.rick.config;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 16:55
+ * @Description: 拦截器
+ */
+public class MyInterceptor implements HandlerInterceptor {
+    /**
+     * Controller方法执行之前的预处理，决定是否放行，可用于登录拦截是否放行
+     * @param request
+     * @param response
+     * @param handler
+     * @return 是否放行(true/false)
+     * @throws Exception
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(&quot;preHandle执行了---Controller执行之前&quot;);
+//        决定是否拦截跳转
+//        request.getRequestDispatcher(&quot;/WEB-INF/pages/error.jsp&quot;).forward(request,response);
+        return true;
+    }
+
+    /**
+     * Controller方法执行之后，DispatcherServlet视图渲染之前执行，可以对ModelAndView进行操作
+     * @param request
+     * @param response
+     * @param handler
+     * @param modelAndView
+     * @throws Exception
+     */
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        System.out.println(&quot;postHandle执行了---Controller方法执行之后，DispatcherServlet视图渲染之前执行&quot;);
+        //        request.getRequestDispatcher(&quot;/WEB-INF/pages/error.jsp&quot;).forward(request,response);
+    }
+
+    /**
+     * DispatcherServlet视图渲染结束后执行，一般进行资源的释放
+     * @param request
+     * @param response
+     * @param handler
+     * @param ex
+     * @throws Exception
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        System.out.println(&quot;afterCompletion执行了---最后&quot;);
+    }
+}
+</code></pre>
+<p>在<code>springmvc.xml</code>中进行配置</p>
+<pre><code class="language-xml">&lt;mvc:interceptors&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;!--需要拦截的方法--&gt;
+        &lt;mvc:mapping path=&quot;/User/**&quot;/&gt;
+        &lt;!--不拦截的方法 &lt;mvc:exclude-mapping path=&quot;&quot;/&gt;--&gt;
+
+        &lt;!--配置拦截器对象--&gt;
+        &lt;bean class=&quot;com.rick.config.MyInterceptor&quot;/&gt;
+	&lt;/mvc:interceptor&gt;
+	&lt;!-- 配置多个拦截器时，按顺序配置即可 --&gt;
+&lt;/mvc:interceptors&gt;
+</code></pre>
+<p>当我执行<code>User</code>中方法时就可以看到拦截的效果：</p>
+<figure data-type="image" tabindex="28"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjpgn6hsj30vk0a1q3n.jpg" alt="image-20200228173013784" loading="lazy"></figure>
+<h2 id="mybatis中使用mapperxml配置">MyBatis中使用Mapper.xml配置</h2>
+<p>对于简单<code>SQL</code>语句来说，注解使代码显得更加简洁,使用<code>@Mapper</code>和<code>@Repository</code>比较方便，但当我们涉及到一些复杂<code>SQL</code>语句需要传参和动态<code>SQL</code>的时候，注解就会显得比较麻烦，此时应该采用<code>xml</code>的语句映射方式</p>
+<p>我们在<code>dao</code>下面创建测试的接口<code>UserTestDao</code>  <strong>!!!注意：我们不需要在接口上声明任何注解</strong></p>
+<pre><code class="language-java">package com.rick.dao;
+
+import com.rick.entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * @Author: Rick
+ * @Date: 2020/2/28 18:01
+ * @Description:
+ */
+public interface UserTestDao {
+    public void insertUser(User user);
+    public List&lt;User&gt; queryAll();
+}
+</code></pre>
+<p>在<code>resource</code>目录下面创建<code>mapper</code>目录并在下面创建<code>UserTestDao.xml</code> 和<code>mybatis.xml</code></p>
+<figure data-type="image" tabindex="29"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjr296n6j30c706zdfv.jpg" alt="image-20200228224328615" loading="lazy"></figure>
+<p><code>mybatis.xml</code>	==&gt; 这里面的<code>settings</code> 具体细节<strong>可查官方文档进行配置</strong>，为了简便，我们这里就不做配置</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+
+&lt;configuration&gt;
+
+&lt;/configuration&gt;
+</code></pre>
+<p><code>UserMapper.xml</code></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper namespace=&quot;com.rick.dao.UserTestDao&quot;&gt;
+    &lt;!--
+		mapper接口的方法名称要和mapper映射文件的statement的id一致。
+		mapper接口的方法参数类型要和mapper映射文件的statement的parameterType的值一致，而且它的参数是一个。
+		mapper接口的方法返回值类型要和mapper映射文件的statement的resultType的值一致。
+	 --&gt;
+    &lt;!--parameterType可以省略--&gt;
+    &lt;insert id=&quot;insertUser&quot; parameterType=&quot;com.rick.entity.User&quot;&gt;
+        insert into user(name, age) values (#{name}, #{age})
+    &lt;/insert&gt;
+
+    &lt;!--注意如果返回的是集合，那应该设置为集合包含的类型，而不是集合本身。--&gt;
+    &lt;select id=&quot;queryAll&quot; resultType=&quot;com.rick.entity.User&quot;&gt;
+        select * from user
+    &lt;/select&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+<p><strong>注意在配置对象参数和返回参数时，一定要配上java目录下面的引用，我这里是 com.rick.entity.User，若只写User，那么在编译时会找不到User类而报错</strong></p>
+<p><strong>ApplicationContext.xml中配置SqlSession 工厂加入mapperLocations和configLocation</strong></p>
+<pre><code class="language-xml">&lt;!-- 配置 SqlSession 工厂 --&gt;
+&lt;bean id=&quot;sqlSessionFactoryBean&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+    &lt;!-- 引入数据源 --&gt;
+    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+    &lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:mapper/*.xml&quot;/&gt;
+    &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis.xml&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>至此，<code>UserTestDao</code>便与<code>UserDao</code>的功能一样了，只不过<code>UserTsetDao</code>是通过mapper和xml进行配置，<code>UserDao</code>直接通过注解方式进行配置，各有优点，根据实际情况合理选用一种</p>
+<h2 id="配置jdbc事务">配置JDBC事务</h2>
+<p>配置<code>ApplicationContext.xml</code></p>
+<pre><code class="language-xml">&lt;!--开启Spring的事务--&gt;
+    &lt;!--配置事务管理器--&gt;
+    &lt;bean id=&quot;dataSourceTransactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--启用Spring事务的注解功能--&gt;
+    &lt;tx:annotation-driven transaction-manager=&quot;dataSourceTransactionManager&quot;/&gt;
+</code></pre>
+<p>然后们就可以在业务<code>Service</code>层进行声明注解<code>@Transactional</code></p>
+<figure data-type="image" tabindex="30"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjs9a31zj30nj03r749.jpg" alt="image-20200228230539790" loading="lazy"></figure>
+<p>至此，一个较为完整的SSM整合基本完成~</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[动态规划(入门篇)]]></title>
         <id>https://kay-rick.github.io/post/dong-tai-gui-hua-ru-men-pian/</id>
