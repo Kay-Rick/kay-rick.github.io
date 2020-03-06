@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-02-28T16:41:26.524Z</updated>
+    <updated>2020-03-06T13:05:40.919Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,286 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[Redis基础篇(一)]]></title>
+        <id>https://kay-rick.github.io/post/redis-ji-chu-pian-yi/</id>
+        <link href="https://kay-rick.github.io/post/redis-ji-chu-pian-yi/">
+        </link>
+        <updated>2020-03-06T12:58:14.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>Redis 是一个开源，高级的键值存储和一个适用的解决方案，用于构建高性能，可扩展的 Web 应用程序。Redis 也被作者戏称为数据结构服务器 ，这意味着使用者可以通过一些命令，基于带有 TCP 套接字的简单服务器-客户端协议来访问一组可变数据结构 。(在 Redis 中都采用键值对的方式，只不过对应的数据结构不一样罢了)</p>
+</blockquote>
+<h2 id="redis是什么">Redis是什么?</h2>
+<ul>
+<li>
+<p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、<strong>Key-Value数据库</strong>，并提供多种语言的API</p>
+<p>​	1、Redis安装在磁盘</p>
+<p>​	2、<strong>Redis数据存储在内存</strong>。</p>
+</li>
+<li>
+<p>Redis解决什么问题</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zzdqdpa6j30ne0xmwgl.jpg" alt="image-20191217201429438" style="zoom:33%;" />
+<p>​	先从Redis缓存查询数据，如果没有则到MySQL中查</p>
+</li>
+<li>
+<p>Redis特性</p>
+<ul>
+<li>
+<p>速度快</p>
+</li>
+<li>
+<p>键值对数据结构服务器</p>
+</li>
+<li>
+<p>丰富的功能</p>
+</li>
+<li>
+<p>简单稳定  --- 单线程</p>
+</li>
+<li>
+<p>持久化</p>
+</li>
+<li>
+<p>高可用、分布式转移</p>
+</li>
+<li>
+<p>客户端语言多</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Redis使用场景</p>
+<ol>
+<li>
+<p>缓存数据库</p>
+</li>
+<li>
+<p>排行榜</p>
+</li>
+<li>
+<p>计数器应用</p>
+</li>
+<li>
+<p>社交网络</p>
+</li>
+<li>
+<p>消息队列</p>
+</li>
+<li>
+<p>其他场景</p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="redis数据类型">Redis数据类型?</h2>
+<h3 id="string">String</h3>
+<ul>
+<li>
+<p><code>String</code>类型 （实际上可以是<strong>字符串（包括<code>XML JSON</code>）</strong>，还有数字（整形 浮点数），<strong>二进制（图片 音频 视频）</strong>，<strong>最大不能超过512MB</strong>）</p>
+<pre><code>set age 18	(18)
+incr age		(19)
+decr age		(18)
+incrby age 2	(20)
+decrby age 2	(18)
+</code></pre>
+</li>
+<li>
+<p>批量设值 <code>mset</code></p>
+<pre><code>mset name Rick age 20
+</code></pre>
+</li>
+</ul>
+<p>​		批量设置，可<strong>减少IO进而提高效率</strong></p>
+<ul>
+<li>
+<p>设置过期时间</p>
+<pre><code>set age 23 ex 10	// 10s后过期 px 10000ms过期
+</code></pre>
+</li>
+<li>
+<p>常用用法</p>
+<pre><code>set name Rick
+append name Kay
+get name			(RickKay)
+</code></pre>
+</li>
+<li>
+<p>String应用场景</p>
+<ul>
+<li>
+<p>计数器</p>
+<pre><code>INCR article:readcount:{文章id}		// 统计某文章的阅读量,用户进来点一次进行加1
+GET article:readcount:{文章id}		// 获得某文章的阅读量
+</code></pre>
+<pre><code>INCR article:readcount:1001
+INCR article:readcount:1001
+INCR article:readcount:1001
+INCR article:readcount:1001
+GET article:readcount:1001		(4)
+</code></pre>
+</li>
+<li>
+<p>Web集群session共享</p>
+<p>Spring session + redis实现session共享</p>
+</li>
+<li>
+<p>分布式系统全局序列号</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="hash">Hash</h3>
+<ul>
+<li>
+<p>Hash <strong>哈希hash是一个string类型的field和value的映射表，hash特适合用于存储对象</strong></p>
+<p>存储一个用户(user)信息：1主键</p>
+<p><code>hset</code></p>
+<pre><code>hset user:1 name Rick age 20
+hgetall user:1		(&quot;name&quot; &quot;Rick&quot; &quot;age&quot; &quot;20&quot;)
+hget user:1 age					(&quot;20&quot;)
+</code></pre>
+<p><code>hmset</code></p>
+<pre><code>hmset user:2 name Kay age 20 sex male
+hmget user:2 name age sex			(&quot;Kay&quot; &quot;20&quot; &quot;male&quot;)
+hgetall user:2	 (&quot;name&quot; &quot;Kay&quot; &quot;age&quot; &quot;18&quot; &quot;sex&quot; &quot;male&quot;)
+hvals user:2				(&quot;Kay&quot; &quot;18&quot; &quot;male&quot;)
+</code></pre>
+</li>
+<li>
+<p>三种方式存储用户信息的优缺点</p>
+<ul>
+<li>
+<p>原生：<code>set user:1:name james</code></p>
+<p>​			<code>set user:1:age 23</code></p>
+<p>​			<code>set user:1:sex boy</code></p>
+<p>​	优点：简单直观，每个键对应一个值</p>
+<p>​	缺点：键数过多，占用内存多，用户信息过于分散，不用于生产环境</p>
+</li>
+<li>
+<p>将对象序列化存入Redis  <code>set user:1 serialize(userInfo)</code></p>
+<p>​	优点： 编程简单</p>
+<p>​    缺点：序列化和反序列化有开销</p>
+</li>
+<li>
+<p>使用Hash类型</p>
+<p>​	优点：简单直观，使用合理可减少内存空间消耗</p>
+<p>​	缺点：要控制ziplist与hashtable两种编码转换，且hashtable会消耗更多内存erialize</p>
+</li>
+</ul>
+</li>
+<li>
+<p>应用场景</p>
+<ul>
+<li>
+<p><strong>电商购物车</strong></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gci79x5onoj30ju128k57.jpg" alt="image-20200304210814747" style="zoom:50%;" />
+<p>以用户id为key；商品id为filed；商品数量为value</p>
+<p>例如用户1001的购物车的相关操作：</p>
+<p>添加商品 ---&gt; <code>hset cart:1001 10088 1</code></p>
+<p>增加数量 ---&gt; <code>hincrby cart:1001 10088 1</code></p>
+<p>商品总数 ---&gt;<code>hlen cart:1001</code></p>
+<p>删除商品 ---&gt; <code>hdel cart:1001 10088</code></p>
+<p>获取购物车所有商品 ---&gt; <code>hgetall cart:1001</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="list">List</h3>
+<ul>
+<li>
+<p><code>rpush</code>和<code>lpush</code></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga1031flckj31me0o2gnn.jpg" alt="image-20191218172422826" style="zoom: 33%;" />
+<p><code>rpush</code>：在<code>list</code>的尾部追加元素</p>
+<p><code>lpush</code>：在<code>list</code>的头部追加元素</p>
+<p><code>lrange key start stop</code>	：返回列表<code>key</code>中指定区间内的元素，区间以偏移量<code>start</code>和<code>stop</code>指定</p>
+<pre><code>rpush str a b c
+lrange str 0 -1					(&quot;a&quot; &quot;b&quot; &quot;c&quot;)
+lpush str1 a b c
+lrange str1 0 -1					(&quot;c&quot; &quot;b&quot; &quot;a&quot;)
+</code></pre>
+</li>
+<li>
+<p>因为有序，可以通过索引下标获取元素或某个范围内元素列表</p>
+<p>​	<code>llen</code>  获取当前列表长度</p>
+<p>​	<code>lpop</code> 把左边第一个元素删掉</p>
+<p>​	<code>rpop</code> 把右边第一个元素删掉</p>
+<pre><code>llen str			(3)
+lpop str			(a)
+rpop str			(c)
+</code></pre>
+</li>
+<li>
+<p>应用场景</p>
+<ul>
+<li>
+<p><code>Stack	： LPUSH + LPOP ==&gt; FILO</code></p>
+</li>
+<li>
+<p><code>Queue：LPUSH+ RPOP</code></p>
+</li>
+<li>
+<p><code>Blocking MQ ： LPUSH + BRPOP</code></p>
+</li>
+<li>
+<p><strong>微博和微信公众号消息流</strong></p>
+<p>公众号A发微博，消息id为10018</p>
+<p><code>LPUSH msg:1001 10018</code></p>
+<p>公众号B发微博，消息id为10086</p>
+<p><code>LPUSH msg:1001 10086</code></p>
+<p>查看最新微博消息</p>
+<p><code>LRANGE msg:rick 0 5</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="set">Set</h3>
+<ul>
+<li><code>sadd sinter</code>(求交集)</li>
+</ul>
+<p>保存多元素，与列表不一样的是<strong>不允许有重复元素</strong>，且<strong>集合是无序</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga10bvy447j31d60o2dij.jpg" alt="image-20191218173253651" style="zoom:25%;" />
+<pre><code>sadd user a b c					(3)
+sadd user a						(0)
+</code></pre>
+<ul>
+<li>
+<p>集合使用场景：</p>
+<ul>
+<li>
+<p><strong>微博微信点赞</strong></p>
+<p><code>sadd like:{消息id} {用户id}</code>	==&gt;  点赞</p>
+<p><code>srem like:{消息id} {用户id}</code>	==&gt;	取消点赞</p>
+<p><code>sismember like:{消息id} {用户id}</code>	==&gt;	检查用户是否点赞</p>
+<p><code>smembers like:{消息id}</code>		==&gt;	获取点赞的用户列表</p>
+<p><code>scard like:{消息id}</code>			==&gt;	获取点赞用户数</p>
+</li>
+<li>
+<p><strong>微信小程序抽奖</strong></p>
+<p><code>sadd key {userID}</code>		==&gt;    点击参与抽奖</p>
+<p><code>smembers key</code>			 ==&gt;	 查看参与抽奖所有用户</p>
+<p><code>srandmember key[count](抽完后不剔除) / SPOP key [count](抽完后剔除)</code>	==&gt; 	抽取<code>count</code>名中奖者</p>
+</li>
+<li>
+<p><strong>集合操作实现微博微信关注模型</strong></p>
+<p>A关注的人：ASet:  {B,C,D}</p>
+<p>B关注的人：BSet:  {A,C,D,E}</p>
+<p>C关注的人：CSet:  {A,B,E,F}</p>
+<p>A和B的共同关注（求交集）： <code>SINTER ASet BSet</code>	==&gt; {C,D}</p>
+<p>A关注的人也关注B（列举出A关注的人是否关注B）：	<code>sismember CSet B sismember DSet B</code></p>
+<p>A可能认识的人（差集）：<code>sidff ASet BSet</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="zset">Zset</h3>
+<p>有序集合，常<strong>用于排行榜</strong>，如视频网站需要对用户上传视频做排行榜，或<strong>点赞数与集合有联系，不能有重复的成员</strong></p>
+<pre><code>zadd zan 100 Rick
+zadd zan 200 kay
+zadd zan 150 Lee
+zrange zan 0 -1 withscores			(&quot;Rick&quot; &quot;100&quot; &quot;Lee&quot; &quot;150&quot; &quot;kay&quot; &quot;200&quot;)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring、SpringMVC、MyBatis整合]]></title>
         <id>https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/</id>
