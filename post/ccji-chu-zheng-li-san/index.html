@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>C/C++基础整理(三) | Rick</title>	
+<title>C/C++基础整理（三） | Rick</title>	
 
 <link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
 <script type="text/javascript">
@@ -146,7 +146,7 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">C/C++基础整理(三)</h1>
+			<h1 class="wow swing entry-title">C/C++基础整理（三）</h1>
 <div class="entry-meta">
 <div class="wow bounce">
 	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-20 22:22:33" itemprop="datePublished" pubdate="">2020-02-20</time></i>
@@ -891,6 +891,73 @@ stod如果是非法输入:
 <p><code>unordered_map</code> 在头文件<code>#include &lt;unordered_map&gt;</code> 中</p>
 <p><code>unordered_set</code> 在头文件<code>#include&lt;unordered_set&gt;</code>中</p>
 <p><code>unordered_map</code> 和 <code>map</code> (或者 <code>unordered_set</code> 和 <code>set</code> )的区别是， <code>map</code> 会按照键值对的键 <code>key</code>进行排序( <code>set</code> ⾥面会按照集合中的元素⼤小进⾏排序，从小到大顺序)，而 <code>unordered_map</code> (或者 <code>unordered_set</code> )省去了这个排序的过程，如果偶尔刷题时候用 <code>map</code> 或者 <code>set</code> 超时了，可以考虑用 <code>unordered_map</code> (或者 <code>unordered_set</code> )缩短代码运行时间、提⾼代码效率~至于用法和<code>map</code> 、 <code>set</code> 是一样的</p>
+<h3 id="null和nullptr">NULL和nullptr</h3>
+<ul>
+<li>
+<p>C中的NULL</p>
+<p>在C语言中，<code>NULL</code>通常被定义为：<code>#define NULL ((void*)0)</code></p>
+<p>所以说<strong>NULL实际上是一个空指针</strong>，如果在C语言中写入以下代码，编译是没有问题的，因为在C语言中把空指针赋给int和char指针的时候，发生了隐式类型转换，把void指针转换成了相应类型的指针。</p>
+<pre><code class="language-c++">int  *pi = NULL;
+char *pc = NULL;
+</code></pre>
+</li>
+<li>
+<p>C++中的NULL</p>
+<p>但是问题来了，以上代码如果使用C++编译器来编译则是会出错的，<strong>因为C++是强类型语言</strong>，<code>void*</code>是不能隐式转换成其他类型的指针的，所以实际上编译器提供的头文件做了相应的处理：</p>
+<pre><code class="language-c++">#ifdef __cplusplus
+#define NULL 0
+#else
+#define NULL ((void *)0)
+#endif
+</code></pre>
+<p>可见，在C++中，<strong>NULL实际上是0</strong>.因为<strong>C++中不能把void*类型的指针隐式转换成其他类型的指针，所以为了结果空指针的表示问题，C++引入了0来表示空指针</strong>，这样就有了上述代码中的NULL宏定义。</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+ 
+void func(void* i)
+{
+	cout &lt;&lt; &quot;func1&quot; &lt;&lt; endl;
+}
+ 
+void func(int i)
+{
+	cout &lt;&lt; &quot;func2&quot; &lt;&lt; endl;
+}
+ 
+void main(int argc,char* argv[])
+{
+	func(NULL);				// func2
+	func(nullptr);		// func1
+	getchar();
+}
+</code></pre>
+<p>我们对函数<code>func</code>进行可重载，参数分别是<code>void*</code>类型和<code>int</code>类型，但是运行结果却与我们使用<code>NULL</code>的初衷是相违背的，因为我们本来是想用<code>NULL</code>来代替空指针，但是在将<code>NULL</code>输入到函数中时，它却选择了<code>int</code>形参这个函数版本，所以是有问题的，这就是用<code>NULL</code>代替空指针在<code>C++</code>程序中的二义性。</p>
+</li>
+<li>
+<p><code>C++</code>中的<code>nullptr</code></p>
+<p>为解决<code>NULL</code>代指空指针存在的二义性问题，在<code>C++11</code>版本(2011年发布)中特意引入了<code>nullptr</code>这一新的关键字来代指空指针，从上面的例子中我们可以看到，使用<code>nullptr</code>作为实参，确实选择了正确的以<code>void*</code>作为形参的函数版本。</p>
+</li>
+<li>
+<p><strong>总结</strong></p>
+<pre><code>NULL在C++中就是0，这是因为在C++中void* 类型是不允许隐式转换成其他类型的，所以之前C++中用0来代表空指针，但是在重载整形的情况下，会出现上述的问题。所以，C++11加入了nullptr，可以保证在任何情况下都代表空指针，而不会出现上述的情况，因此，建议以后还是都用nullptr替代NULL吧，而NULL就当做0使用。
+</code></pre>
+</li>
+</ul>
+<h2 id="c内存分配">C++内存分配</h2>
+<h3 id="newdelete">new/delete</h3>
+<ul>
+<li><code>new/delete</code>是<code>c++</code>中的关键字</li>
+<li>使用<code>new</code>操作符申请内存分配时<strong>无须指定内存块的大小</strong>，编译器会根据类型信息自行计算</li>
+<li><code>new</code>操作符内存分配成功时，<strong>返回的是对象类型的指针，类型严格与对象匹配</strong>，无须进行类型转换，故<code>new</code>是符合类型安全性的操作符</li>
+<li><code>new</code>内存分配失败时，会抛出<code>bac_alloc</code>异常</li>
+</ul>
+<h3 id="mallocfree">malloc/free</h3>
+<ul>
+<li><code>malloc/free</code>是<code>c</code>中的系统函数，当然c++中也支持<code>malloc/free</code>,不过效率不及<code>new/delete</code></li>
+<li><code>malloc</code>则需要显式地指出所需内存的尺寸</li>
+<li><code>malloc</code>内存分配成功则是返回<code>void *</code> ，需要通过强制类型转换将<code>void*</code>指针转换成我们需要的类型</li>
+<li><code>malloc</code>分配内存失败时返回<code>NULL</code></li>
+</ul>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -906,10 +973,10 @@ stod如果是非法输入:
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/dong-tai-gui-hua-ru-men-pian/" rel="prev"> 动态规划(入门篇)</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/dong-tai-gui-hua-ru-men-pian/" rel="prev"> 动态规划（入门篇）</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/ccji-chu-zheng-li-er/" rel="next"> C/C++基础整理(二）</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/ccji-chu-zheng-li-er/" rel="next"> C/C++基础整理（二）</a></div>
 		
 		</div>
 	</nav>

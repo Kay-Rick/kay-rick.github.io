@@ -1,0 +1,913 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>C++面向对象基础篇 | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/0082zybply1gboa0boul9j30zm0c6wqz.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">C++面向对象基础篇</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-25 18:50:17" itemprop="datePublished" pubdate="">2020-03-25</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>C++是一门面向对象的语言，本篇就C++面向对象中类与对象的特性做相关整理</p>
+</blockquote>
+<h2 id="类与对象">类与对象</h2>
+<h3 id="类的对象和概念">类的对象和概念</h3>
+<p>变量 + 函数 进行捆绑封装形成一个类</p>
+<ul>
+<li>
+<p>定义类</p>
+<pre><code class="language-c++">class Employee
+{
+private:
+    char sname[20];
+
+public:
+    int salary;
+
+    void setName(const char *name);
+    void getName(char *name);
+    void avrageSalary(Employee e1, Employee e2);
+};	// 必须要有分号
+
+// 成员变量的函数可在类中进行实现，同样也可在外部实现
+// 外部实现方式 类名 :: 方法
+void Employee ::setName(const char * name)
+{
+    strcpy(sname, name);
+}
+
+void Employee ::getName(char *name)
+{
+    strcpy(name, sname);
+}
+</code></pre>
+</li>
+<li>
+<p>使用类</p>
+<pre><code class="language-c++">Employee emp;
+// 对象名.成员名
+emp.setName(&quot;Rick&quot;);
+emp.salary = 10000;
+// 指针-&gt;成员名
+Employee *p = &amp;emp;
+p-&gt;salary = 5000;
+// 引用名.成员名
+CEmployee &amp;r = emp;
+r.salary = 8000;
+</code></pre>
+</li>
+</ul>
+<h3 id="访问权限">访问权限</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">private</th>
+<th style="text-align:center">私有成员，只能在成员函数中访问</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>public</strong></td>
+<td style="text-align:center"><strong>公有成员，可以在任何地方访问</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>protect</strong></td>
+<td style="text-align:center"><strong>保护成员，暂不介绍</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="默认函数">默认函数</h3>
+<ul>
+<li>
+<p>构造函数</p>
+<pre><code class="language-c++">class Line{
+   public:
+      Line();  		// 这是默认空构造函数
+  		Line(double length);	// 带参构造函数
+   private:
+      double length;
+}; 
+int main( ){
+   Line line1;
+	 Line line2(5.0)
+}
+</code></pre>
+</li>
+<li>
+<p>析构函数</p>
+<p>类的<strong>析构函数</strong>是类的一种特殊的成员函数，它会在每次删除所创建的对象时执行。</p>
+<p>析构函数的名称与类的名称是完全相同的，只是在<strong>前面加了个波浪号（~）作为前缀，它不会返回任何值，也不能带有任何参数</strong>。析构函数有<strong>助于在跳出程序（比如关闭文件、释放内存等）前释放资源</strong>。</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+ 
+using namespace std;
+ 
+class Line
+{
+   public:
+      void setLength( double len );
+      double getLength( void );
+      Line();   // 这是构造函数声明
+      ~Line();  // 这是析构函数声明
+ 
+   private:
+      double length;
+};
+ 
+// 成员函数定义，包括构造函数
+Line::Line(void)
+{
+    cout &lt;&lt; &quot;Object is being created&quot; &lt;&lt; endl;
+}
+Line::~Line(void)
+{
+    cout &lt;&lt; &quot;Object is being deleted&quot; &lt;&lt; endl;
+}
+ 
+void Line::setLength( double len )
+{
+    length = len;
+}
+ 
+double Line::getLength( void )
+{
+    return length;
+}
+// 程序的主函数
+int main( )
+{
+   Line line;
+   // 设置长度
+   line.setLength(6.0); 
+   cout &lt;&lt; &quot;Length of line : &quot; &lt;&lt; line.getLength() &lt;&lt;endl;
+   return 0;
+}
+</code></pre>
+<pre><code>Object is being created
+Length of line : 6
+Object is being deleted
+</code></pre>
+</li>
+</ul>
+<h3 id="this指针">this指针</h3>
+<blockquote>
+<p>并非对象的成员，是常量指针</p>
+<p>每个对象可以使用this指针访问自己的地址</p>
+<p>非static成员函数调用时，this指针为隐式参数</p>
+<p>用途：防止自赋值、返回以连续调用</p>
+</blockquote>
+<pre><code class="language-c++">class Rick
+{
+private:
+    int age;
+public:
+    Rick();
+    Rick(int age);
+  	Rick* ReturnAddress() {
+      return this;
+    }
+};
+
+Rick::Rick(int age)
+{
+    this-&gt;age = age;
+}
+</code></pre>
+<h3 id="函数模板">函数模板</h3>
+<p>例如实际问题中的需要：<strong>对于不同类型数据可以用的排序函数sort</strong></p>
+<p>模板中<code>class</code>也可写成 <code>typename</code></p>
+<pre><code class="language-c++">template &lt;class T&gt;
+return-type sort(...T...)
+
+template &lt;class T1, class T2&gt;
+</code></pre>
+<pre><code class="language-c++">template &lt;class T&gt;
+void print(const T array[], int size){
+    int i;
+    for (i = 0; i &lt; size; i++) {
+        cout &lt;&lt; array[i];
+    }
+    return;
+}
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;class T&gt;
+T Max(T a, T b) {
+    cout &lt;&lt; &quot;TemplateMax&quot; &lt;&lt; endl;
+    return 0;
+}
+
+template &lt;class T1, class T2&gt;
+T1 Max(T1 a, T2 b) {
+    cout &lt;&lt; &quot;TemplateMax2&quot; &lt;&lt; endl;
+    return 0;
+}
+
+double Max(double a, double b) {
+    cout &lt;&lt; &quot;MyMax&quot; &lt;&lt; endl;
+    return 0;
+}
+
+int main() {
+    int i = 4, j = 5;
+    Max(1.2, 3.4);      // MyMax
+    Max(i, j);          // TemplateMax
+    Max(1.2, 3);        // TemplateMax2
+    return 0;
+}
+</code></pre>
+<p>在有多个函数和函数模板名字相同的情况下，编译器如下处理：</p>
+<ul>
+<li>先找参数完全匹配的<strong>普通函数</strong>（非由模板实例化而得的函数）</li>
+<li>再找参数完全匹配的<strong>模板函数</strong></li>
+<li>再找是参数经过自动类型转换后能够匹配的<strong>普通函数</strong></li>
+<li>上面的都找不到，则报错</li>
+</ul>
+<h3 id="类模板">类模板</h3>
+<p>为了多快好省地定义出一批相似的类，可以<strong>定义类模板</strong>，然后由类模板生成不同的类</p>
+<p>类模板：在<strong>定义类的时候给它一个/多个参数，这个/些参数表示不同的数据类型</strong>。在<strong>调用类模板时，指定参数</strong>，由编译系统根据参数提供的数据类型自动产生相应的模板类</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;class T&gt;  // 类模板首部，声明类模板参数
+class Carray
+{
+    T *ptrElement;
+    int size;
+public:
+    Carray(int length);
+    ~Carray();
+    int len();
+    void setElement(T arg, int index);
+    T getElement(int index);
+};
+int main(int argc, char const *argv[])
+{
+  	// 创建一个元素类型为int的Carray模板类，而声明该模板类的一个对象、以及一个指针
+    Carray &lt;int&gt; arrayInt(50), *ptrArrayInt;
+    return 0;
+}
+</code></pre>
+<p><strong>函数模板作为类模板成员</strong></p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;class T&gt;
+class A {
+    public:
+        // 成员模板函数
+        template &lt;class T2&gt;
+        void Func(T2 t) {
+            cout &lt;&lt; t;
+        }  
+};
+
+int main() {
+    A&lt;int&gt; a;
+    a.Func('K');    // K
+    a.Func(&quot;hello&quot;);    // hello
+    return 0;
+}
+</code></pre>
+<p>类模板的“&lt;类型参数表&gt;”中<strong>可以出现非类型参数</strong></p>
+<pre><code class="language-c++">template &lt;class T, int size&gt;
+class Array {
+    T array[size];
+    public:
+        void Print() {
+            for (int i = 0; i &lt; size; i++) {
+                cout &lt;&lt; array[i] &lt;&lt; endl;
+            }
+        }
+};
+
+int main() {
+    Array&lt;double, 40&gt; a1;
+    Array&lt;int, 50&gt; a2;
+    return 0;
+}
+</code></pre>
+<h3 id="static">static</h3>
+<ul>
+<li>
+<p>static修饰成员变量就是静态成员变量，<strong>静态成员变量一共就一份，为所有对象共享</strong>，静态成员不需要通过对象就能访问到</p>
+</li>
+<li>
+<p><code>sizeof</code>运算符不会计算静态成员变量</p>
+<pre><code class="language-c++">class MyClass {
+    int n;
+    static int n;
+};
+sizeof(MyClass)   = 4
+</code></pre>
+</li>
+<li>
+<p>static修饰成员函数就是静态成员函数，普通成员函数必须具体作用于某个对象，而<strong>静态成员函数并不具体作用于某个对象</strong></p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Rectangle {
+    private:
+        int w,h;
+        static int nTotalArea;
+        static int nTotalNumber;
+    public:
+        Rectangle(int w_, int h_);
+        ~Rectangle();
+        static void PrintTotal();
+};
+// 必须在定义类的文件中对静态成员变量进行一次说明或初始化，否则链接不能通过
+int Rectangle::nTotalNumber = 0;
+int Rectangle::nTotalArea = 0;
+
+Rectangle::Rectangle(int w_, int h_) {
+    w = w_;
+    h = h_;
+    nTotalNumber ++;
+    nTotalArea += w * h;
+}
+
+Rectangle::~Rectangle() {
+    nTotalNumber--;
+    nTotalArea -= w * h;
+}
+/**
+ * 在静态成员函数中，不能访问费静态成员变量，也不能调用非静态成员函数
+ */
+void Rectangle::PrintTotal() {
+    cout &lt;&lt; nTotalNumber &lt;&lt; &quot;,&quot; &lt;&lt; nTotalArea &lt;&lt; endl;
+}
+
+int main(void){
+    Rectangle r1(3,3), r2(2,2);
+    Rectangle::PrintTotal();
+    r1.PrintTotal();
+    return 0;
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="成员变量和封闭类">成员变量和封闭类</h3>
+<p>有成员对象的类叫 封闭类</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class CTyre {
+    private:
+        int radius;
+        int width;
+    public:
+        // 构造器初始化列表
+        CTyre(int r, int w) : radius(r), width(w) {}
+};
+
+class CEngine{
+
+};
+
+class CCar {
+    private:
+        int price;
+        CTyre tyre;
+        CEngine engine;
+    public:
+        CCar(int p, int tr, int tw);  
+};
+
+CCar::CCar(int p, int tr, int tw) : price(p), tyre(tr, tw) {}
+
+int main(void) {
+    CCar car(20000, 17, 225);
+    return 0;
+}
+</code></pre>
+<p>这个例子中如果<code>CCar</code>不定义构造函数， <code>CCar car</code> 会报错，因为编译器不明白 <code>car.tyre</code>该如何初始化。<code>car.engine</code>的初始化没问题，用默认构造函数即可。</p>
+<blockquote>
+<p>任何生成封闭类对象的语句，都要让编译器明白，对象中的成员对象是如何初始化的。</p>
+<p>具体做法就是：通过封闭类的构造函数的初始化列表</p>
+</blockquote>
+<h3 id="常量对象-常量成员函数">常量对象、常量成员函数</h3>
+<ul>
+<li>
+<p><strong>常量对象：如果不希望某个对象的值被改变，则定义该对象的时候可以在前面加<code>const</code>关键字</strong></p>
+<pre><code class="language-c++">class Demo {
+  private:
+  	int value;
+  public:
+  	void setValue() {}
+};
+const Demo Obj;		// 常量对象
+</code></pre>
+</li>
+<li>
+<p><strong>常量成员函数</strong>：在函数说明后面加<code>const</code>关键字。<strong>常量成员函数执行期间不应修改其所作用的对象</strong>。因此，在<strong>常量成员函数中不能修改成员变量的值(静态成员变量除外)</strong></p>
+<pre><code class="language-c++">class Sample {
+    public:
+        int value;
+        void GetValue() const;
+        void func();
+        Sample();
+};
+
+void Sample::GetValue() const {
+    // value = 0      wrong!
+    // func();      wrong!
+}
+
+int main(void) {
+    const Sample s;
+    s.value = 100;      // Error  常量对象不可修改
+    s.func();           // Error  常量对象上面不能执行非常量成员函数
+    s.GetValue();       // OK     常量对象上可以执行常量成员函数
+    return 0;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>常引用</strong>：引用前面加const关键字，称为常引用。<strong>不能通过其常引用，修改其引用的变量</strong>。</p>
+<pre><code class="language-c++">class Sample {
+  ...
+}
+// 当我们去传递引用参数的时候，不能避免o无意被修改，这时就需要常引用
+void PrintObj(Sample &amp;o) {
+  ...
+}
+// 这样就能确保不会出现无意中更改o值得语句
+void PrintObj(const Sample &amp;o) {
+  ...
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="友元">友元</h3>
+<blockquote>
+<p>友元分为友元函数和友元类两种</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>类的友元函数是定义在类外部，但有权访问类的所有私有（private）成员和保护（protected）成员。<strong>尽管友元函数的原型有在类的定义中出现过，但是</strong>友元函数并不是成员函数</strong>。</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Car;  //提前声明Car类
+class Driver {
+    public:
+        void ModifyCar(Car* pCar);
+};
+
+class Car {
+    private:
+        int price;
+    friend int MostExpensiveCar(Car cars[], int total); // 友元声明
+    // 友元声明：可以将一个类的成员函数(包括构造、析构函数)说明为另一个类的友元
+  	friend void Driver::ModifyCar(Car* pCar);   
+};
+
+void Driver::ModifyCar(Car* pCar) {
+    pCar-&gt;price += 1000;
+}
+
+// 不是任何类的成员函数
+int MostExpensiveCar (Car cars[], int total) {
+    int tmpMax = -1;
+    for (int i = 0; i &lt; total; i++) {
+        if (cars[i].price &gt;tmpMax) {
+            tmpMax = cars[i].price;
+        }
+    }
+    return tmpMax;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>友元类：如果A是B的友元类，那么A的成员函数可以访问B的私有成员</strong>。（<strong>友元类之间的关系不能传递，不能继承</strong>）</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Car {
+    private:
+        int price;
+    friend class Driver;		// 声明Driver为友元类
+};
+
+class Driver {
+    public:
+        Car myCar;
+        void ModifyCar() {
+            myCar.price += 1000;
+        }
+};
+</code></pre>
+</li>
+</ul>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/java-ji-chu-pian-yi/" rel="prev"> Java基础篇（一）</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/shu-jin-jie-pian/" rel="next"> 树（进阶篇）</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>Redis基础篇（一） | Rick</title>	
+<title>Java基础篇（二） | Rick</title>	
 
 <link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
 <script type="text/javascript">
@@ -56,7 +56,7 @@ window.onload=getCSS();
 			
 		<header id="header" class="site-header" 
 		
-		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/00831rSTly1gcki7nfncvj31m00mqk3g.jpg)"
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/00831rSTgy1gd6gz30x3gj31p50u0b2b.jpg)"
 		
 		>
 			<div class="site-branding">
@@ -146,10 +146,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">Redis基础篇（一）</h1>
+			<h1 class="wow swing entry-title">Java基础篇（二）</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-06 20:58:14" itemprop="datePublished" pubdate="">2020-03-06</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-25 20:56:01" itemprop="datePublished" pubdate="">2020-03-25</time></i>
 	          </div>
 			
 </span>
@@ -158,292 +158,131 @@ window.onload=getCSS();
                   
 			<div class="wow slideInLeft entry-summary song">
 				<blockquote>
-<p>Redis 是一个开源，高级的键值存储和一个适用的解决方案，用于构建高性能，可扩展的 Web 应用程序。Redis 也被作者戏称为数据结构服务器 ，这意味着使用者可以通过一些命令，基于带有 TCP 套接字的简单服务器-客户端协议来访问一组可变数据结构 。(在 Redis 中都采用键值对的方式，只不过对应的数据结构不一样罢了)</p>
+<p>从本篇起，Java基础篇的整理主要偏向于面试题</p>
 </blockquote>
-<h2 id="redis是什么">Redis是什么?</h2>
+<h2 id="面向对象和面向过程的区别">面向对象和面向过程的区别</h2>
 <ul>
-<li>
-<p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、<strong>Key-Value数据库</strong>，并提供多种语言的API</p>
-<p>​	1、Redis安装在磁盘</p>
-<p>​	2、<strong>Redis数据存储在内存</strong>。</p>
-</li>
-<li>
-<p>Redis解决什么问题</p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zzdqdpa6j30ne0xmwgl.jpg" alt="image-20191217201429438" style="zoom:33%;" />
-<p>​	先从Redis缓存查询数据，如果没有则到MySQL中查</p>
-</li>
-<li>
-<p>Redis特性</p>
-<ul>
-<li>
-<p>速度快</p>
-</li>
-<li>
-<p>键值对数据结构服务器</p>
-</li>
-<li>
-<p>丰富的功能</p>
-</li>
-<li>
-<p>简单稳定  --- 单线程</p>
-</li>
-<li>
-<p>持久化</p>
-</li>
-<li>
-<p>高可用、分布式转移</p>
-</li>
-<li>
-<p>客户端语言多</p>
-</li>
+<li><strong>面向过程性能高，因为类调用时需要实例化，开销比较大，比较消耗资源</strong></li>
+<li><strong>面向过程没有面向对象易维护、易复用、易扩展(封装、继承、多态)</strong></li>
 </ul>
-</li>
-<li>
-<p>Redis使用场景</p>
+<h2 id="jvm">JVM</h2>
+<ul>
+<li>Java虚拟机（JVM）是运行 Java 字节码的虚拟机。<strong>JVM有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节码，它们都会给出相同的结果</strong>。字节码和不同系统的 JVM 实现是 Java 语言“一次编译，随处可以运行”的关键所在。</li>
+</ul>
+<h2 id="构造器constructor-是否可被-override">构造器Constructor 是否可被 override?</h2>
+<ul>
+<li>继承的时候我们就知道父类的私有属性和构造方法并不能被继承，所以 Constructor 也就<strong>不能被 override（重写）</strong>,但是<strong>可以 overload（重载）</strong>,所以你可以看到一个类中有多个构造函数的情况。</li>
+</ul>
+<h2 id="java面向对象三大特性封装-继承-多态">Java面向对象三大特性：封装、继承、多态</h2>
+<ul>
+<li>封装：封装把一<strong>个对象的属性私有化</strong>，同时<strong>提供一些可以被外界访问的属性的方法</strong>，如果属性不想被外界访问，我们大可不必提供方法给外界访问。但是如果一个类没有提供给外界访问的方法，那么这个类也没有什么意义了。</li>
+</ul>
+<h2 id="string-stringbuffer-和-stringbuilder-的区别是什么-string-为什么是不可变的">String StringBuffer 和 StringBuilder 的区别是什么? String 为什么是不可变的?</h2>
+<ul>
+<li>String类中：private <strong>final</strong> char value[]  ---&gt;不可变</li>
+<li>StringBuilder 与 StringBuffer 的构造方法都是<strong>调用父类构造方法也就是 AbstractStringBuilder 实现</strong>的</li>
+<li>StringBuffer 对方法<strong>加了同步锁或者对调用的方法加了同步锁(synchronized)</strong>，所以是线程安全的。StringBuilder 并没有对方法进行加同步锁，所以是非线程安全的</li>
+</ul>
+<h2 id="接口和抽象类区别">接口和抽象类区别</h2>
+<ul>
+<li>接口的方法<strong>默认是 public</strong>，所有方法在接口中不能有实现(Java 8 开始接口方法可以有默认实现），<strong>而抽象类可以有非抽象的方法。</strong></li>
+<li>接口中<strong>除了static、final变量，不能有其他变量</strong>，而抽象类中则不一定。</li>
+<li>一个类可以实现多个接口，<strong>但只能实现一个抽象类</strong>。接口自己本身可以通过extends关键字扩展多个接口。</li>
+<li>在JDK8中，接口也可以定义静态方法，可以直接用接口名调用。实现类和实现是不可以调用的。如果同时实现两个接口，接口中定义了一样的默认方法，则必须重写，不然会报错。</li>
+</ul>
+<h2 id="对象实体和对象引用有何区别">对象实体和对象引用有何区别？</h2>
+<ul>
+<li>new创建对象实例（<strong>对象实例在堆内存中</strong>），<strong>对象引用指向对象实例</strong>（对象引用存放在栈内存中）。一个对象引用可以指向0个或1个对象（一根绳子可以不系气球，也可以系一个气球）;<strong>一个对象可以有n个引用指向它</strong>（可以用n条绳子系住一个气球）。</li>
+</ul>
+<h2 id="实例方法和静态方法有何不同">实例方法和静态方法有何不同？</h2>
+<ul>
+<li>浅层次：在外部调用<strong>静态方法时，可以使用&quot;类名.方法名&quot;的方式</strong>，<strong>也可以使用&quot;对象名.方法名&quot;的方式</strong>。而实例方法只有后面这种方式。也就是说，<strong>调用静态方法可以无需创建对象。（静态方法的调用不依赖于对象）</strong></li>
+<li>JVM深层次：类的静态方法，静态变量是在<strong>类装载的时候装载的</strong>，这时候还没有产生对象**。静态变量 存放在 Java 内存区域的方法区**</li>
+<li>static关键字使用场景
 <ol>
-<li>
-<p>缓存数据库</p>
-</li>
-<li>
-<p>排行榜</p>
-</li>
-<li>
-<p>计数器应用</p>
-</li>
-<li>
-<p>社交网络</p>
-</li>
-<li>
-<p>消息队列</p>
-</li>
-<li>
-<p>其他场景</p>
-</li>
+<li><strong>修饰成员变量和成员方法:</strong> 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。调用格式：<code>类名.静态变量名</code> <code>类名.静态方法名()</code></li>
+<li><strong>静态代码块:</strong> 静态代码块定义在类中方法外, <strong>静态代码块在非静态代码块之前执行(静态代码块—&gt;非静态代码块—&gt;构造方法)。 该类不管创建多少对象，静态代码块只执行一次.</strong></li>
+<li><strong>静态内部类（static修饰类的话只能修饰内部类）：</strong> 静态内部类与非静态内部类之间存在一个最大的区别: 非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围类，但是静态内部类却没有。没有这个引用就意味着：1. 它的创建是不需要依赖外围类的创建。2. 它不能使用任何外围类的非static成员变量和方法。</li>
+<li><strong>静态导包(用来导入类中的静态资源，1.5之后的新特性):</strong> 格式为：<code>import static</code> 这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法。</li>
 </ol>
 </li>
 </ul>
-<h2 id="redis数据类型">Redis数据类型?</h2>
-<h3 id="string">String</h3>
+<h2 id="final关键字">final关键字</h2>
 <ul>
 <li>
-<p><code>String</code>类型 （实际上可以是<strong>字符串（包括<code>XML JSON</code>）</strong>，还有数字（整形 浮点数），<strong>二进制（图片 音频 视频）</strong>，<strong>最大不能超过512MB</strong>）</p>
-<pre><code>set age 18	(18)
-incr age		(19)
-decr age		(18)
-incrby age 2	(20)
-decrby age 2	(18)
-</code></pre>
+<p>可作用在变量、方法、类</p>
 </li>
 <li>
-<p>批量设值 <code>mset</code></p>
-<pre><code>mset name Rick age 20
-</code></pre>
+<p>final作用在基本数据类型上：数值一旦初始化便不能随意更改；final作用在引用型变量：初始化之后不能再指向其他的对象</p>
 </li>
-</ul>
-<p>​		批量设置，可<strong>减少IO进而提高效率</strong></p>
+<li>
+<p>final作用在类上--&gt;该类不能被继承，所有的成员方法默认为final</p>
+</li>
+<li>
+<p>final作用在方法上：</p>
 <ul>
-<li>
-<p>设置过期时间</p>
-<pre><code>set age 23 ex 10	// 10s后过期 px 10000ms过期
-</code></pre>
-</li>
-<li>
-<p>常用用法</p>
-<pre><code>set name Rick
-append name Kay
-get name			(RickKay)
-</code></pre>
-</li>
-<li>
-<p>String应用场景</p>
-<ul>
-<li>
-<p>计数器</p>
-<pre><code>INCR article:readcount:{文章id}		// 统计某文章的阅读量,用户进来点一次进行加1
-GET article:readcount:{文章id}		// 获得某文章的阅读量
-</code></pre>
-<pre><code>INCR article:readcount:1001
-INCR article:readcount:1001
-INCR article:readcount:1001
-INCR article:readcount:1001
-GET article:readcount:1001		(4)
-</code></pre>
-</li>
-<li>
-<p>Web集群session共享</p>
-<p>Spring session + redis实现session共享</p>
-</li>
-<li>
-<p>分布式系统全局序列号</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="hash">Hash</h3>
-<ul>
-<li>
-<p>Hash <strong>哈希hash是一个string类型的field和value的映射表，hash特适合用于存储对象</strong></p>
-<p>存储一个用户(user)信息：1主键</p>
-<p><code>hset</code></p>
-<pre><code>hset user:1 name Rick age 20
-hgetall user:1		(&quot;name&quot; &quot;Rick&quot; &quot;age&quot; &quot;20&quot;)
-hget user:1 age					(&quot;20&quot;)
-</code></pre>
-<p><code>hmset</code></p>
-<pre><code>hmset user:2 name Kay age 20 sex male
-hmget user:2 name age sex			(&quot;Kay&quot; &quot;20&quot; &quot;male&quot;)
-hgetall user:2	 (&quot;name&quot; &quot;Kay&quot; &quot;age&quot; &quot;18&quot; &quot;sex&quot; &quot;male&quot;)
-hvals user:2				(&quot;Kay&quot; &quot;18&quot; &quot;male&quot;)
-</code></pre>
-</li>
-<li>
-<p>三种方式存储用户信息的优缺点</p>
-<ul>
-<li>
-<p>原生：<code>set user:1:name james</code></p>
-<p>​			<code>set user:1:age 23</code></p>
-<p>​			<code>set user:1:sex boy</code></p>
-<p>​	优点：简单直观，每个键对应一个值</p>
-<p>​	缺点：键数过多，占用内存多，用户信息过于分散，不用于生产环境</p>
-</li>
-<li>
-<p>将对象序列化存入Redis  <code>set user:1 serialize(userInfo)</code></p>
-<p>​	优点： 编程简单</p>
-<p>​    缺点：序列化和反序列化有开销</p>
-</li>
-<li>
-<p>使用Hash类型</p>
-<p>​	优点：简单直观，使用合理可减少内存空间消耗</p>
-<p>​	缺点：要控制ziplist与hashtable两种编码转换，且hashtable会消耗更多内存erialize</p>
-</li>
+<li>把方法锁定，防止任何继承类修改它的含义</li>
 </ul>
 </li>
 <li>
-<p>应用场景</p>
+<p>类中的private修饰的方法默认添加有final关键字</p>
+</li>
+</ul>
+<h2 id="java中异常">Java中异常</h2>
+<h3 id="层次">层次</h3>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztjy5yx9j31a20py7nz.jpg" alt="image-20191217165252832" loading="lazy"></figure>
 <ul>
-<li>
-<p><strong>电商购物车</strong></p>
-<img src="https://tva1.sinaimg.cn/large/00831rSTly1gci79x5onoj30ju128k57.jpg" alt="image-20200304210814747" style="zoom:50%;" />
-<p>以用户id为key；商品id为filed；商品数量为value</p>
-<p>例如用户1001的购物车的相关操作：</p>
-<p>添加商品 ---&gt; <code>hset cart:1001 10088 1</code></p>
-<p>增加数量 ---&gt; <code>hincrby cart:1001 10088 1</code></p>
-<p>商品总数 ---&gt;<code>hlen cart:1001</code></p>
-<p>删除商品 ---&gt; <code>hdel cart:1001 10088</code></p>
-<p>获取购物车所有商品 ---&gt; <code>hgetall cart:1001</code></p>
-</li>
+<li><strong>Error（错误）:是程序无法处理的错误</strong>，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。</li>
+<li><strong>Exception（异常）:是程序本身可以处理的异常</strong>。Exception 类有一个重要的子类 <strong>RuntimeException</strong>。RuntimeException 异常由Java虚拟机抛出。<strong>NullPointerException</strong>（要访问的变量没有引用任何对象时，抛出该异常）、<strong>ArithmeticException</strong>（算术运算异常，一个整数除以0时，抛出该异常）和 <strong>ArrayIndexOutOfBoundsException</strong> （下标越界异常）。</li>
+<li><strong>异常和错误的区别：异常能被程序本身处理，错误是无法处理。</strong></li>
 </ul>
-</li>
-</ul>
-<h3 id="list">List</h3>
+<h3 id="trycatchfianlly">try/catch/fianlly</h3>
 <ul>
-<li>
-<p><code>rpush</code>和<code>lpush</code></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga1031flckj31me0o2gnn.jpg" alt="image-20191218172422826" style="zoom: 33%;" />
-<p><code>rpush</code>：在<code>list</code>的尾部追加元素</p>
-<p><code>lpush</code>：在<code>list</code>的头部追加元素</p>
-<p><code>lrange key start stop</code>	：返回列表<code>key</code>中指定区间内的元素，区间以偏移量<code>start</code>和<code>stop</code>指定</p>
-<pre><code>rpush str a b c
-lrange str 0 -1					(&quot;a&quot; &quot;b&quot; &quot;c&quot;)
-lpush str1 a b c
-lrange str1 0 -1					(&quot;c&quot; &quot;b&quot; &quot;a&quot;)
-</code></pre>
+<li><strong>try 块：</strong> 用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。</li>
+<li><strong>catch 块：</strong> 用于处理try捕获到的异常。</li>
+<li><strong>finally 块：</strong> 无论是否捕获或处理异常，finally块里的语句都会被执行。<strong>当在try块或catch块中遇到return 语句时，finally语句块将在方法返回之前被执行。</strong></li>
+<li>finally语句块不会被执行的情况：
+<ol>
+<li>在finally语句块第一行发生了异常。 因为在其他行，finally块还是会得到执行</li>
+<li>在前面的代码中用了System.exit(int)已退出程序。 exit是带参函数 ；若该语句在异常语句之后，finally会执行</li>
+<li>程序所在的线程死亡。</li>
+<li>关闭CPU。</li>
+</ol>
 </li>
-<li>
-<p>因为有序，可以通过索引下标获取元素或某个范围内元素列表</p>
-<p>​	<code>llen</code>  获取当前列表长度</p>
-<p>​	<code>lpop</code> 把左边第一个元素删掉</p>
-<p>​	<code>rpop</code> 把右边第一个元素删掉</p>
-<pre><code>llen str			(3)
-lpop str			(a)
-rpop str			(c)
-</code></pre>
-</li>
-<li>
-<p>应用场景</p>
+</ul>
+<h2 id="深拷贝浅拷贝">深拷贝/浅拷贝</h2>
+<p><strong>浅拷贝</strong>：对基本数据类型进行值传递，引用类型的属性复制，复制栈中的变量 和 变量指向堆内存中的对象的指针，不复制堆内存中的对象。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztvk9ybgj30u00uyack.jpg" alt="image-20191217170403217" style="zoom:50%;" />
+<p><strong>深拷贝</strong>：对基本数据类型进行值传递，引用类型的属性复制，复制栈中的变量 和 变量指向堆内存中的对象的指针和堆内存中的对象。（在堆中创建了新的对象）</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9ztxcys4pj30u00v5gnt.jpg" alt="image-20191217170540653" style="zoom:50%;" />
+<h2 id="反射">反射</h2>
+<p>对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。---&gt;<strong>反射就是把java类中的各种成分映射成一个个的Java对象</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zuj06enpj31gm0lkn56.jpg" alt="image-20191217172633390" loading="lazy"></figure>
 <ul>
-<li>
-<p><code>Stack	： LPUSH + LPOP ==&gt; FILO</code></p>
-</li>
-<li>
-<p><code>Queue：LPUSH+ RPOP</code></p>
-</li>
-<li>
-<p><code>Blocking MQ ： LPUSH + BRPOP</code></p>
-</li>
-<li>
-<p><strong>微博和微信公众号消息流</strong></p>
-<p>公众号A发微博，消息id为10018</p>
-<p><code>LPUSH msg:1001 10018</code></p>
-<p>公众号B发微博，消息id为10086</p>
-<p><code>LPUSH msg:1001 10086</code></p>
-<p>查看最新微博消息</p>
-<p><code>LRANGE msg:rick 0 5</code></p>
-</li>
+<li>反射优势：运行期类型的判断，动态加载类，提高代码灵活度。</li>
 </ul>
-</li>
-</ul>
-<h3 id="set">Set</h3>
+<p>应用：</p>
 <ul>
-<li><code>sadd sinter</code>(求交集)</li>
+<li>JDBC 连接数据库时使用 <code>Class.forName()</code>通过反射加载数据库的驱动程序</li>
+<li>Spring XML配置方法进行装在Bean</li>
 </ul>
-<p>保存多元素，与列表不一样的是<strong>不允许有重复元素</strong>，且<strong>集合是无序</strong></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga10bvy447j31d60o2dij.jpg" alt="image-20191218173253651" style="zoom:25%;" />
-<pre><code>sadd user a b c					(3)
-sadd user a						(0)
-</code></pre>
-<ul>
-<li>
-<p>集合使用场景：</p>
-<ul>
-<li>
-<p><strong>微博微信点赞</strong></p>
-<p><code>sadd like:{消息id} {用户id}</code>	==&gt;  点赞</p>
-<p><code>srem like:{消息id} {用户id}</code>	==&gt;	取消点赞</p>
-<p><code>sismember like:{消息id} {用户id}</code>	==&gt;	检查用户是否点赞</p>
-<p><code>smembers like:{消息id}</code>		==&gt;	获取点赞的用户列表</p>
-<p><code>scard like:{消息id}</code>			==&gt;	获取点赞用户数</p>
-</li>
-<li>
-<p><strong>微信小程序抽奖</strong></p>
-<p><code>sadd key {userID}</code>		==&gt;    点击参与抽奖</p>
-<p><code>smembers key</code>			 ==&gt;	 查看参与抽奖所有用户</p>
-<p><code>srandmember key[count](抽完后不剔除) / SPOP key [count](抽完后剔除)</code>	==&gt; 	抽取<code>count</code>名中奖者</p>
-</li>
-<li>
-<p><strong>集合操作实现微博微信关注模型</strong></p>
-<p>A关注的人：ASet:  {B,C,D}</p>
-<p>B关注的人：BSet:  {A,C,D,E}</p>
-<p>C关注的人：CSet:  {A,B,E,F}</p>
-<p>A和B的共同关注（求交集）： <code>SINTER ASet BSet</code>	==&gt; {C,D}</p>
-<p>A关注的人也关注B（列举出A关注的人是否关注B）：	<code>sismember CSet B sismember DSet B</code></p>
-<p>A可能认识的人（差集）：<code>sidff ASet BSet</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="zset">Zset</h3>
-<p>有序集合，常<strong>用于排行榜</strong>，如视频网站需要对用户上传视频做排行榜，或<strong>点赞数与集合有联系，不能有重复的成员</strong></p>
-<pre><code>zadd zan 100 Rick
-zadd zan 200 kay
-zadd zan 150 Lee
-zrange zan 0 -1 withscores			(&quot;Rick&quot; &quot;100&quot; &quot;Lee&quot; &quot;150&quot; &quot;kay&quot; &quot;200&quot;)
-</code></pre>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
-				<a href="https://kay-rick.github.io/tag/Rfvk69mNa/" rel="tag">Redis</a>	
+				<a href="https://kay-rick.github.io/tag/U-6HRLQLq/" rel="tag">总结</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/_oVxR5i5U/" rel="tag">Java</a>	
 				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/shu-ru-men-pian/" rel="prev"> 树（入门篇）</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/java-ji-chu-pian-san/" rel="prev"> Java基础篇（三）</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/" rel="next"> Spring、SpringMVC、MyBatis整合</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/java-ji-chu-pian-yi/" rel="next"> Java基础篇（一）</a></div>
 		
 		</div>
 	</nav>

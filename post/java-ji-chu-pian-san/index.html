@@ -1,0 +1,1126 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>Java基础篇（三） | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/00831rSTgy1gd6htgs6wkj31j90u0qv7.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">Java基础篇（三）</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-25 21:25:27" itemprop="datePublished" pubdate="">2020-03-25</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>本篇主要涉及到多线程方面的面试题</p>
+</blockquote>
+<h2 id="线程-程序-进程">线程、程序、进程</h2>
+<h3 id="进程">进程</h3>
+<pre><code>- 定义：
+	1、一个正在执行的程序
+	2、系统运行程序的基本单位
+	3、一个进程可由进程控制块(PCB包含：标识符、状态、优先级、程序计数器、内存指针、上下文数据、IO信息等)的数据结构来控制
+	
+</code></pre>
+<p>进程状态</p>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zrtw49tuj30s40bm0y5.jpg" alt="image-20191217155307260" loading="lazy"></figure>
+<ul>
+<li>
+<p>新建态：线程被创建，PCB被创建出来但还未加载到内存</p>
+</li>
+<li>
+<p>就绪态：进程已经加载到内存，已经做好了准备，等待CPU进行调度</p>
+</li>
+<li>
+<p>运行态：得到CPU的调度，进程正在执行</p>
+</li>
+<li>
+<p>阻塞态：进程因为某些事件需要停止执行(IO操作等)</p>
+</li>
+<li>
+<p>退出态：操作系统从可执行进程组中释放该进程，要么自己停止，要么因为某种原因被取消运行</p>
+<p>Java中</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zscph8rfj31ba0u0dzc.jpg" alt="image-20191217161118329" style="zoom:80%;" />
+</li>
+</ul>
+<h3 id="线程">线程</h3>
+<ul>
+<li>
+<p>一个进程在其执行的过程中可以产生多个线程。与进程<strong>不同的是同类的多个线程共享同一块内存空间和一组系统资源</strong>系统在产生一个线程，或是在<strong>各个线程之间作切换工作时，负担要比进程小得多</strong>，也正因为如此，线程也被称为轻量级进程</p>
+</li>
+<li>
+<p>操作系统隐藏 Java虚拟机（JVM）中的 READY 和 RUNNING 状态，它只能看到 RUNNABLE 状态</p>
+</li>
+</ul>
+<h2 id="什么是上下文切换">什么是上下文切换？</h2>
+<ul>
+<li>
+<p>多线程编程中一般<strong>线程的个数都大于 CPU 核心的个数</strong>，而<strong>一个 CPU 核心在任意时刻只能被一个线程使用</strong>，为了让这些线程都能得到有效执行，CPU 采取的策略是为<strong>每个线程分配时间片并轮转的形式</strong>。当一个线程的时间片用完的时候就会<strong>重新处于就绪状态让给其他线程使用</strong>，这个过程就属于一次上下文切换。</p>
+</li>
+<li>
+<p>总结说：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。<strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
+</li>
+</ul>
+<h2 id="sleep和wait方法的区别和共同点">sleep()和wait()方法的区别和共同点</h2>
+<ul>
+<li>
+<p>最主要的区别在于：<strong>sleep 方法没有释放锁，而 wait 方法释放了锁</strong> 。</p>
+</li>
+<li>
+<p>Wait 通常被用于线程间交互/通信，sleep 通常被用于暂停执行。</p>
+</li>
+<li>
+<p>wait() 方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象上的 notify() 或者 notifyAll() 方法。sleep() 方法执行完成后，线程会自动苏醒。或者可以使用 wait(long timeout)超时后线程会自动苏醒。</p>
+</li>
+<li>
+<p>共同点：<strong>都可以暂停线程的执行</strong></p>
+</li>
+</ul>
+<h2 id="为什么我们调用-start-方法时会执行-run-方法为什么我们不能直接调用-run-方法">为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？</h2>
+<ul>
+<li>new 一个 Thread，线程进入了新建状态;<strong>调用 start() 方法，会启动一个线程并使线程进入了就绪状态</strong>，当分配到时间片后就可以开始运行了。 <strong>start() 会执行线程的相应准备工作，然后自动执行 run() 方法</strong>的内容</li>
+<li>直接执行 run() 方法，会把 run 方法<strong>当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它</strong></li>
+</ul>
+<h2 id="java多线程3中实现方式">Java多线程3中实现方式</h2>
+<h3 id="继承thread类实现多线程">继承Thread类实现多线程</h3>
+<p>继承Thread类的方法尽管被我列为一种多线程实现方式，但Thread本质上也是实现了Runnable接口的一个实例，它代表一个线程的实例，并且，启动线程的唯一方法就是通过Thread类的start()实例方法。start()方法是一个native方法，它将启动一个新线程，并执行run()方法。这种方式实现多线程很简单，通过自己的类直接extend Thread，并复写run()方法，就可以启动新线程并执行自己定义的run()方法。</p>
+<pre><code class="language-java">public class MyThread extends Thread {
+　　public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　}
+}
+</code></pre>
+<p>在合适的地方启动线程</p>
+<pre><code class="language-java">MyThread myThread1 = new MyThread();
+MyThread myThread2 = new MyThread();
+myThread1.start();
+myThread2.start();
+</code></pre>
+<h3 id="实现runnable接口实现多线程">实现Runnable接口实现多线程</h3>
+<p>如果自己的类已经extends另一个类，就无法直接extends Thread，此时，必须实现一个Runnable接口，如下：</p>
+<pre><code class="language-java">public class MyThread extends OtherClass implements Runnable {
+　　public void run() {
+　　 System.out.println(&quot;MyThread.run()&quot;);
+　　}
+}
+</code></pre>
+<p>启动MyThread</p>
+<pre><code class="language-java">MyThread myThread = new MyThread();
+Thread thread = new Thread(myThread);
+thread.start();
+</code></pre>
+<p>事实上，当传入一个Runnable target参数给Thread后，Thread的run()方法就会调用target.run()，参考JDK源代码：</p>
+<pre><code class="language-java">public void run() {
+　　if (target != null) {
+　　 target.run();
+　　}
+}
+</code></pre>
+<h3 id="使用executorservice-callable-future实现有返回结果的多线程">使用ExecutorService、Callable、Future实现有返回结果的多线程</h3>
+<p>Executor框架是指java 5中引入的一系列并发库中与executor相关的一些功能类，其中包括线程池，Executor，Executors，ExecutorService，CompletionService，Future，Callable等。他们的关系为：</p>
+<p>并发编程的一种编程方式是把任务拆分为一些列的小任务，即Runnable，然后在提交给一个Executor执行，<strong>Executor.execute(Runnalbe)</strong> 。Executor在执行时使用内部的线程池完成操作。</p>
+<ul>
+<li><strong>创建线程池</strong></li>
+</ul>
+<p>Executors类，提供了<strong>一系列工厂方法用于创先线程池</strong>，返回的线程池都实现了ExecutorService接口。</p>
+<p><strong>public static ExecutorService newFixedThreadPool(int nThreads)</strong></p>
+<p>创建固定数目线程的线程池。</p>
+<p><strong>public static ExecutorService newCachedThreadPool()</strong></p>
+<p>创建一个可缓存的线程池，调用<code>execute</code> 将重用以前构造的线程（如果线程可用）。如果现有线程没有可用的，则创建一个新线程并添加到池中。终止并从缓存中移除那些已有 60 秒钟未被使用的线程。</p>
+<p><strong>public static ExecutorService newSingleThreadExecutor()</strong></p>
+<p>创建一个单线程化的Executor。</p>
+<p><strong>public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize)</strong></p>
+<p>创建一个支持定时及周期性的任务执行的线程池，多数情况下可用来替代Timer类。</p>
+<pre><code class="language-java">Executor executor = Executors.newFixedThreadPool(10);  
+Runnable task = new Runnable() {  
+    @Override  
+    public void run() {  
+        System.out.println(&quot;task over&quot;);  
+    }  
+};  
+executor.execute(task);  
+  
+executor = Executors.newScheduledThreadPool(10);  
+ScheduledExecutorService scheduler = (ScheduledExecutorService) executor;  
+scheduler.scheduleAtFixedRate(task, 10, 10, TimeUnit.SECONDS);
+</code></pre>
+<ul>
+<li><strong>ExecutorService生命周期</strong></li>
+</ul>
+<p>ExecutorService<strong>扩展了Executor并添加了一些生命周期管理的方法</strong>。一个Executor的生命周期有三种状态，<strong>运行</strong> ，<strong>关闭</strong> ，<strong>终止</strong> 。Executor创建时处于运行状态。<strong>当调用ExecutorService.shutdown()后，处于关闭状态，isShutdown()方法返回true</strong>。这时，不应该再想Executor中添加任务，所有已添加的任务执行完毕后，Executor处于终止状态，isTerminated()返回true。</p>
+<p>如果Executor处于关闭状态，往Executor提交任务会抛出unchecked exception RejectedExecutionException。</p>
+<pre><code class="language-java">ExecutorService executorService = (ExecutorService) executor;  
+while (!executorService.isShutdown()) {  
+    try {  
+        executorService.execute(task);  
+    } catch (RejectedExecutionException ignored) {  
+          
+    }  
+}  
+executorService.shutdown();  
+</code></pre>
+<ul>
+<li>使用Callable，Future返回结果</li>
+</ul>
+<p>Future<V>代表一个异步执行的操作，通过get()方法可以获得操作的结果，如果异步操作还没有完成，则，get()会使当前线程阻塞。<strong>FutureTask<V>实现了Future<V>和Runable<V>。Callable代表一个有返回值的操作</strong>。</p>
+<pre><code class="language-java">Callable&lt;Integer&gt; func = new Callable&lt;Integer&gt;(){  
+    public Integer call() throws Exception {  
+        System.out.println(&quot;inside callable&quot;);  
+        Thread.sleep(1000);  
+        return new Integer(8);  
+    }         
+};        
+FutureTask&lt;Integer&gt; futureTask  = new FutureTask&lt;Integer&gt;(func);  
+Thread newThread = new Thread(futureTask);  
+newThread.start();  
+  
+try {  
+    System.out.println(&quot;blocking here&quot;);  
+    Integer result = futureTask.get();  
+    System.out.println(result);  
+} catch (InterruptedException ignored) {  
+} catch (ExecutionException ignored) {  
+}
+</code></pre>
+<h2 id="线程死锁">线程死锁</h2>
+<p>多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。</p>
+<h3 id="产生死锁的必要条件">产生死锁的必要条件</h3>
+<ul>
+<li><strong>互斥条件</strong>：该资源任意一个时刻只由一个线程占用。</li>
+<li><strong>请求与保持条件</strong>：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li><strong>不剥夺条件</strong>:线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。</li>
+<li><strong>循环等待条件</strong>:若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+</ul>
+<h3 id="如何避免死锁">如何避免死锁？</h3>
+<ul>
+<li>
+<p>破坏互斥条件：<strong>没有办法破坏</strong>，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）</p>
+</li>
+<li>
+<p>破坏请求和保持条件：一次性申请所有的资源（银行家算法）</p>
+</li>
+<li>
+<p>破坏不剥夺条件：占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。</p>
+</li>
+<li>
+<p>破坏循环等待条件：靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件</p>
+</li>
+</ul>
+<h3 id="写一产生死锁的程序">写一产生死锁的程序</h3>
+<pre><code class="language-java">public class DeadLockDemo {
+    private static Object resource1 = new Object();//资源 1
+    private static Object resource2 = new Object();//资源 2
+
+    public static void main(String[] args) {
+        new Thread(() -&gt; {
+            synchronized (resource1) {
+                System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                try {
+                    Thread.sleep(1000);  //
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource2&quot;);
+                synchronized (resource2) {
+                    System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                }
+            }
+        }, &quot;线程 1&quot;).start();
+
+        new Thread(() -&gt; {
+            synchronized (resource2) {
+                System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource1&quot;);
+                synchronized (resource1) {
+                    System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                }
+            }
+        }, &quot;线程 2&quot;).start();
+    }
+}
+</code></pre>
+<p>输出：</p>
+<pre><code>Thread[线程 1,5,main]get resource1
+Thread[线程 2,5,main]get resource2
+Thread[线程 1,5,main]waiting get resource2
+Thread[线程 2,5,main]waiting get resource1
+</code></pre>
+<p>线程 A 通过 <code>synchronized (resource1)</code>获得 resource1 的监视器锁，然后通过<code>Thread.sleep(1000);</code>让线程 A 休眠 1s 为的是让<strong>线程 B 得到执行然后获取到 resource2 的监视器锁</strong>。线程 A 和线程 B 休眠结束了都开始企图请求获取对方的资源，然后这<strong>两个线程就会陷入互相等待的状态</strong>，这也就产生了死锁。</p>
+<h3 id="破坏死锁">破坏死锁</h3>
+<p>靠<strong>按序申请资源来预防。按某一顺序申请资源</strong>，释放资源则反序释放。破坏循环等待条件。</p>
+<pre><code class="language-java">new Thread(() -&gt; {
+            synchronized (resource1) {
+                System.out.println(Thread.currentThread() + &quot;get resource1&quot;);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread() + &quot;waiting get resource2&quot;);
+                synchronized (resource2) {
+                    System.out.println(Thread.currentThread() + &quot;get resource2&quot;);
+                }
+            }
+        }, &quot;线程 2&quot;).start();
+</code></pre>
+<p><strong>线程 1 首先获得到 resource1 的监视器锁,这时候线程 2 就获取不到了</strong>。然后线程 1 再去获取 resource2 的监视器锁，可以获取到。<strong>然后线程 1 释放了对 resource1、resource2 的监视器锁的占用，线程 2 获取到就可以执行了</strong>。这样就破坏了破坏循环等待条件，因此避免了死锁。</p>
+<h2 id="乐观锁和悲观锁">乐观锁和悲观锁</h2>
+<h3 id="何为乐观锁-悲观锁">何为乐观锁、悲观锁</h3>
+<ul>
+<li>
+<p>乐观锁</p>
+<p>总是<strong>假设最好</strong>的情况，每次去拿数据的时候都<strong>认为别人不会修改</strong>，所以<strong>不会上锁</strong>，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，<strong>乐观锁适用于多读的应用类型，这样可以提高吞吐量</strong></p>
+</li>
+<li>
+<p>悲观锁</p>
+<p>总是<strong>假设最坏</strong>的情况，每次去拿数据的时候都<strong>认为别人会修改</strong>，所以每次在拿数据的时候都<strong>会上锁</strong>，这样别人想拿这个数据就会阻塞直到它拿到锁（<strong>共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程</strong>）。<strong>一般多写的场景下用悲观锁就比较合适。</strong>----&gt;synchronized ReentrantLock就是悲观锁的思想，传统的关系型数据库里边就用到了很多这种锁机制，比如<strong>行锁，表锁等，读锁，写锁</strong>等</p>
+</li>
+</ul>
+<h3 id="乐观锁实现方式">乐观锁实现方式</h3>
+<ul>
+<li>
+<p><strong>版本号控制</strong></p>
+<p>​		一般是在数据表中<strong>加上一个数据版本号version字段</strong>，<strong>表示数据被修改的次数</strong>，当数据被修改时，version值会加一。当线程<strong>A要更新数据值时，在读取数据的同时也会读取version值</strong>，在<strong>提交更新时，若刚才读取到的version值为当前数据库中的version值相等时才更新</strong>，否则重试更新操作，直到更新成功。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga1xidusg9j31h00hmgu1.jpg" alt="image-20191219124054387" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>CAS算法</strong></p>
+<p>即<strong>compare and swap（比较与交换）</strong>，是一种有名的<strong>无锁算法</strong>。无锁编程，即不使用锁的情况下实现多线程之间的变量同步，也就是在没有线程被阻塞的情况下实现变量的同步，所以也叫非阻塞同步（Non-blocking Synchronization）。<strong>CAS算法</strong>涉及到三个操作数</p>
+<p>​		需要读写的内存值V</p>
+<p>​		进行比较的值A</p>
+<p>​		拟写入的新值B</p>
+<p>当且仅当 V 的值等于 A时，CAS通过原子方式用新值B来更新V的值，否则不会执行任何操作（比较和替换是一个原子操作）。一般情况下是一个<strong>自旋操作</strong>，即<strong>不断的重试</strong>。</p>
+</li>
+</ul>
+<h3 id="乐观锁缺点">乐观锁缺点</h3>
+<ul>
+<li>
+<p><strong>ABA问题</strong>：如果一个变量V初次读取的时候是A值，并且在准备赋值的时候检查到它仍然是A值，那我们就能说明它的值没有被其他线程修改过了吗？很明显是不能的，因为在这段时间它的值可能被改为其他值，然后又改回A，那CAS操作就会误认为它从来没有被修改过。这个问题被称为CAS操作的 <strong>&quot;ABA&quot;问题。</strong></p>
+<p>解决ABA问题办法----&gt;引入版本号控制</p>
+</li>
+<li>
+<p>循环时间长CPU开销大：<strong>自旋CAS（也就是不成功就一直循环执行直到成功）如果长时间不成功，会给CPU带来非常大的执行开销。</strong></p>
+</li>
+<li>
+<p><strong>只能保证一个共享变量的原子操作</strong>：CAS机制所保证的只是一个变量的原子性操作，而不能保证整个代码块的原子性。但是从 JDK 1.5开始，提供了<code>AtomicReference类</code>来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作.所以我们可以使用锁或者利用<code>AtomicReference类</code>把多个共享变量合并成一个共享变量来操作。</p>
+</li>
+</ul>
+<h3 id="cas和synchronized的使用场景">CAS和Synchronized的使用场景</h3>
+<p><strong>简单的来说CAS适用于写比较少的情况下（多读场景，冲突一般较少），synchronized适用于写比较多的情况下（多写场景，冲突一般较多）</strong></p>
+<p>​		对于资源竞争较少（线程冲突较轻）的情况，<strong>使用synchronized同步锁进行线程阻塞和唤醒切换以及用户态内核态间的切换操作额外浪费消耗cpu资源</strong>；而<strong>CAS基于硬件实现，不需要进入内核</strong>，不需要切换线程，操作自旋几率较少，因此可以获得更高的性能。</p>
+<p>​		Java并发编程这个领域中synchronized关键字一直都是元老级的角色，很久之前很多人都会称它为 <strong>“重量级锁”</strong> 。但是，在JavaSE 1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的 <strong>偏向锁</strong> 和 <strong>轻量级锁</strong> 以及其它<strong>各种优化</strong>之后变得在某些情况下并不是那么重了。synchronized的底层实现主要依靠 <strong>Lock-Free</strong> 的队列，基本思路是 <strong>自旋后阻塞</strong>，<strong>竞争切换后继续竞争锁</strong>，<strong>稍微牺牲了公平性，但获得了高吞吐量</strong>。在线程冲突较少的情况下，可以获得和CAS类似的性能；而线程冲突严重的情况下，性能远高于CAS。</p>
+<h2 id="synchronizedreentrantlocklock">Synchronized,ReentrantLock,Lock</h2>
+<h3 id="synchronized关键字用法">synchronized关键字用法</h3>
+<h4 id="修饰代码块"><strong>修饰代码块</strong></h4>
+<p>被修饰的代码块称为同步语句块，其作用的范围是大括号{}括起来的代码，<strong>作用的对象是调用这个代码块的对象</strong></p>
+<ul>
+<li><strong>Demo1 ---&gt;理解synchronized关键字锁的是对象</strong></li>
+</ul>
+<pre><code class="language-java">class SyncThread implements Runnable {
+   private static int count;
+
+   public SyncThread() {
+      count = 0;
+   }
+
+   public  void run() {
+      synchronized(this) {
+         for (int i = 0; i &lt; 5; i++) {
+            try {
+               System.out.println(Thread.currentThread().getName() + &quot;:&quot; + (count++));
+               Thread.sleep(100);
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
+         }
+      }
+   }
+
+   public int getCount() {
+      return count;
+   }
+}
+
+
+
+
+</code></pre>
+<p>调用结果1：</p>
+<pre><code class="language-java">// main方法调用----&gt;一个对象
+SyncThread syncThread = new SyncThread();
+Thread thread1 = new Thread(syncThread, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+结果：
+SyncThread1:0
+SyncThread1:1
+SyncThread1:2
+SyncThread1:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread2:7
+SyncThread2:8
+SyncThread2:9
+
+</code></pre>
+<p>调用结果2：</p>
+<pre><code class="language-java">// main方法调用----&gt;两个对象的时候
+SyncThread syncThread1 = new SyncThread();
+SyncThread syncThread2 = new SyncThread();
+Thread thread1 = new Thread(syncThread1, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread2, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+
+SyncThread1:0
+SyncThread2:1
+SyncThread1:2
+SyncThread2:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread1:7
+SyncThread1:8
+SyncThread2:9
+
+</code></pre>
+<p>这时创建了<strong>两个SyncThread的对象syncThread1和syncThread2，线程thread1执行的是syncThread1对象中的synchronized代码(run)，而线程thread2执行的是syncThread2对象中的synchronized代码(run)</strong>；我们知道synchronized锁定的是对象，这时会有<strong>两把锁</strong>分别锁定syncThread1对象和syncThread2对象，而这两把锁是互不干扰的，不形成互斥，所以两个线程可以同时执行。</p>
+<p><strong>一个线程访问一个对象的synchronized代码块时，别的线程可以访问该对象的非synchronized代码块而不受阻塞</strong></p>
+<ul>
+<li><strong>Demo2---&gt;指定某个对象加锁</strong></li>
+</ul>
+<pre><code class="language-java">/**
+ * 银行账户类
+ */
+class Account {
+   String name;
+   float amount;
+
+   public Account(String name, float amount) {
+      this.name = name;
+      this.amount = amount;
+   }
+   //存钱
+   public  void deposit(float amt) {
+      amount += amt;
+      try {
+         Thread.sleep(100);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+   }
+   //取钱
+   public  void withdraw(float amt) {
+      amount -= amt;
+      try {
+         Thread.sleep(100);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public float getBalance() {
+      return amount;
+   }
+}
+
+/**
+ * 账户操作类
+ */
+class AccountOperator implements Runnable{
+   private Account account;
+   public AccountOperator(Account account) {
+      this.account = account;
+   }
+
+   public void run() {
+      synchronized (account) {
+         account.deposit(500);
+         account.withdraw(500);
+         System.out.println(Thread.currentThread().getName() + &quot;:&quot; + account.getBalance());
+      }
+   }
+}
+
+// main方法进行调用
+Account account = new Account(&quot;zhang san&quot;, 10000.0f);
+AccountOperator accountOperator = new AccountOperator(account);
+
+final int THREAD_NUM = 5;
+Thread threads[] = new Thread[THREAD_NUM];
+for (int i = 0; i &lt; THREAD_NUM; i ++) {
+   threads[i] = new Thread(accountOperator, &quot;Thread&quot; + i);
+   threads[i].start();
+}
+
+</code></pre>
+<p>调用结果：</p>
+<pre><code>Thread3:10000.0
+Thread2:10000.0
+Thread1:10000.0
+Thread4:10000.0
+Thread0:10000.0
+</code></pre>
+<h4 id="修饰普通方法">修饰普通方法</h4>
+<p>被修饰的方法称为同步方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象Synchronized修饰一个方法很简单，就是在方法的前面加synchronized，public synchronized void method(){//todo}; synchronized修饰方法和修饰一个代码块类似，<strong>只是作用范围不一样，修饰代码块是大括号括起来的范围，而修饰方法范围是整个函数。</strong></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5k9ll02vj30x80u0430.jpg" alt="image-20191222160453297" style="zoom:50%;" />
+<p>虽然可以使用synchronized来定义方法，但synchronized并不属于方法定义的一部分，因此，synchronized关键字不能被继承。<strong>如果在父类中的某个方法使用了synchronized关键字，而在子类中覆盖了这个方法，在子类中的这个方法默认情况下并不是同步的</strong>，而必须显式地在<strong>子类的这个方法中加上synchronized关键字才可以</strong>。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5kcdlrp3j30tg0l476y.jpg" alt="image-20191222160736255" style="zoom:50%;" />
+<h4 id="修饰一个静态的方法">修饰一个静态的方法</h4>
+<p>其作用的范围是整个静态方法，作用的对象是这个类的所有对象</p>
+<ul>
+<li>Demo：synchronized关键字修饰静态方法</li>
+</ul>
+<pre><code class="language-java">/**
+ * 同步线程
+ */
+class SyncThread implements Runnable {
+   private static int count;
+
+   public SyncThread() {
+      count = 0;
+   }
+
+   public synchronized static void method() {
+      for (int i = 0; i &lt; 5; i ++) {
+         try {
+            System.out.println(Thread.currentThread().getName() + &quot;:&quot; + (count++));
+            Thread.sleep(100);
+         } catch (InterruptedException e) {
+            e.printStackTrace();
+         }
+      }
+   }
+
+   public synchronized void run() {
+      method();
+   }
+}
+
+// main方法中的调用
+SyncThread syncThread1 = new SyncThread();
+SyncThread syncThread2 = new SyncThread();
+Thread thread1 = new Thread(syncThread1, &quot;SyncThread1&quot;);
+Thread thread2 = new Thread(syncThread2, &quot;SyncThread2&quot;);
+thread1.start();
+thread2.start();
+
+</code></pre>
+<p>调用结果：</p>
+<pre><code>SyncThread1:0
+SyncThread1:1
+SyncThread1:2
+SyncThread1:3
+SyncThread1:4
+SyncThread2:5
+SyncThread2:6
+SyncThread2:7
+SyncThread2:8
+SyncThread2:9
+</code></pre>
+<p>​		syncThread1和syncThread2是SyncThread的两个对象，但在thread1和thread2并发执行时却保持了线程同步。这是因为run中调用了静态方法method，<strong>而静态方法是属于类的，所以syncThread1和syncThread2相当于用了同一把锁。</strong></p>
+<h4 id="修饰类">修饰类</h4>
+<ul>
+<li>其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象。</li>
+</ul>
+<pre><code class="language-java">class ClassName {
+   public void method() {
+      synchronized(ClassName.class) {
+         // todo
+      }
+   }
+}
+</code></pre>
+<p><strong>synchronized作用于一个类T时，是给这个类T加锁，T的所有对象用的是同一把锁</strong></p>
+<h3 id="synchronized底层实现">synchronized底层实现</h3>
+<ul>
+<li>进入执行synchronized代码块： monitorenter：count++</li>
+<li>释放：monitorexit： count--；</li>
+<li>线程判断计数器是否是0，如果是0表示当前锁空闲，可以进行占用，反之就等待</li>
+</ul>
+<h3 id="synchronized性能优化">synchronized性能优化</h3>
+<p>参考：http://www.pianshen.com/article/13827882/</p>
+<h4 id="jdk16之前重量级锁">JDK1.6之前（重量级锁）</h4>
+<p>​		<strong>Synchronized是通过对象内部的一个叫做监视器锁（monitor）来实现的</strong>。但是监视器锁本质又是依赖于底层的操作系统的Mutex Lock来实现的。而**操作系统实现线程之间的切换这就需要从用户态转换到核心态，这个成本非常高，状态之间的转换需要相对比较长的时间，这就是为什么Synchronized效率低的原因。**因此，这种依赖于操作系统Mutex Lock所实现的锁我们称之为“重量级锁”。JDK中对Synchronized做的种种优化，其核心都是为了减少这种重量级锁的使用</p>
+<h4 id="jdk16之后锁升级">JDK1.6之后（锁升级）</h4>
+<p>锁的升级过程如下：**<em>*锁的状态总共有四种：无锁状态、偏向锁、轻量级锁和重量级锁*<em><strong>。(对象头中锁的状态是2个字节)随着锁的竞争，锁可以从</strong>偏向锁升级到轻量级锁，再升级的重量级锁</em></em>（但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级</p>
+<ul>
+<li>
+<p><strong>自旋锁优化----&gt;自适应自旋锁</strong></p>
+<p>**频繁的阻塞和唤醒对CPU来说是一件负担很重的工作,所谓自旋锁，就是让该线程等待一段时间，不会被立即挂起，看持有锁的线程是否会很快释放锁。**怎么等待呢？执行一段无意义的循环即可（自旋),如果持有锁的线程很快就释放了锁，那么自旋的效率就非常好</p>
+<p>JDK 1.6引入了更加聪明的自旋锁，即***自适应自旋锁***。所谓自适应就意味着自旋的次数不再是固定的，它是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。它怎么做呢？**线程如果自旋成功了，那么下次自旋的次数会更加多，因为虚拟机认为既然上次成功了，那么此次自旋也很有可能会再次成功，那么它就会允许自旋等待持续的次数更多。**反之，<strong>如果对于某个锁，很少有自旋能够成功的，那么在以后要或者这个锁的时候自旋的次数会减少甚至省略掉自旋过程，以免浪费处理器资源。</strong></p>
+</li>
+<li>
+<p><strong>锁消除</strong></p>
+<p>锁消除<strong>是Java虚拟机在JIT编译时</strong>，通过对运行上下文的扫描，<strong>去除不可能存在共享资源竞争的锁，通过锁消除，可以节省毫无意义的请求锁时间</strong>。就是JVM会检测到不可能存在共享数据竞争，JVM会进行锁的消除(StringBuffer,Vector,HashTable)</p>
+</li>
+<li>
+<p><strong>锁粗化</strong></p>
+<p>将连续的加锁 精简到只加一次锁。</p>
+<pre><code class="language-java">public class StringBufferTest {
+    StringBuffer stringBuffer = new StringBuffer();
+ 
+    public void append(){
+        stringBuffer.append(&quot;a&quot;);
+        stringBuffer.append(&quot;b&quot;);
+        stringBuffer.append(&quot;c&quot;);
+    }
+}
+</code></pre>
+<p>这里<strong>每次调用stringBuffer.append方法都需要加锁和解锁</strong>，如果虚拟机检测到有一系列连串的对同一个对象加锁和解锁操作，就会将其合并成一次范围更大的加锁和解锁操作，<strong>即在第一次append方法时进行加锁，最后一次append方法结束后进行解锁。</strong></p>
+</li>
+<li>
+<p><strong>轻量级锁</strong></p>
+<p><strong>无竞争的条件下，通过CAS消除同步互斥</strong>多个线程交替同步执行的情况，没有竞争</p>
+</li>
+<li>
+<p><strong>偏向锁</strong></p>
+<p>无竞争条件下，消除整个互斥同步，<strong>连CAS都不做(只有一个线程执行同步)</strong></p>
+<p>引入偏向锁是为了在<strong>无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径</strong>，因为轻量级锁的获取及释放<strong>依赖多次CAS原子指令，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令</strong>（由于一旦出现<strong>多线程竞争的情况就必须撤销偏向锁</strong>，所以偏向锁的撤销操作的性能损耗必须小于节省下来的CAS原子指令的性能消耗）。</p>
+<p>​		偏向锁只有<strong>遇到其他线程尝试竞争偏向锁时</strong>，持有偏向锁的线程才会释放锁，线程不会主动去释放偏向锁。</p>
+<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5m43mnzij316c0e80vr.jpg" alt="image-20191222170850243" loading="lazy"></figure>
+</li>
+</ul>
+<h3 id="lock">Lock</h3>
+<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga5m8g1y7bj31ik0mi78d.jpg" alt="image-20191222171301152" loading="lazy"></figure>
+<p>​		Lock实现和synchronized不一样，<strong>后者是一种悲观锁，它胆子很小，它很怕有人和它抢吃的，所以它每次吃东西前都把自己关起来</strong>。而<strong>Lock呢底层其实是CAS乐观锁的体现，它无所谓，别人抢了它吃的，它重新去拿吃的就好啦，所以它很乐观</strong>。</p>
+<p>Lock接口的源码：</p>
+<pre><code class="language-java">public interface Lock {
+
+    /**
+     * Acquires the lock.
+     */
+    void lock();
+
+    /**
+     * Acquires the lock unless the current thread is
+     * {@linkplain Thread#interrupt interrupted}.
+     */
+    void lockInterruptibly() throws InterruptedException;
+
+    /**
+     * Acquires the lock only if it is free at the time of invocation.
+     */
+    boolean tryLock();
+
+    /**
+     * Acquires the lock if it is free within the given waiting time and the
+     * current thread has not been {@linkplain Thread#interrupt interrupted}.
+     */
+    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
+
+    /**
+     * Releases the lock.
+     */
+    void unlock();
+	
+}
+
+</code></pre>
+<h3 id="reentrantlock">ReentrantLock</h3>
+<p><strong>ReentrantLock是Lock的一个具体实现类</strong></p>
+<pre><code class="language-java">import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class LockTest {
+	private Lock lock = new ReentrantLock();
+
+	//需要参与同步的方法
+	private void method(Thread thread){
+		lock.lock();
+		try {
+			System.out.println(&quot;线程名&quot;+thread.getName() + &quot;获得了锁&quot;);
+		}catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			System.out.println(&quot;线程名&quot;+thread.getName() + &quot;释放了锁&quot;);
+			lock.unlock();
+		}
+	}
+	
+	public static void main(String[] args) {
+		LockTest lockTest = new LockTest();
+		
+		//线程1
+		Thread t1 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				lockTest.method(Thread.currentThread());
+			}
+		}, &quot;t1&quot;);
+		
+		Thread t2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				lockTest.method(Thread.currentThread());
+			}
+		}, &quot;t2&quot;);
+		
+		t1.start();
+		t2.start();
+	}
+}
+//执行情况： 线程名t1获得了锁
+//         线程名t1释放了锁
+//         线程名t2获得了锁
+//         线程名t2释放了锁
+
+</code></pre>
+<h3 id="reentrantlock和synchronized用法区别">ReentrantLock和synchronized用法区别</h3>
+<ul>
+<li>用ReentrantlLock保护代码块一定要在finally块里面释放锁，synchronized不需要，JVM自动帮助我们释放</li>
+</ul>
+<pre><code class="language-java">Lock lock = new ReentrantLock();
+lock.lock();
+try { 
+  // update object state
+}
+finally {
+  lock.unlock(); 
+}
+</code></pre>
+<ul>
+<li>
+<p>性能区别</p>
+<p>在Synchronized优化以前，synchronized的性能是比ReenTrantLock差很多的，但是自从Synchronized引入了偏向锁，轻量级锁（自旋锁）后，两者的性能就差不多了，在两种方法都可用的情况下，官方甚至建议使用synchronized，其实synchronized的优化我感觉就借鉴了ReenTrantLock中的CAS技术。都是试图在用户态就把加锁问题解决，避免进入内核态的线程阻塞。</p>
+</li>
+<li>
+<p>功能区别</p>
+<p>便利性：很明显<strong>Synchronized的使用比较方便简洁</strong>，并且<strong>由编译器去保证锁的加锁和释放，而ReenTrantLock需要手工声明来加锁和释放锁</strong>，为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁。</p>
+<p>锁的细粒度和灵活度：很明显ReenTrantLock优于Synchronized</p>
+</li>
+<li>
+<p>相关使用场景</p>
+<ul>
+<li>竞争资源不是很激烈，偶有同步---&gt;synchronized</li>
+<li>同步激烈，synchronized性能急剧下降---&gt;ReentrantLock</li>
+</ul>
+</li>
+<li>
+<p>我们什么时候才应该使用 <code>ReentrantLock</code> 呢？</p>
+<p>​		<strong>在确实需要一些 synchronized 所没有的特性的时候</strong>，比如<strong>时间锁等候、可中断锁等候、无块结构锁、多个条件变量或者锁投票(ReentrantLock的独有魅力)</strong>。 <code>ReentrantLock</code> 还具有可伸缩性的好处，应当在高度争用的情况下使用它，但是请记住，大多数 synchronized 块几乎从来没有出现过争用，所以可以把高度争用放在一边。我建议用 synchronized 开发，直到确实证明 synchronized 不合适，而不要仅仅是假设如果使用 <code>ReentrantLock</code> “性能会更好”。</p>
+</li>
+</ul>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/U-6HRLQLq/" rel="tag">总结</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/_oVxR5i5U/" rel="tag">Java</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/java-ji-chu-pian-si/" rel="prev"> Java基础篇（四）</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/java-ji-chu-pian-er/" rel="next"> Java基础篇（二）</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

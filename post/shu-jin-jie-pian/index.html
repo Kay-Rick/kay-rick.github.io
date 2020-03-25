@@ -1,0 +1,1189 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>树（进阶篇） | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/00831rSTgy1gd6cvw9bzsj31lc0sgu10.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">树（进阶篇）</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-25 18:42:27" itemprop="datePublished" pubdate="">2020-03-25</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>上一篇介绍了树和二叉树的一些基本知识，存储结构，遍历，常见算法应用等，这一篇主要对树的另外一些高级数据结构进行梳理</p>
+</blockquote>
+<h2 id="二叉搜索树">二叉搜索树</h2>
+<h3 id="什么是二叉搜索树">什么是二叉搜索树？</h3>
+<p>一颗二叉树，可以为空；如果不为空，满足以下性质：</p>
+<ul>
+<li>非空<strong>左子树</strong>的所有键值<strong>小于其根节点的键值</strong></li>
+<li>非空<strong>右子树</strong>的所有键值<strong>大于其根节点的键值</strong></li>
+<li><strong>左、右子树都是二叉搜素树</strong></li>
+</ul>
+<h3 id="二叉搜索树常见算法">二叉搜索树常见算法</h3>
+<h4 id="查找元素">查找元素</h4>
+<ul>
+<li><code>Position Find(ElementType X, BinTree BST)</code>：从二叉搜索树BST中查找元素X，返回其结点所在地址</li>
+</ul>
+<pre><code class="language-c++">TreeNode* Find(int x, TreeNode* root) {
+    if (root == NULL) {
+        return NULL;		// 查找失败
+    }
+    if (root-&gt;val &gt; x) {
+        return Find(x, root-&gt;left);		// 左子树递归查找
+    }
+    if (root-&gt;val &lt; x) {
+        return Find(x, root-&gt;right);	// 右子树递归查找
+    }else
+    {
+        return root;		// 查找到结点
+    }
+}
+</code></pre>
+<pre><code class="language-c++">TreeNode* Find(int x, TreeNode* root) {
+    while (root != NULL) {
+        if (root-&gt;val &gt; x) {
+            root = root-&gt;left;
+        }else if (root-&gt;val &lt; x)
+        {
+            root = root-&gt;right;
+        }else
+        {
+            return root;
+        }       
+        return NULL;
+    }   
+}
+</code></pre>
+<p><strong>查找的效率决定于树的高度</strong></p>
+<h4 id="查找最值元素">查找最值元素</h4>
+<ul>
+<li><code>Position FindMin(BinTree BST)</code>：从二叉搜索树BST中查找并返回最小元素所在节点的地址</li>
+</ul>
+<pre><code class="language-c++">TreeNode* FindMin(TreeNode* root) {
+    if (root == NULL) {
+        return NULL;
+    }
+    if (root-&gt;left == NULL) {
+        return root;
+    }else
+    {
+        return FindMin(root-&gt;left);
+    }
+}
+</code></pre>
+<ul>
+<li><code>Position FindMax(BinTree BST)</code>：从二叉搜索树BST中查找并返回最大元素所在节点的地址</li>
+</ul>
+<pre><code class="language-c++">TreeNode* FindMax(TreeNode* root) {
+    if (root != NULL) {
+        while (root-&gt;right != NULL) {
+            root = root-&gt;right;
+        }
+    } 
+    return root;
+}
+</code></pre>
+<h4 id="插入元素">插入元素</h4>
+<ul>
+<li>
+<p><code>BinTree Insert(ElementType X, BinTree BST)</code>：插入元素X到二叉搜索树BST中</p>
+<pre><code class="language-c++">TreeNode* insertIntoBST(TreeNode* root, int val) {
+    // 若原树为空，生成并返回一个结点的二叉搜索树
+  	if (root == NULL) {
+      root = new TreeNode(val);
+    }
+  	// 开始查找要插入元素的位置
+    if (root-&gt;val &gt; val) {
+      root-&gt;left = insertIntoBST(root-&gt;left, val);		// 递归处理左子树
+    }else if (root-&gt;val &lt; val)
+    {
+      root-&gt;right = insertIntoBST(root-&gt;right, val);	// 递归处理右子树
+    }
+    return root; 
+}
+</code></pre>
+</li>
+</ul>
+<h4 id="删除元素">删除元素</h4>
+<ul>
+<li>
+<p><code>BinTree Delete(ElementType X, BinTree BST)</code>：从二叉搜索树BST中删除元素X</p>
+<ul>
+<li>
+<p>要删除<strong>叶结点</strong>：直接删除，并修改其父节点指针--置为<code>NULL</code></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhhxlq3bj30lw0ceq4b.jpg" alt="image-20200318231109608" style="zoom:50%;" />
+</li>
+<li>
+<p>要删除的结点<strong>只有一个孩子结点</strong>：将其父节点的指针指向要删除节点的孩子结点</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhk2f5qkj30i20c4ta7.jpg" alt="image-20200318231314737" style="zoom:50%;" />
+</li>
+<li>
+<p>要删除的结点<strong>有左、右两颗子树</strong>：</p>
+<p>用<strong>另一结点替代被删除结点</strong>：<strong>右子树的最小元素或者左子树的最大元素</strong>，这样就<strong>转换成了前两种情况</strong></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhtajm8kj30gg0csq52.jpg" alt="image-20200318232206833" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhubc8zrj30dg0cogmy.jpg" alt="image-20200318232306027" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhtzurowj30cu0aumyx.jpg" alt="image-20200318232247420" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcyhs7y6jxj30dg0cqta2.jpg" alt="image-20200318232104915" style="zoom:50%;" />
+</li>
+</ul>
+<pre><code class="language-c++">TreeNode* deleteNode(TreeNode* root, int key) {
+    TreeNode* temp = NULL;
+    // 先查找到结点的位置
+    if (root == NULL) {
+      return root;
+    }
+    if (root-&gt;val &gt; key) {
+      root-&gt;left = deleteNode(root-&gt;left, key);
+    }else if (root-&gt;val &lt; key)
+    {
+      root-&gt;right = deleteNode(root-&gt;right, key);
+    }else
+    // 找到了要删除的结点，然后对三种情况进行判断
+    {
+        // 左右子树都有结点的情况
+        if (root-&gt;left != NULL &amp;&amp; root-&gt;right != NULL) {
+            // 在右子树上找一个最小的结点对要删除的结点进行替代
+            temp = FindMin(root-&gt;right);
+            root-&gt;val = temp-&gt;val;
+            // 转换成要删除的是叶子结点或者只有一个孩子结点的情况
+            root-&gt;right = deleteNode(root-&gt;right, root-&gt;val);
+        }else
+            // 针对要删除的是叶子结点或者是只有一个孩子结点的情况
+        {
+            if (root-&gt;left == NULL) {
+                root = root-&gt;right;
+            }else if (root-&gt;right == NULL)
+            {
+                root = root-&gt;left;
+            }
+        }
+    }
+    return root; 
+}
+
+TreeNode* FindMin(TreeNode* root) {
+  if (root == NULL) {
+    return NULL;
+  }
+  if (root-&gt;left == NULL) {
+    return root;
+  }else
+  {
+    return FindMin(root-&gt;left);
+  }
+}
+</code></pre>
+<pre><code class="language-c++">TreeNode* deleteNode(TreeNode* root, int key) {
+  if (!root) {
+    return nullptr;
+  }
+  // 找到要删除的结点
+  if (root-&gt;val == key) {
+    // 如果右子树没有结点，直接删掉该结点并返回左子树
+    if (!root-&gt;right) {
+      TreeNode* left = root-&gt;left;
+      delete root;
+      return left;
+    }else
+    {
+      // 如果右子树有结点，找到右子树的最小结点
+      // 进行交换，这样下次删除的就是叶子结点，比较容易
+      TreeNode* right = root-&gt;right;
+      while (right-&gt;left) {
+        right = right-&gt;left;
+      }
+      swap(root-&gt;val, right-&gt;val);
+    }
+  }
+  root-&gt;left = deleteNode(root-&gt;left, key);
+  root-&gt;right = deleteNode(root-&gt;right, key);
+  return root;
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="判断一棵树是否为二叉搜索树">判断一棵树是否为二叉搜索树</h3>
+<h4 id="递归">递归</h4>
+<p>乍一看：这是一个平凡的问题，只需要遍历整棵树，检查结点值<code>node-&gt;right-&gt;val &gt; node-&gt;val</code>和<code>node-&gt;left-&gt;val &lt; node-&gt;val</code>对每个结点都成立</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd0gt8xjxlj30vw0fi0vg.jpg" alt="image-20200320161835995" style="zoom: 33%;" />
+<p>问题是，这种方法并不总是正确。<strong>不仅右子结点要大于该节点，整个右子树的元素都应该大于该节点</strong>。例如:</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd0gudchi6j317e0fgdkj.jpg" alt="image-20200320161938824" style="zoom: 33%;" />
+<p>这意味着我们需要<strong>在遍历树的同时保留结点的上界与下界，在比较时不仅比较子结点的值，也要与上下界比较。</strong></p>
+<pre><code class="language-c++">bool isValidBST(TreeNode* root) {
+  // 为了测试通过LeetCode测试用例，上边界和下边界使用了long的边界值
+  return helper(root, LONG_MAX, LONG_MIN);
+}
+bool helper(TreeNode* root, long upper, long lower) {
+    if (!root) {
+      	return true;
+    }
+    int val = root-&gt;val;
+    if (val &gt;= upper) {
+      	return false;
+    }
+    if (val &lt;= lower) {
+      	return false;
+    }
+    if (!helper(root-&gt;left, val, lower)) {
+      	return false;
+    }
+    if (!helper(root-&gt;right, upper, val)) {
+      	return false;
+    }
+    return true;
+}
+</code></pre>
+<p>更为优雅的递归：</p>
+<pre><code class="language-c++">class Solution {
+public:
+    private:
+    TreeNode* prev = NULL;
+public:
+    bool isValidBST(TreeNode* root) {
+        if(!root)   return true;
+        return isValidBST(root-&gt;left)  &amp;&amp; help(root) &amp;&amp; isValidBST(root-&gt;right);
+    }
+    
+    bool help(TreeNode* root){
+        if(!prev){
+            prev = root;
+            return true;
+        }
+        if(prev-&gt;val &gt;= root-&gt;val)   return false;
+        prev = root;
+        return true;
+    }
+};
+</code></pre>
+<h4 id="中序遍历为升序">中序遍历为升序</h4>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        TreeNode* node = root;
+        vector&lt;int&gt; inorder;
+        stack&lt;TreeNode*&gt; s;
+        while (node || !s.empty()) {
+            while (node) {
+                s.push(node);
+                node = node-&gt;left;
+            }
+            if (!s.empty()) {
+                node = s.top();
+                inorder.push_back(node-&gt;val);
+                s.pop();
+                node = node-&gt;right;
+            }
+        }
+        // 验证中序序列是否为升序
+        for (int i = 1; i &lt; inorder.size(); i++) {
+            if (inorder[i] &lt;= inorder[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+</code></pre>
+<h2 id="平衡二叉树avl树">平衡二叉树(AVL树)</h2>
+<h3 id="平衡二叉树概念">平衡二叉树概念</h3>
+<p>搜索树结点不同插入次序，将导致<strong>不同的深度和平均查找长度ASL</strong></p>
+<ul>
+<li>平衡因子（Balance Factor）：<strong>BF(T) = h<sub>L</sub> - h<sub>R</sub></strong>，其中h<sub>L</sub> 、h<sub>R</sub>分别表示T的左、右子树的高度。</li>
+</ul>
+<blockquote>
+<p>平衡二叉树（Balanced Binary Tree）（AVL树）空树，或者任一结点左、右子树高度差的绝对值不超过1，即|BF(T)| ≤ 1</p>
+</blockquote>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczdyj85pqj30qe080778.jpg" alt="image-20200319175418894" style="zoom:50%;" />
+<p><strong>注意：是对任意一个结点而言，不仅仅是根节点</strong></p>
+<h3 id="平衡二叉树的高度">平衡二叉树的高度</h3>
+<p>完全二叉树 高度log<sub>2</sub>n，设n<sub>h</sub>高度为h的平衡二叉树的最少结点数。结点数最少时：</p>
+<p>有 <strong>n<sub>h</sub> = n<sub>h-1</sub> + n<sub>h-2</sub> + 1</strong>  ==&gt;	斐波那契数列加1</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcze6gngzxj30pe072gmw.jpg" alt="image-20200319180157073" style="zoom:50%;" />
+<h3 id="平衡二叉树的调整">平衡二叉树的调整</h3>
+<p>在平衡二叉树进行插入结点后，可能会导致该二叉树不再是平衡二叉树，需要对结点位置进行调整：调整的原则一定要注意：<strong>调整完一定还要是二叉搜索树</strong></p>
+<p>####RR旋转</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczf67zqhnj30o605q40i.jpg" alt="image-20200319183618370" style="zoom:50%;" />
+<p>不平衡的**“发现者”<strong>是Mar，</strong>“麻烦结点”**Nov在发现右子树的右边，因而叫RR插入，需要RR旋转（右单旋）</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczf7l9frkj30qc0800vu.jpg" alt="image-20200319183737281" style="zoom:50%;" />
+<p>注意：插入的结点<strong>不一定就是最右边的结点才算RR旋转</strong>，一定要明确的是：插入结点后，<strong>被破坏平衡的那个结点的右子树的右边（可以是左叶子结点也可以是右叶子结点，只要是在右子树的右边即可）就可</strong></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczfdkl7yfj30m20aidj6.jpg" alt="image-20200319184322231" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczfexawy7j30n40fsdlh.jpg" alt="image-20200319184440426" style="zoom:50%;" />
+<h4 id="ll旋转">LL旋转</h4>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczg6wjifhj30r009atci.jpg" alt="image-20200319191132018" style="zoom:50%;" />
+<p>Mar的平衡性和May的平衡性都被破坏，我们<strong>只需要解决第一个被破坏的结点Mar</strong></p>
+<p>“发现者”是Mar，“麻烦结点”Apr在<strong>发现者左子树的左边</strong>，因而交LL插入，需要<strong>LL旋转（左单旋）</strong></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczga3lq2xj30qs07o77n.jpg" alt="image-20200319191437310" style="zoom:50%;" />
+<h4 id="lr旋转">LR旋转</h4>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczgl6yye9j30rc07ggqh.jpg" alt="image-20200319192517997" style="zoom:50%;" />
+<p><strong>“发现者”<strong>是May，</strong>“麻烦结点”<strong>Jan在</strong>左子树的右边</strong>，因而交LR插入，需要LR旋转</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczgngz7eij30qo09kn1u.jpg" alt="image-20200319192729272" style="zoom:50%;" />
+<h4 id="rl旋转">RL旋转</h4>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczhisf5hvj30s008uwkm.jpg" alt="image-20200319195734013" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczi7io743j30rk09uwje.jpg" alt="image-20200319202119089" style="zoom:50%;" />
+<h2 id="堆">堆</h2>
+<h3 id="相关概念">相关概念</h3>
+<p>优先队列（Priority Queue）：特殊的“队列”，<strong>取出元素的顺序是按照元素的优先权（关键字）大小</strong>，呃呃不是元素进入队列的先后顺序；我们发现当我们实现优先队列的时候，无论是数组、有序数组还是链表，我们都不能很好地去实现按优先权大小这个功能</p>
+<p>堆</p>
+<ul>
+<li>
+<p>结构性：用<strong>数组</strong>表示的<strong>完全二叉树</strong></p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd2xwdipq4j30m00bg0uh.jpg" alt="image-20200322194055046" style="zoom:50%;" />
+</li>
+<li>
+<p>有序性：<strong>任一结点的关键字是其子树所有节点的最大值（或最小值）</strong></p>
+<ul>
+<li>最大堆：也称“大顶堆”：根节点是最大值</li>
+<li>最小堆：也称“小顶堆”：根节点是最小值</li>
+</ul>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd2ui2g1a7j30ts0j67fg.jpg" alt="image-20200322174322022" style="zoom:50%;" />
+</li>
+</ul>
+<h3 id="最大堆操作">最大堆操作</h3>
+<h4 id="创建最大堆">创建最大堆</h4>
+<pre><code class="language-c++">typedef int ElementType;
+typedef struct HNode* Heap; /* 堆的类型定义 */
+struct HNode {
+    ElementType* Data; /* 存储元素的数组 */
+    int Size;          /* 堆中当前元素个数 */
+    int Capacity;      /* 堆的最大容量 */
+};
+typedef Heap MaxHeap; /* 最大堆 */
+
+#define MAXDATA 1000  /* 该值应根据具体情况定义为大于堆中所有可能元素的值 */
+
+/**
+ * @description: 创建容量为MaxSize的空的最大堆
+ * @param int
+ * @return: MaxHeap
+ */ 
+MaxHeap CreateMaxHeap (int MaxSize) {
+    MaxHeap H = (MaxHeap) malloc (sizeof(struct HNode));
+    H-&gt;Data = (ElementType*) malloc ((MaxSize + 1) * sizeof(ElementType));
+    H-&gt;Size = 0;
+    H-&gt;Capacity = MaxSize;
+    H-&gt;Data[0] = MAXDATA;   /* 定义&quot;哨兵&quot;为大于堆中所有可能元素的值*/
+    return H;
+}
+</code></pre>
+<h4 id="最大堆插入结点">最大堆插入结点</h4>
+<pre><code class="language-c++">/**
+ * @description: 将元素X插入最大堆H，其中H-&gt;Data[0]已经定义为哨兵
+ * @param MaxHeap 
+ * @param ElementType
+ * @return: bool
+ */
+bool Insert (MaxHeap H, ElementType X) {
+    int i;
+    if (IsFull(H)) { 
+        printf(&quot;最大堆已满\n&quot;);
+        return false;
+    }
+    i = ++H-&gt;Size; /* i指向插入后堆中的最后一个元素的位置 */
+    for (; H-&gt;Data[i / 2] &lt; X; i /= 2)
+        H-&gt;Data[i] = H-&gt;Data[i / 2]; /* 上滤X */
+    H-&gt;Data[i] = X; /* 将X插入 */
+    return true;
+}
+
+/**
+ * @description: 判断堆是否达到最大容量
+ * @param Heap
+ * @return: bool
+ */
+bool IsFull(Heap H){
+    return (H-&gt;Size == H-&gt;Capacity);
+}
+</code></pre>
+<h4 id="最大堆结点的删除">最大堆结点的删除</h4>
+<pre><code class="language-c++">#define ERROR -1 /* 错误标识应根据具体情况定义为堆中不可能出现的元素值 */
+/**
+ * @description: 从最大堆H中取出键值为最大的元素，并删除一个结点
+ * @param MaxHeap 
+ * @return: ElementType
+ */
+ElementType DeleteMax (MaxHeap H) {
+    int Parent, Child;
+    ElementType MaxItem, X;
+    if (IsEmpty(H)) {
+        printf(&quot;最大堆已为空&quot;);
+        return ERROR;
+    }
+    MaxItem = H-&gt;Data[1]; /* 取出根结点存放的最大值 */
+    /* 用最大堆中最后一个元素从根结点开始向上过滤下层结点 */
+    X = H-&gt;Data[H-&gt;Size--]; /* 注意当前堆的规模要减小 */
+    for(Parent = 1; Parent * 2 &lt;= H-&gt;Size; Parent = Child ) {
+        Child = Parent * 2;
+        if((Child != H-&gt;Size) &amp;&amp; (H-&gt;Data[Child] &lt; H-&gt;Data[Child + 1]))
+            Child++;  /* Child指向左右子结点的较大者 */
+        if(X &gt;= H-&gt;Data[Child]) break; /* 找到了合适位置 */
+        else  /* 下滤X */
+            H-&gt;Data[Parent] = H-&gt;Data[Child];
+    }
+    H-&gt;Data[Parent] = X;
+    return MaxItem;
+} 
+
+/**
+ * @description: 判断堆是否为空
+ * @param Heap 
+ * @return: bool
+ */
+bool IsEmpty(Heap H) {
+    return (H-&gt;Size == 0);
+}
+</code></pre>
+<h4 id="最大堆的建立">最大堆的建立</h4>
+<p>建立最大堆：将已经存在的N个元素按最大堆的要求存放在一个一维数组中</p>
+<ul>
+<li>方法1：通过插入操作，将N个元素一个个相继插入到一个初始化为空的堆中去，时间代价为<code>O(NlogN)</code></li>
+<li>方法2：在线性时间复杂度下建立最大堆
+<ul>
+<li>将N个元素按输入顺序存入，先满足完全二叉树的结构特性</li>
+<li>调整各结点位置，以满足最大堆的有序特性</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @description: 调整H-&gt;Data[]中的元素，使满足最大堆的有序性
+ * @param MaxHeap 
+ */
+void BuildMaxHeap(MaxHeap H) {
+    /* 这里假设所有H-&gt;Size个元素已经存在H-&gt;Data[]中 */
+    int i;
+    /* 从最后一个结点的父节点开始，到根结点1 */
+    for(i = H-&gt;Size / 2; i &gt; 0; i--)
+        PercDown(H, i);
+}
+
+/**
+ * @description: 下滤：将H中以H-&gt;Data[p]为根的子堆调整为最大堆
+ * @param MaxHeap
+ * @param int 
+ */
+void PercDown(MaxHeap H, int p) {
+    int Parent, Child;
+    ElementType X;
+    X = H-&gt;Data[p]; /* 取出根结点存放的值 */
+    for(Parent = p; Parent * 2 &lt;= H-&gt;Size; Parent = Child ) {
+        Child = Parent * 2;
+        if((Child != H-&gt;Size) &amp;&amp; (H-&gt;Data[Child] &lt; H-&gt;Data[Child + 1]) )
+            Child++;  /* Child指向左右子结点的较大者 */
+        if(X &gt;= H-&gt;Data[Child]) break; /* 找到了合适位置 */
+        else  /* 下滤X */
+            H-&gt;Data[Parent] = H-&gt;Data[Child];
+    }
+    H-&gt;Data[Parent] = X;
+}
+</code></pre>
+<h3 id="堆排序">堆排序</h3>
+<h4 id="算法1">算法1</h4>
+<pre><code class="language-c++">void HeapSort1 (ElementType A[], int N) {
+  BuildHeap(A);
+  for (i = 0; i &lt; N; i++) {
+    tempA[i] = DeleteMin(A);
+  }
+  for (i = 0; i &lt; N; i++) {
+    A[i] = tempA[i];
+  }
+}
+</code></pre>
+<p>时间复杂度为<code>O(NlogN)</code>；</p>
+<p>需要额外<code>O(N)</code>空间，并且复制元素需要时间</p>
+<h4 id="算法2">算法2</h4>
+<pre><code class="language-c++">typedef int ElementType;
+
+/**
+ * @brief 交换元素
+ * @param a 
+ * @param b 
+ */
+void Swap(ElementType *a, ElementType *b) {
+    ElementType t = *a;
+    *a = *b;
+    *b = t;
+}
+
+/**
+ * @brief 向下过滤，将N个元素的数组中以A[p]为根的子堆调整为最大堆
+ * @param A 
+ * @param p 
+ * @param N 
+ */
+void PercDown(ElementType A[], int p, int N) {
+    int Parent, Child;
+    ElementType X;
+
+    X = A[p]; /* 取出根结点存放的值 */
+    for (Parent = p; (Parent * 2 + 1) &lt; N; Parent = Child) {
+        Child = Parent * 2 + 1; // 从0开始，不同之前堆是从1开始
+        if ((Child != N - 1) &amp;&amp; (A[Child] &lt; A[Child + 1]))
+            Child++; /* Child指向左右子结点的较大者 */
+        if (X &gt;= A[Child])
+            break; /* 找到了合适位置 */
+        else       /* 下滤X */
+            A[Parent] = A[Child];
+    }
+    A[Parent] = X;
+}
+
+/**
+ * @brief 堆排序
+ * @param A 
+ * @param N 
+ */
+void HeapSort(ElementType A[], int N) {
+    int i;
+    for (i = N / 2 - 1; i &gt;= 0; i--) /* 建立最大堆 */
+        PercDown(A, i, N);
+    for (i = N - 1; i &gt; 0; i--) {
+        /* 删除最大堆顶 */
+        Swap(&amp;A[0], &amp;A[i]);
+        PercDown(A, 0, i);
+    }
+}
+</code></pre>
+<h2 id="哈夫曼树与编码">哈夫曼树与编码</h2>
+<h3 id="基础概念">基础概念</h3>
+<p>带权路径长度（WPL）：设二叉树有n个叶子结点，每个叶子结点带有权值w<sub>k</sub>，从根节点到每个叶子结点的长度为I<sub>k</sub>，则每个叶子结点的带权路径长度之和就是 <strong>WPL = ∑w<sub>k</sub>I<sub>k</sub></strong></p>
+<p><strong>最优二叉树获哈夫曼树</strong>：<strong>WPL最小的二叉树</strong></p>
+<h3 id="哈夫曼树的构造">哈夫曼树的构造</h3>
+<p>每次把<strong>权值最小的两颗二叉树</strong>合并，<strong>如何每次找到最小的权值 ==&gt; 最小堆</strong></p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+#define MINDATA -1     /* 该值应根据具体情况定义为小于堆中所有可能元素的值 */
+
+typedef struct HuffmanTreeNode* HuffmanTree;
+struct HuffmanTreeNode {    /* 哈弗曼树结点定义 */
+    int weight;             /* 权值 */
+    HuffmanTree left, right;
+};
+
+typedef HuffmanTreeNode* ElementType;   /* 哈弗曼树结点的指针为ElementType */
+typedef struct HNode* Heap; /* 堆的类型定义 */
+typedef Heap MinHeap;       /* 最小堆 */
+struct HNode {
+    ElementType* Data;      /* 存储元素的数组 */
+    int Size;               /* 堆中当前元素个数 */
+    int Capacity;           /* 堆的最大容量 */
+};
+
+/**
+ * @description: 创建容量为MaxSize的最小堆
+ * @param int 
+ * @return: MinHeap
+ */
+MinHeap CreateMinHeap (int MaxSize) {
+    MinHeap H = (MinHeap)malloc(sizeof(struct HNode));
+    H-&gt;Data = (ElementType*)malloc((MaxSize + 1) * sizeof (ElementType));
+    H-&gt;Size = 0;
+    H-&gt;Capacity = MaxSize;
+    H-&gt;Data[0]-&gt;weight = MINDATA;  /* 定义&quot;哨兵&quot;为小于堆中所有可能元素的值*/
+    return H;
+}
+
+/**
+ * @description: 判断堆是否达到最大容量
+ * @param MinHeap
+ * @return: bool
+ */
+bool IsFull(MinHeap H){
+    return (H-&gt;Size == H-&gt;Capacity);
+}
+
+/**
+ * @description: 将元素X插入最小堆H，其中H-&gt;Data[0]已经定义为哨兵
+ * @param MinHeap
+ * @param ElementType 
+ * @return: bool
+ */
+bool Insert (MinHeap H, ElementType X) {
+    int i;
+    if (IsFull(H)) {
+        printf(&quot;最小堆已满\n&quot;);
+        return false;
+    }
+    i = ++H-&gt;Size;  /* i指向插入后堆中的最后一个元素的位置 */
+    for (; H-&gt;Data[i / 2]-&gt;weight &gt; X-&gt;weight; i /= 2) {
+        H-&gt;Data[i] = H-&gt;Data[i / 2];    /* 上滤X */
+    }
+    H-&gt;Data[i] = X; /* 将X插入 */
+}
+
+/**
+ * @description: 判断堆是否为空
+ * @param MinHeap 
+ * @return: bool
+ */
+bool IsEmpty(MinHeap H) {
+    return (H-&gt;Size == 0);
+}
+
+/**
+ * @description: 从最小堆H中取出键值为最小的元素，并删除一个结点
+ * @param MinHeap 
+ * @return: ElementType
+ */
+ElementType DeleteMin (MinHeap H) {
+    int Parent, Child;
+    ElementType MinItem, X;
+    if (IsEmpty(H)) {
+        printf(&quot;最小堆已为空\n&quot;);
+        return;
+    }
+    MinItem = H-&gt;Data[1];   /* 取出根结点存放的最小值 */
+    X = H-&gt;Data[H-&gt;Size--];
+    for (Parent = 1; Parent * 2 &lt;= H-&gt;Size; Parent = Child) {
+        Child = Parent * 2;
+        if ((Child != H-&gt;Size) &amp;&amp; (H-&gt;Data[Child]-&gt;weight &gt; H-&gt;Data[Child + 1]-&gt;weight))
+            Child++;    /* Child指向左右子结点的较小者 */
+        if (X-&gt;weight &lt;= H-&gt;Data[Child]-&gt;weight) break; /* 找到了合适的位置 */
+        else  /* 下滤X */
+            H-&gt;Data[Parent] = H-&gt;Data[Child];
+    }
+    H-&gt;Data[Parent] = X;
+    return MinItem;
+}
+
+/**
+ * @description: 下滤：将H中以H-&gt;Data[p]为根的子堆调整为最小堆
+ * @param MaxHeap
+ * @param int 
+ */
+void PercDown(MinHeap H, int p) {
+    int Parent, Child;
+    ElementType X;
+    X = H-&gt;Data[p]; /* 取出根结点存放的值 */
+    for(Parent = p; Parent * 2 &lt;= H-&gt;Size; Parent = Child) {
+        Child = Parent * 2;
+        if((Child != H-&gt;Size) &amp;&amp; (H-&gt;Data[Child]-&gt;weight &gt; H-&gt;Data[Child + 1]-&gt;weight))
+            Child++;  /* Child指向左右子结点的较大者 */
+        if(X-&gt;weight &lt;= H-&gt;Data[Child]-&gt;weight) break; /* 找到了合适位置 */
+        else  /* 下滤X */
+            H-&gt;Data[Parent] = H-&gt;Data[Child];
+    }
+    H-&gt;Data[Parent] = X;
+}
+
+/**
+ * @description: 调整H-&gt;Data[]中的元素，使满足最大堆的有序性
+ * @param MaxHeap 
+ */
+void BuildMinHeap(MinHeap H) {
+    /* 这里假设所有H-&gt;Size个元素已经存在H-&gt;Data[]中 */
+    int i;
+    /* 从最后一个结点的父节点开始，到根结点1 */
+    for(i = H-&gt;Size / 2; i &gt; 0; i--)
+        PercDown(H, i);
+}
+
+/**
+ * @description: 利用最小堆构建哈弗曼树
+ * @param MinHeap 
+ * @return: HuffmanTree
+ */
+HuffmanTree Huffman (MinHeap H) {
+    /* 假设H-&gt;Size个权值赢存在H-&gt;Elements[]-&gt;weight里 */
+    int i;
+    HuffmanTree T;
+    BuildMinHeap(H);    /* 将H-&gt;Elements[]按权值调整为最小堆 */
+    for (i = 1; i &lt; H-&gt;Size; i++) {     /* 合并 */
+        T = (HuffmanTree)malloc(sizeof(struct HuffmanTreeNode));
+        T-&gt;left = DeleteMin(H);     /* 从最小堆删除一个结点，作为左结点 */
+        T-&gt;right = DeleteMin(H);    /* 从最小堆删除一个结点，作为右结点 */
+        T-&gt;weight = T-&gt;left-&gt;weight + T-&gt;right-&gt;weight; /* 计算新权值 */
+        Insert(H, T);               /* 将新T插入最小堆 */
+    }
+    T = DeleteMin(H);
+    return T;
+}
+</code></pre>
+<h3 id="哈弗曼编码">哈弗曼编码</h3>
+<ul>
+<li>
+<p>根据字符出现的频次，进行不等长编码，提高编码的效率，频率高的字符编码尽量短。但是不等长编码会带来二义性的问题</p>
+</li>
+<li>
+<p>避免二义性：<strong>前缀码 （prefix code）：任何字符的编码都不是领字符编码的前缀，这样就可以无二义性地解码</strong></p>
+</li>
+<li>
+<p>规定在哈弗曼树中左分支为0，右分支为1，则从根节点到每个叶子结点所经过的分支对应的0和1组成的序列便是该结点对应的哈弗曼编码</p>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd54wq1nlwj316e0u0tgw.jpg" alt="image-20200324171431840" style="zoom: 33%;" />
+</li>
+</ul>
+<h2 id="并查集">并查集</h2>
+<h3 id="基础概念-2">基础概念</h3>
+<p>并查集是一种维护集合的数据结构。</p>
+<ul>
+<li>并：Union（合并）合并两个集合</li>
+<li>查：Find（查找）判断<strong>两个元素是否在同一个集合里面</strong></li>
+<li>集：Set（集合）</li>
+</ul>
+<p>并查集实现一般<strong>使用数组</strong>来实现，数组中每个元素类型定义为<code>SetType</code></p>
+<pre><code class="language-c++">typedef int ElementType;
+typedef struct {
+    ElementType data;
+    int parent;		// 指向parent数组下标
+}SetType;
+</code></pre>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56rbmyqfj30dw0gcq4i.jpg" alt="image-20200324181835578" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56saat66j30ke07iwft.jpg" alt="image-20200324181930573" style="zoom:50%;" />
+<h3 id="集合运算">集合运算</h3>
+<h4 id="查找">查找</h4>
+<pre><code class="language-c++">/**
+ * @brief 查找某个元素所在集合
+ * @param S 
+ * @param X 
+ * @return int 
+ */
+int Find(SetType S[], ElementType X) {
+    int i;
+    for (i = 0; i &lt; MaxSize &amp;&amp; S[i].data != X; i++);
+    if (i &gt;= MaxSize)
+        return -1;  // 未找到返回-1
+    for (; S[i].parent &gt; 0; i = S[i].parent);
+    return i;       // 找到 X 所在集合，返回树根结点在数组 X 中的下标
+}
+</code></pre>
+<h4 id="并">并</h4>
+<ul>
+<li>分别找到<code>X1</code>和<code>X2</code>两个元素所在集合树的根节点</li>
+<li>如果他们不同根，<strong>将其中一个根节点的父结点指针设置成另一个根节点的数组下标</strong></li>
+<li><strong>为了提高合并后查找的性能，我们可以采用小的集合合并到大的集合里面</strong></li>
+<li>如何知道两个集合谁大谁小？ ==&gt; 我们可以看到当一个元素为根节点的时候，他的<code>parent</code>为-1，那么我们可以对其进行修改变为 <code>-集合元素个数</code></li>
+</ul>
+<img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd57zq96wmj30we0hi0zw.jpg" alt="image-20200324190115919" style="zoom:50%;" />
+<pre><code class="language-c++">/**
+ * @brief 合并两个元素所在集合树根节点
+ * @param S 
+ * @param X1 
+ * @param X2 
+ */
+void Union (SetType S[], ElementType X1, ElementType X2) {
+    int root1, root2;
+    root1 = Find(S, X1);
+    root2 = Find(S, X2);
+    // 集合1比较大，将集合2并入集合1
+    if (S[root1].parent &lt; S[root2].parent) { 
+        S[root1].parent += S[root2].parent;
+        S[root2].parent = root1;
+    } else {
+        S[root2].parent += S[root1].parent;
+        S[root1].parent = root2;
+    }
+}
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/I7ONPRk58e/" rel="tag">算法</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/jJmi_bqwwy/" rel="tag">C++</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/U-6HRLQLq/" rel="tag">总结</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/cmian-xiang-dui-xiang-ji-chu-pian/" rel="prev"> C++面向对象基础篇</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/shu-ru-men-pian/" rel="next"> 树（入门篇）</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
