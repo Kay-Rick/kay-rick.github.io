@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-03-25T13:54:13.496Z</updated>
+    <updated>2020-06-26T08:10:02.750Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,2634 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[树（实战篇）]]></title>
+        <id>https://kay-rick.github.io/post/shu-shi-zhan-pian/</id>
+        <link href="https://kay-rick.github.io/post/shu-shi-zhan-pian/">
+        </link>
+        <updated>2020-06-26T08:06:57.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>基础篇部分和进阶篇部分介绍了树相关章节的基础知识和基础算法，本篇就PAT上相关习题做一个总结</p>
+</blockquote>
+<h2 id="dfs遍历相关">DFS遍历相关</h2>
+<ul>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805521431773184">树叶子结点</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805359372255232">完全二叉树</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805424153280512">等重路径</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805388447170560">供应链总销售额</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805376476626944">供应链最高价格</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805362341822464">供应链最低价格</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/1071785408849047552">堆路径</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805347921805312">中缀表达式</a></p>
+</li>
+</ul>
+</br>
+<h3 id="数叶子结点">数叶子结点</h3>
+<p>家庭关系可以用家谱树来表示，给定一个家谱树，你的任务是找出其中没有孩子的成员。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个整数 N 表示树中结点总数以及一个整数 M 表示非叶子结点数。</p>
+<p>接下来 M 行，每行的格式为：</p>
+<pre><code>ID K ID[1] ID[2] ... ID[K]
+</code></pre>
+<p>ID 是一个两位数字，表示一个非叶子结点编号，K 是一个整数，表示它的子结点数，接下来的 K 个 ID[i] 也是两位数字，表示一个子结点的编号。</p>
+<p>为了简单起见，我们将根结点固定设为 01。</p>
+<p>所有结点的编号即为 01,02,03,…,31,32,33,…,N。</p>
+<p><strong>输出格式</strong></p>
+<p>输出从根结点开始，自上到下，树的<strong>每一层级</strong>分别包含多少个叶子节点。</p>
+<p>输出占一行，整数之间用空格隔开。</p>
+<p><strong>数据范围</strong></p>
+<p>0&lt;N&lt;100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>2 1
+01 1 02
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>0 1
+</code></pre>
+<p><strong>样例解释</strong></p>
+<p>该样例表示一棵只有 2 个结点的树，其中 01 结点是根，而 02 结点是其唯一的子节点。</p>
+<p>因此，在根这一层级上，存在 0 个叶结点；在下一个级别上，有 1 个叶结点。</p>
+<p>所以，我们应该在一行中输出0 1。</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int N = 110;
+int n, m;
+int cnt[N];
+int max_depth;
+vector&lt;int&gt; g[N];
+
+/*
+ * DFS搜索，加上depth参数为了记录每一层的叶子结点个数
+ */
+void dfs(int u, int depth) {
+    // 说明u是叶子结点
+    if (g[u].size() == 0) {
+        cnt[depth]++;
+        max_depth = max(max_depth, depth);
+        return;
+    }
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        dfs(g[u][i], depth + 1);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    // 读入数据建树
+    for (int i = 0; i &lt; m; i++) {
+        int id, k;
+        cin &gt;&gt; id &gt;&gt; k;
+        while(k--) {
+            int son;
+            cin &gt;&gt; son;
+            g[id].push_back(son);
+        }
+    }
+    dfs(1, 0);
+    cout &lt;&lt; cnt[0];
+    for (int i = 1; i &lt;= max_depth; i++) {
+        cout &lt;&lt; &quot; &quot; &lt;&lt; cnt[i];
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="完全二叉树">完全二叉树</h3>
+<p>给定一个树，请你判断它是否是完全二叉树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示树的结点个数。</p>
+<p>树的结点编号为 0∼N−1。</p>
+<p>接下来 N 行，每行对应一个结点，并给出该结点的左右子结点的编号，如果某个子结点不存在，则用 <code>-</code> 代替。</p>
+<p><strong>输出格式</strong></p>
+<p>如果是完全二叉树，则输出 <code>YES</code> 以及最后一个结点的编号。</p>
+<p>如果不是，则输出 <code>NO</code> 以及根结点的编号。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤20</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>9
+7 8
+- -
+- -
+- -
+0 1
+2 3
+4 5
+- -
+- -
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>YES 8
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>8
+- -
+4 5
+0 6
+- -
+2 3
+- 7
+- -
+- -
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>NO 1
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+const int N = 30;
+
+int n;
+int l[N], r[N];
+int level[N];
+bool st[N];
+int key, id;
+
+// 判断是完全二叉树，我们根节点开始编号为1
+void dfs(int root, int k) {
+    if (root == -1) 
+        return;
+    if (key &lt; k) {
+        key = k;
+        id = root;
+    }
+    // 左儿子 2 * k
+    dfs(l[root], k * 2);
+    // 右儿子  2 * k + 1
+    dfs(r[root], k * 2 + 1);
+}
+
+int main() {
+    cin &gt;&gt; n;
+    // 左右儿子全部先初始化为 -1
+    memset(l, -1, sizeof l);
+    memset(r, -1, sizeof r);
+    for (int i = 0; i &lt; n; i++) {
+        string a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        if (a != &quot;-&quot;) {
+            l[i] = stoi(a);
+            st[l[i]] = true;
+        }
+        if (b != &quot;-&quot;) {
+            r[i] = stoi(b);
+            st[r[i]] = true;
+        }
+    }
+    // 不是任何结点的左右儿子就是根节点
+    int root = 0;
+    while(st[root])
+        root++;
+    dfs(root, 1);
+    // 全部按完全二叉树能填充进去，说明满足完全二叉树
+    if (key == n)
+        cout &lt;&lt; &quot;YES&quot; &lt;&lt; ' ' &lt;&lt; id;
+    else
+        cout &lt;&lt; &quot;NO&quot; &lt;&lt; ' ' &lt;&lt; root;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="等重路径">等重路径</h3>
+<p>给定一个非空的树，树根为 R。</p>
+<p>树中每个节点 Ti 的权重为 Wi。从 R 到 L 的路径权重定义为从<strong>根节点</strong>R 到任何<strong>叶节点</strong>L 的路径中包含的所有节点的权重之和。</p>
+<p>现在给定一个加权树以及一个给定权重数字，请你找出树中所有的权重等于该数字的路径（必须从根节点到叶节点）。</p>
+<p>例如，我们考虑下图的树，对于每个节点，上方的数字是节点 <code>ID</code>，它是两位数字，而下方的数字是该节点的权重。</p>
+<p>假设给定数为 24，则存在 4 个具有相同给定权重的不同路径：<code>{10 5 2 7}，{10 4 10}，{10 3 3 6 2}，{10 3 3 6 2}</code>， 已经在图中用红色标出。</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.acwing.com/media/article/image/2020/03/27/19_0f9e40686f-212.jpg" alt="212.jpg" loading="lazy"></figure>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数 N,M,S，分别表示树的总节点数量，非叶子节点数量，给定权重数字。</p>
+<p>第二行包含 N 个整数 Wi，表示每个节点的权重。</p>
+<p>接下来 M 行，每行的格式为：</p>
+<pre><code>ID K ID[1] ID[2] ... ID[K]
+</code></pre>
+<p>ID 是一个两位数字，表示一个非叶子结点编号，K 是一个整数，表示它的子结点数，接下来的 K 个 ID[i] 也是两位数字，表示一个子结点的编号。</p>
+<p>出于方便考虑，根节点固定为 00，且树中所有节点的编号为 00∼N−1。</p>
+<p><strong>输出格式</strong></p>
+<p>以<strong>单调递减</strong>的顺序输出所有权重为S的路径。</p>
+<p>每个路径占一行，从根节点到叶节点按顺序输出每个节点的权重。</p>
+<p>注意：我们称 A 序列 {A1,A2,…,An} 大于 B 序列 {B1,B2,…,Bm}，当且仅当存在一个整数 k，1≤k&lt;min(n,m)，对于所有 1≤i≤k，Ai=Bi 成立，并且 Ak+1&gt;Bk+1。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤100,<br>
+0≤M&lt;N,<br>
+0&lt;S&lt;230,<br>
+0&lt;Wi&lt;1000</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>20 9 24
+10 2 4 3 5 10 2 18 9 7 2 2 1 3 12 1 8 6 2 2
+00 4 01 02 03 04
+02 1 05
+04 2 06 07
+03 3 11 12 13
+06 1 09
+07 2 08 10
+16 1 15
+13 3 14 16 17
+17 2 18 19
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>10 5 2 7
+10 4 10
+10 3 3 6 2
+10 3 3 6 2
+</code></pre>
+<ul>
+<li>计算所有叶结点到根节点路径权值和</li>
+<li>等于目标值，存下来</li>
+<li>vctor排序，默认字典序</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int N = 110;
+
+int n, m, S;
+int w[N];
+bool g[N][N];
+vector&lt;vector&lt;int&gt;&gt; res;
+
+void dfs(int u, int s, vector&lt;int&gt;&amp; path) {
+    bool is_leaf = true;
+    // 判断是否为叶子节点
+    for (int i = 0; i &lt; n; i++) {
+        if (g[u][i]) {
+            is_leaf = false;
+            break;
+        }
+    }
+    // 是叶子结点
+    if (is_leaf) {
+        // 权值等于目标权值S
+        if (s == S)
+            res.push_back(path);
+    }
+    else {
+        for (int i = 0; i &lt; n; i++) {
+            if (g[u][i]) {
+                path.push_back(w[i]);
+                dfs(i, s + w[i], path);
+                // 恢复现场
+                path.pop_back();
+            }
+        }
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; S;
+    for (int i = 0; i &lt; n; i++) 
+        cin &gt;&gt; w[i];
+    
+    while (m--) {
+        int id, k;
+        cin &gt;&gt; id &gt;&gt; k;
+        while (k--) {
+            int son;
+            cin &gt;&gt; son;
+            g[id][son] = true;
+        }
+    }
+    
+    vector&lt;int&gt; path({w[0]});
+    // 从根节点开始搜
+    dfs(0, w[0], path);
+    
+    sort(res.begin(), res.end(), greater&lt;vector&lt;int&gt;&gt;());
+    for (auto a : res) {
+        cout &lt;&lt; a[0];
+        for (int i = 1; i &lt; a.size(); i++)
+            cout &lt;&lt; ' ' &lt;&lt; a[i];
+        cout &lt;&lt; endl;
+    }
+    
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="供应链总销售额">供应链总销售额</h3>
+<p>供应链是由零售商，经销商和供应商构成的销售网络，每个人都参与将产品从供应商转移到客户的过程。</p>
+<p>整个销售网络可以看作一个树形结构，从根部的供应商往下，每个人从上一级供应商中买入商品后，假定买入价格为 P，则会以高出买入价 r% 的价格向下出售。</p>
+<p>只有零售商（即叶节点）可以直接将产品销售给顾客。</p>
+<p>现在，给定整个销售网络，请你计算所有零售商的总销售额。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个数，N 表示供应链总成员数（所有成员编号从 0 到 N−1，根部供应商编号为 0），P 表示根部供应商的<strong>每件产品</strong>的售卖价格，r，溢价百分比。</p>
+<p>接下来 N 行，每行包含一个成员的信息，格式如下：</p>
+<p>Ki ID[1] ID[2] … ID[Ki]</p>
+<p>其中第 i 行，Ki 表示从供应商 i 直接进货的成员数，接下来 Ki 个整数是每个进货成员的编号。</p>
+<p>如果某一行的 Kj 为 0，则表示这是零售商，那么后面只会跟一个数字，表示卖给客户的产品总件数。</p>
+<p><strong>输出格式</strong></p>
+<p>输出总销售额，保留一位小数。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤105,<br>
+0&lt;P≤1000,<br>
+0&lt;r≤50<br>
+每个零售商手中的产品不超过 100 件。<br>
+最终答案保证不超过 1010。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 1.80 1.00
+3 2 3 5
+1 9
+1 4
+1 7
+0 7
+2 6 1
+1 8
+0 9
+0 4
+0 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>42.4
+</code></pre>
+<ul>
+<li><strong>问题的本质是求叶子结点的层数</strong></li>
+</ul>
+<h4 id="记忆化搜索">记忆化搜索</h4>
+<p>求各个结点到根节点的距离：存储节点的时候，只存储每个结点的父节点信息</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+const int N = 100010;
+
+int n;
+double P, R;
+// 存所有节点
+int p[N];
+int f[N];
+// 记录销售量
+int c[N];
+// 记忆化搜索过程，求每个结点到根节点的距离
+int dfs(int u) {
+    // f[u]已经被计算出来，直接返回
+    if (f[u] != -1)
+        return f[u];
+    // 根节点
+    if (p[u] == -1) {
+        f[u] = 0;
+        return 0;
+    }
+    // 当前结点层数 = 父节点层数 + 1
+    f[u] = dfs(p[u]) + 1;
+    return f[u];
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; P &gt;&gt; R;
+    memset(p, -1, sizeof p);
+    for (int i = 0; i &lt; n; i++) {
+        int k;
+        cin &gt;&gt; k;
+        for (int j = 0; j &lt; k; j++) {
+            int son;
+            cin &gt;&gt; son;
+            p[son] = i;
+        }
+        // 节点是叶子节点，输入销售量
+        if (k == 0) {
+            cin &gt;&gt; c[i];
+        }
+    }
+    
+    memset(f, -1, sizeof f);
+    double res = 0;
+    for (int i = 0; i &lt; n; i++) {
+        if (c[i] != 0)
+            res += c[i] * P * pow(1 + R / 100, dfs(i));
+    }
+    
+    printf(&quot;%.1lf\n&quot;, res);
+    return 0;
+}
+</code></pre>
+<h4 id="dfs解法">DFS解法</h4>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+
+const int N = 100010;
+
+int n;
+double P, R;
+// 记录销售量
+int c[N];
+// 使用邻接表来存树
+vector&lt;int&gt; g[N];
+double total = 0;
+
+// 返回节点到根节点的距离
+void dfs(int u, double p) {
+    if (c[u] &gt; 0) {
+        total += c[u] * p;
+    }
+    else {
+        for (int i = 0; i &lt; g[u].size(); i++) {
+            dfs(g[u][i], p * (1 + R / 100.0));
+        }
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; P &gt;&gt; R;
+    for (int i = 0; i &lt; n; i++) {
+        int k;
+        cin &gt;&gt; k;
+        for (int j = 0; j &lt; k; j++) {
+            int son;
+            cin &gt;&gt; son;
+            g[i].push_back(son);
+        }
+        // 节点是叶子节点，输入销售量
+        if (k == 0) {
+            cin &gt;&gt; c[i];
+        }
+    }
+    
+    dfs(0, P);
+    
+    printf(&quot;%.1lf\n&quot;, total);
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="供应链最高价格">供应链最高价格</h3>
+<p>供应链是由零售商，经销商和供应商构成的销售网络，每个人都参与将产品从供应商转移到客户的过程。</p>
+<p>整个销售网络可以看作一个树形结构，从根部的供应商往下，每个人从上一级供应商中买入商品后，假定买入价格为 P，则会以高出买入价 r% 的价格向下出售。</p>
+<p>只有零售商（即叶节点）可以直接将产品销售给顾客。</p>
+<p>现在，给定整个销售网络，请你计算零售商能达到的最高销售价格。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个数，N 表示供应链总成员数（所有成员编号为 0 到 N−1)；P 表示根部供应商的产品销售价格；r，表示溢价百分比。</p>
+<p>第二行包含 N 个数字，第 i 个数字 Si 是编号为 i 的成员的上级供应商的编号。根部供应商的 Sroot 为 -1。</p>
+<p><strong>输出格式</strong></p>
+<p>输出零售商可达到的最高销售价格，保留两位小数，以及可达到最高销售价格的零售商的数量。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤105,<br>
+0&lt;P≤1000,<br>
+0&lt;r≤50,<br>
+最终答案保证不超过 1010。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>9 1.80 1.00
+1 5 4 4 -1 4 5 3 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1.85 2
+</code></pre>
+<ul>
+<li>问题本质是求最大深度</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int n;
+double P, R;
+vector&lt;int&gt; g[N];
+int max_depth = 0;
+int cnt = 0;
+
+void dfs(int u, int depth) {
+    
+    if (g[u].size() == 0) {
+        if (depth &gt; max_depth) {
+            max_depth = depth;
+            cnt = 1;
+        }
+        else if (depth == max_depth)
+            cnt++;
+        return;
+    }
+    else {
+        for (int i = 0; i &lt; g[u].size(); i++)
+            dfs(g[u][i], depth + 1);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; P &gt;&gt; R;
+    int root;
+    for (int i = 0; i &lt; n; i++) {
+        int a;
+        cin &gt;&gt; a;
+        if (a != -1)
+            g[a].push_back(i);
+        else {
+            root = i;
+        }
+    }
+    
+    dfs(root, 0);
+    
+    printf(&quot;%.2lf %d\n&quot;, P * pow(1 + R / 100, max_depth), cnt);
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="供应链最低价格">供应链最低价格</h3>
+<p>供应链是由零售商，经销商和供应商构成的销售网络，每个人都参与将产品从供应商转移到客户的过程。</p>
+<p>整个销售网络可以看作一个树形结构，从根部的供应商往下，每个人从上一级供应商中买入商品后，假定买入价格为 P，则会以高出买入价 r% 的价格向下出售。</p>
+<p>只有零售商（即叶节点）可以直接将产品销售给顾客。</p>
+<p>现在，给定整个销售网络，请你计算零售商能达到的最低销售价格。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个数，N 表示供应链总成员数（所有成员编号从 0 到 N−1，根部供应商编号为 0），P 表示根部供应商的产品售卖价格，r，溢价百分比。</p>
+<p>接下来 N 行，每行包含一个成员的信息，格式如下：</p>
+<p>Ki ID[1] ID[2] … ID[Ki]</p>
+<p>其中第 i 行，Ki 表示从供应商 i 直接进货的成员数，接下来 Ki 个整数是每个进货成员的编号。</p>
+<p>如果 Kj 为 0 则表示第 j 名成员是零售商。</p>
+<p><strong>输出格式</strong></p>
+<p>输出零售商可达到的最低销售价格，保留四位小数，以及可达到最低销售价格的零售商的数量。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤105,<br>
+0&lt;P≤1000,<br>
+0&lt;r≤50,<br>
+最终答案保证不超过 1010</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 1.80 1.00
+3 2 3 5
+1 9
+1 4
+1 7
+0
+2 6 1
+1 8
+0
+0
+0
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1.8362 2
+</code></pre>
+</br>
+<ul>
+<li>问题本质是求最低深度</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int n;
+double P, R;
+vector&lt;int&gt; g[N];
+int min_depth = -1;
+int cnt;
+
+void dfs (int u, int depth) {
+    if (g[u].size() == 0) {
+        if (depth &lt; min_depth || min_depth == -1) {
+            min_depth = depth;
+            cnt = 1;
+        }
+        else if (depth == min_depth)
+            cnt++;
+    }
+    else {
+        for (int i = 0; i &lt; g[u].size(); i++)
+            dfs(g[u][i], depth + 1);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; P &gt;&gt; R;
+    for (int i = 0; i &lt; n; i++) {
+        int k;
+        cin &gt;&gt; k;
+        while (k--) {
+            int a;
+            cin &gt;&gt; a;
+            g[i].push_back(a);
+        }
+    }
+    
+    dfs(0, 0);
+    
+    printf(&quot;%.4lf %d\n&quot;, P * pow(1 + R / 100.0, min_depth), cnt);
+    
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="堆路径">堆路径</h3>
+<p>在计算机科学中，堆是一种的基于树的专用数据结构，它具有堆属性：</p>
+<p>如果 P 是 C 的父结点，则在大顶堆中 P 结点的权值大于或等于 C 结点的权值，在小顶堆中 P 结点的权值小于或等于 C 结点的权值。</p>
+<p>一种堆的常见实现是二叉堆，它是由完全二叉树来实现的。</p>
+<p>可以肯定的是，在大顶/小顶堆中，任何从根到叶子的路径都必须按非递增/非递减顺序排列。</p>
+<p>你的任务是检查给定完全二叉树中的每个路径，以判断它是否是堆。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示树中结点数量。</p>
+<p>第二行包含 N 个 <strong>不同</strong> 的整数，表示给定完全二叉树的层序遍历序列。</p>
+<p><strong>输出格式</strong></p>
+<p>对于给定的树，首先输出所有从根到叶子的路径。</p>
+<p>每条路径占一行，数字之间用空格隔开，行首行尾不得有多余空格。</p>
+<p>必须以如下顺序输出路径：对于树中的每个结点都必须满足，其右子树中的路径先于其左子树中的路径输出。</p>
+<p>最后一行，如果是大顶堆，则输出 <code>Max Heap</code>，如果是小顶堆，则输出 <code>Min Heap</code>，如果不是堆，则输出 <code>Not Heap</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1&lt;N≤1000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>8
+98 72 86 60 65 12 23 50
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>98 86 23
+98 86 12
+98 72 65
+98 72 60 50
+Max Heap
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>8
+8 38 25 58 52 82 70 60
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>8 25 70
+8 25 82
+8 38 52
+8 38 58 60
+Min Heap
+</code></pre>
+<p><strong>输入样例3：</strong></p>
+<pre><code>8
+10 28 15 12 34 9 8 56
+</code></pre>
+<p><strong>输出样例3：</strong></p>
+<pre><code>10 15 8
+10 15 9
+10 28 34
+10 28 12 56
+Not Heap
+</code></pre>
+<ul>
+<li>
+<p>大顶堆：从根节点往下路径严格下降</p>
+</li>
+<li>
+<p>小顶堆：从根节点往上路径严格上升</p>
+</li>
+<li>
+<p>DFS搜到所有路径，进行判断是否满足大顶堆或小顶堆</p>
+</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n;
+vector&lt;vector&lt;int&gt;&gt; res;
+int h[N];
+bool min_heap, max_heap;
+
+void dfs(int u, vector&lt;int&gt;&amp; path) {
+    path.push_back(h[u]);
+    // 是叶子结点的情况
+    if (2 * u &gt; n) {
+        res.push_back(path);
+    }
+    if (2 * u + 1 &lt;= n)
+        dfs(2 * u + 1, path);
+    if (2 * u &lt;= n)
+        dfs(2 * u, path);
+    path.pop_back();
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++) {
+        cin &gt;&gt; h[i];
+    }
+    vector&lt;int&gt; path;
+    dfs(1, path);
+    
+    for (auto p : res) {
+        cout &lt;&lt; p[0];
+        for (int i = 1; i &lt; p.size(); i++) {
+            cout &lt;&lt; ' ' &lt;&lt; p[i];
+            if (p[i] &gt; p[i - 1])
+                min_heap = true;
+            else if (p[i] &lt; p[i - 1]) 
+                max_heap = true;
+        }
+        cout &lt;&lt; endl;
+    }
+    
+    if (min_heap &amp;&amp; max_heap)
+        cout &lt;&lt; &quot;Not Heap&quot; &lt;&lt; endl;
+    else if (min_heap)
+        cout &lt;&lt; &quot;Min Heap&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;Max Heap&quot; &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="中缀表达式">中缀表达式</h3>
+<p>给定一个句法二叉树，请你输出相应的中缀表达式，并利用括号反映运算符的优先级。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N 表示二叉树的总结点个数。</p>
+<p>接下来 N 行，每行以下列格式给出一个结点的信息（第 i 行对应于第 i 个结点）：</p>
+<pre><code>data left_child right_child
+</code></pre>
+<p>其中 <code>data</code> 是一个长度不超过 10 的字符串，<code>left_child</code> 和 <code>right_child</code> 分别是该结点的左右子结点编号。</p>
+<p>所有结点编号从 1 到 N，NULL 用 -1 表示。</p>
+<p>以下两个图分别对应样例 1 和样例 2。</p>
+<p><img src="https://cdn.acwing.com/media/article/image/2020/04/12/19_fab5ca9c7c-11.JPG" alt="11.JPG" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/04/12/19_019334bc7c-222.JPG" alt="222.JPG" loading="lazy"></p>
+<p><strong>输出格式</strong></p>
+<p>请在一行输出中缀表达式，并利用括号反映运算符的优先级。</p>
+<p>注意，不能有多余括号，请任何符号之间不得有空格。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤20</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>8
+* 8 7
+a -1 -1
+* 4 1
++ 2 5
+b -1 -1
+d -1 -1
+- -1 6
+c -1 -1
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>(a+b)*(c*(-d))
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>8
+2.35 -1 -1
+* 6 1
+- -1 4
+% 7 8
++ 2 3
+a -1 -1
+str -1 -1
+871 -1 -1
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>(a*2.35)+(-(str%871))
+</code></pre>
+<ul>
+<li>中序遍历序列加括号的一个过程（注意叶子结点不用添加括号）</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+const int N = 30;
+
+int n;
+string w[N];
+int l[N], r[N];
+bool st[N], is_leaf[N];
+
+string dfs (int u) {
+    string left, right;
+    if (l[u] != -1) {
+        left = dfs(l[u]);
+        // 判断当前层加不加括号
+        if (!is_leaf[l[u]])
+            left = &quot;(&quot; + left + &quot;)&quot;;
+    }
+    if (r[u] != -1) {
+        right = dfs(r[u]);
+        if (!is_leaf[r[u]])
+            right = &quot;(&quot; + right + &quot;)&quot;;
+    }
+    return left + w[u] + right;
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++) {
+        cin &gt;&gt; w[i] &gt;&gt; l[i] &gt;&gt; r[i];
+        // 如果是根节点，节点编号一定不是左右儿子所出现的编号
+        if (l[i])
+            st[l[i]] = true;
+        if (r[i])
+            st[r[i]] = true;
+        // 标记是否是叶子节点，叶子节点不用添加左右括号
+        if (l[i] == -1 &amp;&amp; r[i] == -1)
+            is_leaf[i] = true;
+    }
+    
+    // 找到根节点编号
+    int root = 1;
+    while (st[root])
+        root++;
+        
+    cout &lt;&lt; dfs(root) &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+</br>
+<h2 id="bfs遍历相关">BFS遍历相关</h2>
+<ul>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805485033603072">树的遍历</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805349394006016">Z字型遍历二叉树</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805372601090048">最大的一代</a></p>
+</li>
+</ul>
+<h3 id="树的遍历">树的遍历</h3>
+<p>一个二叉树，树中每个节点的权值互不相同。</p>
+<p>现在给出它的后序遍历和中序遍历，请你输出它的层序遍历。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示二叉树的节点数。</p>
+<p>第二行包含 N 个整数，表示二叉树的后序遍历。</p>
+<p>第三行包含 N 个整数，表示二叉树的中序遍历。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一行 N 个整数，表示二叉树的层序遍历。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤30</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>7
+2 3 1 5 7 6 4
+1 2 3 4 5 6 7
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>4 1 6 3 5 7 2
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 40;
+// 存储后序和中序的序列
+int post[N], in[N];
+// 用哈希表存根节点的左子树和右子树:第一维为表示树结点的值 第二维表示树节点指向的节点
+unordered_map&lt;int, int&gt; l, r;
+// 记录中序序列的下标
+unordered_map&lt;int, int&gt; pos;
+
+// 中序+后序重建二叉树
+int build(int is, int ie, int ps, int pe) {
+    // 找到根节点
+    int root = post[pe];
+    // 找到根节点在中序序列中的位置
+    int k = pos[root];
+    // 左子树存在，构建左子树
+    if (is &lt; k)
+        l[root] = build(is, k - 1, ps, ps + (k - 1 - is));
+    // 右子树存在，构建右子树
+    if (k &lt; ie) 
+        r[root] = build(k + 1, ie, ps + (k - 1 - is) + 1, pe - 1);
+    return root;
+}
+
+// 二叉树广度优先搜索,使用队列
+void bfs(int root) {
+    queue&lt;int&gt; qu;
+    vector&lt;int&gt; res;
+    qu.push(root);
+    while (!qu.empty()) {
+        int t = qu.front();
+        qu.pop();
+        res.push_back(t);
+        if (l.count(t))
+            qu.push(l[t]);
+        if (r.count(t))
+            qu.push(r[t]);
+    }
+    cout &lt;&lt; res[0];
+    for (int i = 1; i &lt; res.size(); i++) 
+        cout &lt;&lt; ' ' &lt;&lt; res[i];
+}
+
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; post[i];
+    }
+    // 读入中序序列并保存中序序列的下标
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; in[i];
+        pos[in[i]] = i;
+    }
+    // 构建树
+    int root = build(0, n - 1, 0, n - 1);
+    bfs(root);
+}
+</code></pre>
+</br>
+<h3 id="z字型遍历二叉树">Z字型遍历二叉树</h3>
+<p>假设一个二叉树上各结点的权值互不相同。</p>
+<p>我们就可以通过其后序遍历和中序遍历来确定唯一二叉树。</p>
+<p>请你输出该二叉树的 Z 字形遍历序列----也就是说，从根结点开始，逐层遍历，第一层从右到左遍历，第二层从左到右遍历，第三层从右到左遍历，以此类推。</p>
+<p>例如，下图所示二叉树，其 Z 字形遍历序列应该为：<code>1 11 5 8 17 12 20 15</code>。</p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.acwing.com/media/article/image/2020/04/12/19_92e868327c-337cbfb0-a7b2-4500-9664-318e9ffc870e.jpg" alt="337cbfb0-a7b2-4500-9664-318e9ffc870e.jpg" loading="lazy"></figure>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示二叉树结点数量。</p>
+<p>第二行包含 N 个整数，表示二叉树的中序遍历序列。</p>
+<p>第三行包含 N 个整数，表示二叉树的后序遍历序列。</p>
+<p><strong>输出格式</strong></p>
+<p>输出二叉树的 Z 字形遍历序列。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤30</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>8
+12 11 20 17 1 15 8 5
+12 20 17 11 15 8 5 1
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1 11 5 8 17 12 20 15
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;unordered_map&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 40;
+
+vector&lt;int&gt; res;
+int n;
+unordered_map&lt;int, int&gt; l, r, pos;
+int in[N], post[N];
+
+// 构建二叉树
+int build (int il, int ir, int pl, int pr) {
+    int root = post[pr];
+    int k = pos[root];
+    
+    if (il &lt; k)
+        l[root] = build(il, k - 1, pl, pl + k - il - 1);
+    if (ir &gt; k)
+        r[root] = build(k + 1, ir, pl + k - il - 1 + 1, pr - 1);
+    return root;
+}
+
+// 层序遍历
+void bfs (int u) {
+    queue&lt;int&gt; q;
+    q.push(u);
+    int step = 0;
+    while (!q.empty()) {
+        vector&lt;int&gt; v;
+        int cnt = q.size();
+        while (cnt--) {
+            int t = q.front();
+            q.pop();
+            v.push_back(t);
+            if (l.count(t))
+                q.push(l[t]);
+            if (r.count(t))
+                q.push(r[t]);
+        }
+        if (++step % 2)
+            reverse(v.begin(), v.end());
+        for (int i = 0; i &lt; v.size(); i++)
+            res.push_back(v[i]);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n;
+    // 使用hash记录下中序遍历的下标位置
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; in[i];
+        pos[in[i]] = i;
+    }
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; post[i];
+    }
+    int root = build(0, n - 1, 0, n - 1);
+    bfs(root);
+    cout &lt;&lt; res[0];
+    for (int i = 1; i &lt; res.size(); i++)
+        cout &lt;&lt; ' ' &lt;&lt; res[i];
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="最大的一代">最大的一代</h3>
+<p>家庭关系可以用家谱树来表示，同一层上的所有结点都属于同一代人。</p>
+<p>请你找出人数最多的一代。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个整数 N 表示树中结点总数以及一个整数 M 表示非叶子结点数。</p>
+<p>接下来 M 行，每行的格式为：</p>
+<pre><code>ID K ID[1] ID[2] ... ID[K]
+</code></pre>
+<p>ID 是一个两位数字，表示一个非叶子结点编号，K 是一个整数，表示它的子结点数，接下来的 K 个 ID[i] 也是两位数字，表示一个子结点的编号。</p>
+<p>为了简单起见，我们将根结点固定设为 01。</p>
+<p>所有结点的编号即为 01,02,03,…,31,32,33,…,N。</p>
+<p><strong>输出格式</strong></p>
+<p>输出结点数量最多的一层的结点数量以及层级。</p>
+<p>保证答案唯一。</p>
+<p>根结点定义为第一层。</p>
+<p><strong>数据范围</strong></p>
+<p>0&lt;N&lt;100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>23 13
+21 1 23
+01 4 03 02 04 05
+03 3 06 07 08
+06 2 12 13
+13 1 21
+08 2 15 16
+02 2 09 10
+11 2 19 20
+17 1 22
+05 1 11
+07 1 14
+09 1 17
+10 1 18
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>9 4
+</code></pre>
+<ul>
+<li>BFS的时候存下每一层的结点，然后找到最大的那一层输出</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 110;
+
+int n, m;
+bool g[N][N];
+vector&lt;vector&lt;int&gt;&gt; level;
+
+void bfs(int u) {
+    queue&lt;int&gt; q;
+    q.push(u);
+    while (!q.empty()) {
+        int cnt = q.size();
+        vector&lt;int&gt; res;
+        while (cnt--) {
+            int t = q.front();
+            res.push_back(t);
+            q.pop();
+            for (int i = 1; i &lt;= n; i++) {
+                if (g[t][i])
+                    q.push(i);
+            }
+        }
+        level.push_back(res);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    while (m--) {
+        int id, k;
+        cin &gt;&gt; id &gt;&gt; k;
+        while (k--) {
+            int son;
+            cin &gt;&gt; son;
+            g[id][son] = true;
+        }
+    }
+    bfs(1);
+    int max_size = 0;
+    int max_id;
+    for (int i = 0; i &lt; level.size(); i++) {
+        if (level[i].size() &gt; max_size) {
+            max_id = i;
+            max_size = level[i].size();
+        }
+    }
+    cout &lt;&lt; level[max_id].size() &lt;&lt; ' ' &lt;&lt; max_id + 1 &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+</br>
+<h2 id="二叉搜索树">二叉搜索树</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805440976633856">判断前序序列能够构成二叉搜索树</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805407749357568">判断完全二叉搜索树</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805367987355648">构建二叉搜索树</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805355987451904">二叉搜索树最后两层结点数量</a></li>
+</ul>
+</br>
+<h3 id="判断前序序列能否构成二叉搜索树镜像">判断前序序列能否构成二叉搜索树(镜像)</h3>
+<p>二叉搜索树 (BST) 递归定义为具有以下属性的二叉树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>我们将二叉搜索树镜面翻转得到的树称为二叉搜索树的镜像。</p>
+<p>现在，给定一个整数序列，请你判断它是否可能是某个二叉搜索树或其镜像进行前序遍历的结果。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示节点数量。</p>
+<p>第二行包含 N 个整数。</p>
+<p><strong>输出格式</strong></p>
+<p>如果给定整数序列是某个二叉搜索树或其镜像的前序遍历序列，则在第一行输出 <code>YES</code>，否则输出 <code>NO</code>。</p>
+<p>如果你的答案是 <code>YES</code>，则还需要在第二行输出这棵树的后序遍历序列。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>7
+8 6 5 7 10 8 11
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>YES
+5 7 6 8 11 10 8
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>7
+8 10 11 8 6 7 5
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>YES
+11 8 10 7 5 6 8
+</code></pre>
+<p><strong>输入样例3：</strong></p>
+<pre><code>7
+8 6 8 5 10 9 11
+</code></pre>
+<p><strong>输出样例3：</strong></p>
+<pre><code>NO
+</code></pre>
+</br>
+<ul>
+<li>左子树要严格小于左子树，右子树大于等于左子树，所以当出现相同权值结点的时候，我们要取中序序列中相同值是第一个的位置</li>
+<li>镜像之后的中序序列是从大到小，每次在中序序列中找最后一个出现相同值的位置，刚好和镜像之前相反</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+const int N = 1010;
+
+int n, cnt;
+int preorder[N], inorder[N], postorder[N];
+
+bool build (int il, int ir, int pl, int pr, int type) {
+    // 当所有点都用完，可以构建成功
+    if (il &gt; ir)
+        return true;
+    int root = preorder[pl];
+    int k;
+    // 正向
+    if (type == 0) {
+        // 找到第一个相等的节点(BST定义)
+        for (k = il; k &lt;= ir; k++) {
+            if (inorder[k] == root)
+                break;
+        }
+        // 找不到构建失败
+        if (k &gt; ir)
+            return false;
+    }
+    else {
+        // 反向找到第一个相等的节点(BST定义)
+        for (k = ir; k &gt;= il; k--) {
+            if (inorder[k] == root)
+                break;
+        }
+        if (k &lt; il)
+            return false;
+    }
+
+    bool res = true;
+    if (!build(il, k - 1, pl + 1, pl + 1 + (k - 1 - il), type))
+        res = false;
+    if (!build(k + 1, ir, pl + 1 + (k - 1 - il) + 1, pr, type))
+        res = false;
+    postorder[cnt++] = root;
+    return res;
+}
+
+
+int main() {
+    cin &gt;&gt; n;
+    for(int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; preorder[i];
+        inorder[i] = preorder[i];
+    }
+    sort(inorder, inorder + n);
+    // 正常建树是否可以建成功
+    if (build(0, n - 1, 0, n - 1, 0)) {
+        cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+        cout &lt;&lt; postorder[0];
+        for (int i = 1; i &lt; n; i++) 
+            cout &lt;&lt; ' ' &lt;&lt; postorder[i];
+        cout &lt;&lt; endl;
+    }else{
+        reverse(inorder, inorder + n); 
+        // 判断镜像建树是否可以建成功
+        cnt = 0;
+        if (build(0, n - 1, 0, n - 1, 1)) {
+            cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+            cout &lt;&lt; postorder[0];
+            for (int i = 1; i &lt; n; i++) 
+                cout &lt;&lt; ' ' &lt;&lt; postorder[i];
+            cout &lt;&lt; endl;
+        }else
+            cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="判断完全二叉搜索树">判断完全二叉搜索树</h3>
+<p>二叉搜索树 (BST) 递归定义为具有以下属性的二叉树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>完全二叉树 (CBT) 定义为除最深层外的其他层的结点数都达到最大个数，最深层的所有结点都连续集中在最左边的二叉树。</p>
+<p>现在，给定 N 个不同非负整数，表示 N 个结点的权值，用这 N 个结点可以构成唯一的完全二叉搜索树。</p>
+<p>请你输出该完全二叉搜索树的层序遍历。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示结点个数。</p>
+<p>第二行包含 N 个不同非负整数，表示每个结点的权值。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，输出给定完全二叉搜索树的层序遍历序列。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000,<br>
+结点权值不超过 2000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10
+1 2 3 4 5 6 7 8 9 0
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6 3 8 1 5 7 9 0 2 4
+</code></pre>
+<ul>
+<li>完全二叉树当前结点编号x，左儿子2 * x，右儿子2 * x + 1，父节点 x / 2</li>
+<li>构建n个结点的完全二叉树</li>
+<li>当使用中序序列填进完全二叉树，使其满足二叉搜索树的性质</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+const int N = 1010;
+
+int n;
+int w[N], t[N];
+
+// 将中序遍历填进完全二叉树使其满足完全二叉搜索树性质
+int dfs(int u, int&amp; k) {
+    if (u * 2 &lt;= n)
+        dfs(u * 2, k);
+    t[u] = w[k++];
+    if (u * 2 + 1 &lt;= n)
+        dfs(u * 2 + 1, k);
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; w[i];
+    }
+    // 排完序后w中存的就是中序遍历
+    sort(w, w + n);
+    int k = 0;
+    dfs(1, k);
+    cout &lt;&lt; t[1];
+    for (int i = 2; i &lt;= n; i++)
+        cout &lt;&lt; ' ' &lt;&lt; t[i];
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="构建二叉搜索树输入为左右儿子">构建二叉搜索树(输入为左右儿子)</h3>
+<p>二叉搜索树 (BST) 递归定义为具有以下属性的二叉树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>给定二叉树的具体结构以及一系列不同的整数，只有一种方法可以将这些数填充到树中，以使结果树满足 BST 的定义。</p>
+<p>请你输出结果树的层序遍历。</p>
+<p>示例如图 1 和图 2 所示。</p>
+<figure data-type="image" tabindex="3"><img src="https://cdn.acwing.com/media/article/image/2020/04/05/19_8639415877-24c2521f-aaed-4ef4-bac8-3ff562d80a1b.jpg" alt="24c2521f-aaed-4ef4-bac8-3ff562d80a1b.jpg" loading="lazy"></figure>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个正整数 N，表示树的结点个数。</p>
+<p>所有结点的编号为 0∼N−1，并且编号为 0 的结点是根结点。</p>
+<p>接下来 N 行，第 i 行（从 0 计数）包含结点 i 的左右子结点编号。如果该结点的某个子结点不存在，则用 −1 表示。</p>
+<p>最后一行，包含 N 个不同的整数，表示要插入树中的数值。</p>
+<p><strong>输出格式</strong></p>
+<p>输出结果树的层序遍历序列。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤100</p>
+<p><strong>输入样例</strong>：</p>
+<pre><code>9
+1 6
+2 3
+-1 -1
+-1 4
+5 -1
+-1 -1
+7 -1
+-1 8
+-1 -1
+73 45 11 58 82 25 67 38 42
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>58 25 82 11 38 67 45 73 42
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 110;
+
+int n, cnt;
+// 存左右儿子
+int l[N], r[N];
+int a[N];
+// 存节点权值
+int w[N];
+int p[N];
+
+// 中序遍历去填充节点
+void dfs(int u, int&amp; k) {
+    if (u == -1)
+        return;
+    dfs(l[u], k);
+    w[u] = a[k++];
+    dfs(r[u], k);
+}
+
+// 得到节点编号的层次遍历结果p
+void bfs() {
+    queue&lt;int&gt; q;
+    q.push(0);
+    while (!q.empty()) {
+        int t = q.front();
+        p[cnt++] = t;
+        q.pop();
+        if (l[t] != -1)
+            q.push(l[t]);
+        if (r[t] != -1)
+            q.push(r[t]);
+    }
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++){
+        cin &gt;&gt; l[i] &gt;&gt; r[i];
+    }
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i];
+    }
+    sort(a, a + n);
+    int k = 0;
+    dfs(0, k);
+    bfs();
+
+    cout &lt;&lt; w[p[0]];
+    for (int i = 1; i &lt; n; i++) {
+        cout &lt;&lt; ' ' &lt;&lt; w[p[i]];
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="二叉搜索树最后两层结点数量根据插入序列建bst">二叉搜索树最后两层结点数量(根据插入序列建BST)</h3>
+<p>二叉搜索树 (BST) 递归定义为具有以下属性的二叉树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于或等于它的根结点的值</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>将一系列数字按顺序插入到一个空的二叉搜索树中，然后，请你计算结果树的最低两层的结点个数。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示插入数字序列包含的数字个数。</p>
+<p>第二行包含 N 个整数，表示插入数字序列。</p>
+<p><strong>输出格式</strong></p>
+<p>以如下格式，在一行中，输出结果树的最后两层的结点数：</p>
+<pre><code>n1 + n2 = n
+</code></pre>
+<p><code>n1</code> 是最底层结点数量，<code>n2</code> 是倒数第二层结点数量，<code>n</code> 是它们的和。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000,<br>
+−1000≤ 插入数字 ≤1000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>9
+25 30 42 16 20 20 35 -5 28
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2 + 4 = 6
+</code></pre>
+</br>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n;
+int l[N], r[N];
+// 记录结点权值
+int v[N];
+int max_depth, idx;
+int cnt[N];
+
+// 不断插入节点生成二叉搜索树(递归)
+void insert (int&amp; u, int w) {
+    // 现在就要进行插入
+    if (u == 0) {
+        u = ++idx;
+        v[u] = w;
+    }
+    // 插入到左子树
+    else if (w &lt;= v[u])
+        insert(l[u], w);
+    else 
+        insert(r[u], w);
+}
+
+void dfs (int u, int depth) {
+    if (u == 0)
+        return;
+    // 记录当前层节点数
+    cnt[depth]++;
+    max_depth = max(max_depth, depth);
+    dfs(l[u], depth + 1);
+    dfs(r[u], depth + 1);
+}
+
+int main () {
+    cin &gt;&gt; n;
+    int root = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int a;
+        cin &gt;&gt; a;
+        insert(root, a);
+    }
+    // dfs遍历树
+    dfs(root, 0);
+    
+    cout &lt;&lt; cnt[max_depth] &lt;&lt; &quot; + &quot; &lt;&lt; cnt[max_depth - 1] &lt;&lt; &quot; = &quot; &lt;&lt; cnt[max_depth - 1] + cnt[max_depth] &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+</br>
+<h2 id="通过序列构建树">通过序列构建树</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805380754817024">再次树遍历</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805365537882112">反转二叉树</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805353470869504">前序和后序遍历序列</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805345078067200">后序遍历</a></li>
+</ul>
+<p>使用序列构建二叉树的题目出现频次较多，代码模板要熟记在心</p>
+<h3 id="再次树遍历">再次树遍历</h3>
+<p>通过使用栈可以以非递归方式实现二叉树的中序遍历。</p>
+<p>例如，假设遍历一个如下图所示的 6 节点的二叉树（节点编号从 1 到 6）。</p>
+<p>则堆栈操作为：push(1); push(2); push(3); pop(); pop(); push(4); pop(); pop(); push(5); push(6); pop(); pop()。</p>
+<p>我们可以从此操作序列中生成唯一的二叉树。</p>
+<p>你的任务是给出这棵树的后序遍历。</p>
+<figure data-type="image" tabindex="4"><img src="https://cdn.acwing.com/media/article/image/2020/04/03/19_783e80c875-3.png" alt="3.png" loading="lazy"></figure>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示树中节点个数。</p>
+<p>树中节点编号从 1 到 N。</p>
+<p>接下来 2N 行，每行包含一个栈操作，格式为：</p>
+<ul>
+<li><code>Push X</code>，将编号为 X 的节点压入栈中。</li>
+<li><code>Pop</code>，弹出栈顶元素。</li>
+</ul>
+<p><strong>输出格式</strong></p>
+<p>输出这个二叉树的后序遍历序列。</p>
+<p>数据保证有解，数和数之间用空格隔开，末尾不能有多余空格。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤30</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6
+Push 1
+Push 2
+Push 3
+Pop
+Pop
+Push 4
+Pop
+Pop
+Push 5
+Push 6
+Pop
+Pop
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 4 2 6 5 1
+</code></pre>
+<ul>
+<li>Push操作序列顺序就是前序遍历</li>
+<li>Pop出的序列是中序序列</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+const int N = 40;
+int pre[N], in[N], post[N];
+int n, cnt;
+
+void build (int pl, int pr, int il, int ir) {
+    if (il &gt; ir)
+        return;
+    int root = pre[pl];
+    // 中序序列中找到根的位置
+    int k;
+    for (k = il; k &lt;= ir; k++) {
+        if (in[k] == root)
+            break;
+    }
+    
+    build (pl + 1, pl + 1 + (k - 1 - il), il, k - 1);
+    build (pl + 1 + (k - 1 - il) + 1, pr, k + 1, ir);
+    post[cnt++] = root;
+}
+
+int main() {
+    cin &gt;&gt; n;
+    stack&lt;int&gt; s;
+    int kp = 0;
+    int ki = 0;
+    for (int i = 0; i &lt; n * 2; i++) {
+        string op;
+        cin &gt;&gt; op;
+        if (op == &quot;Push&quot;) {
+            int a;
+            cin &gt;&gt; a;
+            pre[kp++] = a;
+            s.push(a);
+        }
+        else {
+            in[ki++] = s.top();
+            s.pop();
+        }
+    }
+    
+    build(0, n - 1, 0, n - 1);
+    
+    cout &lt;&lt; post[0];
+    for (int i = 1; i &lt; n; i++) {
+        cout &lt;&lt; ' ' &lt;&lt; post[i];
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="反转二叉树">反转二叉树</h3>
+<p>以下是来自 <code>Max Howell @twitter</code> 的内容：</p>
+<pre><code>谷歌：我们的百分之九十的工程师都使用你编写的软件，但是你连在白板上反转二叉树都做不到，还是滚吧。
+</code></pre>
+<p>现在，请你证明你会反转二叉树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个整数 N，表示树的结点数量。</p>
+<p>所有结点编号从 0 到 N−1。</p>
+<p>接下来 N 行，每行对应一个 0∼N−1 的结点，给出该结点的左右子结点的编号，如果该结点的某个子结点不存在，则用 <code>−</code> 表示。</p>
+<p><strong>输出格式</strong></p>
+<p>输出反转后二叉树的层序遍历序列和中序遍历序列，每个序列占一行。</p>
+<p>相邻数字之间用空格隔开，末尾不得有多余空格。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤10</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>8
+1 -
+- -
+0 -
+2 7
+- -
+- -
+5 -
+4 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 7 2 6 4 0 5 1
+6 5 7 4 3 2 0 1
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 20;
+int n, cnt;
+// 记录左儿子和右儿子
+int l[N], r[N];
+// 记录中序遍历和层序遍历
+int in[N], level[N];
+bool st[N];
+
+// 翻转二叉树
+void reverse(int root) {
+    if (root == -1)
+        return;
+    reverse(l[root]);
+    reverse(r[root]);
+    swap(l[root], r[root]);
+}
+
+void bfs(int root) {
+    queue&lt;int&gt; q;
+    q.push(root);
+    while(!q.empty()){
+        int t = q.front();
+        level[cnt++] = t;
+        q.pop();
+        if (l[t] != -1)
+            q.push(l[t]);
+        if (r[t] != -1)
+            q.push(r[t]);
+    }
+    cout &lt;&lt; level[0];
+    for (int i = 1; i &lt; n; i++) {
+        cout &lt;&lt; ' ' &lt;&lt; level[i];
+    }
+}
+
+void dfs(int root) {
+    if (root == -1)
+        return;
+    dfs(l[root]);
+    in[cnt++] = root;
+    dfs(r[root]);
+}
+
+int main() {
+    cin &gt;&gt; n;
+    memset(l, -1, sizeof l);
+    memset(r, -1, sizeof r);
+    for (int i = 0; i &lt; n; i++) {
+        string a, b;
+        cin &gt;&gt; a;
+        if (a != &quot;-&quot;){
+            l[i] = stoi(a);
+            st[l[i]] = true;
+        }
+        cin &gt;&gt; b;
+        if (b != &quot;-&quot;){
+            r[i] = stoi(b);
+            st[r[i]] = true;
+        }
+    }
+    
+    // 找到根节点
+    int root;
+    for (int i = 0; i &lt; n; i++) {
+        if (!st[i]){
+            root = i;
+            break;
+        }
+    }
+    // 翻转二叉树
+    reverse(root);
+    // 层序遍历
+    bfs(root);
+    // 中序遍历
+    cout &lt;&lt; endl;
+    cnt = 0;
+    dfs(root);
+    cout &lt;&lt; in[0];
+    for (int i = 1; i &lt; n; i++) {
+        cout &lt;&lt; ' ' &lt;&lt; in[i];
+    }
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="前序和后序遍历序列">前序和后序遍历序列</h3>
+<p>假设一个二叉树上所有结点的权值都互不相同。</p>
+<p>我们可以通过后序遍历和中序遍历来确定唯一二叉树。</p>
+<p>也可以通过前序遍历和中序遍历来确定唯一二叉树。</p>
+<p>但是，如果只通过前序遍历和后序遍历，则有可能无法确定唯一二叉树。</p>
+<p>现在，给定一组前序遍历和后序遍历，请你输出对应二叉树的中序遍历。</p>
+<p>如果树不是唯一的，则输出任意一种可能树的中序遍历即可。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示结点数量。</p>
+<p>第二行给出前序遍历序列。</p>
+<p>第三行给出后序遍历序列。</p>
+<p>一行中的数字都用空格隔开。</p>
+<p><strong>输出格式</strong></p>
+<p>首先第一行，如果树唯一，则输出 <code>Yes</code>，如果不唯一，则输出 <code>No</code>。</p>
+<p>然后在第二行，输出树的中序遍历。</p>
+<p>注意，如果树不唯一，则输出任意一种可能的情况均可。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤30</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>7
+1 2 3 4 6 7 5
+2 6 7 4 5 3 1
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>Yes
+2 1 6 4 7 3 5
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>4
+1 2 3 4
+2 4 3 1
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>No
+2 1 3 4
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+const int N = 40;
+int pre[N], post[N];
+int cnt, n;
+
+int dfs (int l1, int r1, int l2, int r2, string&amp; in) {
+    // 已经构建完成，说明方案合法
+    if (l1 &gt; r1)
+        return 1;
+    // 方案不合法
+    if (pre[l1] != post[r2])
+        return 0;
+    // 枚举左子树包含的节点数量
+    int cnt = 0;
+    // 暴力枚举有多少种情况
+    for (int i = l1; i &lt;= r1; i++) {
+        string lin, rin;
+        int lcnt = dfs(l1 + 1, i, l2, l2 + i - l1 - 1, lin);
+        int rcnt = dfs(i + 1, r1, l2 + i - l1 - 1 + 1, r2 - 1, rin);
+        // 左右子树都存在，能够构建
+        if (lcnt &gt; 0 &amp;&amp; rcnt &gt; 0) {
+            in = lin + to_string(pre[l1]) + ' ' + rin;
+            cnt += lcnt * rcnt;
+            if (cnt &gt; 1)
+                break;
+        }
+    }
+    return cnt;
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) 
+        cin &gt;&gt; pre[i];
+    for (int i = 0; i &lt; n; i++)
+        cin &gt;&gt; post[i];
+    string in;
+    // 求有多少种方案
+    cnt = dfs(0, n - 1, 0, n - 1, in);
+    if (cnt &gt; 1)
+        cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    in.pop_back();
+    cout &lt;&lt; in &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="后序遍历">后序遍历</h3>
+<p>假设二叉树上各结点的权值互不相同且都为正整数。</p>
+<p>给定二叉树的前序遍历和中序遍历，请你输出二叉树的后序遍历的第一个数字。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示二叉树结点总数。</p>
+<p>第二行给出二叉树的前序遍历序列。</p>
+<p>第三行给出二叉树的中序遍历序列。</p>
+<p><strong>输出格式</strong></p>
+<p>输出二叉树的后序遍历的第一个数字。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤50000</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>7
+1 2 3 4 5 6 7
+2 3 1 5 4 7 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3
+</code></pre>
+</br>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+
+const int N = 50010;
+int pre[N], in[N];
+unordered_map&lt;int, int&gt; pos;
+int post, n;
+
+void build(int il, int ir, int pl, int pr) {
+    int root = pre[pl];
+    int k = pos[root];
+    
+    if (il &lt; k)
+        build(il, k - 1, pl + 1, pl + 1 + k - 1 - il);
+    if (ir &gt; k)
+        build(k + 1, ir, pl + 1 + k - 1 -il + 1, pr);
+    if (post == 0)
+        post = root;
+}
+
+int main () {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; pre[i];
+    }
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; in[i];
+        pos[in[i]] = i;
+    }
+    build(0, n - 1, 0, n -1);
+    cout &lt;&lt; post &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+</br>
+<h2 id="avl平衡二叉树">AVL平衡二叉树</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805404939173888">AVL树的根</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805351302414336">判断完全AVL树</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805346063728640">判断红黑树</a></li>
+</ul>
+<h3 id="avl树的根">AVL树的根</h3>
+<p>AVL树是一种自平衡二叉搜索树。</p>
+<p>在AVL树中，任何节点的两个子树的高度最多相差 1 个。</p>
+<p>如果某个时间，某节点的两个子树之间的高度差超过 1，则将通过树旋转进行重新平衡以恢复此属性。</p>
+<p>图 1−4 说明了旋转规则。</p>
+<p><img src="https://cdn.acwing.com/media/article/image/2020/03/30/19_3a941ca472-31.jpg" alt="31.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/03/30/19_3dd0488472-32.jpg" alt="32.jpg" loading="lazy"><br>
+<img src="https://cdn.acwing.com/media/article/image/2020/03/30/19_411c0b5472-33.jpg" alt="33.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/03/30/19_43ea12f472-34.jpg" alt="34.jpg" loading="lazy"></p>
+<p>现在，给定插入序列，请你求出 AVL 树的根是多少。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示总插入值数量。</p>
+<p>第二行包含 N 个不同的整数，表示每个插入值。</p>
+<p><strong>输出格式</strong></p>
+<p>输出得到的 AVL 树的根是多少。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤20</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>5
+88 70 61 96 120
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>70
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>7
+88 70 61 96 120 90 65
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>88
+</code></pre>
+</br>
+<h4 id="ll型-右旋">LL型  == &gt; 右旋</h4>
+<ul>
+<li>将原来根（A）的左儿子变成新的根</li>
+<li>现在根（B）的右儿子变成原来根（A）的左儿子（根据二叉搜索树定义确定）</li>
+<li>现在根（B）的右儿子变成原来的根（A）</li>
+</ul>
+<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gg4zdbtp3ej310i0l2q4x.jpg" alt="image-20200626000356718" loading="lazy"></figure>
+<pre><code class="language-c++">// 右旋操作
+void R (int&amp; u) {
+    // 原来根的左儿子变成新的根
+    int p = l[u];
+    // 现在根的右儿子变成原来根的左儿子
+    l[u] = r[p];
+    // 现在根的右儿子变成原来的根
+    r[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+</code></pre>
+<h4 id="rr型-左旋">RR型 ==&gt; 左旋</h4>
+<ul>
+<li>将原来根（A）的右儿子变成新的根</li>
+<li>现在根（B）的左儿子变成原来根（A）的右儿子（根据二叉搜索树定义确定）</li>
+<li>现在根（B）的左儿子变成原来的根（A）</li>
+</ul>
+<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gg4zo7metaj314k0n20uy.jpg" alt="image-20200626001424209" loading="lazy"></figure>
+<pre><code class="language-c++">// 左旋操作
+void L (int&amp; u) {
+    // 原来根的右儿子变成新的根
+    int p = r[u];
+    // 现在根的左儿子变成原来根的右儿子
+    r[u] = l[p];
+    // 现在根的左儿子变成原来的根
+    l[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+</code></pre>
+<h4 id="lr型-左旋-右旋">LR型 == &gt; 左旋 + 右旋</h4>
+<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gg4zxdphrrj31h20hqaco.jpg" alt="image-20200626002313342" loading="lazy"></figure>
+<h4 id="rl型-右旋-左旋">RL型 ==&gt; 右旋 + 左旋</h4>
+<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gg506gjrn9j31g40j6goa.jpg" alt="image-20200626003156461" loading="lazy"></figure>
+<h4 id="构建平衡二叉树">构建平衡二叉树</h4>
+<ul>
+<li>插入结点构建二叉搜索树</li>
+<li>每次插入一个结点之后，获取根节点左右儿子高度差
+<ul>
+<li>左儿子结点的左右儿子高度差为1 == &gt; LL 或者 RR（通过正负判断），否则就是 LR或者 RL</li>
+</ul>
+</li>
+<li>更新树的高度</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+const int N = 30;
+int l[N], r[N], v[N], h[N], idx;
+
+
+// 更新树的高度
+void update(int u) {
+    h[u] = max(h[l[u]], h[r[u]]) + 1;
+}
+
+// 右旋操作
+void R (int&amp; u) {
+    // 原来根的左儿子变成新的根
+    int p = l[u];
+    // 现在根的右儿子变成原来根的左儿子
+    l[u] = r[p];
+    // 现在根的右儿子变成原来的根
+    r[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+
+// 左旋操作
+void L (int&amp; u) {
+    // 原来根的右儿子变成新的根
+    int p = r[u];
+    // 现在根的左儿子变成原来根的右儿子
+    r[u] = l[p];
+    // 现在根的左儿子变成原来的根
+    l[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+// 获取左右儿子的高度差
+int get_balance(int u) {
+    return h[l[u]] - h[r[u]];
+}
+
+void insert(int&amp; u, int w) {
+    if (u == 0) {
+        u = ++idx;
+        v[u] = w;
+    }
+    // 插到根节点的左子树
+    else if (w &lt; v[u]) {
+        insert(l[u], w);
+        if (get_balance(u) == 2) {
+            // LL型：右旋根节点
+            if (get_balance(l[u]) == 1)
+                R(u);
+            // LR型：左旋左子树，右旋根
+            else {
+                L(l[u]);
+                R(u);
+            }
+        }
+    }
+    // 插入到根节点的右子树
+    else {
+        insert(r[u], w);
+        if (get_balance(u) == -2) {
+            // RR型：左旋根节点
+            if (get_balance(r[u]) == -1)
+                L(u);
+            // LR型：右旋右子树，左旋根
+            else {
+                R(r[u]);
+                L(u);
+            }
+        }
+    }
+    // 更新树的高度
+    update(u);
+}
+
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    int root = 0;
+    while (n--) {
+        int w;
+        cin &gt;&gt; w;
+        insert(root, w);
+    }
+    
+    cout &lt;&lt; v[root] &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="判断完全avl树">判断完全AVL树</h3>
+<p>AVL树是一种自平衡二叉搜索树。</p>
+<p>在AVL树中，任何节点的两个子树的高度最多相差 1 个。</p>
+<p>如果某个时间，某节点的两个子树之间的高度差超过 1，则将通过树旋转进行重新平衡以恢复此属性。</p>
+<p>图 1−4 说明了旋转规则。</p>
+<p><img src="https://cdn.acwing.com/media/article/image/2020/04/11/19_b107e4207b-1.jpg" alt="1.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/04/11/19_b3f408627b-2.jpg" alt="2.jpg" loading="lazy"><br>
+<img src="https://cdn.acwing.com/media/article/image/2020/04/11/19_b8b9b5fe7b-3.jpg" alt="3.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/04/11/19_bb4555f87b-4.jpg" alt="4.jpg" loading="lazy"></p>
+<p>现在，给定插入序列，请你输出得到的AVL树的层序遍历，并判断它是否是完全二叉树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 N，表示插入序列中元素个数。</p>
+<p>第二行包含 N 个不同的整数表示插入序列。</p>
+<p><strong>输出格式</strong></p>
+<p>第一行输出得到的AVL树的层序遍历序列。</p>
+<p>第二行，如果该AVL树是完全二叉树，则输出 <code>YES</code>，否则输出 <code>NO</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤20</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>5
+88 70 61 63 65
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>70 63 88 61 65
+YES
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>8
+88 70 61 96 120 90 65 68
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>88 65 96 61 70 90 120 68
+NO
+</code></pre>
+<ul>
+<li>构建平衡二叉树</li>
+<li>BFS判断是否是完全二叉树：pos从1开始记录，左右儿子按2 * i 和2 * i + 1 记录，若记录大于结点数n，则不是完全二叉树</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 30;
+
+// 记录左右儿子
+int l[N], r[N];
+// 记录节点权值
+int v[N];
+// 记录每个节点高度
+int h[N];
+// 记录层序遍历结果
+int level[N];
+// 记录节点编号
+int pos[N];
+int idx, n, cnt;
+
+// 更新节点的高度
+void update(int u) {
+    h[u] = max(h[l[u]], h[r[u]]) + 1;
+}
+
+// 右旋
+void R(int&amp; u) {
+    // 原来根的左儿子变成新的根
+    int p = l[u];
+    // 现在根的右儿子变成原来根的左儿子
+    l[u] = r[p];
+    // 现在根的右儿子变成原来的根
+    r[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+
+// 左旋
+void L(int&amp; u) {
+    // 原来根的右儿子变成新的根
+    int p = r[u];
+    // 现在根的左儿子变成原来根的右儿子
+    r[u] = l[p];
+    // 现在根的左儿子变成原来的根
+    l[p] = u;
+    update(u);
+    update(p);
+    u = p;
+}
+
+// 获取左右儿子高度差
+int get_balance(int u) {
+    return h[l[u]] - h[r[u]];
+}
+
+// 插入新节点到u的左儿子或右儿子
+void insert(int&amp; u, int w) {
+    if (u == 0) {
+        u = ++idx;
+        v[u] = w;
+    }
+    // 插到根节点的左子树
+    else if (w &lt; v[u]) {
+        insert(l[u], w);
+        if (get_balance(u) == 2) {
+            // LL型：右旋根节点
+            if (get_balance(l[u]) == 1)
+                R(u);
+            // LR型：左旋左子树，右旋根
+            else {
+                L(l[u]);
+                R(u);
+            }
+        }
+    }
+    // 插入到根节点的右子树
+    else {
+        insert(r[u], w);
+        if (get_balance(u) == -2) {
+            // RR型：左旋根节点
+            if (get_balance(r[u]) == -1)
+                L(u);
+            // LR型：右旋右子树，左旋根
+            else {
+                R(r[u]);
+                L(u);
+            }
+        }
+    }
+    // 更新树的高度
+    update(u);
+}
+
+
+bool bfs(int u) {
+    queue&lt;int&gt; q;
+    q.push(u);
+    pos[u] = 1;
+    bool res = true;
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        level[cnt++] = t;
+        if (pos[t] &gt; n)
+            res = false;
+        if (l[t]) {
+            q.push(l[t]);
+            pos[l[t]] = pos[t] * 2;
+        }
+        if (r[t]) {
+            q.push(r[t]);
+            pos[r[t]] = pos[t] * 2 + 1;
+        }
+    }
+    return res;
+}
+
+int main() {
+    int root = 0;
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        int w;
+        cin &gt;&gt; w;
+        insert(root, w);
+    }
+    bool res = bfs(root);
+    cout &lt;&lt; v[level[0]];
+    for (int i = 1; i &lt; n; i++) {
+        cout &lt;&lt; ' ' &lt;&lt; v[level[i]];
+    }
+    cout &lt;&lt; endl;
+    if (res)
+        cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="判断红黑树">判断红黑树</h3>
+<p>数据结构中有一类平衡的二叉搜索树，称为红黑树。</p>
+<p>它具有以下 5 个属性：</p>
+<ul>
+<li>节点是红色或黑色。</li>
+<li>根节点是黑色。</li>
+<li>所有叶子都是黑色。（叶子是 NULL节点）</li>
+<li>每个红色节点的两个子节点都是黑色。</li>
+<li>从任一节点到其每个叶子的所有路径都包含相同数目的黑色节点。</li>
+</ul>
+<p>例如，下列三张图中，左图中的二叉树是红黑树，其余两图中的二叉树不是红黑树。</p>
+<p><img src="https://cdn.acwing.com/media/article/image/2020/04/13/19_aefa6b627d-1.jpg" alt="1.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/04/13/19_b137133a7d-2.jpg" alt="2.jpg" loading="lazy"> <img src="https://cdn.acwing.com/media/article/image/2020/04/13/19_b3bfc8407d-3.jpg" alt="3.jpg" loading="lazy"></p>
+<p>现在，对于每个给定的二叉搜索树，请你判断它是否是合法的红黑树。</p>
+<p><strong>注意</strong></p>
+<p>给定的前序遍历序列可能不合法，即无法构建出合法二叉搜索树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 K，表示共有 K 组测试数据。</p>
+<p>每组测试数据，第一行包含整数 N，表示二叉搜索树的节点数量。</p>
+<p>第二行给出了这个二叉搜索树的前序遍历。</p>
+<p>注意，虽然所有节点的权值都为正，但是我们使用负号表示红色节点。</p>
+<p>各节点权值互不相同。</p>
+<p>输入样例与题目中三个图例相对应。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每组数据，如果是合法红黑树则输出一行 <code>Yes</code>，否则输出一行 <code>No</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤K≤30,<br>
+1≤N≤30</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3
+9
+7 -2 1 5 -4 -11 8 14 -15
+9
+11 -2 1 -7 5 -4 8 14 -15
+8
+10 -7 5 -6 8 15 -11 17
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>Yes
+No
+No
+</code></pre>
+<ul>
+<li>通过前序和中序序列构建树（注意判断前序序列是否合法）</li>
+<li>判断左右子树中黑色结点个数是否相同</li>
+<li>红色结点下面必须是两个黑色结点判断</li>
+<li>统计黑色结点数</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int N = 40;
+int pre[N], in[N];
+unordered_map&lt;int, int&gt; pos;
+bool ans;
+
+int build (int il, int ir, int pl, int pr, int&amp; sum) {
+    int root = pre[pl];
+    int k = pos[abs(root)];
+    // 如果前序序列不合法，返回false
+    if (k &lt; il || k &gt; ir) {
+        ans = false;
+        return 0;
+    }
+    int left = 0;
+    int right = 0;
+    int ls = 0;
+    int rs = 0;
+    // 构建树的过程
+    if (il &lt; k)
+        left = build(il, k - 1, pl + 1, pl + 1 + k - 1 - il, ls);
+    if (k &lt; ir)
+        right = build(k + 1, ir, pl + 1 + k - 1 - il + 1, pr, rs);
+    // 左右子树中黑色点的个数不同
+    if (ls != rs)
+        ans = false;
+    sum = ls;
+    // 每个红色节点下面必须是两个黑色节点
+    if (root &lt; 0) {
+        if (left &lt; 0 || right &lt; 0)
+            ans = false;
+    }
+    // 是黑色节点，则++
+    else
+        sum++;
+        
+    return root;
+}
+
+int main() {
+    int T;
+    cin &gt;&gt; T;
+    while (T--) {
+        int n;
+        cin &gt;&gt; n;
+        for (int i = 0; i &lt; n; i++) {
+            cin &gt;&gt; pre[i];
+            // 存在正负：存中序节点我们使用绝对值
+            in[i] = abs(pre[i]);
+        }
+        sort(in, in + n);
+        pos.clear();
+        for (int i = 0; i &lt; n; i++) 
+            pos[in[i]] = i;
+        ans = true;
+        int sum;
+        int root = build(0, n - 1, 0, n - 1, sum);
+        
+        if (root &lt; 0)
+            ans = false;
+        if (ans)
+            cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    }
+}
+</code></pre>
+</br>
+</br>
+<h2 id="公共祖先">公共祖先</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805343727501312">最低公共祖先</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/1038430130011897856">二叉树中最低公共祖先</a></li>
+</ul>
+</br>
+<h3 id="最低公共祖先">最低公共祖先</h3>
+<p>树中两个结点 U 和 V 的最低公共祖先（LCA）是指同时具有 U 和 V 作为后代的最深结点。</p>
+<p>二叉搜索树 (BST) 递归定义为具有以下属性的二叉树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>现在给定 BST 中的任意两个结点，请你找出它们的最低公共祖先。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 M 和 N，分别表示询问结点对数以及二叉搜索树中的结点数量。</p>
+<p>第二行包含 N 个不同整数，表示该二叉搜索树的前序遍历序列。</p>
+<p>接下来 M 行，每行包含两个不同的整数 U 和 V，表示一组询问。</p>
+<p>所有结点权值均在 <strong>int</strong> 范围内。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每对给定的 U 和 V，输出一行结果。</p>
+<p>如果 U 和 V 的 LCA 是 A，且 A 不是 U 或 V，则输出 <code>LCA of U and V is A.</code>。</p>
+<p>如果 U 和 V 的 LCA 是 A，且 A 是 U 或 V 中的一个，则输出 <code>X is an ancestor of Y.</code>，其中 X 表示 A，Y 表示另一个结点。</p>
+<p>如果 U 或 V 没有在 BST 中找到，则输出 <code>ERROR: U is not found.</code> 或 <code>ERROR: V is not found.</code> 或 <code>ERROR: U and V are not found.</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤M≤1000,<br>
+1≤N≤10000</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 8
+6 3 1 2 5 4 8 7
+2 5
+8 7
+1 9
+12 -3
+0 8
+99 99
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>LCA of 2 and 5 is 3.
+8 is an ancestor of 7.
+ERROR: 9 is not found.
+ERROR: 12 and -3 are not found.
+ERROR: 0 is not found.
+ERROR: 99 and 99 are not found.
+</code></pre>
+<ul>
+<li>存储只需要存储结点的父节点，构建树的时候找所有点深度</li>
+<li>将比较低的点向上移动，找到与另一个点同一深度</li>
+<li>两个点同步向上找到相同的点</li>
+</ul>
+<pre><code>题中结点权值是int范围，我们可以使用hash表做一个映射，映射到0 ~ N - 1，减少时间复杂度前面的常数
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 10010;
+
+int m, n;
+int in[N], pre[N];
+// 存储离散化处理之前的数据
+int seq[N];
+// 映射：离散化处理
+unordered_map&lt;int, int&gt; pos;
+// 记录每个节点的父节点
+int p[N];
+int depth[N];
+
+// 构建二叉树，并记录每个节点的层数
+int build (int il, int ir, int pl, int pr, int d) {
+    int root = pre[pl];
+    // 进行了映射处理，根节点的值就是相应根节点在中序序列的下标
+    int k = root;
+    depth[root] = d;
+    
+    // 记录左右儿子的父节点为root
+    if (il &lt; k)
+        p[build(il, k - 1, pl + 1, pl + 1 + k - 1- il, d + 1)] = root;
+    if (k &lt; ir)
+        p[build(k + 1, ir, pl + 1 + k - 1 - il + 1, pr, d + 1)] = root;
+    
+    return root;
+}
+
+
+int main() {
+    cin &gt;&gt; m &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; pre[i];
+        seq[i] = pre[i];
+    }
+    sort(seq, seq + n);
+    
+    // 把int范围内的数映射到 0 ~ n -1，减少常数级别的操作，pos中的key存的就是原来的值
+    for (int i = 0; i &lt; n; i++) {
+        pos[seq[i]] = i;
+        in[i] = i;
+    }
+    for (int i = 0; i &lt; n; i++)
+        pre[i] = pos[pre[i]];
+    
+    build(0, n - 1, 0, n - 1, 0);
+    
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 查询合法
+        if (pos.count(b) &amp;&amp; pos.count(a)) {
+            a = pos[a];
+            b = pos[b];
+            // 记录下来查询的值
+            int x = a;
+            int y = b;
+            // 找公共祖先节点
+            while (a != b) {
+                // b的深度更深，往上找父节点
+                if (depth[a] &lt; depth[b])
+                    b = p[b];
+                else
+                    a = p[a];
+            }
+            if (a != x &amp;&amp; b != y)
+                printf(&quot;LCA of %d and %d is %d.\n&quot;, seq[x], seq[y], seq[a]);
+            else if (a == x)
+                printf(&quot;%d is an ancestor of %d.\n&quot;, seq[x], seq[y]);
+            else
+                printf(&quot;%d is an ancestor of %d.\n&quot;, seq[y], seq[x]);
+        }
+        else if (pos.count(a) == 0 &amp;&amp; pos.count(b) == 0)
+            printf(&quot;ERROR: %d and %d are not found.\n&quot;, a, b);
+        else if (pos.count(a) == 0)
+            printf(&quot;ERROR: %d is not found.\n&quot;, a);
+        else
+            printf(&quot;ERROR: %d is not found.\n&quot;, b);
+    }
+    
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="二叉树中最低公共祖先">二叉树中最低公共祖先</h3>
+<p>树中两个结点 U 和 V 的最低公共祖先（LCA）是指同时具有 U 和 V 作为后代的最深结点。</p>
+<p>给定二叉树中的任何两个结点，请你找到它们的 LCA。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 M 和 N，分别表示询问结点对数以及二叉树中的结点数量。</p>
+<p>接下来两行，每行包含 N 个不同的整数，分别表示二叉树的中序和前序遍历。</p>
+<p>保证二叉树可由给定遍历序列唯一确定。</p>
+<p>接下来 M 行，每行包含两个不同的整数 U 和 V，表示一组询问。</p>
+<p>所有结点权值均在 <strong>int</strong> 范围内。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每对给定的 U 和 V，输出一行结果。</p>
+<p>如果 U 和 V 的 LCA 是 A，且 A 不是 U 或 V，则输出 <code>LCA of U and V is A.</code>。</p>
+<p>如果 U 和 V 的 LCA 是 A，且 A 是 U 或 V 中的一个，则输出 <code>X is an ancestor of Y.</code>，其中 X 表示 A，Y 表示另一个结点。</p>
+<p>如果 U 或 V 没有在二叉树中找到，则输出 <code>ERROR: U is not found.</code> 或 <code>ERROR: V is not found.</code> 或 <code>ERROR: U and V are not found.</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤M≤1000,<br>
+1≤N≤10000</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 8
+7 2 3 4 6 5 1 8
+5 3 7 2 6 4 8 1
+2 6
+8 1
+7 9
+12 -3
+0 8
+99 99
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>LCA of 2 and 6 is 3.
+8 is an ancestor of 1.
+ERROR: 9 is not found.
+ERROR: 12 and -3 are not found.
+ERROR: 0 is not found.
+ERROR: 99 and 99 are not found.
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+const int N = 10010;
+
+int n, m;
+int pre[N], in[N], seq[N];
+unordered_map&lt;int, int&gt; pos;
+int p[N];
+int depth[N];
+
+int build (int il, int ir, int pl, int pr, int d) {
+    int root = pre[pl];
+    int k = root;
+    depth[root] = d;
+    
+    if (il &lt; k)
+        p[build(il, k - 1, pl + 1, pl + 1 + k - 1 - il, d + 1)] = root;
+    if (k &lt; ir)
+        p[build(k + 1, ir, pl + 1 + k - 1 - il + 1, pr, d + 1)] = root;
+    
+    return root;
+}
+
+int main() {
+    cin &gt;&gt; m &gt;&gt; n;
+    // 读入中序序列并映射
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; seq[i];
+        pos[seq[i]] = i;
+        in[i] = i;
+    }
+    // 读入前序序列并做好映射
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; pre[i];
+        pre[i] = pos[pre[i]];
+    }
+    
+    build(0, n - 1, 0, n - 1, 0);
+    
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 查询合法
+        if (pos.count(b) &amp;&amp; pos.count(a)) {
+            a = pos[a];
+            b = pos[b];
+            // 记录下来查询的值
+            int x = a;
+            int y = b;
+            // 找公共祖先节点
+            while (a != b) {
+                // b的深度更深，往上找父节点
+                if (depth[a] &lt; depth[b])
+                    b = p[b];
+                else
+                    a = p[a];
+            }
+            if (a != x &amp;&amp; b != y)
+                printf(&quot;LCA of %d and %d is %d.\n&quot;, seq[x], seq[y], seq[a]);
+            else if (a == x)
+                printf(&quot;%d is an ancestor of %d.\n&quot;, seq[x], seq[y]);
+            else
+                printf(&quot;%d is an ancestor of %d.\n&quot;, seq[y], seq[x]);
+        }
+        else if (pos.count(a) == 0 &amp;&amp; pos.count(b) == 0)
+            printf(&quot;ERROR: %d and %d are not found.\n&quot;, a, b);
+        else if (pos.count(a) == 0)
+            printf(&quot;ERROR: %d is not found.\n&quot;, a);
+        else
+            printf(&quot;ERROR: %d is not found.\n&quot;, b);
+    }
+    
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java基础篇（四）]]></title>
         <id>https://kay-rick.github.io/post/java-ji-chu-pian-si/</id>
@@ -2339,6 +4967,7 @@ class Driver {
 <p>上一篇介绍了树和二叉树的一些基本知识，存储结构，遍历，常见算法应用等，这一篇主要对树的另外一些高级数据结构进行梳理</p>
 </blockquote>
 <h2 id="二叉搜索树">二叉搜索树</h2>
+</br>
 <h3 id="什么是二叉搜索树">什么是二叉搜索树？</h3>
 <p>一颗二叉树，可以为空；如果不为空，满足以下性质：</p>
 <ul>
@@ -2346,6 +4975,7 @@ class Driver {
 <li>非空<strong>右子树</strong>的所有键值<strong>大于其根节点的键值</strong></li>
 <li><strong>左、右子树都是二叉搜素树</strong></li>
 </ul>
+</br>
 <h3 id="二叉搜索树常见算法">二叉搜索树常见算法</h3>
 <h4 id="查找元素">查找元素</h4>
 <ul>
@@ -2529,6 +5159,7 @@ TreeNode* FindMin(TreeNode* root) {
 </code></pre>
 </li>
 </ul>
+</br>
 <h3 id="判断一棵树是否为二叉搜索树">判断一棵树是否为二叉搜索树</h3>
 <h4 id="递归">递归</h4>
 <p>乍一看：这是一个平凡的问题，只需要遍历整棵树，检查结点值<code>node-&gt;right-&gt;val &gt; node-&gt;val</code>和<code>node-&gt;left-&gt;val &lt; node-&gt;val</code>对每个结点都成立</p>
@@ -2611,7 +5242,10 @@ public:
     }
 };
 </code></pre>
+</br>
+</br>
 <h2 id="平衡二叉树avl树">平衡二叉树(AVL树)</h2>
+</br>
 <h3 id="平衡二叉树概念">平衡二叉树概念</h3>
 <p>搜索树结点不同插入次序，将导致<strong>不同的深度和平均查找长度ASL</strong></p>
 <ul>
@@ -2622,10 +5256,12 @@ public:
 </blockquote>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczdyj85pqj30qe080778.jpg" alt="image-20200319175418894" style="zoom:50%;" />
 <p><strong>注意：是对任意一个结点而言，不仅仅是根节点</strong></p>
+</br>
 <h3 id="平衡二叉树的高度">平衡二叉树的高度</h3>
 <p>完全二叉树 高度log<sub>2</sub>n，设n<sub>h</sub>高度为h的平衡二叉树的最少结点数。结点数最少时：</p>
 <p>有 <strong>n<sub>h</sub> = n<sub>h-1</sub> + n<sub>h-2</sub> + 1</strong>  ==&gt;	斐波那契数列加1</p>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcze6gngzxj30pe072gmw.jpg" alt="image-20200319180157073" style="zoom:50%;" />
+</br>
 <h3 id="平衡二叉树的调整">平衡二叉树的调整</h3>
 <p>在平衡二叉树进行插入结点后，可能会导致该二叉树不再是平衡二叉树，需要对结点位置进行调整：调整的原则一定要注意：<strong>调整完一定还要是二叉搜索树</strong></p>
 <p>####RR旋转</p>
@@ -2647,7 +5283,10 @@ public:
 <h4 id="rl旋转">RL旋转</h4>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczhisf5hvj30s008uwkm.jpg" alt="image-20200319195734013" style="zoom:50%;" />
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczi7io743j30rk09uwje.jpg" alt="image-20200319202119089" style="zoom:50%;" />
+</br>
+</br>
 <h2 id="堆">堆</h2>
+</br>
 <h3 id="相关概念">相关概念</h3>
 <p>优先队列（Priority Queue）：特殊的“队列”，<strong>取出元素的顺序是按照元素的优先权（关键字）大小</strong>，呃呃不是元素进入队列的先后顺序；我们发现当我们实现优先队列的时候，无论是数组、有序数组还是链表，我们都不能很好地去实现按优先权大小这个功能</p>
 <p>堆</p>
@@ -2665,6 +5304,7 @@ public:
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd2ui2g1a7j30ts0j67fg.jpg" alt="image-20200322174322022" style="zoom:50%;" />
 </li>
 </ul>
+</br>
 <h3 id="最大堆操作">最大堆操作</h3>
 <h4 id="创建最大堆">创建最大堆</h4>
 <pre><code class="language-c++">typedef int ElementType;
@@ -2802,6 +5442,7 @@ void PercDown(MaxHeap H, int p) {
     H-&gt;Data[Parent] = X;
 }
 </code></pre>
+</br>
 <h3 id="堆排序">堆排序</h3>
 <h4 id="算法1">算法1</h4>
 <pre><code class="language-c++">void HeapSort1 (ElementType A[], int N) {
@@ -2860,7 +5501,7 @@ void PercDown(ElementType A[], int p, int N) {
  */
 void HeapSort(ElementType A[], int N) {
     int i;
-    for (i = N / 2 - 1; i &gt;= 0; i--) /* 建立最大堆 */
+    for (i = N / 2; i &gt;= 0; i--) /* 建立最大堆 */
         PercDown(A, i, N);
     for (i = N - 1; i &gt; 0; i--) {
         /* 删除最大堆顶 */
@@ -2869,10 +5510,14 @@ void HeapSort(ElementType A[], int N) {
     }
 }
 </code></pre>
+</br>
+</br>
 <h2 id="哈夫曼树与编码">哈夫曼树与编码</h2>
+</br>
 <h3 id="基础概念">基础概念</h3>
 <p>带权路径长度（WPL）：设二叉树有n个叶子结点，每个叶子结点带有权值w<sub>k</sub>，从根节点到每个叶子结点的长度为I<sub>k</sub>，则每个叶子结点的带权路径长度之和就是 <strong>WPL = ∑w<sub>k</sub>I<sub>k</sub></strong></p>
 <p><strong>最优二叉树获哈夫曼树</strong>：<strong>WPL最小的二叉树</strong></p>
+</br>
 <h3 id="哈夫曼树的构造">哈夫曼树的构造</h3>
 <p>每次把<strong>权值最小的两颗二叉树</strong>合并，<strong>如何每次找到最小的权值 ==&gt; 最小堆</strong></p>
 <pre><code class="language-c++">#include &lt;iostream&gt;
@@ -3024,6 +5669,7 @@ HuffmanTree Huffman (MinHeap H) {
     return T;
 }
 </code></pre>
+</br>
 <h3 id="哈弗曼编码">哈弗曼编码</h3>
 <ul>
 <li>
@@ -3037,7 +5683,10 @@ HuffmanTree Huffman (MinHeap H) {
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd54wq1nlwj316e0u0tgw.jpg" alt="image-20200324171431840" style="zoom: 33%;" />
 </li>
 </ul>
+</br>
+</br>
 <h2 id="并查集">并查集</h2>
+</br>
 <h3 id="基础概念-2">基础概念</h3>
 <p>并查集是一种维护集合的数据结构。</p>
 <ul>
@@ -3054,6 +5703,7 @@ typedef struct {
 </code></pre>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56rbmyqfj30dw0gcq4i.jpg" alt="image-20200324181835578" style="zoom:50%;" />
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56saat66j30ke07iwft.jpg" alt="image-20200324181930573" style="zoom:50%;" />
+</br>
 <h3 id="集合运算">集合运算</h3>
 <h4 id="查找">查找</h4>
 <pre><code class="language-c++">/**
@@ -3108,9 +5758,10 @@ void Union (SetType S[], ElementType X1, ElementType X2) {
         </link>
         <updated>2020-03-25T10:31:30.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
-<p>树是一种数据结构，它是由n（n&gt;=0）个有限结点组成一个具有层次关系的集合。把它叫做“树”是因为它看起来像一棵倒挂的树，也就是说它是根朝上，而叶朝下的。本篇主要就树的一些基础部分进行一些梳理，所有代码均在LeetCode上Accepted</p>
+<p>树是一种数据结构，它是由n（n&gt;=0）个有限结点组成一个具有层次关系的集合。把它叫做“树”是因为它看起来像一棵倒挂的树，也就是说它是根朝上，而叶朝下的。本篇主要就树的一些基础部分进行一些梳理，所有代码均在LeetCode或PAT上Accepted</p>
 </blockquote>
 <h2 id="二叉树相关概念">二叉树相关概念</h2>
+</br>
 <h3 id="树的相关概念">树的相关概念</h3>
 <p>在数据结构中把树枝分叉处、树叶、树根抽象为<strong>节点（node）</strong>，其中树根抽象为<strong>根节点</strong>，且对于一棵树来说最多存在一个根节点；把树叶概括为<strong>叶子节点</strong>，且叶子节点不再延伸出新的节点；把茎干和树枝统一抽象为<strong>边</strong>。这样，树就被定位为若干个节点和若干条边组成的数据结构，且在<strong>树中的结点不能被边连接成环</strong>。</p>
 <ul>
@@ -3123,6 +5774,7 @@ void Union (SetType S[], ElementType X1, ElementType X2) {
 <li>多棵树组合在一起称为<strong>森林（forest）</strong></li>
 </ul>
 <figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcpz40e6q9j30g308ljrs.jpg" alt="image-20200311143025921" loading="lazy"></figure>
+</br>
 <h3 id="二叉树及特殊的二叉树">二叉树及特殊的二叉树</h3>
 <blockquote>
 <p>二叉树递归定义：</p>
@@ -3135,17 +5787,21 @@ void Union (SetType S[], ElementType X1, ElementType X2) {
 <li>完全二叉树：除了最下面一层外，<strong>其余层的结点个数都达到了当层所能达到的最大结点树</strong></li>
 </ul>
 <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcpzcvqmxyj31ki0rg11a.jpg" alt="image-20200311143901133" style="zoom: 33%;" />
+</br>
 <h3 id="二叉树的主要性质">二叉树的主要性质</h3>
 <ul>
-<li>在二一叉树中，第<code>i</code>层上最多有<code>2i</code>个结点<code>（ i≥0 ）</code></li>
+<li>在二叉树中，第<code>i</code>层上最多有<code>2i</code>个结点<code>（ i≥0 ）</code></li>
 <li>深度为<code>k</code>的二叉树至多有<strong>2<sup>k+1</sup> - 1</strong>个结点<code>（ k≥0 ）</code>其中深度<code>(depth)</code>定义为二叉树中层数最大的叶结点的层数</li>
 <li>一棵二叉树，若其终端结点数为<strong>n<sub>0</sub></strong>，度为2的结点数为<strong>n<sub>2</sub></strong> ，则<strong>n<sub>0</sub> = n<sub>2</sub> + 1</strong></li>
 <li>满二叉树定理：非空满二叉树树叶数目等于其分支结点数加1</li>
 <li>满二叉树定理推论：一个非空3叉树的空子树数目等 于其结点数加1</li>
-<li>有n个结点<code>（ n &gt; 0 ）</code>的完全二叉树的高度为 <strong>⌈log<sub>2</sub> (n+1)⌉</strong>（深度为**⌈log<sub>2</sub> (n+1)⌉ - 1** ）</li>
+<li>有n个结点<code>（ n &gt; 0 ）</code>的完全二叉树的高度为 <strong>⌈log<sub>2</sub> (n+1)⌉</strong>（深度为⌈log<sub>2</sub> (n+1)⌉ - 1 ）</li>
 </ul>
+</br>
+</br>
 <h2 id="二叉树的存储结构">二叉树的存储结构</h2>
 <p><code>LinkedList</code>是特殊化的<code>Tree</code>；<code>Tree</code>是特殊化的<code>Graph</code></p>
+</br>
 <h3 id="二叉树顺序存储结构">二叉树顺序存储结构</h3>
 <p>完全二叉树：从上至下、从左到右存储n个结点的完全二叉树的结点父子关系：</p>
 <ul>
@@ -3185,100 +5841,107 @@ void Union (SetType S[], ElementType X1, ElementType X2) {
 </tbody>
 </table>
 <p><strong>一般二叉树可以采用这种结构，但会造成空间浪费</strong></p>
+</br>
 <h3 id="二叉树链表存储">二叉树链表存储</h3>
 <pre><code class="language-c++">struct TreeNode {
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode(int x):val(x),left(NULL),right(NULL){}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x):val(x),left(NULL),right(NULL){}
 }
 </code></pre>
 <pre><code class="language-java">public class TreeNode {
-  public int val;
-  public TreeNode left,right;
-  public TreeNode(int val) {
-    this.val = val;
-    this.left = null;
-    this.right = null;
-  }
+    public int val;
+    public TreeNode left,right;
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
 }
 </code></pre>
 <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcr451q1xjj30po08sdgk.jpg" alt="image-20200312141005358" style="zoom:50%;" />
+</br>
+</br>
 <h2 id="二叉树的遍历">二叉树的遍历</h2>
 <p>我们统一结点类型为</p>
 <pre><code class="language-c++">struct TreeNode {
     int val;			// 数据域
-    TreeNode* left;	// 指向左子树根节点指针
+    TreeNode* left;		// 指向左子树根节点指针
     TreeNode* right;	// 指向右子树根节点指针
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 </code></pre>
+</br>
 <h3 id="先中后递归遍历">先中后递归遍历</h3>
 <h4 id="先序">先序</h4>
 <p>​	访问<strong>根节点</strong></p>
 <p>​	<strong>先序</strong>遍历其<strong>左子树</strong></p>
 <p>​	<strong>先序</strong>遍历其<strong>右子树</strong></p>
-<pre><code class="language-c++">/**
- * @description: 先序遍历递归算法
- * @param TreeNode*
- */
-void preOrder1(TreeNode* root) {
-    if (root != NULL) {
-        printf(&quot;%d\n&quot;, root-&gt;val);
-        preOrder1(root-&gt;left);
-        preOrder1(root-&gt;right);
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        if (root != NULL) {
+            res.push_back(root-&gt;val);
+            preorderTraversal(root-&gt;left);
+            preorderTraversal(root-&gt;right);
+        }
+        return res;
     }
-    return;
-}
+private:
+    vector&lt;int&gt; res;
+}; 
 </code></pre>
 <h4 id="中序">中序</h4>
 <p>​	<strong>中序</strong>遍历<strong>左子树</strong></p>
 <p>​	访问<strong>根节点</strong></p>
 <p>​	<strong>中序</strong>遍历<strong>右子树</strong></p>
-<pre><code class="language-c++">/**
- * @description: 中序遍历递归算法
- * @param TreeNode* 
- */
-void inOrder1(TreeNode* root) {
-    if (root != NULL) {
-        inOrder1(root-&gt;left);
-        printf(&quot;%d\n&quot;, root-&gt;val);
-        inOrder1(root-&gt;right);
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) {
+        if (root != NULL) {
+            inorderTraversal(root-&gt;left);
+            res.push_back(root-&gt;val);
+            inorderTraversal(root-&gt;right);
+        }
     }
-    return;
-}
+private:
+    vector&lt;int&gt; res;
+}; 
 </code></pre>
 <h4 id="后序">后序</h4>
 <p>​	<strong>后序</strong>遍历<strong>左子树</strong></p>
 <p>​	<strong>后序</strong>遍历<strong>右子树</strong></p>
 <p>​	访问<strong>根节点</strong></p>
-<pre><code class="language-c++">/**
- * @description: 后序遍历递归算法
- * @param TreeNode*
- */
-void postOrder1(TreeNode* root) {
-    if (root != NULL) {
-        postOrder1(root-&gt;left);
-        postOrder1(root-&gt;right);
-        printf(&quot;%d\n&quot;, root-&gt;val);
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        if(root != NULL) {
+            postorderTraversal(root-&gt;left);
+            postorderTraversal(root-&gt;right);
+            res.push_back(root-&gt;val);
+        }
+        return res;
     }
-    return;
-}
+private:
+    vector&lt;int&gt; res;
+}; 
 </code></pre>
+</br>
 <h3 id="先中后非递归遍历">先中后非递归遍历</h3>
 <p><strong>先序、中序和后序遍历过程：遍历过程中经过结点的路线是一样的，只是访问各结点的时机不同</strong></p>
 <p>先序遍历和中序遍历的，<strong>区别在于第一次访问结点和第二次访问结点什么时候打印结点的问题</strong></p>
 <pre><code>T = root;
 while(栈不空 || T != NULL) {
-		while(T != NULL) {
-			第一次访问结点;T进栈		// printf ==&gt; 先序
-			T = T-&gt;lchild;
-		}
-		// 以下考虑栈顶结点
-		while(栈不空) {
-			第二次访问结点;出栈;		// printf ==&gt; 中序
-			T = T-&gt;rchild;
-		}
+	while(T != NULL) {
+		第一次访问结点;T进栈		// printf ==&gt; 先序
+		T = T-&gt;lchild;
+	}
+	// 以下考虑栈顶结点
+	while(栈不空) {
+		第二次访问结点;出栈;		// printf ==&gt; 中序
+		T = T-&gt;rchild;
+	}
 }
 </code></pre>
 <h4 id="先序-2">先序</h4>
@@ -3289,28 +5952,35 @@ while(栈不空 || T != NULL) {
 <li>当<strong>左子树遍历结束后，从栈顶弹出这个结点</strong></li>
 <li>然后按照其<strong>右指针在去先序遍历该结点的右子树</strong></li>
 </ul>
-<pre><code class="language-c++">/**
- * @description: 先序遍历非递归算法
- * @param TreeNode*
- */
-void preOrder2(TreeNode* root) {
-    TreeNode* T = root;
-    stack &lt;TreeNode*&gt; s;
-    while (T || !s.empty()) {
-      	// 遇到一个结点就压栈，并去遍历左子树
-        while (T) {
-            s.push(T);
-            printf(&quot;%d\n&quot;, T-&gt;val);	//第一次访问到该结点就打印
-            T = T-&gt;left;
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 先序遍历非递归算法
+     * @param root 
+     * @return vector&lt;int&gt; 
+     */
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        TreeNode* T = root;
+        vector&lt;int&gt; res;
+        stack &lt;TreeNode*&gt; s;
+        while (T != NULL || !s.empty()) {
+            // 遇到第一个结点就压栈，并去遍历左子树
+            while (T != NULL) {
+                // 第一次访问结点就加到结果集
+                res.push_back(T-&gt;val);
+                s.push(T);
+                T = T-&gt;left;
+            }
+            if (!s.empty()) {
+                // 左子树遍历结束，弹出栈顶元素
+                T = s.top();
+                s.pop();
+                T = T-&gt;right;
+            }
         }
-        if (!s.empty()) {
-          	// 左子树遍历结束，从栈顶弹出结点
-          	T = s.top();
-            s.pop();
-            T = T-&gt;right;
-        }
-    } 
-}
+        return res;
+    }
+};
 </code></pre>
 <h4 id="中序-2">中序</h4>
 <p><strong>第二次碰到结点就打印（出栈操作的时候）</strong></p>
@@ -3320,139 +5990,109 @@ void preOrder2(TreeNode* root) {
 <li>当<strong>左子树遍历结束后，从栈顶弹出这个结点并访问它</strong></li>
 <li>然后按照其<strong>右指针在去中序遍历该结点的右子树</strong></li>
 </ul>
-<pre><code class="language-c++">/**
- * @description: 中序遍历非递归算法
- * @param TreeNode*
- */
-void InOrder2 (TreeNode* root) {
-    TreeNode* T = root;
-    stack &lt;TreeNode*&gt; s;
-    while (T || !s.empty()) {
-      	// 遇到一个结点就压栈，并去遍历左子树
-        while (T) {
-            s.push(T);
-            T = T-&gt;left;
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 中序遍历非递归算法
+     * @param root 
+     * @return vector&lt;int&gt; 
+     */
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) {
+        TreeNode* T = root;
+        vector&lt;int&gt; res;
+        stack&lt;TreeNode*&gt; s;
+        while (T != NULL || !s.empty()) {
+            // 遇到第一个结点就压栈，并遍历左子树
+            while (T != NULL) {
+                s.push(T);
+                T = T-&gt;left;
+            }
+            if (!s.empty()) {
+                // 左子树遍历结束，从栈顶弹出结点并访问
+                T = s.top();
+                s.pop();
+                res.push_back(T-&gt;val);
+                // 按右指针去中序遍历该结点右子树
+                T = T-&gt;right;
+            }
         }
-        if (!s.empty()) {
-          	// 左子树遍历结束，从栈顶弹出结点并访问
-            T = s.top();
-            printf(&quot;%d\n&quot;, T-&gt;val);
-          	s.pop();
-          	// 按其右指针去中序遍历该结点右子树
-            T = T-&gt;right;
-        }
+        return res;
     }
-}
+};
 </code></pre>
 <h4 id="后序-2">后序</h4>
-<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcre40n9m6j316e0man68.jpg" alt="image-20200312195504823" style="zoom: 33%;" />
-<pre><code>p = b；
-do
-{ 
-	while (结点p有左孩子) {
-		将结点p进栈；
-		p = p-&gt;lchild；
-		//此时栈顶结点（尚未访问）没有左孩子或左子树已遍历过
-		while (栈不空且结点p是栈顶结点) {
-			取栈顶结点p；
-			if(结点p的右子树已访问) {
-				访问结点p；
-				退栈；
-			}
-			else 
-				p = p-&gt;rchild； //转向处理其右子树
-} while（栈不空）；
-栈中结点没有访问，并且左右子树都没有遍历
-用do-while循环，后判断条件
-栈空结束
-</code></pre>
-<pre><code class="language-c++">/**
- * @description: 后序遍历非递归算法
- * @param TreeNode*
- */
-void postOrder2(TreeNode* root) {
-    TreeNode* T = root;
-    TreeNode* r;
-    stack&lt;TreeNode*&gt; s;
-    bool flag;
-    do
-    {
-      	// 扫描结点T所有左子树结点进栈
-        while (T) {
-            s.push(T);
-            T = T-&gt;left;
-        }
-      	// r指向刚刚访问的结点，初始为空
-        r = NULL;
-      	// flag为真标志正在处理栈顶结点
-        flag = true;
-        while (!s.empty() &amp;&amp; flag) {
-            T = s.top();		// 取栈顶结点
-            if (T-&gt;right == r) {	// 如果结点T右孩子为空或者为刚访问结点
-                s.pop();
-                printf(&quot;%d\n&quot;, T-&gt;val);
-                r = T;		// 指向刚访问过的结点
+<p>我们不妨来思考先序遍历的顺序是 根-左-右，<strong>我们很容易能够变成根-右-左，那么后序遍历恰好是这种结果的一个倒序</strong>，我们就可以<strong>采用栈来保存根-右-左这种遍历结果的顺序，然后依次出栈就是后序遍历结果</strong></p>
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 后序遍历非递归算法 ==&gt; 中序遍历稍作修改
+     * @param root 
+     * @return vector&lt;int&gt; 
+     */
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; res;
+        stack&lt;TreeNode*&gt; s;
+        TreeNode* T = root;
+        while (T != NULL || !s.empty()) {
+            // 遇到第一个结点就压栈，并去访问右子树，将结果放在前面
+            while (T != NULL) {
+                s.push(T);
+                res.insert(res.begin(),T-&gt;val);
+                T = T-&gt;right;
             }
-            else {
-              	T = T-&gt;right;	// 转向处理右子树
-                flag = false;
-            }          
-        }       
-    } while (!s.empty());
-}
-</code></pre>
-<p>以上后序遍历的解法显得比较复杂，我们还是希望能够像先序和中序一样可以通过一套模板来实现，我们不妨来思考先序遍历的顺序是 根-左-右，<strong>我们很容易能够变成根-右-左，那么后序遍历恰好是这种结果的一个倒序</strong>，我们就可以<strong>采用栈来保存根-右-左这种遍历结果的顺序，然后依次出栈就是后序遍历结果</strong></p>
-<pre><code class="language-c++">/**
- * @description: 后序遍历费递归算法
- * @param TreeNode*
- */
-void postOrder3 (TreeNode* root) {
-    TreeNode* T = root;
-    stack&lt;TreeNode*&gt; s, res;
-    while (T != NULL || !s.empty()) {
-        while (T != NULL) {
-            s.push(T);
-            res.push(T);
-            T = T-&gt;right;
+            // 访问栈顶元素，遍历结点左子树
+            if (!s.empty()) {
+                T = s.top();
+                s.pop();
+                T = T-&gt;left;
+            }
         }
-        if (!s.empty()) {
-            T = s.top();
-            s.pop();
-            T = T-&gt;left;
-        }
+        return res;
     }
-  	// 打印遍历结果
-    while (!res.empty()) {
-        printf(&quot;%d\n&quot;,res.top()-&gt;val);
-        res.pop();
-    } 
-}
+};
 </code></pre>
+</br>
 <h3 id="层次遍历">层次遍历</h3>
 <p>层次遍历是按照层次的顺序从根节点向下逐层进行遍历，而且对每一层的结点从左到右进行</p>
 <p>BFS思想 ==&gt; <strong>使用队列实现</strong></p>
-<pre><code class="language-c++">/**
- * @description: 层次遍历
- * @param TreeNode* 
- */
-void LayerOrder(TreeNode* root) {
-    queue&lt;TreeNode*&gt; q;
-    q.push(root);
-    // 队列不为空时循环
-    while (!q.empty()) {
-        TreeNode* now = q.front();
-        q.pop();
-        printf(&quot;%d\n&quot;, now-&gt;val);  // 访问队首元素
-        // 左右子树非空时进队
-        if (now-&gt;left != NULL) {
-            q.push(now-&gt;left);
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 层序遍历：使用队列 BFS 思想
+     * @param root 
+     * @return vector&lt;vector&lt;int&gt;&gt; 
+     */
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+        vector&lt;vector&lt;int&gt;&gt; res;
+        queue&lt;TreeNode*&gt; q;
+        if (root == NULL) {
+            return res;
         }
-        if (now-&gt;right != NULL) {
-            q.push(now-&gt;right);
+        q.push(root);
+        while (!q.empty()) {
+            vector&lt;int&gt; v;
+            // 使用count记录每一层的个数
+            int count = q.size();
+            while (count--) {
+                TreeNode* T;
+                T = q.front();
+                q.pop();
+                v.push_back(T-&gt;val);
+                if (T-&gt;left != NULL) {
+                    q.push(T-&gt;left);
+                }        
+                if (T-&gt;right != NULL) {
+                    q.push(T-&gt;right);
+                }
+            }
+            res.push_back(v);
         }
+        return res;
     }
-}
+};
 </code></pre>
+</br>
+</br>
 <h2 id="二叉树遍历的应用">二叉树遍历的应用</h2>
 <p>以下我们统一数据结点为：</p>
 <pre><code class="language-c++">struct TreeNode {
@@ -3462,6 +6102,7 @@ void LayerOrder(TreeNode* root) {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 </code></pre>
+</br>
 <h3 id="输出二叉树的叶子结点">输出二叉树的叶子结点</h3>
 <p>在二叉树遍历算法中<strong>增加检测结点的“左右子树是否都为空”</strong></p>
 <pre><code class="language-c++">void PreOrderPrintLeaves (TreeNode* root) {
@@ -3474,8 +6115,9 @@ void LayerOrder(TreeNode* root) {
   }
 }
 </code></pre>
+</br>
 <h3 id="求二叉树的高度">求二叉树的高度</h3>
-<p>递归解法</p>
+<h4 id="递归解法">递归解法</h4>
 <pre><code class="language-c++">int maxDepth(TreeNode* root) {
     if (root == NULL) {
       return 0;
@@ -3483,33 +6125,72 @@ void LayerOrder(TreeNode* root) {
     return 1 + max(maxDepth(root-&gt;left), maxDepth(root-&gt;right));
 }
 </code></pre>
-<p>非递归解法：我们也可以使用层序遍历二叉树，然后计数总层数，即为二叉树的最大深度</p>
-<pre><code class="language-c++">int maxDepth(TreeNode* root) {
-    TreeNode* T = root;
-    int res = 0;
-    if (root == NULL) {
-      return 0;
-    }
-    queue&lt;TreeNode*&gt; q;
-    q.push(T);
-    while (!q.empty()) {
-      res++;
-      // 一定要将 q.size() 放在初始化里，而不能放在判断停止的条件中
-      // 因为q的大小是随时变化的，所以放停止条件中会出错
-      for (int i = q.size(); i &gt; 0; i--) {
-        T = q.front();
-        q.pop();
-        if (T-&gt;left != NULL) {
-          q.push(T-&gt;left);
+<h4 id="bfs解法">BFS解法</h4>
+<p>我们也可以使用层序遍历二叉树，然后计数总层数，即为二叉树的最大深度</p>
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 求树的最大深度
+     * @param root 
+     * @return int 
+     */
+    int maxDepth(TreeNode *root) {
+        TreeNode *T = root;
+        int res = 0;
+        if (root == NULL) {
+            return 0;
         }
-        if (T-&gt;right != NULL) {
-          q.push(T-&gt;right);
+        queue&lt;TreeNode *&gt; q;
+        q.push(T);
+        while (!q.empty()) {
+            res++;
+            // 一定要将 q.size() 放在初始化里，而不能放在判断停止的条件中
+            // 因为q的大小是随时变化的，所以放停止条件中会出错
+            for (int i = q.size(); i &gt; 0; i--) {
+                T = q.front();
+                q.pop();
+                if (T-&gt;left != NULL) {
+                    q.push(T-&gt;left);
+                }
+                if (T-&gt;right != NULL) {
+                    q.push(T-&gt;right);
+                }
+            }
         }
-      }
+        return res;
     }
-    return res;
-}
+};
 </code></pre>
+<h4 id="dfs解法">DFS解法</h4>
+<pre><code class="language-c++">class Solution {
+public:
+    int max_depth = 0;
+    int maxDepth(TreeNode* root) {
+        if (root == NULL)
+            return 0;
+        dfs (root, 1);
+        return max_depth;
+    }
+    /**
+     * @brief DFS求最大深度
+     * @param root 
+     * @param depth 
+     */
+    void dfs (TreeNode* root, int depth) {
+        // 是叶子结点，更新最大高度
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            max_depth = max(max_depth, depth); 
+        }
+        // 递归左子树
+        if (root-&gt;left != NULL)
+            dfs(root-&gt;left, depth + 1);
+        // 递归右子树
+        if (root-&gt;right != NULL)
+            dfs(root-&gt;right, depth + 1);
+    }
+};
+</code></pre>
+</br>
 <h3 id="两种遍历序列确定一颗二叉树">两种遍历序列确定一颗二叉树</h3>
 <blockquote>
 <p>必须要知道<strong>中序序列</strong>才能去确定一颗二叉树</p>
@@ -4716,178 +7397,6 @@ public interface UserTestDao {
 <p>然后们就可以在业务<code>Service</code>层进行声明注解<code>@Transactional</code></p>
 <figure data-type="image" tabindex="30"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjs9a31zj30nj03r749.jpg" alt="image-20200228230539790" loading="lazy"></figure>
 <p>至此，一个较为完整的SSM整合基本完成~</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[动态规划（入门篇）]]></title>
-        <id>https://kay-rick.github.io/post/dong-tai-gui-hua-ru-men-pian/</id>
-        <link href="https://kay-rick.github.io/post/dong-tai-gui-hua-ru-men-pian/">
-        </link>
-        <updated>2020-02-23T12:46:24.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="什么是动态规划问题">什么是动态规划问题？</h2>
-<p><a href="https://mp.weixin.qq.com/s/Gswf1P6n0Gh9NkVBzDc1zg">通过金矿故事介绍动态规划（上）</a></p>
-<p><a href="https://mp.weixin.qq.com/s/P9AOcnjK10siUITIiOr7BQ">通过金矿故事介绍动态规划（下）</a></p>
-<p>通过金矿故事我们可以了解到动态规划问题是一种用来解决一类<strong>最优化问题</strong>的算法思想，就是将一个复杂的问题分解成若干个子问题，通过<strong>综合子问题的最优解来得到原来问题的最优解</strong>。</p>
-<p>解决动态规划问题的核心在于：<strong>找到重复子问题，记住之前做的事</strong></p>
-<br>
-<h2 id="如何理解动态规划中的概念">如何理解动态规划中的概念？</h2>
-<br>
-<h3 id="重叠子问题">重叠子问题</h3>
-<blockquote>
-<p>如果一个问题可以被分解为若干个子问题，且这些子问题会重复出现，那么就称这个问题拥有“重叠子问题”，动态规划通过记录重叠子问题的解，来使下次碰到相同的子问题时直接使用之前记录的结果，依次避免大量重复计算。因此，一个问题必须拥有重叠子问题，才能使用动态规划去解决</p>
-</blockquote>
-<p>我们从熟悉的斐波那契数列来理解重叠子问题</p>
-<p>初学者在接触斐波那契数列的时候，可能一般的写法是这样的：</p>
-<pre><code class="language-c++">int F(int n){
-  if(n == 0 || n == 1) return 1;
-  else return F(n - 1) + F(n - 2);
-}
-</code></pre>
-<p>这里就是<strong>不断地分解问题为子问题   ==&gt;  动态规划问题必须要满足</strong></p>
-<p>然而实际上，这个递归会涉及到很多重复的计算。</p>
-<img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6eq02kwpj30tc0kgtai.jpg" alt="image-20200223161917205" style="zoom:50%;" />
-<br>
-<p>当<code>n = 5</code>的时候，可以得到<code>F(5) = F(4) + F(3)</code>，接下来在计算<code>F(4)</code>的时候，又会有<code>F(4) = F(3) + F(2)</code>，这个时候我发现<code>F(3)</code>被重复计算，可以推知，如果<code>n</code>非常大，重复计算的次数将难以想象，实际复杂度会达到<strong>O(2<sup>n</sup>)</strong></p>
-<p>为了避免重复计算，我们可以开辟一个一维数组<code>dp</code>，保存已经计算过的结果，用<code>dp[n</code>]记录<code>F(n)</code>的结果，并用<code>dp[n] = -1</code> 表示当前还没有被计算过 ==&gt; 就是我们说的<strong>做备忘录，记住之前做的事</strong></p>
-<pre><code class="language-c++">int dp[MAXN];
-
-int F(int n){
-  if(n == 0 || n == 1) return 1;		// 递归边界
-  if(dp[n] != -1) return dp[n];			// 已经计算过，直接返回结果
-  else{
-    dp[n] = F(n - 1) + F(n - 2);
-    return dp[n];
-  }
-}
-</code></pre>
-<br>
-<h3 id="最优子结构">最优子结构</h3>
-<p>我们通过<strong>数塔问题</strong>来理解&quot;最优子结构&quot;这个概念</p>
-<img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6gwrqvm1j30pu0ikq58.jpg" alt="image-20200223173450683" style="zoom:50%;" />
-<p>其中第一层有一个数字，第二层有两个数字······第n层有n个数字，现在从第一层走到第n层，每次只能走向下一层连接的两个数字中的一个，问：最后路径上所有数字相加后得到的和最大是多少？</p>
-<p>如果按照题目描述，我们可以用二维数组<code>f</code>，其中<code>f[i][j]</code> 存放第<code>i</code>层的第<code>j</code>个数字，那么<code>f[1][1] = 5,f[2][1] = 8 ··· f[5][5] = 4</code>此时，如果我们尝试穷举所有路径，然后记录路径上数字和的最大值，那么由于每层中每个数字都有两个分支，时间复杂度为O(2 <sup>n</sup>)，这样的时间复杂度显然是我们不可以接受的</p>
-<p><strong>基于上面的考虑，我们不妨令<code>dp[i][j]</code> 表示从第i行第j个数字出发的到达最底层所有路径中能得到的最大和</strong></p>
-<p>我们可以归纳得到一个信息：如果要求出<code>dp[i][j]</code>，那么一定要先求出它的两个子问题，从位置<code>(i + 1, j)</code>到达最底层的最大和<code>dp[i + 1][j]</code>和 位置<code>(i + 1,j + 1)</code>到达最底层的最大和<code>dp[i + 1][j + 1]</code> ，即进行一次决策</p>
-<center><b>dp[i][j] = max(dp [i + 1][j] ,dp [i + 1][j + 1] ) + f[i][j]</b></center>
-<p><code>dp[i][j]</code>称为<strong>问题的状态</strong>，上面的式子称为<strong>状态转移方程</strong></p>
-<p>我们可以发现，状态<code>dp[i][j]</code>只与第<code>i + 1</code>层状态有关，而与其他层状态无关，那么这样的转移什么时候能够结束呢？我们可以发现在数塔的最后一层的<code>dp</code>值总是等于元素本身</p>
-<p>这样就可以从最底层各位置的<code>dp</code>值开始，不断地往上求出每一层各位置的<code>dp</code>值，最后就会得到我们想要的<code>dp[1][1]</code></p>
-<p>分析到这里，我们的问题基本得到解决，在这个过程中我们发现解决问题的关键在找到<strong>状态转移的方程</strong>，如果一个问题的最优解可以由其子问题的最优解有效地构造出来，那么称这个问题拥有<strong>最优子结构</strong></p>
-<p><strong>一个问题必须拥有重叠子问题和最优子结构，才能使用动态规划，</strong></p>
-<br>
-<h3 id="子问题独立">子问题独立</h3>
-<p>想一想上面数塔问题中，我们在分解成重叠子问题的时候，状态<code>dp[i][j]</code>只与第<code>i + 1</code>层状态有关，而与其他层状态无关，这里就是子问题独立</p>
-<br>
-<h3 id="边界">边界</h3>
-<p>当我们找到数塔问题的状态转移方程，那么这样的转移什么时候能够结束呢？我们可以发现在数塔的最后一层的<code>dp</code>值总是等于元素本身，在这个时候就可以进行返回了，这里就是我们所说的边界</p>
-<br>
-<h2 id="如何解决动态规划问题">如何解决动态规划问题？</h2>
-<p>当我们理解了动态规划中的一些重要概念以后，解决动态规划问题可以按下面的步骤去思考</p>
-<ul>
-<li>构造问题所对应的过程</li>
-<li>思考过程的最后一个步骤，看看有哪些选择情况</li>
-<li>找到最后一步的子问题，确保符合**“子问题重叠”，把子问题中不相同的地方设置为参数**</li>
-<li><strong>使得子问题符合“最优子结构”</strong></li>
-<li><strong>找到边界，考虑边界的各种处理方式</strong></li>
-<li>确保满足“子问题独立”，一般而言，如果我们是在多个子问题中选择一个作为实施方案，而不会同时实施多个方案，那么子问题就是独立的</li>
-<li><strong>考虑如何做备忘录</strong></li>
-<li>分析所需时间是否满足要求</li>
-<li><strong>写出转移方程式</strong></li>
-</ul>
-<br>
-<p>我们再进一步提炼，得到解题中最为重要的<strong>四步法</strong></p>
-<blockquote>
-<ul>
-<li>问题拆解，找到问题之间的具体联系</li>
-<li>状态定义</li>
-<li>递推方程推导</li>
-<li>实现</li>
-</ul>
-</blockquote>
-<p>我们按照这四个步骤来实现数塔问题</p>
-<br>
-<ul>
-<li>
-<p>问题拆解</p>
-<p>这里的总问题是求出最大的路径和，路径是这里的分析重点，路径是由一个个元素组成的，<code>[i][j]</code> 位置的元素，经过这个元素的路径肯定也会经过 <code>[i - 1][j]</code> 或者 <code>[i - 1][j - 1]</code>，因此经过一个元素的路径和可以通过这个元素上面的一个或者两个元素的路径和得到。</p>
-<p>也就是我们要求得<code>[1][1]</code>位置元素一定会经过<code>[2][1]</code>或者<code>[2][2]</code>，这样每一步递推下去，我们就会得到最终最大的路径和。</p>
-</li>
-</ul>
-<br>
-<ul>
-<li>
-<p>状态定义</p>
-<p>状态的定义一般会和问题需要求解的答案联系在一起，这里其实有两种方式，一种是考虑路径从上到下，另外一种是考虑路径从下到上，因为元素的值是不变的，所以路径的方向不同也不会影响最后求得的路径和，如果是从上到下，你会发现，在考虑下面元素的时候，起始元素的路径只会从<code>[i - 1][j]</code> 获得，每行当中的最后一个元素的路径只会从 <code>[i - 1][j - 1]</code> 获得，中间二者都可，这样不太好实现，<strong>因此这里考虑从下到上的方式</strong>，状态的定义就变成了 “<strong>最后一行元素到当前元素的最大路径和</strong>”，对于 <code>[0][0]</code> 这个元素来说，最后状态表示的就是我们的最终答案。</p>
-</li>
-</ul>
-<br>
-<ul>
-<li>
-<p>递推方程</p>
-<pre><code>dp[i][j] = max(dp[i + 1][j] ,dp[i + 1][j + 1] ) + f[i][j]
-</code></pre>
-<br>
-</li>
-<li>
-<p>实现</p>
-<p>这里初始化时，我们需要将最后一行的元素填入状态数组中，然后就是按照前面分析的策略，从下到上计算即可</p>
-</li>
-</ul>
-<pre><code class="language-c++">/*
- * @Author: Rick
- * @Email: Kay_Rick@outlook.com
- * @Date: 2020-02-23 20:23:31
- * @Last Modified by: Rick
- * @Last Modified time: 2020-02-23 20:41:05
- * @Description: 动态规划 数塔问题
- */
-#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-const int maxn = 1000;
-int f[maxn][maxn], dp[maxn][maxn];
-
-int main(void){
-    int n;  // 层数
-    scanf(&quot;%d&quot;, &amp;n);
-    // 输入数塔
-    for (int i = 1; i &lt;= n; i++)
-    {
-        for (int j = 1; j &lt;= i; j++)
-        {
-            scanf(&quot;%d&quot;, &amp;f[i][j]);
-        }
-    }
-    // 最后一行元素填入状态数组 ==&gt; 边界
-    for (int k = 1; k &lt;= n; k++)
-    {
-        dp[n][k] = f[n][k];
-    }
-    // 从第n-1层不断往上计算出dp[i][j]
-    for (int i = n - 1; i &gt;= 1; i--)
-    {
-        for (int j = 1; j &lt;= i; j++)
-        {
-            // 状态转移方程
-            dp[i][j] = max(dp[i + 1][j], dp[i + 1][j + 1]) + f[i][j];
-        }
-    }
-    printf(&quot;%d\n&quot;, dp[1][1]);
-    return 0;
-}
-</code></pre>
-<p>输入：</p>
-<pre><code>5
-5
-8 3
-12 7 16
-4 10 11 6
-9 5 3 9 4
-</code></pre>
-<p>输出：</p>
-<pre><code>44
-</code></pre>
 ]]></content>
     </entry>
 </feed>

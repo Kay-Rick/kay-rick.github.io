@@ -161,6 +161,7 @@ window.onload=getCSS();
 <p>上一篇介绍了树和二叉树的一些基本知识，存储结构，遍历，常见算法应用等，这一篇主要对树的另外一些高级数据结构进行梳理</p>
 </blockquote>
 <h2 id="二叉搜索树">二叉搜索树</h2>
+</br>
 <h3 id="什么是二叉搜索树">什么是二叉搜索树？</h3>
 <p>一颗二叉树，可以为空；如果不为空，满足以下性质：</p>
 <ul>
@@ -168,6 +169,7 @@ window.onload=getCSS();
 <li>非空<strong>右子树</strong>的所有键值<strong>大于其根节点的键值</strong></li>
 <li><strong>左、右子树都是二叉搜素树</strong></li>
 </ul>
+</br>
 <h3 id="二叉搜索树常见算法">二叉搜索树常见算法</h3>
 <h4 id="查找元素">查找元素</h4>
 <ul>
@@ -351,6 +353,7 @@ TreeNode* FindMin(TreeNode* root) {
 </code></pre>
 </li>
 </ul>
+</br>
 <h3 id="判断一棵树是否为二叉搜索树">判断一棵树是否为二叉搜索树</h3>
 <h4 id="递归">递归</h4>
 <p>乍一看：这是一个平凡的问题，只需要遍历整棵树，检查结点值<code>node-&gt;right-&gt;val &gt; node-&gt;val</code>和<code>node-&gt;left-&gt;val &lt; node-&gt;val</code>对每个结点都成立</p>
@@ -433,7 +436,10 @@ public:
     }
 };
 </code></pre>
+</br>
+</br>
 <h2 id="平衡二叉树avl树">平衡二叉树(AVL树)</h2>
+</br>
 <h3 id="平衡二叉树概念">平衡二叉树概念</h3>
 <p>搜索树结点不同插入次序，将导致<strong>不同的深度和平均查找长度ASL</strong></p>
 <ul>
@@ -444,10 +450,12 @@ public:
 </blockquote>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczdyj85pqj30qe080778.jpg" alt="image-20200319175418894" style="zoom:50%;" />
 <p><strong>注意：是对任意一个结点而言，不仅仅是根节点</strong></p>
+</br>
 <h3 id="平衡二叉树的高度">平衡二叉树的高度</h3>
 <p>完全二叉树 高度log<sub>2</sub>n，设n<sub>h</sub>高度为h的平衡二叉树的最少结点数。结点数最少时：</p>
 <p>有 <strong>n<sub>h</sub> = n<sub>h-1</sub> + n<sub>h-2</sub> + 1</strong>  ==&gt;	斐波那契数列加1</p>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcze6gngzxj30pe072gmw.jpg" alt="image-20200319180157073" style="zoom:50%;" />
+</br>
 <h3 id="平衡二叉树的调整">平衡二叉树的调整</h3>
 <p>在平衡二叉树进行插入结点后，可能会导致该二叉树不再是平衡二叉树，需要对结点位置进行调整：调整的原则一定要注意：<strong>调整完一定还要是二叉搜索树</strong></p>
 <p>####RR旋转</p>
@@ -469,7 +477,10 @@ public:
 <h4 id="rl旋转">RL旋转</h4>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczhisf5hvj30s008uwkm.jpg" alt="image-20200319195734013" style="zoom:50%;" />
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gczi7io743j30rk09uwje.jpg" alt="image-20200319202119089" style="zoom:50%;" />
+</br>
+</br>
 <h2 id="堆">堆</h2>
+</br>
 <h3 id="相关概念">相关概念</h3>
 <p>优先队列（Priority Queue）：特殊的“队列”，<strong>取出元素的顺序是按照元素的优先权（关键字）大小</strong>，呃呃不是元素进入队列的先后顺序；我们发现当我们实现优先队列的时候，无论是数组、有序数组还是链表，我们都不能很好地去实现按优先权大小这个功能</p>
 <p>堆</p>
@@ -487,6 +498,7 @@ public:
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd2ui2g1a7j30ts0j67fg.jpg" alt="image-20200322174322022" style="zoom:50%;" />
 </li>
 </ul>
+</br>
 <h3 id="最大堆操作">最大堆操作</h3>
 <h4 id="创建最大堆">创建最大堆</h4>
 <pre><code class="language-c++">typedef int ElementType;
@@ -624,6 +636,7 @@ void PercDown(MaxHeap H, int p) {
     H-&gt;Data[Parent] = X;
 }
 </code></pre>
+</br>
 <h3 id="堆排序">堆排序</h3>
 <h4 id="算法1">算法1</h4>
 <pre><code class="language-c++">void HeapSort1 (ElementType A[], int N) {
@@ -682,7 +695,7 @@ void PercDown(ElementType A[], int p, int N) {
  */
 void HeapSort(ElementType A[], int N) {
     int i;
-    for (i = N / 2 - 1; i &gt;= 0; i--) /* 建立最大堆 */
+    for (i = N / 2; i &gt;= 0; i--) /* 建立最大堆 */
         PercDown(A, i, N);
     for (i = N - 1; i &gt; 0; i--) {
         /* 删除最大堆顶 */
@@ -691,10 +704,14 @@ void HeapSort(ElementType A[], int N) {
     }
 }
 </code></pre>
+</br>
+</br>
 <h2 id="哈夫曼树与编码">哈夫曼树与编码</h2>
+</br>
 <h3 id="基础概念">基础概念</h3>
 <p>带权路径长度（WPL）：设二叉树有n个叶子结点，每个叶子结点带有权值w<sub>k</sub>，从根节点到每个叶子结点的长度为I<sub>k</sub>，则每个叶子结点的带权路径长度之和就是 <strong>WPL = ∑w<sub>k</sub>I<sub>k</sub></strong></p>
 <p><strong>最优二叉树获哈夫曼树</strong>：<strong>WPL最小的二叉树</strong></p>
+</br>
 <h3 id="哈夫曼树的构造">哈夫曼树的构造</h3>
 <p>每次把<strong>权值最小的两颗二叉树</strong>合并，<strong>如何每次找到最小的权值 ==&gt; 最小堆</strong></p>
 <pre><code class="language-c++">#include &lt;iostream&gt;
@@ -846,6 +863,7 @@ HuffmanTree Huffman (MinHeap H) {
     return T;
 }
 </code></pre>
+</br>
 <h3 id="哈弗曼编码">哈弗曼编码</h3>
 <ul>
 <li>
@@ -859,7 +877,10 @@ HuffmanTree Huffman (MinHeap H) {
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd54wq1nlwj316e0u0tgw.jpg" alt="image-20200324171431840" style="zoom: 33%;" />
 </li>
 </ul>
+</br>
+</br>
 <h2 id="并查集">并查集</h2>
+</br>
 <h3 id="基础概念-2">基础概念</h3>
 <p>并查集是一种维护集合的数据结构。</p>
 <ul>
@@ -876,6 +897,7 @@ typedef struct {
 </code></pre>
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56rbmyqfj30dw0gcq4i.jpg" alt="image-20200324181835578" style="zoom:50%;" />
 <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd56saat66j30ke07iwft.jpg" alt="image-20200324181930573" style="zoom:50%;" />
+</br>
 <h3 id="集合运算">集合运算</h3>
 <h4 id="查找">查找</h4>
 <pre><code class="language-c++">/**
