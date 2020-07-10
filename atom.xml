@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-06-26T08:10:02.750Z</updated>
+    <updated>2020-07-10T07:15:44.202Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,2631 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[图论(实战篇)]]></title>
+        <id>https://kay-rick.github.io/post/tu-lun-shi-zhan-pian/</id>
+        <link href="https://kay-rick.github.io/post/tu-lun-shi-zhan-pian/">
+        </link>
+        <updated>2020-07-10T07:09:52.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>本篇就PAT上图论相关习题做一个总结</p>
+</blockquote>
+<h2 id="dijkstra">Dijkstra</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805523835109376">紧急情况</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805464397627392">旅行计划</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805379664297984">条条大路通罗马</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805358663417856">在线地图</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805396953219072">加油站</a></li>
+</ul>
+<h3 id="紧急情况">紧急情况</h3>
+<p>作为城市的紧急救援团队负责人，你将获得一张你所在国家的特殊地图。</p>
+<p>该地图显示了一些通过道路连接的分散城市，<strong>道路是双向的</strong>。</p>
+<p>地图上标出了每个城市的救援队数量以及每对城市之间的每条道路的长度。</p>
+<p>当其他城市发出紧急求援信息时，你的工作是尽快带领你的士兵前往该地点，同时，在途中尽可能多地调动救援帮手。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含四个整数 N，表示城市数量（城市编号从 0 到 N−1），M 表示道路数量，C1 表示你当前所在的城市编号，C2 表示发出紧急求援信息的城市编号。</p>
+<p>第二行包含 N 个整数，其中第 i 个整数表示城市 i 的救援队数量。</p>
+<p>接下来 M 行，每行包含三个整数 c1,c2,Li，表示城市 c1 和城市 c2 之间存在一条道路相连，道路长度为 Li。</p>
+<p>数据保证 C1 和 C2 之间至少存在一条路径相连。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，两个整数，第一个整数表示 C1 和 C2 之间最短路的数量，第二个整数表示走最短路的情况下，能聚集到的救援队最大数量。</p>
+<p><strong>数据范围</strong></p>
+<p>2≤N≤500,<br>
+1≤M≤600,<br>
+1≤Li≤200,<br>
+每个城市包含的救援人员数量不超过 200。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>5 6 0 2
+1 2 1 5 3
+0 1 1
+0 2 2
+0 3 1
+1 2 1
+2 4 1
+3 4 1
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2 4
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+const int N = 510;
+const int M = 610;
+
+int g[N][N];
+bool st[N];
+int dist[N], cnt[N], sum[N];
+int w[N];
+
+int n, m, S, T;
+
+void dijkstra() {
+    memset(dist, 0x3f, sizeof dist);
+    dist[S] = 0;
+    cnt[S] = 1;
+    sum[S] = w[S];
+    
+    for (int i = 0; i &lt; n; i++) {
+        int t = -1;
+        // 在未加入的集合S中
+        for (int j = 0; j &lt; n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        st[t] = true;
+        
+        for (int j = 0; j &lt; n; j++) {
+            // 如果被t更新，最短路径数量等于t的路径数量
+            if (dist[j] &gt; dist[t] + g[t][j]) {
+                dist[j] = dist[t] + g[t][j];
+                cnt[j] = cnt[t];
+                sum[j] = sum[t] + w[j];
+            }
+            // 多条相同路径相同，把路径数量累加，并记录最大的救援人数
+            else if (dist[j] == dist[t] + g[t][j]) {
+                cnt[j] += cnt[t];
+                sum[j] = max(sum[j], sum[t] + w[j]);
+            }
+        }
+    }
+    
+}
+
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; S &gt;&gt; T;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; w[i];
+    }
+    memset(g, 0x3f, sizeof g);
+    while (m--) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        // 无向图 + 消除重复边
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+    
+    dijkstra();
+    cout &lt;&lt; cnt[T] &lt;&lt; ' ' &lt;&lt; sum[T] &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<h3 id="旅行计划">旅行计划</h3>
+<p>给定一张地图，包含 N 个城市，M 条高速公路。</p>
+<p>城市之间都能相互连通。</p>
+<p>每条高速公路的长度和走该条公路的花费都是已知的，高速公路都是<strong>双向</strong>的。</p>
+<p>现在要从地图中的某个城市前往另一个城市。</p>
+<p>请你确定最短路径，当最短路径不唯一时，请你选取花费最小的路径（保证唯一）。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含四个整数 N,M,S,D，分别表示城市数量，公路数量，起点城市编号，终点城市编号。</p>
+<p>城市编号从 0 到 N−1。</p>
+<p>接下来 M 行，每行包含四个整数 a,b,c,d，表示城市 a 和城市 b 之间存在一条公路，长度为 c，花费为 d。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，首先输出从起点城市到终点城市的最短路径（花费最少的）经过的所有城市，然后输出最短路径的距离以及最小的花费。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤500,<br>
+1≤M≤600,<br>
+1≤c,d≤500</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>4 5 0 3
+0 1 1 20
+1 3 2 30
+0 3 4 10
+0 2 2 20
+2 3 1 20
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>0 2 3 3 40
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int N = 510;
+
+int g[N][N], w[N][N];
+int dist[N], cost[N];
+int pre[N];
+bool st[N];
+vector&lt;int&gt; path;
+
+int n, m , S, D;
+
+void dijkstra () {
+    memset(dist, 0x3f, sizeof dist);
+    memset(cost, 0x3f, sizeof cost);
+    dist[S] = 0, cost[S] = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int t = -1;
+        for (int j = 0; j &lt; n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        st[t] = true;
+        
+        for (int j = 0; j &lt; n; j++) {
+            // 每次更新j的时候，pre[j]记录前驱结点为t，最后将pre逆序输出就是路径
+            if (dist[j] &gt; dist[t] + g[t][j]) {
+                dist[j] = dist[t] + g[t][j];
+                cost[j] = cost[t] + w[t][j];
+                pre[j] = t;
+            }
+            // 路径相等情况下，记录最小的开销
+            else if (dist[j] == dist[t] + g[t][j] &amp;&amp; cost[j] &gt; cost[t] + w[t][j]) {
+                cost[j] = cost[t] + w[t][j];
+                pre[j] = t;
+            }
+        }
+    }
+}
+
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; S &gt;&gt; D;
+    memset(g, 0x3f, sizeof g);
+    memset(w, 0x3f, sizeof w);
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c, d;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+        w[a][b] = w[b][a] = min(w[a][b], d);
+    }
+    
+    dijkstra();
+    // 输出路径
+    for (int i = D; i != S; i = pre[i]) 
+        path.push_back(i);
+    cout &lt;&lt; S;
+    for (int i = path.size() - 1; i &gt;= 0; i--) {
+        cout &lt;&lt; ' ' &lt;&lt; path[i];
+    }
+    cout &lt;&lt; ' ' &lt;&lt; dist[D] &lt;&lt; ' ' &lt;&lt; cost[D] &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<h3 id="条条大路通罗马">条条大路通罗马</h3>
+<h3 id="在线地图">在线地图</h3>
+<p>输入我们的当前位置和目的地，在线地图就可以推荐一些行进路线。</p>
+<p>现在你的工作是向用户推荐两条路线：一条是最短路线，另一条是最快路线。</p>
+<p>保证任何询问的两地之间都存在至少一条路线。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 M，表示地图中共有 N 个路口（编号 0∼N−1）和 M 个街道。</p>
+<p>接下来 M 行，每行描述一条街道，格式如下：</p>
+<pre><code>V1 V2 one-way length time
+</code></pre>
+<p><code>V1</code> 和 <code>V2</code> 是两个路口的编号，表示这两个路口之间存在一条街道，<code>one-way</code> 如果为 1 则表示这条街道是单行道，只能从 <code>V1</code> 前往 <code>V2</code>。如果为 0 表示是双行道，可随意通行。 <code>length</code> 是街道的长度，<code>time</code> 是通过这条街道花费的时间。</p>
+<p>最后一行，将给出起点和终点路口的编号。</p>
+<p><strong>输出格式</strong></p>
+<p>第一行输出路程最短的路线，并输出最短路程 D，格式如下：</p>
+<pre><code>Distance = D: source -&gt; v1 -&gt; ... -&gt; destination
+</code></pre>
+<p>第二行输出用时最快的路线，并输出最短用时 T，格式如下：</p>
+<pre><code>Time = T: source -&gt; w1 -&gt; ... -&gt; destination
+</code></pre>
+<p><strong>如果最短路线不唯一，则输出用时最短的那条路线（保证唯一）</strong>。</p>
+<p><strong>如果最快路线不唯一，则输出经过路口最少的那条路线（保证唯一）</strong>。</p>
+<p>如果最短路线和最快路线是同一条路线，则以如下格式将两个信息输出在一行：</p>
+<pre><code>Distance = D; Time = T: source -&gt; u1 -&gt; ... -&gt; destination
+</code></pre>
+<p><strong>数据范围</strong></p>
+<p>2≤N≤500,<br>
+1≤M≤N(N−1)2,<br>
+每条道路的长度和用时都不超过 1000</p>
+<p><strong>输入样例1:</strong></p>
+<pre><code>10 15
+0 1 0 1 1
+8 0 0 1 1
+4 8 1 1 1
+3 4 0 3 2
+3 9 1 4 1
+0 6 0 1 1
+7 5 1 2 1
+8 5 1 2 1
+2 3 0 2 2
+2 1 1 1 1
+1 3 0 3 1
+1 4 0 1 1
+9 7 1 3 1
+5 1 0 5 2
+6 5 1 1 2
+3 5
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>Distance = 6: 3 -&gt; 4 -&gt; 8 -&gt; 5
+Time = 3: 3 -&gt; 1 -&gt; 5
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>7 9
+0 4 1 1 1
+1 6 1 1 3
+2 6 1 1 1
+2 5 1 2 2
+3 0 0 1 1
+3 1 1 1 3
+3 2 1 1 2
+4 5 0 2 2
+6 5 1 1 2
+3 5
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>Distance = 3; Time = 4: 3 -&gt; 2 -&gt; 5
+</code></pre>
+<pre><code class="language-c++">#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+const int N = 510;
+
+int g1[N][N], g2[N][N];
+int dist1[N], dist2[N], pre[N];
+bool st[N];
+int S, D;
+int n, m;
+
+pair&lt;int, string&gt; dijkstra(int d1[][N], int d2[][N], int type) {
+    memset(dist1, 0x3f, sizeof dist1);
+    memset(dist2, 0x3f, sizeof dist2);
+    memset(st, 0, sizeof st);
+    dist1[S] = 0;
+    dist2[S] = 0;
+
+    for (int i = 0; i &lt; n; i++) {
+        int t = -1;
+        // 找到一个最小权值
+        for (int j = 0; j &lt; n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist1[t] &gt; dist1[j]))
+                t = j;
+        }
+        st[t] = true;
+        for (int j = 0; j &lt; n; j++) {
+            int w;
+            // 区分是哪种类型
+            if (type == 0)
+                w = d2[t][j];
+            else
+                w = 1;
+
+            if (dist1[j] &gt; dist1[t] + d1[t][j]) {
+                dist1[j] = dist1[t] + d1[t][j];
+                dist2[j] = dist2[t] + w;
+                pre[j] = t;
+            } else if (dist1[j] == dist1[t] + d1[t][j]) {
+                if (dist2[j] &gt; dist2[t] + w) {
+                    dist2[j] = dist2[t] + w;
+                    pre[j] = t;
+                }
+            }
+        }
+    }
+
+    pair&lt;int, string&gt; results;
+    vector&lt;int&gt; path;
+
+    for (int i = D; i != S; i = pre[i])
+        path.push_back(i);
+
+    results.first = dist1[D];
+    results.second = to_string(S);
+    for (int i = path.size() - 1; i &gt;= 0; i--) {
+        results.second += &quot; -&gt; &quot; + to_string(path[i]);
+    }
+
+    return results;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    memset(g1, 0x3f, sizeof g1);
+    memset(g2, 0x3f, sizeof g2);
+
+    while (m--) {
+        int v1, v2, way, length, times;
+        cin &gt;&gt; v1 &gt;&gt; v2 &gt;&gt; way &gt;&gt; length &gt;&gt; times;
+        if (way == 1) {
+            g1[v1][v2] = min(g1[v1][v2], length);
+            g2[v1][v2] = min(g2[v1][v2], times);
+        } else {
+            g1[v1][v2] = g1[v2][v1] = min(g1[v1][v2], length);
+            g2[v1][v2] = g2[v2][v1] = min(g2[v1][v2], times);
+        }
+    }
+
+    cin &gt;&gt; S &gt;&gt; D;
+    auto A = dijkstra(g1, g2, 0);
+    auto B = dijkstra(g2, g1, 1);
+
+    if (A.second == B.second) {
+        cout &lt;&lt; &quot;Distance = &quot; &lt;&lt; A.first &lt;&lt; &quot;; &quot;
+             &lt;&lt; &quot;Time = &quot; &lt;&lt; B.first &lt;&lt; &quot;: &quot; &lt;&lt; B.second &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; &quot;Distance = &quot; &lt;&lt; A.first &lt;&lt; &quot;: &quot; &lt;&lt; A.second &lt;&lt; endl;
+        cout &lt;&lt; &quot;Time = &quot; &lt;&lt; B.first &lt;&lt; &quot;: &quot; &lt;&lt; B.second &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="加油站">加油站</h3>
+<p>加油站的建造位置必须使加油站与距离它最近的房屋的距离尽可能远。</p>
+<p>与此同时，它还必须保证所有房屋都在其服务范围内。</p>
+<p>现在，给出了城市地图和加油站的几个候选位置，请你提供最佳建议。</p>
+<p>如果有多个解决方案，请输出选取位置与所有房屋的平均距离最小的解决方案。</p>
+<p>如果这样的解决方案仍然不是唯一的，请输出选取位置编号最小的解决方案。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含四个整数 N，房屋总数，M，加油站的候选位置总数，K，连接房屋或加油站的道路总数，Ds 加油站的最大服务范围。</p>
+<p>所有房屋的编号从 1 到 N，所有加油站侯选位置编号从 <code>G1</code> 到 <code>GM</code>。</p>
+<p>接下来 K 行，每行格式如下：</p>
+<pre><code>P1 P2 Dist
+</code></pre>
+<p>其中，<code>P1</code> 和 <code>P2</code> 表示一条 <strong>无向</strong> 道路连接的两个房屋或加油站侯选位置的编号，<code>Dist</code> 是道路长度，这是一个整数。</p>
+<p><strong>输出格式</strong></p>
+<p>第一行输出所选位置的编号。</p>
+<p>第二行输出加油站与距离其最近的房屋之间的距离以及与所有房屋之间的平均距离，<strong>精确到小数后一位</strong>。</p>
+<p>如果解决方案不存在，则输出 <code>No Solution</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤103,<br>
+1≤M≤10,<br>
+1≤K≤104,<br>
+1≤Ds≤200,<br>
+1≤Dist≤5000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>4 3 11 5
+1 2 2
+1 4 2
+1 G1 4
+1 G2 3
+2 3 2
+2 G2 1
+3 4 2
+3 G3 2
+4 G1 3
+G2 G1 1
+G3 G2 2
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>G1
+2.0 3.3
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>2 1 2 10
+1 G1 9
+2 G1 20
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>No Solution
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1020;
+const int INF = 0x3f3f3f3f;
+int n, m, k, D;
+int g[N][N];
+int dist[N];
+bool st[N];
+
+// 对两种编号进行处理
+int get(string s) {
+    if (s[0] == 'G')
+        return n + stoi(s.substr(1));
+    else
+        return stoi(s);
+}
+
+void dijkstra(int start, int&amp; min_dist, int&amp; sum_dist) {
+    memset(dist, 0x3f, sizeof dist);
+    memset(st, 0, sizeof st);
+    dist[start] = 0;
+    for (int i = 0; i &lt; n + m; i++) {
+        int t = -1;
+        for (int j = 1; j &lt;= n + m; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        st[t] = true;
+        
+        for (int j = 1; j &lt;= n + m; j++) 
+            dist[j] = min(dist[j], dist[t] + g[t][j]);
+    }
+    
+    // 判断是否都在服务范围内
+    for (int i = 1; i &lt;= n; i++) {
+        if (dist[i] &gt; D) {
+            min_dist = -INF;
+            return;
+        }
+    }
+    min_dist = INF;
+    sum_dist = 0;
+    // 找到最近距离和总距离
+    for (int i = 1; i &lt;= n; i++) {
+        min_dist = min(min_dist, dist[i]);
+        sum_dist += dist[i];
+    }
+    
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k &gt;&gt; D;
+    memset(g, 0x3f, sizeof g);
+    while (k--) {
+        string a, b;
+        int c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        int x = get(a);
+        int y = get(b);
+        g[x][y] = g[y][x] = min(g[x][y], c); 
+    }
+    
+    // 枚举每个加油站
+    
+    // 记录加油站是否合适
+    int res = -1;
+    // 记录加油站距离最近房屋的最大值
+    int min_dist = 0;
+    // 记录总距离的最小值
+    int sum_dist = INF;
+    
+    for (int i = n + 1; i &lt;= n + m; i++) {
+        int d1, d2;
+        dijkstra(i, d1, d2);
+        if (d1 &gt; min_dist) {
+            res = i;
+            min_dist = d1;
+            sum_dist = d2;
+        }
+        else if (min_dist == d1 &amp;&amp; sum_dist &gt; d2) {
+            res = i;
+            sum_dist = d2;
+        }
+    }
+    
+    if (res == -1) {
+        cout &lt;&lt; &quot;No Solution&quot; &lt;&lt; endl;
+    }else{
+        cout &lt;&lt; &quot;G&quot; &lt;&lt; res - n &lt;&lt; endl;
+        printf(&quot;%.1f %.1f\n&quot;, (double)min_dist, (double)sum_dist / n + 1e-8);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="dfsbfs">DFS/BFS</h2>
+<ul>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805456881434624">团伙头目</a></p>
+</li>
+<li>
+<p><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805392092020736">微博转发</a></p>
+</li>
+</ul>
+<h3 id="团伙头目">团伙头目</h3>
+<p>警察找到团伙头目的一种方法是检查人们的通话。</p>
+<p>如果 A 和 B 之间有通话，我们就说 A 和 B 是相关的。并且关联具有传递性，即如果 A 与 B 关联，B 与 C 关联，那么 A 与 C 也是关联的。</p>
+<p>关联权重定义为两人之间所有通话的总时间长度。</p>
+<p>一个“帮派”是一个由<strong>至少3个</strong>相互关联的人组成的群体，并且其总关联权重大于给定的阈值 K。</p>
+<p>在每个帮派中，总权重最大的就是头目，数据保证每个帮派中总权重最大的人是唯一的。</p>
+<p>你需要确定各个帮派以及帮派头目。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 K，表示通话数量以及权重阈值。</p>
+<p>接下来 N 行，每行采用如下形式描述通话：</p>
+<pre><code>Name1 Name2 Time
+</code></pre>
+<p><code>Name1</code> 和 <code>Name2</code> 是通话的两人的名字，<code>Time</code> 是通话时间。</p>
+<p>名字的长度固定为 3，且只包含大写字母。</p>
+<p>时间是一个不超过 1000 的正整数。</p>
+<p><strong>输出格式</strong></p>
+<p>第一行输出帮派数量。</p>
+<p>接下来每行输出一个帮派的信息，包括帮派头目名字以及帮派人数。</p>
+<p>帮派信息按头目名字字典序输出。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N,K≤1000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>8 59
+AAA BBB 10
+BBB AAA 20
+AAA CCC 40
+DDD EEE 5
+EEE DDD 70
+FFF GGG 30
+GGG HHH 20
+HHH FFF 10
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>2
+AAA 3
+GGG 3
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>8 70
+AAA BBB 10
+BBB AAA 20
+AAA CCC 40
+DDD EEE 5
+EEE DDD 70
+FFF GGG 30
+GGG HHH 20
+HHH FFF 10
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>0
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int n, k;
+// 使用哈希表来存储图
+unordered_map&lt;string, vector&lt;pair&lt;string, int&gt; &gt; &gt; g;
+// 记录每个节点的总通话时间
+unordered_map&lt;string, int&gt; total;
+unordered_map&lt;string, bool&gt; st;
+
+int dfs (string ver, vector&lt;string&gt;&amp; nodes) {
+    st[ver] = true;
+    nodes.push_back(ver);
+    int sum = 0;
+    for (auto edge : g[ver]) {
+        sum += edge.second;
+        string cur = edge.first;
+        if (!st[cur])
+            sum += dfs(cur, nodes);
+    }
+    return sum;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; k;
+    while (n--) {
+        string a, b;
+        int c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a].push_back({b, c});
+        g[b].push_back({a, c});
+        total[a] += c;
+        total[b] += c;
+    }
+    // 存储结果
+    vector&lt;pair&lt;string, int&gt; &gt; res;
+    // 遍历
+    for (auto item : total) {
+        string ver = item.first;
+        vector&lt;string&gt; nodes;
+        // 无向图我们使用的是两条有向边来存
+        // dfs遍历出来的权重我们需要 / 2
+        int sum = dfs(ver, nodes) / 2;
+        // 满足是团伙的要求
+        if (nodes.size() &gt; 2 &amp;&amp; sum &gt; k) {
+            // 找出团队头目
+            string boss = nodes[0];
+            for (string node : nodes) {
+                if (total[node] &gt; total[boss]) 
+                    boss = node;
+            }
+            res.push_back({boss, nodes.size()});
+        }
+    }
+    // 按字典序排序
+    sort(res.begin(), res.end());
+    
+    cout &lt;&lt; res.size() &lt;&lt; endl;
+    for (int i = 0; i &lt; res.size(); i++) {
+        cout &lt;&lt; res[i].first &lt;&lt; ' ' &lt;&lt; res[i].second &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="微博转发">微博转发</h3>
+<p>微博被称为中文版的 Twitter。</p>
+<p>微博上的用户既可能有很多关注者，也可能关注很多其他用户。</p>
+<p>因此，形成了一种基于这些关注关系的社交网络。</p>
+<p>当用户在微博上发布帖子时，他/她的所有关注者都可以查看并转发他/她的帖子，然后这些人的关注者可以对内容再次转发…</p>
+<p>现在给定一个社交网络，假设只考虑 L 层关注者，请你计算某些用户的帖子的最大可能转发量。</p>
+<p><strong>补充</strong></p>
+<p>如果 B 是 A 的关注者，C 是 B 的关注者，那么 A 的第一层关注者是 B，第二层关注者是 C。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数，N 表示用户数量，L 表示需要考虑的关注者的层数。</p>
+<p>假设，所有的用户的编号为 1∼N。</p>
+<p>接下来 N 行，每行包含一个用户的关注信息，格式如下：</p>
+<pre><code>M[i] user_list[i]
+</code></pre>
+<p><code>M[i]</code> 是第 i 名用户关注的总人数，<code>user_list[i]</code> 是第 i 名用户关注的 <code>M[i]</code> 个用户的编号列表。</p>
+<p>最后一行首先包含一个整数 K，表示询问次数，然后包含 K 个用户编号，表示询问这些人的帖子的最大可能转发量。</p>
+<p><strong>输出格式</strong></p>
+<p>按顺序，每行输出一个被询问人的帖子最大可能转发量。</p>
+<p>假设每名用户初次看到帖子时，都会转发帖子，只考虑 L 层关注者。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000,<br>
+1≤L≤6,<br>
+1≤M[i]≤100,<br>
+1≤K≤N</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>7 3
+3 2 3 4
+0
+2 5 6
+2 3 1
+2 3 4
+1 4
+1 5
+2 2 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>4
+5
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+const int N = 1010;
+vector&lt;int&gt; g[N];
+int u[N];
+int n, level;
+bool st[N];
+
+int bfs(int a) {
+    queue&lt;int&gt; q;
+    memset(st, 0, sizeof st);
+    q.push(a);
+    st[a] = true;
+    int cnt = 0;
+    int sum = 0;
+    // 限定层次的bfs搜索，sum记录人数
+    while(cnt &lt; level) {
+        int sz = q.size();
+        sum += sz;
+        for (int i = 0; i &lt; sz; i++) {
+            int t = q.front();
+            q.pop();
+            for (int j = 0; j &lt; g[t].size(); j++) {
+                if (!st[g[t][j]]) {
+                    st[g[t][j]] = true;
+                    q.push(g[t][j]);
+                }
+            }
+        }
+        cnt++;
+    }
+    return q.size() + sum - 1;
+}
+
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; level;
+    for (int i = 1; i &lt;= n; i++) {
+        int k;
+        cin &gt;&gt; k;
+        while (k--) {
+            int a;
+            cin &gt;&gt; a;
+            g[a].push_back(i);  
+        }
+    }
+    
+    int k;
+    cin &gt;&gt; k;
+    while (k--) {
+        int query;
+        cin &gt;&gt; query;
+        cout &lt;&lt; bfs(query) &lt;&lt; endl;
+    }
+    
+    return 0;
+}
+</code></pre>
+<h2 id="模拟">模拟</h2>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805346428633088">顶点覆盖</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805343979159552">最大团</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/1038430013544464384">旅行商问题</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/1071785301894295552">顶点着色</a></li>
+</ul>
+<h3 id="顶点覆盖">顶点覆盖</h3>
+<p>如果图中的一个顶点集合能够满足图中的每一条边都至少有一个端点在该集合内，那么这个顶点集合就是图的顶点覆盖。</p>
+<p>现在给定一张图，以及若干个顶点集合，请你判断这些顶点集合是否是图的顶点覆盖。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 M，表示图中点和边的数量。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a 和点 b 之间存在一条边。</p>
+<p>点编号 0∼N−1。</p>
+<p>然后包含一个整数 K，表示询问的顶点集合数量。</p>
+<p>接下来 K 行，每行描述一组询问顶点集合，格式如下：</p>
+<p>Nv V[1] V[2] … V[Nv]</p>
+<p>Nv 是集合中点的数量，V[i] 是点的编号。</p>
+<p><strong>输出格式</strong></p>
+<p>每组询问输出一行结果，如果是顶点覆盖则输出 <code>Yes</code>，否则输出 <code>No</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N,M≤104,<br>
+1≤K≤100,<br>
+1≤Nv≤N</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 11
+8 7
+6 8
+4 5
+8 4
+8 1
+1 2
+1 4
+9 8
+9 1
+1 0
+2 4
+5
+4 0 3 8 4
+6 6 1 7 5 4 9
+3 1 8 4
+2 2 8
+7 9 8 7 6 5 4 2
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>No
+Yes
+Yes
+No
+No
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 10010;
+int n, m;
+bool st[N];
+// 不存在图的遍历，我们只需要用结构体存储边
+struct Edge {
+    int a, b;
+}e[N];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) 
+        cin &gt;&gt; e[i].a &gt;&gt; e[i].b;
+    int k;
+    cin &gt;&gt; k;
+    while (k--) {
+        int cnt;
+        cin &gt;&gt; cnt;
+        memset(st, 0, sizeof st);
+        while (cnt--) {
+            int x;
+            cin &gt;&gt; x;
+            st[x] = true;
+        }
+        int index = 0;
+        while (index &lt; m) {
+            if (!st[e[index].a] &amp;&amp; !st[e[index].b])
+                break;
+            index++;
+        }
+        if (index == m)
+            cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="最大团">最大团</h3>
+<p>在一个无向图中，如果一个顶点子集满足子集内的任意两个不同顶点之间都是相连的，那么这个顶点子集就被称为一个团。</p>
+<p>如果一个团不能通过加入某个新的顶点来扩展成一个更大的团，那么该团就被称为最大团。</p>
+<p>现在，你需要判断给定顶点子集能否构成一个最大团。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 Nv 和 Ne，分别表示无向图中点和边的数量。</p>
+<p>接下来 Ne 行，每行包含两个整数 a,b，表示点 a 和点 b 之间存在一条边。</p>
+<p>所有点的编号从 1 到 Nv。</p>
+<p>再一行，包含整数 M，表示询问次数。</p>
+<p>接下来 M 行，每行描述一个询问顶点子集，首先包含一个整数 K，表示子集包含点的数量，然后包含 K 个整数，表示 K 个不同顶点的编号。</p>
+<p>一行中所有数字之间用一个空格隔开。</p>
+<p><strong>输出格式</strong></p>
+<p>每组询问在一行中输出一个结论。</p>
+<p>如果给定子集是最大团，则输出 <code>Yes</code>，如果是一个团，但不是最大团，则输出 <code>Not Maximal</code>，如果根本不是团，则输出 <code>Not a Clique</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤Nv≤200,<br>
+1≤Ne≤Nv(Nv−1)2,<br>
+1≤M≤100,<br>
+1≤K≤Nv</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>8 10
+5 6
+7 8
+6 4
+3 6
+4 5
+2 3
+8 2
+2 7
+5 3
+3 4
+6
+4 5 4 3 6
+3 2 8 7
+2 2 3
+1 1
+3 4 3 6
+3 3 2 1
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>Yes
+Yes
+Yes
+Yes
+Not Maximal
+Not a Clique
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 210;
+bool g[N][N], st[N];
+int n, m;
+int nodes[N];
+
+bool check_cli (int k) {
+    // 注意这里枚举的方法
+    for (int i = 0; i &lt; k; i++) {
+        for (int j = 0; j &lt; i; j++)
+            if (!g[nodes[i]][nodes[j]])
+                return false;
+    }
+    return true;
+}
+
+bool check_max (int k) {
+    memset(st, 0, sizeof st);
+    for (int i = 0 ; i &lt; k; i++) {
+        st[nodes[i]] = true;
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i]) {
+            bool success = true;
+            // 检查团能不能被继续扩展，如果可以继续扩展就不是最大团
+            for (int j = 0; j &lt; k; j++) {
+                if (!g[i][nodes[j]]) {
+                    success = false;
+                    break;
+                }
+            }
+            if (success)
+                return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    memset(g, 0, sizeof g);
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a][b] = g[b][a] = true;
+    }
+    
+    int cnt;
+    cin &gt;&gt; cnt;
+    while (cnt--) {
+        int k;
+        cin &gt;&gt; k;
+        for (int i = 0; i &lt; k; i++) 
+            cin &gt;&gt; nodes[i];
+        if (check_cli(k)) {
+            if (check_max(k))
+                cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+            else
+                cout &lt;&lt; &quot;Not Maximal&quot; &lt;&lt; endl;
+        }else
+            cout &lt;&lt; &quot;Not a Clique&quot; &lt;&lt; endl;
+    }
+    
+    return 0;
+}
+</code></pre>
+<h3 id="旅行商问题">旅行商问题</h3>
+<p>“旅行商问题”是这样一个问题：“给出一个城市列表以及每对城市之间的距离，访问每个城市并返回原城市的最短路线是什么？”</p>
+<p>这是组合优化中的一个 NP 难题，在运筹学和理论计算机科学中十分重要。</p>
+<p>在此问题中，请你从给定的路径列表中找到最接近旅行商问题的解的路径。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 M，分别表示城市数量以及 <strong>无向图</strong> 中边的数量。</p>
+<p>接下来 M 行，每行以 <code>City1 City2 Dist</code> 格式描述一条边，其中城市编号从 1 到 N，<code>Dist</code> 为正且不超过 100。</p>
+<p>再一行包含一个整数 K，表示给定路径的数量。</p>
+<p>接下来 K 行描述路径，格式为：</p>
+<p>n C1 C2 … Cn</p>
+<p>n 表示给定路径经过的城市的数目，Ci 是路径中经过的城市的编号。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每个路径，在一行中输出 <code>Path X: TotalDist (Description)</code>。</p>
+<p>其中 <code>X</code> 是路径编号（从 1 开始），<code>TotalDist</code> 表示路径总距离（如果距离不存在，则输出 <code>NA</code>），<code>Description</code> 是下列中的一项：</p>
+<ul>
+<li><code>TS simple cycle</code>，如果这是一个访问每个城市的简单回路。</li>
+<li><code>TS cycle</code>，如果这是一个访问每个城市的回路，但不是简单回路。</li>
+<li><code>Not a TS cycle</code>，如果这不是一个访问了每个城市的回路。</li>
+</ul>
+<p>最后一行，输出 <code>Shortest Dist(X) = TotalDist</code>，<code>X</code> 是最接近旅行商问题解决方案的回路编号，<code>TotalDist</code> 是其总距离。</p>
+<p>保证有唯一解。</p>
+<p><strong>数据范围</strong></p>
+<p>2&lt;N≤200,<br>
+N−1≤M≤N(N−1)2，<br>
+1≤K≤1000,<br>
+1≤n≤300</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 10
+6 2 1
+3 4 1
+1 5 1
+2 5 1
+3 1 8
+4 1 6
+1 6 1
+6 3 1
+1 2 1
+4 5 1
+7
+7 5 1 4 3 6 2 5
+7 6 1 3 4 5 2 6
+6 5 1 4 3 6 2
+9 6 2 1 6 3 4 5 2 6
+4 1 2 5 1
+7 6 1 2 5 4 3 1
+7 6 3 2 5 4 1 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>Path 1: 11 (TS simple cycle)
+Path 2: 13 (TS simple cycle)
+Path 3: 10 (Not a TS cycle)
+Path 4: 8 (TS cycle)
+Path 5: 3 (Not a TS cycle)
+Path 6: 13 (Not a TS cycle)
+Path 7: NA (Not a TS cycle)
+Shortest Dist(4) = 8
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 210;
+const int INF = 0x3f3f3f3f;
+int g[N][N];
+bool st[N];
+int vers[310];
+int n, m;
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    memset(g, 0x3f3f3f3f, sizeof g);
+    while (m--) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+    
+    int k;
+    cin &gt;&gt; k;
+    
+    int min_dist = INF;
+    int min_id;
+    for (int m = 1; m &lt;= k; m++) {
+        int cnt;
+        cin &gt;&gt; cnt;
+        for (int i = 1; i &lt;= cnt; i++)
+            cin &gt;&gt; vers[i];
+        
+        int sum = 0;
+        bool success = true;
+        memset(st, 0, sizeof st);
+        
+        // 判断距离是否存在，不存在就是fasle，总距离距离表示为-1
+        for (int i = 1; i + 1 &lt;= cnt; i++) {
+            int a = vers[i], b = vers[i + 1];
+            if (g[a][b] == INF) {
+                sum = -1;
+                success = false;
+                break;
+            }else
+                sum += g[a][b];
+            st[a] = true;
+        }
+        
+        // 判断每个点是否都能到
+        for (int i = 1; i &lt;= n; i++) {
+            if (!st[i]) {
+                success = false;
+                break;
+            }
+        }
+        
+        // 判断是否是回路
+        if (vers[1] != vers[cnt])
+            success = false;
+        
+        if (sum == -1)
+            cout &lt;&lt; &quot;Path &quot; &lt;&lt; m &lt;&lt; &quot;:&quot; &lt;&lt; &quot; NA (Not a TS cycle)&quot; &lt;&lt; endl;
+        else {
+            if (!success)
+                cout &lt;&lt; &quot;Path &quot; &lt;&lt; m &lt;&lt; &quot;: &quot; &lt;&lt; sum &lt;&lt; &quot; (Not a TS cycle)&quot; &lt;&lt; endl;
+            else {
+                if (cnt == n + 1)
+                    cout &lt;&lt; &quot;Path &quot; &lt;&lt; m &lt;&lt; &quot;: &quot; &lt;&lt; sum &lt;&lt; &quot; (TS simple cycle)&quot; &lt;&lt; endl;
+                else
+                    cout &lt;&lt; &quot;Path &quot; &lt;&lt; m &lt;&lt; &quot;: &quot; &lt;&lt; sum &lt;&lt; &quot; (TS cycle)&quot; &lt;&lt; endl;
+                
+                if (min_dist &gt; sum) {
+                    min_dist = sum;
+                    min_id = m;
+                }
+            }
+                
+        }
+    }
+    cout &lt;&lt; &quot;Shortest Dist&quot; &lt;&lt; '(' &lt;&lt; min_id &lt;&lt; &quot;) = &quot; &lt;&lt; min_dist &lt;&lt; endl;  
+}
+</code></pre>
+<h3 id="顶点着色">顶点着色</h3>
+<p>一个合适的顶点着色是指用各种颜色标记图中各个顶点，使得每条边的两个端点的颜色都不相同。</p>
+<p>如果一种合适的顶点着色方案使用了一共 k 种不同的颜色，则称其为合适的 k 着色（<code>k-coloring</code>)。</p>
+<p>现在，你需要判断给定的着色方案是否是合适的 k 着色方案。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 M，分别表示点和边的数量。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a 和点 b 之间存在一条边。</p>
+<p>所有点的编号从 0 到 N−1。</p>
+<p>再一行包含一个整数 K，表示你需要判断的着色方案。</p>
+<p>接下来 K 行，每行包含 N 个颜色，其中第 i 个颜色表示第 i 个点的颜色。</p>
+<p>颜色用非负整数表示，不超过 <strong>int</strong> 范围。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每种着色方案，如果是一种合适的 k 着色方案，则输出一行 <code>k-coloring</code>。</p>
+<p>如果不是合适的着色方案，则输出一行 <code>No</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N,M≤104,<br>
+1≤K≤100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 11
+8 7
+6 8
+4 5
+8 4
+8 1
+1 2
+1 4
+9 8
+9 1
+1 0
+2 4
+4
+0 1 0 1 4 1 0 1 3 0
+0 1 0 1 4 1 0 1 0 0
+8 1 0 1 4 1 0 5 3 0
+1 2 3 4 5 6 7 8 8 9
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>4-coloring
+No
+6-coloring
+No
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;unordered_set&gt;
+
+using namespace std;
+
+const int M = 10010;
+int n, m;
+struct Edge {
+    int a;
+    int b;
+}e[M];
+int vers[M];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 1; i &lt;= m; i++) {
+        cin &gt;&gt; e[i].a &gt;&gt; e[i].b;
+    }
+    
+    int k;
+    cin &gt;&gt; k;
+    while (k--) {
+        for (int i = 0; i &lt; n; i++) {
+            cin &gt;&gt; vers[i];
+        }
+        bool success = true;
+        // 枚举每一条边
+        for (int i = 1; i &lt;= m; i++) {
+            // 边的两个端点颜色相同就不是合适的着色方案
+            if (vers[e[i].a] == vers[e[i].b]) {
+                success = false;
+                break;
+            }
+        }
+        
+        if (success) {
+            unordered_set&lt;int&gt; ss;
+            for (int i = 0; i &lt; n; i++) 
+                ss.insert(vers[i]);
+            cout &lt;&lt; ss.size() &lt;&lt; &quot;-coloring&quot; &lt;&lt; endl;
+        }else
+            cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    }
+    
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[图论(基础篇)]]></title>
+        <id>https://kay-rick.github.io/post/tu-lun-ji-chu-pian/</id>
+        <link href="https://kay-rick.github.io/post/tu-lun-ji-chu-pian/">
+        </link>
+        <updated>2020-07-10T07:01:38.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>本篇内容属于图论基础篇内容，省去了最基础的概念，对于一些容易遗忘的概念和重要的基础算法做了梳理</p>
+</blockquote>
+<h2 id="图相关概念">图相关概念</h2>
+</br>
+<h3 id="连通图和连通分量">连通图和连通分量</h3>
+<ul>
+<li>连通图：若图中<strong>任意两个顶点</strong>都连通，则称为<strong>连通图</strong>， 否则称为非连通图</li>
+<li>无向图G中的极大连通子图称为G的连通分量。任何连通图的连通分量只有一个，非连通图有多个连通分量</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvg081p4j30sb0a1td3.jpg" alt="image-20200607100850914" loading="lazy"></figure>
+</br>
+<h3 id="强连通图和强连通分量">强连通图和强连通分量</h3>
+<ul>
+<li>
+<p>有向图：若从定点i到顶点j有路径，则称从顶点i到j是连通的。若图G中任意两个顶点i和j都连通，即从顶点i到j和从顶点j到i都存在路径，则称图G是<strong>强连通图</strong></p>
+</li>
+<li>
+<p>有向图G中的极大强连通子图称为G的强连通分量。非强连通图有多个强连通分量。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvgah3s5j30l20bvn0d.jpg" alt="image-20200607101417696" loading="lazy"></figure>
+</br>
+<h2 id="图的存储">图的存储</h2>
+</br>
+<h3 id="邻接矩阵存储">邻接矩阵存储</h3>
+<h4 id="定义">定义</h4>
+<p>邻接矩阵时表示顶点之间相邻关系的矩阵。设<code>G=（V, E）</code>是具有n(n &gt; 0)个顶点的图，顶点的编号依次为<code>0 ~ n - 1</code></p>
+<ul>
+<li>无向图中若<code>(i, j)</code>连通：<code>A[i] [j] = 1</code></li>
+<li>有向图中若i到j有边：<code>A[i] [j] = 1</code></li>
+<li>带权无向图，A[i] [j] = w<sub>ij</sub></li>
+<li>带权有向图，A[i] [j] = w<sub>ij</sub></li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvgpzhovj30qi0hcjx5.jpg" alt="image-20200607103340476" loading="lazy"></figure>
+<h4 id="存储类型">存储类型</h4>
+<p>使用二维数组来进行存储</p>
+<h4 id="特点">特点</h4>
+<ul>
+<li>邻接矩阵唯一</li>
+<li>适合稠密图的存储</li>
+</ul>
+</br>
+<h3 id="邻接表存储">邻接表存储</h3>
+<pre><code>每个单链表上添加一个表头节点（表示顶点信息）。并将所有表头节点构成一个数组，下标为i的元素表示顶点i的表头节点
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvh0bxl8j30sn0d3437.jpg" alt="image-20200607120257195" loading="lazy"></figure>
+<h4 id="存储类型-2">存储类型</h4>
+<p>使用vector边长数组来存</p>
+<ul>
+<li>若只用存储重点编号，则可以直接定义为int类型	<code>vector &lt;int&gt; Adj[N]</code></li>
+</ul>
+<pre><code class="language-c++">vector&lt;int&gt; Adj[N];
+// 添加一条从1号顶点到达3号顶点的有向边
+Adj[1].push_back(3);
+</code></pre>
+<ul>
+<li>若要存储重点编号和边权，那么可以使用结构体Node来存储</li>
+</ul>
+<pre><code class="language-c++">struct Node {
+    int v;	// 边的终点编号
+    int w;	// 边权
+    Node (int _v, int _w) : v(_v), w(_w) {}		// 构造函数
+}
+
+vector&lt;Node&gt; Adj[N];
+// 添加一条从1号顶点到达3号顶点的有向边，边权为4
+Adj[1].push_back(Node(3, 4));
+</code></pre>
+</br>
+<h2 id="图的遍历">图的遍历</h2>
+<blockquote>
+<p>图的遍历这一部分一定要熟记DFS和BFS的算法模板，很多题目就是在这些模板上做一些处理就可以解决</p>
+</blockquote>
+</br>
+<h3 id="深度优先搜索-dfs">深度优先搜索 DFS</h3>
+<h4 id="邻接矩阵存储遍历">邻接矩阵存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">const int INF = 0x3f3f3f3f;
+// 邻接矩阵存储图的信息g[i][j]表示顶点 i 到顶点 j 这条边的权值大小
+int g[N][N];
+bool st[N];
+// 初始化
+memset(g, 0x3f, sizeof g);
+
+void dfs(int u) {
+    // 先标记这个点已经被访问过
+    st[u] = true;
+    // 递归地去遍历和该点连通的点
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[u][i] != INF)
+            dfs(i);
+    }
+}
+</code></pre>
+<h4 id="邻接表存储遍历">邻接表存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">// 使用邻接表来存储图
+vector&lt;int&gt; g[N];
+bool st[N];
+
+void dfs(int u) {
+    // st[u] 表示点u已经被遍历过
+    st[u] = true;
+	// 递归地去遍历和该点连通的点
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        if (!st[g[u][i]]) 
+            dfs(g[u][i]);
+    }
+}
+</code></pre>
+</br>
+<h3 id="广度优先搜索-bfs">广度优先搜索 BFS</h3>
+<h4 id="邻接矩阵存储遍历-2">邻接矩阵存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">const int INF = 0x3f3f3f3f;
+// 邻接矩阵存储图的信息g[i][j]表示顶点 i 到顶点 j 这条边的权值大小
+int g[N][N];
+bool st[N];
+// 初始化
+memset(g, 0x3f, sizeof g);
+
+queue&lt;int&gt; q;
+st[1] = true; // 表示1号点已经被遍历过
+q.push(1);
+while (!q.empty()) {
+    int t = q.front();
+    q.pop();
+    
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[t][i] != INF) {
+            st[i] = true; // 表示点i已经被遍历过
+            q.push(i);
+        }
+    }
+}
+</code></pre>
+</br>
+<h2 id="最短路径">最短路径</h2>
+<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvhdi5erj310n0dkmyz.jpg" alt="image-20200708231809330" loading="lazy"></figure>
+</br>
+<h3 id="dijkstra算法">Dijkstra算法</h3>
+<p>Dijkstra算法用来解决<strong>单源最短路问题，不存在负边权</strong>，给定图G和起点s，通过算法得到S到其他任何顶点的最短距离</p>
+<h4 id="朴素dijkstra">朴素Dijkstra</h4>
+<ul>
+<li>
+<pre><code class="language-c++">dist[1] = 0, dist[i] = MAX;
+集合S：当前已确定最短距离的点
+</code></pre>
+</li>
+<li>
+<pre><code>for i : 1 ~ n
+	不在集合S中，距离最近的点  --&gt; t;
+	t  --&gt; 集合S
+	用t更新其他点的距离 (当dist[x] &gt; dist[t] + w 就更新dist[x])
+</code></pre>
+</li>
+</ul>
+<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvhqylkxj3090066jrd.jpg" alt="image-20200607161658126" loading="lazy"></figure>
+<ul>
+<li>代码模板</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file Dijkstra.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-07 18:10:32
+ * @brief Dijkstra算法
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+const int N = 510;
+
+int n, m;
+// 使用邻接矩阵来存储
+int g[N][N];
+// 保存最短距离
+int dist[N];
+// 用来判断是否有加入到集合中
+bool st[N];
+
+int dijkstra() {
+    // 先初始化为正无穷
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int t = -1;
+        // 找到不在集合S中距离最近的点
+        for (int j = 1; j &lt;= n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        // 将t加入到集合
+        st[t] = true;
+        // 用t来更新其他点距离
+        for (int j = 1; j &lt;= n; j++)
+            dist[j] = min(dist[j], dist[t] + g[t][j]);
+    }
+    if (dist[n] == 0x3f3f3f3f)
+        return -1;
+    return dist[n];
+}
+</code></pre>
+<h4 id="堆优化版dijkstra">堆优化版Dijkstra</h4>
+<p>核心思想：集合中找最近的点的操作可以<strong>使用堆来实现</strong>，C++中可以使用优先队列<code>priority_queue</code>来实现</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+const int N = 1000010;
+// 第一个存放边权，第二个存放节点编号(方便heap按边权排序)
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+// 使用邻接表来存储
+vector&lt;PII&gt; g[N];
+
+// 保存最短距离
+int dist[N];
+// 用来判断是否有加入到集合中
+bool st[N];
+
+int dijkstra() {
+    // 先置为正无穷
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    // 使用小根堆
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt; &gt; heap;
+    // pair排序时是先根据first，再根据second，这里显然要根据距离排序
+    heap.push({0, 1});
+    while (!heap.empty()) {
+        auto t = heap.top();
+        heap.pop();
+        int ver = t.second;
+        if (st[ver])
+            continue;
+        st[ver] = true;
+        
+        // 更新节点
+        for (int i = 0; i &lt; g[ver].size(); i++) {
+            int j = g[ver][i].second;
+            if (dist[j] &gt; dist[ver] + g[ver][i].first) {
+                dist[j] = dist[ver] + g[ver][i].first;
+                heap.push({dist[j], j});
+            }
+        }
+    }
+    if (dist[n] == 0x3f3f3f3f)
+        return -1;
+    return dist[n]; 
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    while (m--) {
+        int a, b, c;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+        // a到b之间有一条边权为c的边
+        g[a].push_back({c, b});
+    }
+    
+    int t = dijkstra();
+    printf(&quot;%d\n&quot;, t);
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="bellman-ford算法">Bellman-Ford算法</h3>
+<ul>
+<li>
+<p><strong>适合存在负边权的最短路，而且最短路不一定存在（例如存在负权回路）</strong></p>
+</li>
+<li>
+<pre><code>for 1 ~ n
+	for 所有边 a, b, w
+		dist[b] = min(dist[b], dist[a] + w);
+</code></pre>
+</li>
+</ul>
+<h4 id="求有边数限制的最短路">求有边数限制的最短路</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你求出从1号点到n号点的最多经过k条边的最短距离，如果无法从1号点走到n号点，输出impossible。</p>
+<p>注意：图中可能 <strong>存在负权回路</strong> 。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数n，m，k。</p>
+<p>接下来m行，每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示从1号点到n号点的最多经过k条边的最短距离。</p>
+<p>如果不存在满足条件的路径，则输出“impossible”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n,k≤500,<br>
+1≤m≤10000,<br>
+任意边长的绝对值不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3 1
+1 2 1
+2 3 1
+1 3 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Bellman-Ford.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 21:30:56
+ * @brief Bellman-Ford算法求有边数限制的最短路
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 510, M = 10010;
+
+int n, m, k;
+int dist[N], backup[N];
+
+struct Edge {
+    int a;
+    int b;
+    int w;
+} edge[M];
+
+int bellman_ford() {
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    for (int i = 0; i &lt; k; i++) {
+        // 做数组拷贝，防止在下面的更新操作中被串联更新
+        memcpy(backup, dist, sizeof dist);
+        for (int j = 0; j &lt; m; j++) {
+            auto e = edge[j];
+            dist[e.b] = min(dist[e.b], backup[e.a] + e.w);
+        }
+    }
+    // 这里不直接写等于无穷：是因为有可能距离无穷的那个节点在里层的for循环会更新下一个无穷的节点
+    if (dist[n] &gt; 0x3f3f3f3f / 2)
+        return -1;
+    else
+        return dist[n];
+}
+
+int main() {
+
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    // 读入m条边
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, w;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; w;
+        edge[i] = {a, b, w};
+    }
+
+    int t = bellman_ford();
+    if (t == -1)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="spfa算法">SPFA算法</h3>
+<ul>
+<li>
+<p>spfa求最短路算法其实是对Bellman-Ford算法改进，在Bellman-Ford算法中<code>dist[b] = min(dist[b], dist[a] + w);</code>，如果dist[a]没有变小，那么这个操作一定会是无效的操作，spfa算法就是在这里利用BFS进行优化</p>
+</li>
+<li>
+<pre><code>queue &lt;-- 1;
+while queue 不空
+	t = q.front();
+	q.pop();
+	更新t的所有出边(如果被更新，就再加到队列去更新别人)
+</code></pre>
+</li>
+</ul>
+<h4 id="spfa求最短路">SPFA求最短路</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你求出1号点到n号点的最短距离，如果无法从1号点走到n号点，则输出impossible。</p>
+<p>数据保证不存在负权回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n和m。</p>
+<p>接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示1号点到n号点的最短距离。</p>
+<p>如果路径不存在，则输出”impossible”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n,m≤105,<br>
+图中涉及边长绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3
+1 2 5
+2 3 -3
+1 3 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file SPFA.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 21:07:47
+ * @brief SPFA算法求最短路
+ *          在Bellman-Ford算法中dist[b] = min(dist[b], dist[a] + w);
+ *          如果dist[a]没有变小，那么这个操作一定会是无效的操作
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 100010;
+// 第一个位置存储编号，第二个位置存储边权
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;PII&gt; g[N];
+int dist[N];
+bool st[N];
+
+int spfa() {
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    queue&lt;int&gt; q;
+    q.push(1);
+    st[1] = true;
+    // 利用BFS的思想优化Bellman-Ford算法就是SPFA
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        st[t] = false;
+
+        for (int i = 0; i &lt; g[t].size(); i++) {
+            int j = g[t][i].first;
+            int w = g[t][i].second;
+            // 队列中存的就是那些变小的节点：更新过谁，我再拿谁更新别人
+            if (dist[j] &gt; dist[t] + w) {
+                dist[j] = dist[t] + w;
+                if (!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return dist[n];
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        // 加一条从a到b的边，边权为c
+        g[a].push_back({b, c});
+    }
+
+    int t = spfa();
+
+    if (t == 0x3f3f3f3f)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h4 id="spfa判断负环">SPFA判断负环</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你判断图中是否存在负权回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n和m。</p>
+<p>接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>如果图中<strong>存在</strong>负权回路，则输出“Yes”，否则输出“No”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤2000,<br>
+1≤m≤10000,<br>
+图中涉及边长绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3
+1 2 -1
+2 3 4
+3 1 -4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>Yes
+</code></pre>
+<ul>
+<li>更新dist[x]时候，同时记录cnt[x]，记录每个节点最短路的边数 cnt[x] &gt;= n 表示经过了n + 1个点，说明有环的存在</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file SPFA-hasCircle.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 22:28:12
+ * @brief SPFA判断回路里面是否有负环
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int N = 2010, M = 10010;
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;PII&gt; g[N];
+int dist[N];
+// 记录最短路的边数，cnt[x] &gt;= n 表示有环
+int cnt[N];
+bool st[N];
+
+bool spfa() {
+    queue&lt;int&gt; q;
+    // 将所有点都入队：因为以前只是求固定一个点
+    // 但存在负权回路的时候，不一定所有点都能经过负权回路
+    for (int i = 1; i &lt;= n; i++) {
+        st[i] = true;
+        q.push(i);
+    }
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        // 出队了进行标记，没有在队列里面
+        st[t] = false;
+
+        for (int i = 0; i &lt; g[t].size(); i++) {
+            int j = g[t][i].first;
+            int w = g[t][i].second;
+            // 当前需要更新
+            if (dist[j] &gt; dist[t] + w) {
+                dist[j] = dist[t] + w;
+                cnt[j] = cnt[t] + 1;
+                // 最短路的边数 &gt;= n 表示存在环
+                if (cnt[j] &gt;= n)
+                    return true;
+                if (!st[j]) {
+                    st[j] = true;
+                    q.push(j);
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a].push_back({b, c});
+    }
+
+    if (spfa())
+        cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+}
+</code></pre>
+</br>
+<h3 id="floyd算法">Floyd算法</h3>
+<p>对于一个各边权值均大于零的有向图，对于每一个顶点 i ≠ j，求出顶点i与顶点j之间最短路径和最短路径长度</p>
+<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvia5i8cj30lj0boq6i.jpg" alt="image-20200708230636736" loading="lazy"></figure>
+<pre><code class="language-c++">/**
+ * @file Floyd.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-30 00:42:40
+ * @brief Floyd算法：多源最短路算法：动态规划思想
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 210;
+
+int n, m;
+// d[i][j] 存储所有边，执行完floyd算法存的就是i到j的最短距离
+int d[N][N];
+
+// 求多源汇最短路floyd算法
+void floyd() {
+    for (int k = 1; k &lt;= n; k++) {
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= n; j++)
+                // 上一层：从i出发只经过i ~ k - 1 到j的距离
+                // d[i][k] + d[k][j] 经过k的距离
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+        }
+    }
+}
+</code></pre>
+</br>
+<h2 id="最小生成树">最小生成树</h2>
+<blockquote>
+<p>对于带权连通图G（每条边上的权值为大于零的实数），可能有多颗不同的生成树</p>
+<p>每棵生成树的所有边的权值之和可能不同</p>
+<p>其中权值之和最小的生成树称为图的最小生成树</p>
+</blockquote>
+<h3 id="prim算法适合稠密图">Prim算法(适合稠密图)</h3>
+<p>给定一个n个点m条边的无向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>求最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p>给定一张边带权的无向图G=(V, E)，其中V表示图中点的集合，E表示图中边的集合，n=|V|，m=|E|。</p>
+<p>由V中的全部n个顶点和E中n-1条边构成的无向连通子图被称为G的一棵生成树，其中边的权值之和最小的生成树被称为无向图G的最小生成树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>接下来m行，每行包含三个整数u，v，w，表示点u和点v之间存在一条权值为w的边。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，若存在最小生成树，则输出一个整数，表示最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤500,<br>
+1≤m≤10^5,<br>
+图中涉及边的边权的绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>4 5
+1 2 1
+1 3 2
+1 4 3
+2 3 2
+3 4 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvimiw0oj30oi0j0wnt.jpg" alt="image-20200709150633120" loading="lazy"></figure>
+<ul>
+<li>核心思想：让一棵小树长大</li>
+<li>从顶点开始，找距离树最近的边的点加进来（贪心思想）</li>
+<li>从未加到树中的顶点选一个距离树最小距离的点加进来，直到所有点都加进来</li>
+<li><strong>时间复杂度O(n^2)</strong></li>
+</ul>
+<pre><code>S：当前连通块的点集
+dist[i]:表示点i到最集合的距离
+
+dist初始化为正无穷
+for 1 ~ n
+	t = 集合外距离最近的点
+	用 t 来更新其他点到集合的距离
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Prim.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-29 22:02:16
+ * @brief Prim算法
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 510;
+const int M = 100010;
+const int INF = 0x3f3f3f3f;
+
+int n, m;
+int dist[N];
+bool st[N];
+int g[N][N];
+
+int prim() {
+    // prim算法中dist[j]表示当前点到集合的距离
+    memset(dist, 0x3f, sizeof dist);
+    int res = 0;
+    for (int i = 0; i &lt; n; i++) {
+        // 找到距离集合最近的点
+        int t = -1;
+        for (int j = 1; j &lt;= n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        st[t] = true;
+        // 不是第一个点且dist[t]为正无穷的情况,说明没有找到
+        if (i != 0 &amp;&amp; dist[t] == INF)
+            return INF;
+        // 放在前面，防止有环的出现
+        if (i != 0)
+            res += dist[t];
+        // 用t更新其他点到集合的距离
+        for (int j = 1; j &lt;= n; j++) {
+            // Dijkstra算法找的是距起点的距离
+            // Prim算法找的是距离集合的距离
+            dist[j] = min(dist[j], g[t][j]);
+        }
+    }
+    return res;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    memset(g, 0x3f, sizeof g);
+
+    while (m--) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+
+    int t = prim();
+    if (t == INF)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="kruskal算法适合边稀疏图">Kruskal算法(适合边稀疏图)</h3>
+<p>给定一个n个点m条边的无向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>求最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p>给定一张边带权的无向图G=(V, E)，其中V表示图中点的集合，E表示图中边的集合，n=|V|，m=|E|。</p>
+<p>由V中的全部n个顶点和E中n-1条边构成的无向连通子图被称为G的一棵生成树，其中边的权值之和最小的生成树被称为无向图G的最小生成树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>接下来m行，每行包含三个整数u，v，w，表示点u和点v之间存在一条权值为w的边。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，若存在最小生成树，则输出一个整数，表示最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤10^5,<br>
+1≤m≤2∗10^5,<br>
+图中涉及边的边权的绝对值均不超过1000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>4 5
+1 2 1
+1 3 2
+1 4 3
+2 3 2
+3 4 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvizuablj30nd08a425.jpg" alt="image-20200709150942941" loading="lazy"></figure>
+<ul>
+<li>核心思想：将森林合并成树</li>
+<li><strong>将所有边从小到大排序（最慢的一步O(mlog m)）</strong></li>
+<li>枚举每一条边，a -&gt; b，权重c，a和b不连通，将这条边加到集合当中(并查集)</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 200010;
+
+int n ,m;
+int p[N];
+
+struct Edge {
+    int a, b, w;
+    // 重载小于号，方便排序
+    bool operator&lt; (const Edge&amp; e) const {
+        return w &lt; e.w;
+    }
+}edges[N];
+
+// 并查集找祖宗节点
+int find(int x) {
+    if (p[x] != x) 
+        p[x] = find(p[x]);
+    return p[x];
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        edges[i] = {a, b, c};
+    }
+    // 对边按权值大小排序
+    sort(edges, edges + m);
+    
+    // 初始化并查集
+    for (int i = 1; i &lt;= n; i++) 
+        p[i] = i;
+    
+    int res = 0, cnt = 0;
+    // 枚举每一条边
+    for (int i = 0; i &lt; m; i++) {
+        int a = edges[i].a;
+        int b = edges[i].b;
+        int w = edges[i].w;
+        
+        // 找是否在一个集合中
+        a = find(a);
+        b = find(b);
+        
+        // 没有在一个集合当中，要再a和b之间加一条边, 边权已经排序，直接加入权值
+        if (a != b) {
+            p[a] = b;
+            res += w;
+            cnt++;
+        }
+    }
+    
+    if (cnt &lt; n - 1)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h2 id="拓扑排序"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805343043829760">拓扑排序</a></h2>
+<p>对一个<strong>有向无环图G</strong>进行拓扑排序，<strong>是将G中所有顶点排成一个线性序列，使得图中任意一对顶点u和v，若边&lt;u,v&gt;∈E(G)，则u在线性序列中出现在v之前</strong>。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 NN 和 MM，分别表示有向图的点和边的数量。</p>
+<p>接下来 MM 行，每行给出一条边的起点和终点。</p>
+<p>点的编号从 11 到 NN。</p>
+<p>再一行包含一个整数 KK，表示询问次数。</p>
+<p>接下来 KK 行，每行包含一个所有点的排列。</p>
+<p>一行中的数字用空格隔开。</p>
+<p><strong>输出格式</strong></p>
+<p>在一行中输出所有不是拓扑序列的询问序列的编号。</p>
+<p>询问序列编号从 00 开始。</p>
+<p>行首和行尾不得有多余空格，保证存在至少一个解。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000,<br>
+1≤M≤10000,<br>
+1≤K≤100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 8
+1 2
+1 3
+5 2
+5 4
+2 3
+2 6
+3 4
+6 4
+5
+1 5 2 3 6 4
+5 1 2 6 3 4
+5 1 2 3 6 4
+5 2 1 6 3 4
+1 2 3 4 5 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 4
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Test.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-14 21:11:37
+ * @brief 判断拓扑排序
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 1010, M = 10010;
+struct Edge {
+    int a;
+    int b;
+} e[M];
+int n, m;
+// 记录路径中的下标
+int pos[N];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        e[i].a = a;
+        e[i].b = b;
+    }
+
+    int k;
+    cin &gt;&gt; k;
+    vector&lt;int&gt; res;
+    for (int i = 0; i &lt; k; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            int x;
+            cin &gt;&gt; x;
+            pos[x] = j;
+        }
+
+        bool success = true;
+        for (int j = 0; j &lt; m; j++) {
+            if (pos[e[j].b] &lt; pos[e[j].a]) {
+                success = false;
+                break;
+            }
+        }
+        if (!success)
+            res.push_back(i);
+    }
+    if (res.size() &gt; 0) {
+        cout &lt;&lt; res[0];
+        for (int i = 1; i &lt; res.size(); i++)
+            cout &lt;&lt; ' ' &lt;&lt; res[i];
+    }
+    return 0;
+}
+</code></pre>
+</br>
+<h2 id="特殊图">特殊图</h2>
+</br>
+<h3 id="二分图">二分图</h3>
+<p>二分图，是图论中的一种特殊模型。设<code>G=(V,E)</code>是一个<strong>无向图</strong>，如果顶点V可分割为两个互不相交的子集<code>(A,B)</code>，并且图中的每条边<code>（i，j）</code>所关联的两个顶点i和j分别属于这两个不同的顶点集<code>(i in A,j in B)</code>，则称图G为一个二分图。简单来说，如果图中点可以被分为两组，并且使得所有边都跨越组的边界，则这就是一个二分图。准确地说**：把一个图的顶点划分为两个不相交子集 ，使得每一条边都分别连接两个集合中的顶点。如果存在这样的划分，则此图为一个二分图**</p>
+<h4 id="染色法判定二分图">染色法判定二分图</h4>
+<ul>
+<li>充要条件：<strong>一个图是二分图当且仅当图中不含奇数环</strong></li>
+<li>判定是否是一个二分图：染色法</li>
+</ul>
+<figure data-type="image" tabindex="10"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvjioqcxj30pt09fwf9.jpg" alt="image-20200709153406616" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+vector&lt;int&gt; g[N];
+int color[N];
+
+bool dfs(int u, int c) {
+    color[u] = c;
+    // 遍历所有的点
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        int j = g[u][i];
+        // 没有染色就去dfs染色
+        if (!color[j]) {
+            // 递归调用：1变2, 2变1的过程
+            if (!dfs(j, 3 - c))
+                return false;
+        }
+        // 染色且颜色相同，就表示不是二分图
+        else if (color[j] == c)
+            return false;
+    }
+    
+    return true;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 无向图：两条边都要加
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    
+    bool flag = true;
+    for(int i = 1; i &lt;= n; i++) {
+        // 该点没有染色，就开始dfs开始染色
+        if (!color[i]) {
+            if (!dfs(i, 1)) {
+                flag = false;
+                break;
+            }
+        }
+    }
+    
+    if (flag) 
+        cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    
+    return 0;
+}
+</code></pre>
+<h4 id="匈牙利算法求二分图最大匹配">匈牙利算法求二分图最大匹配</h4>
+<p>给定一个二分图，其中左半部包含n1个点（编号1<sub>n1），右半部包含n2n2个点（编号1</sub>n2），二分图共包含m条边。</p>
+<p>数据保证任意一条边的两个端点都不可能在同一部分中。</p>
+<p>请你求出二分图的最大匹配数。</p>
+<p>二分图的匹配：给定一个二分图G，在G的一个子图M中，M的边集{E}中的任意两条边都不依附于同一个顶点，则称M是一个匹配。</p>
+<p>二分图的最大匹配：所有匹配中包含边数最多的一组匹配被称为二分图的最大匹配，其边数即为最大匹配数。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数 n1、 n2和 m。</p>
+<p>接下来m行，每行包含两个整数u和v，表示左半部点集中的点u和右半部点集中的点v之间存在一条边。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示二分图的最大匹配数。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n1,n2≤500,<br>
+1≤u≤n1,<br>
+1≤v≤n2,<br>
+1≤m≤10^5</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>2 2 4
+1 1
+1 2
+2 1
+2 2
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2
+</code></pre>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/96229700">如何理解匈牙利算法</a></li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 510;
+
+int n1, n2, m;
+vector&lt;int&gt; g[N];
+bool st[N];
+// match[j]表示右边集合匹配左边集合点的编号
+int match[N];
+
+bool find(int x) {
+    
+    for(int i = 0; i &lt; g[x].size(); i++) {
+        int j = g[x][i];
+        if (!st[j]) {
+            st[j] = true;
+            // 当没有任何匹配的时候或者匹配到左边集合的点可以匹配到别的节点
+            if (match[j] == 0 || find(match[j])) {
+                match[j] = x;
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    cin &gt;&gt; n1 &gt;&gt; n2 &gt;&gt; m;
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 只用存一条有向边
+        g[a].push_back(b);
+    }
+    
+    int res = 0;
+    
+    // 只用枚举左边的集合
+    for (int i = 1; i &lt;= n1; i++) {
+        // 每次都要清空：目的是针对左边不同的节点我们需要尝试去匹配所有和他相连的节点，即使匹配的节点已经被匹配过
+        memset(st, false, sizeof st);
+        if (find(i))
+            res++;
+    }
+    
+    cout &lt;&lt; res &lt;&lt; endl;
+    
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="欧拉图">欧拉图</h3>
+<ul>
+<li>
+<p>欧拉路径是图中的一条路径，该<strong>路径满足恰好访问每个边一次</strong></p>
+</li>
+<li>
+<p>欧拉回路是<strong>一条在同一顶点处开始和结束的欧拉路径</strong></p>
+</li>
+<li>
+<p><strong>如果一个连通图的所有顶点的度数都为偶数，那么这个连通图具有欧拉回路，且这个图被称为欧拉图</strong></p>
+</li>
+<li>
+<p>如果一个连通图中有两个顶点的度数为奇数，其他顶点的度数为偶数，那么所有欧拉路径都从其中一个度数为奇数的顶点开始，并在另一个度数为奇数的顶点结束</p>
+</li>
+<li>
+<p><strong>具有欧拉路径但不具有欧拉回路的图被称为半欧拉图</strong></p>
+</li>
+</ul>
+<h4 id="欧拉路径"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805349851185152">欧拉路径</a></h4>
+<p><strong>输入格式</strong><br>
+第一行包含两个整数 N 和 M，表示无向图的点和边的数量。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a 和 b 之间存在一条边。</p>
+<p>所有点的编号从 1∼N。</p>
+<p><strong>输出格式</strong><br>
+首先，在第一行按顺序输出点 1∼N 中每个点的度数。</p>
+<p>第二行输出对该图的判断，Eulerian（欧拉图），Semi-Eulerian（半欧拉图），Non-Eulerian（非欧拉图）。</p>
+<p>行尾不得有多余空格。</p>
+<figure data-type="image" tabindex="11"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvk15x08j30wr0bxdh6.jpg" alt="image-20200709222355944" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+const int N = 510;
+
+int n, m;
+//
+bool g[N][N];
+// 记录每个点的度数
+int d[N];
+bool st[N];
+
+// dfs遍历所有点，返回点的个数
+int dfs(int u) {
+    st[u] = true;
+    
+    // 先将自己计算，所以置为1
+    int res = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[u][i])
+            res += dfs(i);
+    }
+    
+    return res;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    for (int i = 0; i &lt; m; i++) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a][b] = g[b][a] = true;
+        d[a]++;
+        d[b]++;
+    }
+    
+    int cnt = dfs(1);
+    cout &lt;&lt; d[1];
+    
+    for (int i = 2; i &lt;= n; i++)
+        cout &lt;&lt; ' ' &lt;&lt; d[i];
+    cout &lt;&lt; endl;
+    
+    if (cnt == n) {
+        int s = 0;
+        for (int i = 1; i &lt;= n; i++) 
+            if (d[i] % 2)
+                s++;
+        if (s == 0)
+            cout &lt;&lt; &quot;Eulerian&quot; &lt;&lt; endl;
+        else if (s == 2)
+            cout &lt;&lt; &quot;Semi-Eulerian&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;Non-Eulerian&quot; &lt;&lt; endl;
+        
+    }else
+        cout &lt;&lt; &quot;Non-Eulerian&quot; &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="哈密顿图">哈密顿图</h3>
+<ul>
+<li>哈密顿回路问题是包含图中每个顶点的简单回路</li>
+<li>哈密顿图是一个无向图，由指定的起点前往指定的终点，途中经过所有其他节点且只经过一次。在图论中是指含有哈密顿回路的图，闭合的<strong>哈密顿路径称作哈密顿回路</strong>（Hamiltonian cycle），<strong>含有图中所有顶点的路径称作哈密顿路径（Hamiltonian path）</strong></li>
+</ul>
+<h4 id="哈密顿回路"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805351814119424">哈密顿回路</a></h4>
+<p>哈密顿回路问题是找到一个包含图中每个顶点的简单回路。</p>
+<p>这样的回路称为“哈密顿回路”。</p>
+<p>在本题中，你需要做的是判断给定路径是否为哈密顿回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个整数 N 表示顶点数，一个整数 M 表示给定<strong>无向图</strong>中的边数。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a和 b之间存在一条边。</p>
+<p>所有顶点编号从 1 到 N。</p>
+<p>再一行给出整数 KK，表示询问次数。</p>
+<p>接下来 KK 行，每行包含一个询问，格式如下：</p>
+<p>n V1 V2 … Vn</p>
+<p>n 表示给定路径经过的点的数目，Vi 是路径中经过的点。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每个询问，如果是哈密顿回路则在一行输出 <code>YES</code>，否则输出 <code>NO</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>2&lt;N≤200,<br>
+N−1≤M≤N(N−1)/2,<br>
+1≤K≤1000,<br>
+1≤n≤410</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 10
+6 2
+3 4
+1 5
+2 5
+3 1
+4 1
+1 6
+6 3
+1 2
+4 5
+6
+7 5 1 4 3 6 2 5
+6 5 1 4 3 6 2
+9 6 2 1 6 3 4 5 2 6
+4 1 2 5 1
+7 6 1 3 4 5 2 6
+7 6 1 2 5 4 3 1
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>YES
+NO
+NO
+NO
+YES
+NO
+</code></pre>
+<figure data-type="image" tabindex="12"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvkc20vmj30jz0didgh.jpg" alt="image-20200709222610967" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+const int N = 210;
+
+bool g[N][N];
+int n, m;
+bool st[N];
+int nodes[N * 2];
+
+bool check(int cnt) {
+    // 起点和终点不一样或者点数小于n + 1
+    if (nodes[0] != nodes[cnt - 1] || cnt != n + 1)
+        return false;
+    memset(st, 0, sizeof st);
+    for (int i = 0; i &lt; cnt - 1; i++) {
+        st[nodes[i]] = true;
+        // 边不存在
+        if (!g[nodes[i]][nodes[i + 1]])
+            return false;
+    }
+    // 所有点都走到了
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i])
+            return false;
+    }
+    
+    return true;
+}
+
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a][b] = g[b][a] = true;
+    }
+    int k;
+    cin &gt;&gt; k;
+    while (k--) {
+        int cnt;
+        cin &gt;&gt; cnt;
+        for (int i = 0; i &lt; cnt; i++) {
+            cin &gt;&gt; nodes[i];
+        }
+        
+        if (check(cnt))
+            cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    } 
+}
+</code></pre>
+</br>
+<h2 id="补充">补充</h2>
+</br>
+<h3 id="数组模拟链表">数组模拟链表</h3>
+<figure data-type="image" tabindex="13"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvkosggnj30ev06h0sw.jpg" alt="image-20200607192609858" loading="lazy"></figure>
+<ul>
+<li><code>e[N]</code>：存储节点值value</li>
+<li><code>ne[N]</code>：存储某个节点的next指针</li>
+<li><code>head</code>表示头结点的下标</li>
+<li><code>idx</code>表示已经用到了哪个点</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file LinkList.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-07 19:36:30
+ * @brief 数组模拟链表实现
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 100010;
+
+// head表示头结点的下标
+// e[i]表示节点i的值
+// ne[i]表示节点i的next指针是多少
+// idx表示已经用到了哪个点
+int e[N], ne[N], idx, head;
+
+void init () {
+    head = -1;
+    idx = 0;
+}
+
+/**
+ * @brief 将x插到头结点
+ * @param x 
+ */
+void add_to_head (int x) {
+    e[idx] = x;
+    ne[idx] = head;
+    head = idx++;
+}
+
+/**
+ * @brief 将节点 x 插入到下标为 k 的节点的后面
+ * @param k 
+ * @param x 
+ */
+void add (int k, int x) {
+    e[idx] = x;
+    ne[idx] = ne[k];
+    ne[k] = idx++;
+}
+
+/**
+ * @brief 将下标是k的点后面的点删除
+ * @param k 
+ */
+void remove (int k) {
+    ne[k] = ne[ne[k]];
+}
+</code></pre>
+</br>
+<h3 id="树与图的存储">树与图的存储</h3>
+<p>树是一种特殊的图，与图的存储方式相同。<br>
+对于无向图中的边ab，存储两条有向边a-&gt;b, b-&gt;a。<br>
+因此我们可以只考虑有向图的存储。</p>
+<p>(1) 邻接矩阵：<code>g[a] [b]</code> 存储边a-&gt;b</p>
+<p>(2) 邻接表：可以使用vector来存储 <code>vector &lt;int&gt; g[N]</code></p>
+<pre><code class="language-c++">// 对于每个点k，开一个单链表，存储k所有可以走到的点。h[k]存储这个单链表的头结点
+int h[N], e[N], ne[N], idx;
+
+// 添加一条边a-&gt;b
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+// 初始化
+idx = 0;
+memset(h, -1, sizeof h);
+</code></pre>
+</br>
+<h3 id="并查集">并查集</h3>
+<h4 id="解决什么问题">解决什么问题</h4>
+<ul>
+<li><strong>将两个集合合并</strong></li>
+<li><strong>询问两个元素是否在一个集合当中</strong></li>
+</ul>
+<h4 id="基本原理">基本原理</h4>
+<p>每个集合用一棵树来表示。树根的编号就是整个集合的编号。每个节点存储它的父节点，p[x]表示x的父节点</p>
+<ul>
+<li>
+<p>如何判断树根？</p>
+<pre><code class="language-c++">if (p[x] == x)
+</code></pre>
+</li>
+<li>
+<p>如何求x的集合编号？</p>
+<pre><code class="language-c++">while (p[x] != x)
+    x = p[x];
+</code></pre>
+<p><strong>优化：路径压缩，第一次求祖先节点的时候把所有遍历的点的父节点都设为祖先节点</strong></p>
+<pre><code class="language-c++">// 返回x的祖宗节点 + 路径压缩
+int find (int x) {
+    if (p[x] != x)
+        p[x] = find(p[x]);
+    return p[x];
+}
+</code></pre>
+</li>
+<li>
+<p>如何合并两个集合？</p>
+<pre><code class="language-c++">// p[x]是x的集合编号，p[y]是y的集合编号
+p[x] = y;
+</code></pre>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[树（实战篇）]]></title>
         <id>https://kay-rick.github.io/post/shu-shi-zhan-pian/</id>
@@ -6290,1113 +8915,6 @@ public:
     }
 };
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Redis基础篇（一）]]></title>
-        <id>https://kay-rick.github.io/post/redis-ji-chu-pian-yi/</id>
-        <link href="https://kay-rick.github.io/post/redis-ji-chu-pian-yi/">
-        </link>
-        <updated>2020-03-06T12:58:14.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>Redis 是一个开源，高级的键值存储和一个适用的解决方案，用于构建高性能，可扩展的 Web 应用程序。Redis 也被作者戏称为数据结构服务器 ，这意味着使用者可以通过一些命令，基于带有 TCP 套接字的简单服务器-客户端协议来访问一组可变数据结构 。(在 Redis 中都采用键值对的方式，只不过对应的数据结构不一样罢了)</p>
-</blockquote>
-<h2 id="redis是什么">Redis是什么?</h2>
-<ul>
-<li>
-<p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、<strong>Key-Value数据库</strong>，并提供多种语言的API</p>
-<p>​	1、Redis安装在磁盘</p>
-<p>​	2、<strong>Redis数据存储在内存</strong>。</p>
-</li>
-<li>
-<p>Redis解决什么问题</p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zzdqdpa6j30ne0xmwgl.jpg" alt="image-20191217201429438" style="zoom:33%;" />
-<p>​	先从Redis缓存查询数据，如果没有则到MySQL中查</p>
-</li>
-<li>
-<p>Redis特性</p>
-<ul>
-<li>
-<p>速度快</p>
-</li>
-<li>
-<p>键值对数据结构服务器</p>
-</li>
-<li>
-<p>丰富的功能</p>
-</li>
-<li>
-<p>简单稳定  --- 单线程</p>
-</li>
-<li>
-<p>持久化</p>
-</li>
-<li>
-<p>高可用、分布式转移</p>
-</li>
-<li>
-<p>客户端语言多</p>
-</li>
-</ul>
-</li>
-<li>
-<p>Redis使用场景</p>
-<ol>
-<li>
-<p>缓存数据库</p>
-</li>
-<li>
-<p>排行榜</p>
-</li>
-<li>
-<p>计数器应用</p>
-</li>
-<li>
-<p>社交网络</p>
-</li>
-<li>
-<p>消息队列</p>
-</li>
-<li>
-<p>其他场景</p>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="redis数据类型">Redis数据类型?</h2>
-<h3 id="string">String</h3>
-<ul>
-<li>
-<p><code>String</code>类型 （实际上可以是<strong>字符串（包括<code>XML JSON</code>）</strong>，还有数字（整形 浮点数），<strong>二进制（图片 音频 视频）</strong>，<strong>最大不能超过512MB</strong>）</p>
-<pre><code>set age 18	(18)
-incr age		(19)
-decr age		(18)
-incrby age 2	(20)
-decrby age 2	(18)
-</code></pre>
-</li>
-<li>
-<p>批量设值 <code>mset</code></p>
-<pre><code>mset name Rick age 20
-</code></pre>
-</li>
-</ul>
-<p>​		批量设置，可<strong>减少IO进而提高效率</strong></p>
-<ul>
-<li>
-<p>设置过期时间</p>
-<pre><code>set age 23 ex 10	// 10s后过期 px 10000ms过期
-</code></pre>
-</li>
-<li>
-<p>常用用法</p>
-<pre><code>set name Rick
-append name Kay
-get name			(RickKay)
-</code></pre>
-</li>
-<li>
-<p>String应用场景</p>
-<ul>
-<li>
-<p>计数器</p>
-<pre><code>INCR article:readcount:{文章id}		// 统计某文章的阅读量,用户进来点一次进行加1
-GET article:readcount:{文章id}		// 获得某文章的阅读量
-</code></pre>
-<pre><code>INCR article:readcount:1001
-INCR article:readcount:1001
-INCR article:readcount:1001
-INCR article:readcount:1001
-GET article:readcount:1001		(4)
-</code></pre>
-</li>
-<li>
-<p>Web集群session共享</p>
-<p>Spring session + redis实现session共享</p>
-</li>
-<li>
-<p>分布式系统全局序列号</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="hash">Hash</h3>
-<ul>
-<li>
-<p>Hash <strong>哈希hash是一个string类型的field和value的映射表，hash特适合用于存储对象</strong></p>
-<p>存储一个用户(user)信息：1主键</p>
-<p><code>hset</code></p>
-<pre><code>hset user:1 name Rick age 20
-hgetall user:1		(&quot;name&quot; &quot;Rick&quot; &quot;age&quot; &quot;20&quot;)
-hget user:1 age					(&quot;20&quot;)
-</code></pre>
-<p><code>hmset</code></p>
-<pre><code>hmset user:2 name Kay age 20 sex male
-hmget user:2 name age sex			(&quot;Kay&quot; &quot;20&quot; &quot;male&quot;)
-hgetall user:2	 (&quot;name&quot; &quot;Kay&quot; &quot;age&quot; &quot;18&quot; &quot;sex&quot; &quot;male&quot;)
-hvals user:2				(&quot;Kay&quot; &quot;18&quot; &quot;male&quot;)
-</code></pre>
-</li>
-<li>
-<p>三种方式存储用户信息的优缺点</p>
-<ul>
-<li>
-<p>原生：<code>set user:1:name james</code></p>
-<p>​			<code>set user:1:age 23</code></p>
-<p>​			<code>set user:1:sex boy</code></p>
-<p>​	优点：简单直观，每个键对应一个值</p>
-<p>​	缺点：键数过多，占用内存多，用户信息过于分散，不用于生产环境</p>
-</li>
-<li>
-<p>将对象序列化存入Redis  <code>set user:1 serialize(userInfo)</code></p>
-<p>​	优点： 编程简单</p>
-<p>​    缺点：序列化和反序列化有开销</p>
-</li>
-<li>
-<p>使用Hash类型</p>
-<p>​	优点：简单直观，使用合理可减少内存空间消耗</p>
-<p>​	缺点：要控制ziplist与hashtable两种编码转换，且hashtable会消耗更多内存erialize</p>
-</li>
-</ul>
-</li>
-<li>
-<p>应用场景</p>
-<ul>
-<li>
-<p><strong>电商购物车</strong></p>
-<img src="https://tva1.sinaimg.cn/large/00831rSTly1gci79x5onoj30ju128k57.jpg" alt="image-20200304210814747" style="zoom:50%;" />
-<p>以用户id为key；商品id为filed；商品数量为value</p>
-<p>例如用户1001的购物车的相关操作：</p>
-<p>添加商品 ---&gt; <code>hset cart:1001 10088 1</code></p>
-<p>增加数量 ---&gt; <code>hincrby cart:1001 10088 1</code></p>
-<p>商品总数 ---&gt;<code>hlen cart:1001</code></p>
-<p>删除商品 ---&gt; <code>hdel cart:1001 10088</code></p>
-<p>获取购物车所有商品 ---&gt; <code>hgetall cart:1001</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="list">List</h3>
-<ul>
-<li>
-<p><code>rpush</code>和<code>lpush</code></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga1031flckj31me0o2gnn.jpg" alt="image-20191218172422826" style="zoom: 33%;" />
-<p><code>rpush</code>：在<code>list</code>的尾部追加元素</p>
-<p><code>lpush</code>：在<code>list</code>的头部追加元素</p>
-<p><code>lrange key start stop</code>	：返回列表<code>key</code>中指定区间内的元素，区间以偏移量<code>start</code>和<code>stop</code>指定</p>
-<pre><code>rpush str a b c
-lrange str 0 -1					(&quot;a&quot; &quot;b&quot; &quot;c&quot;)
-lpush str1 a b c
-lrange str1 0 -1					(&quot;c&quot; &quot;b&quot; &quot;a&quot;)
-</code></pre>
-</li>
-<li>
-<p>因为有序，可以通过索引下标获取元素或某个范围内元素列表</p>
-<p>​	<code>llen</code>  获取当前列表长度</p>
-<p>​	<code>lpop</code> 把左边第一个元素删掉</p>
-<p>​	<code>rpop</code> 把右边第一个元素删掉</p>
-<pre><code>llen str			(3)
-lpop str			(a)
-rpop str			(c)
-</code></pre>
-</li>
-<li>
-<p>应用场景</p>
-<ul>
-<li>
-<p><code>Stack	： LPUSH + LPOP ==&gt; FILO</code></p>
-</li>
-<li>
-<p><code>Queue：LPUSH+ RPOP</code></p>
-</li>
-<li>
-<p><code>Blocking MQ ： LPUSH + BRPOP</code></p>
-</li>
-<li>
-<p><strong>微博和微信公众号消息流</strong></p>
-<p>公众号A发微博，消息id为10018</p>
-<p><code>LPUSH msg:1001 10018</code></p>
-<p>公众号B发微博，消息id为10086</p>
-<p><code>LPUSH msg:1001 10086</code></p>
-<p>查看最新微博消息</p>
-<p><code>LRANGE msg:rick 0 5</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="set">Set</h3>
-<ul>
-<li><code>sadd sinter</code>(求交集)</li>
-</ul>
-<p>保存多元素，与列表不一样的是<strong>不允许有重复元素</strong>，且<strong>集合是无序</strong></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga10bvy447j31d60o2dij.jpg" alt="image-20191218173253651" style="zoom:25%;" />
-<pre><code>sadd user a b c					(3)
-sadd user a						(0)
-</code></pre>
-<ul>
-<li>
-<p>集合使用场景：</p>
-<ul>
-<li>
-<p><strong>微博微信点赞</strong></p>
-<p><code>sadd like:{消息id} {用户id}</code>	==&gt;  点赞</p>
-<p><code>srem like:{消息id} {用户id}</code>	==&gt;	取消点赞</p>
-<p><code>sismember like:{消息id} {用户id}</code>	==&gt;	检查用户是否点赞</p>
-<p><code>smembers like:{消息id}</code>		==&gt;	获取点赞的用户列表</p>
-<p><code>scard like:{消息id}</code>			==&gt;	获取点赞用户数</p>
-</li>
-<li>
-<p><strong>微信小程序抽奖</strong></p>
-<p><code>sadd key {userID}</code>		==&gt;    点击参与抽奖</p>
-<p><code>smembers key</code>			 ==&gt;	 查看参与抽奖所有用户</p>
-<p><code>srandmember key[count](抽完后不剔除) / SPOP key [count](抽完后剔除)</code>	==&gt; 	抽取<code>count</code>名中奖者</p>
-</li>
-<li>
-<p><strong>集合操作实现微博微信关注模型</strong></p>
-<p>A关注的人：ASet:  {B,C,D}</p>
-<p>B关注的人：BSet:  {A,C,D,E}</p>
-<p>C关注的人：CSet:  {A,B,E,F}</p>
-<p>A和B的共同关注（求交集）： <code>SINTER ASet BSet</code>	==&gt; {C,D}</p>
-<p>A关注的人也关注B（列举出A关注的人是否关注B）：	<code>sismember CSet B sismember DSet B</code></p>
-<p>A可能认识的人（差集）：<code>sidff ASet BSet</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="zset">Zset</h3>
-<p>有序集合，常<strong>用于排行榜</strong>，如视频网站需要对用户上传视频做排行榜，或<strong>点赞数与集合有联系，不能有重复的成员</strong></p>
-<pre><code>zadd zan 100 Rick
-zadd zan 200 kay
-zadd zan 150 Lee
-zrange zan 0 -1 withscores			(&quot;Rick&quot; &quot;100&quot; &quot;Lee&quot; &quot;150&quot; &quot;kay&quot; &quot;200&quot;)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spring、SpringMVC、MyBatis整合]]></title>
-        <id>https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/</id>
-        <link href="https://kay-rick.github.io/post/springspringmvcmybatis-zheng-he/">
-        </link>
-        <updated>2020-02-28T16:18:00.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>这篇文章不会教你Spring、SpringMVC、MyBatis具体的知识，而是教你如何整合这3大框架快速上手进行开发</p>
-</blockquote>
-<p>整合的项目已同步至GitHub  ==&gt; <a href="https://github.com/Kay-Rick/SSM_Strat">Click</a></p>
-<p>环境：</p>
-<ul>
-<li>JDK12 (建议JDK1.8)</li>
-<li>maven-3.6.3</li>
-<li>Tomcat 9.0.24</li>
-<li>MySQL 5.7.29</li>
-<li>Spring：5.0.2.RELEASE</li>
-<li>spring-web：5.0.2.RELEASE</li>
-<li>MyBatis：3.4.5</li>
-</ul>
-<p>架构：</p>
-<ul>
-<li>Spring 作为业务层，整合 SpringMVC 和 MyBatis，处理数据</li>
-<li>SpringMVC 作为表现层，显示数据</li>
-<li>MyBatis 作为持久层，与数据库交互</li>
-</ul>
-<p>常用网站：</p>
-<p><a href="https://mvnrepository.com">maven仓库</a></p>
-<p><a href="https://mybatis.org/mybatis-3/">MyBatis官方文档</a></p>
-<h2 id="创建maven项目">创建Maven项目</h2>
-<p>根据maven提供的archetype选择webapp</p>
-<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj85r0zxj314f0lggp5.jpg" alt="image-20200228232831452" loading="lazy"></figure>
-<p>项目名称：可以自己命名，这里统一为SpringMVC</p>
-<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj8rfylwj314f0lgwfh.jpg" alt="image-20200228232909755" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj93srkpj314f0lgt9e.jpg" alt="image-20200227215902509" loading="lazy"></figure>
-<p>在这里我们选择自己安装的maven目录和<code>setting.xml</code>的配置文件，最好在自己的<code>setting.xml</code>文件中配置阿里云的镜像，否则下载jar包会非常缓慢</p>
-<pre><code class="language-xml">&lt;mirrors&gt;
-     &lt;mirror&gt;
-     	&lt;id&gt;nexus-aliyun&lt;/id&gt;
-     	&lt;name&gt;Nexus aliyun&lt;/name&gt;
-     	&lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
-     	&lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
-     &lt;/mirror&gt;
-&lt;/mirrors&gt;
-</code></pre>
-<p>项目创建完成后，在右下角点 <code>Enable Auto-Import</code>，这样IDE就会自动为我们导jar包</p>
-<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccj9imcomj30qq093aak.jpg" alt="image-20200228232949756" loading="lazy"></figure>
-<h2 id="配置工作区目录">配置工作区目录</h2>
-<p>创建完的Maven项目目录是这样的结构，接下来我们要进行完善</p>
-<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjaxh0edj30c30b10sy.jpg" alt="image-20200227220609312" loading="lazy">在</p>
-<p>main目录下，创建<code>java</code>和<code>resource</code></p>
-<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjba9ze1j30bj04f3yd.jpg" alt="image-20200227220748872" loading="lazy"></figure>
-<p>如果因为IDE版本问题，创建目录没有提示的情况下，就创建两个普通的目录取名<code>java</code>和<code>resource</code>，然后右击创建出的目录，对应<code>java</code>文件夹是<code>Source Root</code>，<code>resource</code>文件夹是<code>Resources Root</code></p>
-<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjbmijcyj30mx0s10vz.jpg" alt="image-20200227220954878" loading="lazy"></figure>
-<p>在<code>java</code>目录下面创建这样几个包 <code>Controller</code>控制器所在包、<code>dao</code>数据库访问接口包、<code>entity</code>对应<code>JavaBean</code>所在包，<code>Service</code>对应一些业务逻辑编写</p>
-<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjbyg4apj30ar09smxa.jpg" alt="image-20200227221521712" loading="lazy"></figure>
-<h2 id="配置pomxml文件">配置pom.xml文件</h2>
-<p>配置<code>properties</code>下面的目录，方便我们对依赖<code>jar</code>包版本的管理</p>
-<pre><code class="language-xml">&lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
-    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
-    &lt;spring.version&gt;5.0.2.RELEASE&lt;/spring.version&gt;
-    &lt;slf4j.version&gt;1.6.6&lt;/slf4j.version&gt;
-    &lt;log4j.version&gt;1.2.12&lt;/log4j.version&gt;
-    &lt;mysql.version&gt;5.1.6&lt;/mysql.version&gt;
-    &lt;mybatis.version&gt;3.4.5&lt;/mybatis.version&gt;
-    &lt;jackson.version&gt;2.9.8&lt;/jackson.version&gt;
-&lt;/properties&gt;
-</code></pre>
-<p>配置<code>dependencies</code></p>
-<pre><code class="language-xml">&lt;dependencies&gt;
-    &lt;!-- spring --&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
-      &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
-      &lt;version&gt;1.6.8&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-tx&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
-      &lt;version&gt;${spring.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;junit&lt;/groupId&gt;
-      &lt;artifactId&gt;junit&lt;/artifactId&gt;
-      &lt;version&gt;4.12&lt;/version&gt;
-      &lt;scope&gt;compile&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;mysql&lt;/groupId&gt;
-      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-      &lt;version&gt;${mysql.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
-      &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
-      &lt;version&gt;2.5&lt;/version&gt;
-      &lt;scope&gt;provided&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
-      &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
-      &lt;version&gt;2.0&lt;/version&gt;
-      &lt;scope&gt;provided&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;jstl&lt;/groupId&gt;
-      &lt;artifactId&gt;jstl&lt;/artifactId&gt;
-      &lt;version&gt;1.2&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- log start --&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;log4j&lt;/groupId&gt;
-      &lt;artifactId&gt;log4j&lt;/artifactId&gt;
-      &lt;version&gt;${log4j.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
-      &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
-      &lt;version&gt;${slf4j.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
-      &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
-      &lt;version&gt;${slf4j.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- log end --&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
-      &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
-      &lt;version&gt;${mybatis.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
-      &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
-      &lt;version&gt;1.3.0&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;c3p0&lt;/groupId&gt;
-      &lt;artifactId&gt;c3p0&lt;/artifactId&gt;
-      &lt;version&gt;0.9.1.2&lt;/version&gt;
-      &lt;type&gt;jar&lt;/type&gt;
-      &lt;scope&gt;compile&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;!-- json begin --&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
-        &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
-        &lt;version&gt;${jackson.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-	&lt;dependency&gt;
-      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
-      &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
-      &lt;version&gt;${jackson.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-      &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
-      &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
-      &lt;version&gt;${jackson.version}&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;!-- json end --&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<h2 id="配置resource和webxml">配置resource和Web.xml</h2>
-<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjdhfnmhj30wf0mmn0m.jpg" alt="image-20200227222330196" loading="lazy"></figure>
-<p>在<code>resource</code>目录下创建2个<code>xml</code>文件和1个<code>properties</code>的文件，分别是：</p>
-<p><code>ApplicationContext.xml</code>   ===&gt;  Spring的配置文件</p>
-<p><code>log4j.properties</code>  ===&gt;  日志的相关配置</p>
-<p><code>springmvc.xml</code>	===&gt;   SpringMVC的配置文件</p>
-<figure data-type="image" tabindex="9"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjedyz78j30b002zq2t.jpg" alt="image-20200227222437061" loading="lazy"></figure>
-<h3 id="applicationcontextxml">ApplicationContext.xml</h3>
-<p><strong>根据自己配置需要修改部分请一定看注释</strong></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
-       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
-	   http://www.springframework.org/schema/beans/spring-beans.xsd
-	   http://www.springframework.org/schema/context
-	   http://www.springframework.org/schema/context/spring-context.xsd
-	   http://www.springframework.org/schema/aop
-	   http://www.springframework.org/schema/aop/spring-aop.xsd
-	   http://www.springframework.org/schema/tx
-	   http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
-
-    &lt;!--配置扫描注解，进行依赖注入--&gt;
-    &lt;context:component-scan base-package=&quot;com.rick&quot;&gt;
-        &lt;!-- 配置要忽略的注解Controller交给SpringMVC去控制 --&gt;
-        &lt;context:exclude-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;
-    &lt;/context:component-scan&gt;
-
-    &lt;!--Spring整合MyBatis--&gt;
-    
-    &lt;!-- 配置数据源 根据自己的mysql具体数据库进行配置，我这里对应的ssm数据库，root用户，密码 257098 --&gt;
-    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
-        &lt;property name=&quot;driverClass&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
-        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:mysql://localhost:3306/ssm&quot;/&gt;
-        &lt;property name=&quot;user&quot; value=&quot;root&quot;/&gt;
-        &lt;property name=&quot;password&quot; value=&quot;257098&quot;/&gt;
-    &lt;/bean&gt;
-    &lt;!-- 配置 SqlSession 工厂 --&gt;
-    &lt;bean id=&quot;sqlSessionFactoryBean&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-        &lt;!-- 引入数据源 --&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
-    &lt;/bean&gt;
-
-    &lt;!-- 配置 Dao 接口所在类--&gt;
-    &lt;!-- 根据自己dao包所在位置进行配置 --&gt;
-    &lt;bean id=&quot;mapperScanner&quot; class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
-        &lt;property name=&quot;basePackage&quot; value=&quot;com.rick.dao&quot;/&gt;
-    &lt;/bean&gt;
-	
-&lt;/beans&gt;
-</code></pre>
-<h3 id="log4jproperties">log4j.properties</h3>
-<p>直接复制</p>
-<pre><code class="language-properties"># Set root category priority to INFO and its only appender to CONSOLE.
-#log4j.rootCategory=INFO, CONSOLE            debug   info   warn error fatal
-log4j.rootCategory=info, CONSOLE, LOGFILE
-
-# Set the enterprise logger category to FATAL and its only appender to CONSOLE.
-log4j.logger.org.apache.axis.enterprise=FATAL, CONSOLE
-
-# CONSOLE is set to be a ConsoleAppender using a PatternLayout.
-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
-log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
-log4j.appender.CONSOLE.layout.ConversionPatern=%d{ISO8601} %-6r [%15.15t] %-5p %30.30c %x - %m\n
-t
-# LOGFILE is set to be a File appender using a PatternLayout.
-log4j.appender.LOGFILE=org.apache.log4j.FileAppender
-log4j.appender.LOGFILE.File=d:\axis.log
-log4j.appender.LOGFILE.Append=true
-log4j.appender.LOGFILE.layout=org.apache.log4j.PatternLayout
-log4j.appender.LOGFILE.layout.ConversionPattern=%d{ISO8601} %-6r [%15.15t] %-5p %30.30c %x - %m\n
-</code></pre>
-<h3 id="springmvcxml">springmvc.xml</h3>
-<p><strong>有部分需自己修改看注释</strong></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
-       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
-    &lt;!-- 扫描Controller的注解 ==&gt; 对应自己的包 --&gt;
-    &lt;context:component-scan base-package=&quot;com.rick&quot;&gt;
-        &lt;!-- 只扫描 controller--&gt;
-        &lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;
-    &lt;/context:component-scan&gt;
-
-    &lt;!-- 配置视图解析器 --&gt;
-    &lt;bean id=&quot;internalResourceViewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
-        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/pages/&quot;/&gt;
-        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
-    &lt;/bean&gt;
-    &lt;!-- 开启对SpringMVC注解的支持 --&gt;
-    &lt;mvc:annotation-driven/&gt;
-
-&lt;/beans&gt;
-</code></pre>
-<h3 id="webxml">web.xml</h3>
-<pre><code class="language-xml">&lt;!DOCTYPE web-app PUBLIC
- &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;
- &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot; &gt;
-
-&lt;web-app&gt;
-  &lt;display-name&gt;Archetype Created Web Application&lt;/display-name&gt;
-
-  &lt;context-param&gt;
-    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-    &lt;param-value&gt;classpath:ApplicationContext.xml&lt;/param-value&gt;
-  &lt;/context-param&gt;
-  &lt;!-- 将过滤器配置在servlet前面，否则IDE会报错 --&gt;
-  &lt;!-- 配置过滤器，解决中文乱码问题--&gt;
-  &lt;filter&gt;
-    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
-    &lt;!-- 字符集初始化为 UTF-8 --&gt;
-    &lt;init-param&gt;
-      &lt;param-name&gt;encoding&lt;/param-name&gt;
-      &lt;param-value&gt;UTF-8&lt;/param-value&gt;
-    &lt;/init-param&gt;
-  &lt;/filter&gt;
-
-  &lt;filter-mapping&gt;
-    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
-    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-  &lt;/filter-mapping&gt;
-
-  &lt;!-- 配置 spring 的监听器，默认只加载 WEB-INF 目录下的 applicationContext.xml 配置文件 --&gt;
-  &lt;listener&gt;
-    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
-  &lt;/listener&gt;
-
-  &lt;!-- 配置DispatcherServlet前端控制器--&gt;
-  &lt;servlet&gt;
-    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-    &lt;!-- 加载 springmvc.xml --&gt;
-    &lt;init-param&gt;
-      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-      &lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;
-    &lt;/init-param&gt;
-    &lt;!-- 启动服务器，加载该servlet --&gt;
-    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-  &lt;/servlet&gt;
-
-  &lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
-  &lt;/servlet-mapping&gt;
-
-&lt;/web-app&gt;
-
-</code></pre>
-<p>在配置web.xml的时候这里注意几个点根据自己的命名来确定：</p>
-<figure data-type="image" tabindex="10"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjgbyo7jj316505zdgi.jpg" alt="image-20200228134733041" loading="lazy"></figure>
-<figure data-type="image" tabindex="11"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjgj60v9j31dh0dwjtl.jpg" alt="image-20200228134902457" loading="lazy"></figure>
-<h2 id="创建数据库表-实体类">创建数据库表、实体类</h2>
-<p>在MySQL数据库管理工具中运行以下SQL创建数据库（该数据库定义了主键递增）</p>
-<pre><code class="language-sql">CREATE DATABASE ssm;
-USE ssm;
-CREATE TABLE user(
-	id int primary key auto_increment,
-	name varchar(20),
-	age int 
-);
-INSERT INTO user(name,age) VALUES('aaa',12);
-INSERT INTO user(name,age) VALUES('bbb',34);
-INSERT INTO user(name,age) VALUES('ccc',56);
-</code></pre>
-<h3 id="entity">entity</h3>
-<p>在entity包下创建User类</p>
-<pre><code class="language-java">package com.rick.entity;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 13:55
- * @Description:
- */
-public class User {
-    private Integer id;
-    private String name;
-    private Integer age;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return &quot;User{&quot; +
-                &quot;id=&quot; + id +
-                &quot;, name='&quot; + name + '\'' +
-                &quot;, age=&quot; + age +
-                '}';
-    }
-}
-</code></pre>
-<h3 id="dao">dao</h3>
-<p>dao包下创建数据库访问接口UserDao，并声明注解 @Repository交由Spring进行管理，声明@Mapper 对应MyBatis的SqlMapper</p>
-<pre><code class="language-java">package com.rick.dao;
-
-import com.rick.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 13:58
- * @Description:
- */
-@Repository
-@Mapper
-public interface UserDao {
-
-    @Insert(&quot;insert into user(name,age) values(#{name},#{age})&quot;)
-    public void insertUser(User user);
-
-    @Select(&quot;select * from user&quot;)
-    public List&lt;User&gt; queryAll();
-}
-
-</code></pre>
-<h3 id="service">Service</h3>
-<p><code>Service</code>包下面创建接口<code>UserService</code>和实现类<code>UserServiceImp</code></p>
-<figure data-type="image" tabindex="12"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjhbsv6tj30bc02wa9x.jpg" alt="image-20200228140845755" loading="lazy"></figure>
-<p><code>UserService</code>中定义逻辑接口</p>
-<pre><code class="language-java">package com.rick.Service;
-
-import com.rick.entity.User;
-
-import java.util.List;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 14:04
- * @Description:
- */
-public interface UserService {
-    public void insertUser(User user);
-    public List&lt;User&gt; queryAll();
-}
-</code></pre>
-<p>实现类<code>UserServiceImp</code>声明注解<code>@Service</code>交由Spring管理</p>
-<pre><code class="language-java">package com.rick.Service.ServiceImp;
-
-import com.rick.Service.UserService;
-import com.rick.dao.UserDao;
-import com.rick.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 14:06
- * @Description:
- */
-@Service
-public class UserServiceImp implements UserService {
-    @Autowired
-    private UserDao userDao;
-
-    @Override
-    public void insertUser(User user) {
-        userDao.insertUser(user);
-        System.out.println(&quot;插入User后：&quot;);
-        System.out.println(userDao.queryAll());
-    }
-
-    @Override
-    public List&lt;User&gt; queryAll() {
-        System.out.println(&quot;Service查询全部数据：&quot;);
-        System.out.println(userDao.queryAll());
-        return userDao.queryAll();
-    }
-}
-</code></pre>
-<h3 id="controller">Controller</h3>
-<p><code>UserController</code>声明注解 <code>@Controller</code>交由Spring管理，该类下面第一级路由信息<code>@RequestMapping(&quot;/User&quot;) @ResponseBody</code>使方法的返回的数据为<code>JSON</code>格式</p>
-<pre><code class="language-java">package com.rick.Controller;
-
-import com.rick.Service.ServiceImp.UserServiceImp;
-import com.rick.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 14:15
- * @Description:
- */
-@Controller
-@RequestMapping(&quot;/User&quot;)
-@ResponseBody
-public class UserController {
-    @Autowired
-    private UserServiceImp userServiceImp;
-
-    @RequestMapping(&quot;/insert&quot;)
-    public String insertUser(User user){
-        userServiceImp.insertUser(user);
-        return user.toString();
-    }
-
-    @RequestMapping(&quot;/getAll&quot;)
-    public String getAll(){
-        return userServiceImp.queryAll().toString();
-    }
-}
-</code></pre>
-<h2 id="配置tomcat服务器">配置Tomcat服务器</h2>
-<figure data-type="image" tabindex="13"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjijiamvj30d301zt8i.jpg" alt="image-20200228142306310" loading="lazy"></figure>
-<figure data-type="image" tabindex="14"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjiso3gxj30gn0ny0u3.jpg" alt="image-20200228142331031" loading="lazy"></figure>
-<figure data-type="image" tabindex="15"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjj1oiixj311d0ni0ti.jpg" alt="image-20200228142443115" loading="lazy"></figure>
-<p>选择Artifact</p>
-<figure data-type="image" tabindex="16"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjjepvs3j30b603dq2r.jpg" alt="image-20200228142458910" loading="lazy"></figure>
-<figure data-type="image" tabindex="17"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjjm8eewj30gk0h7mxe.jpg" alt="image-20200228142550819" loading="lazy"></figure>
-<p>在这里可以配置整个这个SpringMVC项目的URL，默认是<code>http://localhost:8080/SpringMVC_war/</code></p>
-<figure data-type="image" tabindex="18"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjk3n0pcj30pp0ef3ym.jpg" alt="image-20200228142613317" loading="lazy"></figure>
-<figure data-type="image" tabindex="19"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkb0vimj30pn0k4gmj.jpg" alt="image-20200228142748311" loading="lazy"></figure>
-<h2 id="启动项目">启动项目</h2>
-<figure data-type="image" tabindex="20"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkijhzej30mu05g0st.jpg" alt="image-20200228143009892" loading="lazy"></figure>
-<p>启动后先是自动跳转到<code>index.jsp</code>页面下</p>
-<figure data-type="image" tabindex="21"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkpf113j30ka06udfy.jpg" alt="image-20200228143555807" loading="lazy"></figure>
-<h3 id="查询">查询</h3>
-<p>根据自己配置的路由信息即可进行查询，这里就以<code>JSON</code>数据的格式返回</p>
-<figure data-type="image" tabindex="22"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjkwqx1ej30s904p0sx.jpg" alt="image-20200228143724347" loading="lazy"></figure>
-<h3 id="插入">插入</h3>
-<p>由于我们定义了自增主键id，因此插入数据库中的数据<code>id</code>是根据数据库自增的，并不是<code>null</code></p>
-<figure data-type="image" tabindex="23"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjl6ek34j30ml04cwem.jpg" alt="image-20200228144522652" loading="lazy"></figure>
-<blockquote>
-<p>至此，一个SSM的项目就可以运行起来，但仍有一功能不够完善，还需一些额外配置</p>
-</blockquote>
-<h2 id="异常处理">异常处理</h2>
-<p>在项目下创建一个存放自定义异常处理类的包 <code>Exception</code>和<code>config</code></p>
-<figure data-type="image" tabindex="24"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjmj4543j30bn05q747.jpg" alt="image-20200228153208748" loading="lazy"></figure>
-<p>在<code>Exception</code>包下面创建异常处理类信息</p>
-<pre><code class="language-java">package com.rick.Exception;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 15:12
- * @Description: 定义异常信息
- */
-public class SysException extends Exception {
-    private String message;
-
-    public SysException(String message) {
-        this.message = message;
-    }
-
-    public SysException() {
-        
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-}
-
-</code></pre>
-<p><code>config</code>包下面创建类进行异常统一处理跳转</p>
-<pre><code class="language-java">package com.rick.config;
-
-import com.rick.Exception.SysException;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 15:33
- * @Description: 统一异常处理
- */
-@Component
-public class MyExceptionResolver implements HandlerExceptionResolver {
-    @Override
-    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-        SysException se = null;
-        if (e instanceof SysException){
-            se = (SysException)e;
-        }else {
-            se = new SysException(&quot;系统正在维护中&quot;);
-        }
-        System.out.println(se.getMessage());
-        ModelAndView mv = new ModelAndView();
-        mv.addObject(&quot;errorMsg&quot;,se.getMessage());
-        // 指定跳转到 WEB-INF/pages/error.jsp
-        mv.setViewName(&quot;error&quot;);
-        return  mv;
-    }
-}
-</code></pre>
-<p>创建<code>error.jsp</code></p>
-<figure data-type="image" tabindex="25"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjo21vuwj30b604lt8n.jpg" alt="image-20200228155033517" loading="lazy"></figure>
-<pre><code class="language-jsp">&lt;%--
-  Created by IntelliJ IDEA.
-  User: Rick
-  Date: 2020/2/28
-  Time: 15:38
-  To change this template use File | Settings | File Templates.
---%&gt;
-&lt;%--不忽略EL表达式--%&gt;
-&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; isELIgnored=&quot;false&quot; %&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Error&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Error&lt;/h1&gt;
-    &lt;h2&gt;${errorMsg}&lt;/h2&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>在<code>springmvc.xml</code>中配置异常处理器</p>
-<pre><code class="language-xml">&lt;!-- 对应自己写的异常类 --&gt; 
-&lt;bean id=&quot;sysException&quot; class=&quot;com.rick.Exception.SysException&quot;/&gt;
-</code></pre>
-<p>当我们<code>Controller</code>中方法在调用时抛出异常就会被捕获</p>
-<pre><code class="language-java">@RequestMapping(&quot;/hello&quot;)
-public void hello(){
-    int a = 10/0;
-    System.out.println(a);
-}
-</code></pre>
-<figure data-type="image" tabindex="26"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjoaslz6j30jk05l74d.jpg" alt="image-20200228160859287" loading="lazy"></figure>
-<h2 id="配置过滤器和拦截器">配置过滤器和拦截器</h2>
-<p>通过SpringMVC配置过滤器放行静态资源</p>
-<figure data-type="image" tabindex="27"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjoocqmrj30a204za9z.jpg" alt="image-20200228172146426" loading="lazy"></figure>
-<p>在<code>springmvc.xml</code>中进行配置</p>
-<pre><code class="language-xml">&lt;!--配置哪些资源不拦截--&gt;
-&lt;mvc:resources mapping=&quot;/js/**&quot; location=&quot;/js/&quot;/&gt;
-&lt;mvc:resources mapping=&quot;/images/**&quot; location=&quot;/images/&quot;/&gt;
-&lt;mvc:resources mapping=&quot;/css/**&quot; location=&quot;/css/&quot;/&gt;
-</code></pre>
-<p><strong>配置拦截器（AOP思想）</strong></p>
-<p>在<code>config</code>包下面创建<code>MyInterceptor</code></p>
-<pre><code class="language-java">package com.rick.config;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 16:55
- * @Description: 拦截器
- */
-public class MyInterceptor implements HandlerInterceptor {
-    /**
-     * Controller方法执行之前的预处理，决定是否放行，可用于登录拦截是否放行
-     * @param request
-     * @param response
-     * @param handler
-     * @return 是否放行(true/false)
-     * @throws Exception
-     */
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(&quot;preHandle执行了---Controller执行之前&quot;);
-//        决定是否拦截跳转
-//        request.getRequestDispatcher(&quot;/WEB-INF/pages/error.jsp&quot;).forward(request,response);
-        return true;
-    }
-
-    /**
-     * Controller方法执行之后，DispatcherServlet视图渲染之前执行，可以对ModelAndView进行操作
-     * @param request
-     * @param response
-     * @param handler
-     * @param modelAndView
-     * @throws Exception
-     */
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println(&quot;postHandle执行了---Controller方法执行之后，DispatcherServlet视图渲染之前执行&quot;);
-        //        request.getRequestDispatcher(&quot;/WEB-INF/pages/error.jsp&quot;).forward(request,response);
-    }
-
-    /**
-     * DispatcherServlet视图渲染结束后执行，一般进行资源的释放
-     * @param request
-     * @param response
-     * @param handler
-     * @param ex
-     * @throws Exception
-     */
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println(&quot;afterCompletion执行了---最后&quot;);
-    }
-}
-</code></pre>
-<p>在<code>springmvc.xml</code>中进行配置</p>
-<pre><code class="language-xml">&lt;mvc:interceptors&gt;
-    &lt;mvc:interceptor&gt;
-        &lt;!--需要拦截的方法--&gt;
-        &lt;mvc:mapping path=&quot;/User/**&quot;/&gt;
-        &lt;!--不拦截的方法 &lt;mvc:exclude-mapping path=&quot;&quot;/&gt;--&gt;
-
-        &lt;!--配置拦截器对象--&gt;
-        &lt;bean class=&quot;com.rick.config.MyInterceptor&quot;/&gt;
-	&lt;/mvc:interceptor&gt;
-	&lt;!-- 配置多个拦截器时，按顺序配置即可 --&gt;
-&lt;/mvc:interceptors&gt;
-</code></pre>
-<p>当我执行<code>User</code>中方法时就可以看到拦截的效果：</p>
-<figure data-type="image" tabindex="28"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjpgn6hsj30vk0a1q3n.jpg" alt="image-20200228173013784" loading="lazy"></figure>
-<h2 id="mybatis中使用mapperxml配置">MyBatis中使用Mapper.xml配置</h2>
-<p>对于简单<code>SQL</code>语句来说，注解使代码显得更加简洁,使用<code>@Mapper</code>和<code>@Repository</code>比较方便，但当我们涉及到一些复杂<code>SQL</code>语句需要传参和动态<code>SQL</code>的时候，注解就会显得比较麻烦，此时应该采用<code>xml</code>的语句映射方式</p>
-<p>我们在<code>dao</code>下面创建测试的接口<code>UserTestDao</code>  <strong>!!!注意：我们不需要在接口上声明任何注解</strong></p>
-<pre><code class="language-java">package com.rick.dao;
-
-import com.rick.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-/**
- * @Author: Rick
- * @Date: 2020/2/28 18:01
- * @Description:
- */
-public interface UserTestDao {
-    public void insertUser(User user);
-    public List&lt;User&gt; queryAll();
-}
-</code></pre>
-<p>在<code>resource</code>目录下面创建<code>mapper</code>目录并在下面创建<code>UserTestDao.xml</code> 和<code>mybatis.xml</code></p>
-<figure data-type="image" tabindex="29"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjr296n6j30c706zdfv.jpg" alt="image-20200228224328615" loading="lazy"></figure>
-<p><code>mybatis.xml</code>	==&gt; 这里面的<code>settings</code> 具体细节<strong>可查官方文档进行配置</strong>，为了简便，我们这里就不做配置</p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE configuration
-        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-
-&lt;configuration&gt;
-
-&lt;/configuration&gt;
-</code></pre>
-<p><code>UserMapper.xml</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;com.rick.dao.UserTestDao&quot;&gt;
-    &lt;!--
-		mapper接口的方法名称要和mapper映射文件的statement的id一致。
-		mapper接口的方法参数类型要和mapper映射文件的statement的parameterType的值一致，而且它的参数是一个。
-		mapper接口的方法返回值类型要和mapper映射文件的statement的resultType的值一致。
-	 --&gt;
-    &lt;!--parameterType可以省略--&gt;
-    &lt;insert id=&quot;insertUser&quot; parameterType=&quot;com.rick.entity.User&quot;&gt;
-        insert into user(name, age) values (#{name}, #{age})
-    &lt;/insert&gt;
-
-    &lt;!--注意如果返回的是集合，那应该设置为集合包含的类型，而不是集合本身。--&gt;
-    &lt;select id=&quot;queryAll&quot; resultType=&quot;com.rick.entity.User&quot;&gt;
-        select * from user
-    &lt;/select&gt;
-
-&lt;/mapper&gt;
-</code></pre>
-<p><strong>注意在配置对象参数和返回参数时，一定要配上java目录下面的引用，我这里是 com.rick.entity.User，若只写User，那么在编译时会找不到User类而报错</strong></p>
-<p><strong>ApplicationContext.xml中配置SqlSession 工厂加入mapperLocations和configLocation</strong></p>
-<pre><code class="language-xml">&lt;!-- 配置 SqlSession 工厂 --&gt;
-&lt;bean id=&quot;sqlSessionFactoryBean&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-    &lt;!-- 引入数据源 --&gt;
-    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
-    &lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:mapper/*.xml&quot;/&gt;
-    &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis.xml&quot;/&gt;
-&lt;/bean&gt;
-</code></pre>
-<p>至此，<code>UserTestDao</code>便与<code>UserDao</code>的功能一样了，只不过<code>UserTsetDao</code>是通过mapper和xml进行配置，<code>UserDao</code>直接通过注解方式进行配置，各有优点，根据实际情况合理选用一种</p>
-<h2 id="配置jdbc事务">配置JDBC事务</h2>
-<p>配置<code>ApplicationContext.xml</code></p>
-<pre><code class="language-xml">&lt;!--开启Spring的事务--&gt;
-    &lt;!--配置事务管理器--&gt;
-    &lt;bean id=&quot;dataSourceTransactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
-    &lt;/bean&gt;
-    &lt;!--启用Spring事务的注解功能--&gt;
-    &lt;tx:annotation-driven transaction-manager=&quot;dataSourceTransactionManager&quot;/&gt;
-</code></pre>
-<p>然后们就可以在业务<code>Service</code>层进行声明注解<code>@Transactional</code></p>
-<figure data-type="image" tabindex="30"><img src="https://tva1.sinaimg.cn/large/00831rSTly1gccjs9a31zj30nj03r749.jpg" alt="image-20200228230539790" loading="lazy"></figure>
-<p>至此，一个较为完整的SSM整合基本完成~</p>
 ]]></content>
     </entry>
 </feed>

@@ -1,0 +1,1853 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>图论(基础篇) | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://tva1.sinaimg.cn/large/007S8ZIlly1gglw3z0i7dj31s70u04qs.jpg)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">图论(基础篇)</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-07-10 15:01:38" itemprop="datePublished" pubdate="">2020-07-10</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>本篇内容属于图论基础篇内容，省去了最基础的概念，对于一些容易遗忘的概念和重要的基础算法做了梳理</p>
+</blockquote>
+<h2 id="图相关概念">图相关概念</h2>
+</br>
+<h3 id="连通图和连通分量">连通图和连通分量</h3>
+<ul>
+<li>连通图：若图中<strong>任意两个顶点</strong>都连通，则称为<strong>连通图</strong>， 否则称为非连通图</li>
+<li>无向图G中的极大连通子图称为G的连通分量。任何连通图的连通分量只有一个，非连通图有多个连通分量</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvg081p4j30sb0a1td3.jpg" alt="image-20200607100850914" loading="lazy"></figure>
+</br>
+<h3 id="强连通图和强连通分量">强连通图和强连通分量</h3>
+<ul>
+<li>
+<p>有向图：若从定点i到顶点j有路径，则称从顶点i到j是连通的。若图G中任意两个顶点i和j都连通，即从顶点i到j和从顶点j到i都存在路径，则称图G是<strong>强连通图</strong></p>
+</li>
+<li>
+<p>有向图G中的极大强连通子图称为G的强连通分量。非强连通图有多个强连通分量。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvgah3s5j30l20bvn0d.jpg" alt="image-20200607101417696" loading="lazy"></figure>
+</br>
+<h2 id="图的存储">图的存储</h2>
+</br>
+<h3 id="邻接矩阵存储">邻接矩阵存储</h3>
+<h4 id="定义">定义</h4>
+<p>邻接矩阵时表示顶点之间相邻关系的矩阵。设<code>G=（V, E）</code>是具有n(n &gt; 0)个顶点的图，顶点的编号依次为<code>0 ~ n - 1</code></p>
+<ul>
+<li>无向图中若<code>(i, j)</code>连通：<code>A[i] [j] = 1</code></li>
+<li>有向图中若i到j有边：<code>A[i] [j] = 1</code></li>
+<li>带权无向图，A[i] [j] = w<sub>ij</sub></li>
+<li>带权有向图，A[i] [j] = w<sub>ij</sub></li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvgpzhovj30qi0hcjx5.jpg" alt="image-20200607103340476" loading="lazy"></figure>
+<h4 id="存储类型">存储类型</h4>
+<p>使用二维数组来进行存储</p>
+<h4 id="特点">特点</h4>
+<ul>
+<li>邻接矩阵唯一</li>
+<li>适合稠密图的存储</li>
+</ul>
+</br>
+<h3 id="邻接表存储">邻接表存储</h3>
+<pre><code>每个单链表上添加一个表头节点（表示顶点信息）。并将所有表头节点构成一个数组，下标为i的元素表示顶点i的表头节点
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvh0bxl8j30sn0d3437.jpg" alt="image-20200607120257195" loading="lazy"></figure>
+<h4 id="存储类型-2">存储类型</h4>
+<p>使用vector边长数组来存</p>
+<ul>
+<li>若只用存储重点编号，则可以直接定义为int类型	<code>vector &lt;int&gt; Adj[N]</code></li>
+</ul>
+<pre><code class="language-c++">vector&lt;int&gt; Adj[N];
+// 添加一条从1号顶点到达3号顶点的有向边
+Adj[1].push_back(3);
+</code></pre>
+<ul>
+<li>若要存储重点编号和边权，那么可以使用结构体Node来存储</li>
+</ul>
+<pre><code class="language-c++">struct Node {
+    int v;	// 边的终点编号
+    int w;	// 边权
+    Node (int _v, int _w) : v(_v), w(_w) {}		// 构造函数
+}
+
+vector&lt;Node&gt; Adj[N];
+// 添加一条从1号顶点到达3号顶点的有向边，边权为4
+Adj[1].push_back(Node(3, 4));
+</code></pre>
+</br>
+<h2 id="图的遍历">图的遍历</h2>
+<blockquote>
+<p>图的遍历这一部分一定要熟记DFS和BFS的算法模板，很多题目就是在这些模板上做一些处理就可以解决</p>
+</blockquote>
+</br>
+<h3 id="深度优先搜索-dfs">深度优先搜索 DFS</h3>
+<h4 id="邻接矩阵存储遍历">邻接矩阵存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">const int INF = 0x3f3f3f3f;
+// 邻接矩阵存储图的信息g[i][j]表示顶点 i 到顶点 j 这条边的权值大小
+int g[N][N];
+bool st[N];
+// 初始化
+memset(g, 0x3f, sizeof g);
+
+void dfs(int u) {
+    // 先标记这个点已经被访问过
+    st[u] = true;
+    // 递归地去遍历和该点连通的点
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[u][i] != INF)
+            dfs(i);
+    }
+}
+</code></pre>
+<h4 id="邻接表存储遍历">邻接表存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">// 使用邻接表来存储图
+vector&lt;int&gt; g[N];
+bool st[N];
+
+void dfs(int u) {
+    // st[u] 表示点u已经被遍历过
+    st[u] = true;
+	// 递归地去遍历和该点连通的点
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        if (!st[g[u][i]]) 
+            dfs(g[u][i]);
+    }
+}
+</code></pre>
+</br>
+<h3 id="广度优先搜索-bfs">广度优先搜索 BFS</h3>
+<h4 id="邻接矩阵存储遍历-2">邻接矩阵存储遍历</h4>
+<ul>
+<li>节点编号为 1 ~ n</li>
+</ul>
+<pre><code class="language-c++">const int INF = 0x3f3f3f3f;
+// 邻接矩阵存储图的信息g[i][j]表示顶点 i 到顶点 j 这条边的权值大小
+int g[N][N];
+bool st[N];
+// 初始化
+memset(g, 0x3f, sizeof g);
+
+queue&lt;int&gt; q;
+st[1] = true; // 表示1号点已经被遍历过
+q.push(1);
+while (!q.empty()) {
+    int t = q.front();
+    q.pop();
+    
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[t][i] != INF) {
+            st[i] = true; // 表示点i已经被遍历过
+            q.push(i);
+        }
+    }
+}
+</code></pre>
+</br>
+<h2 id="最短路径">最短路径</h2>
+<figure data-type="image" tabindex="5"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvhdi5erj310n0dkmyz.jpg" alt="image-20200708231809330" loading="lazy"></figure>
+</br>
+<h3 id="dijkstra算法">Dijkstra算法</h3>
+<p>Dijkstra算法用来解决<strong>单源最短路问题，不存在负边权</strong>，给定图G和起点s，通过算法得到S到其他任何顶点的最短距离</p>
+<h4 id="朴素dijkstra">朴素Dijkstra</h4>
+<ul>
+<li>
+<pre><code class="language-c++">dist[1] = 0, dist[i] = MAX;
+集合S：当前已确定最短距离的点
+</code></pre>
+</li>
+<li>
+<pre><code>for i : 1 ~ n
+	不在集合S中，距离最近的点  --&gt; t;
+	t  --&gt; 集合S
+	用t更新其他点的距离 (当dist[x] &gt; dist[t] + w 就更新dist[x])
+</code></pre>
+</li>
+</ul>
+<figure data-type="image" tabindex="6"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvhqylkxj3090066jrd.jpg" alt="image-20200607161658126" loading="lazy"></figure>
+<ul>
+<li>代码模板</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file Dijkstra.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-07 18:10:32
+ * @brief Dijkstra算法
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+const int N = 510;
+
+int n, m;
+// 使用邻接矩阵来存储
+int g[N][N];
+// 保存最短距离
+int dist[N];
+// 用来判断是否有加入到集合中
+bool st[N];
+
+int dijkstra() {
+    // 先初始化为正无穷
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int t = -1;
+        // 找到不在集合S中距离最近的点
+        for (int j = 1; j &lt;= n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        // 将t加入到集合
+        st[t] = true;
+        // 用t来更新其他点距离
+        for (int j = 1; j &lt;= n; j++)
+            dist[j] = min(dist[j], dist[t] + g[t][j]);
+    }
+    if (dist[n] == 0x3f3f3f3f)
+        return -1;
+    return dist[n];
+}
+</code></pre>
+<h4 id="堆优化版dijkstra">堆优化版Dijkstra</h4>
+<p>核心思想：集合中找最近的点的操作可以<strong>使用堆来实现</strong>，C++中可以使用优先队列<code>priority_queue</code>来实现</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+const int N = 1000010;
+// 第一个存放边权，第二个存放节点编号(方便heap按边权排序)
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+// 使用邻接表来存储
+vector&lt;PII&gt; g[N];
+
+// 保存最短距离
+int dist[N];
+// 用来判断是否有加入到集合中
+bool st[N];
+
+int dijkstra() {
+    // 先置为正无穷
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    // 使用小根堆
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt; &gt; heap;
+    // pair排序时是先根据first，再根据second，这里显然要根据距离排序
+    heap.push({0, 1});
+    while (!heap.empty()) {
+        auto t = heap.top();
+        heap.pop();
+        int ver = t.second;
+        if (st[ver])
+            continue;
+        st[ver] = true;
+        
+        // 更新节点
+        for (int i = 0; i &lt; g[ver].size(); i++) {
+            int j = g[ver][i].second;
+            if (dist[j] &gt; dist[ver] + g[ver][i].first) {
+                dist[j] = dist[ver] + g[ver][i].first;
+                heap.push({dist[j], j});
+            }
+        }
+    }
+    if (dist[n] == 0x3f3f3f3f)
+        return -1;
+    return dist[n]; 
+}
+
+int main() {
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    while (m--) {
+        int a, b, c;
+        scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+        // a到b之间有一条边权为c的边
+        g[a].push_back({c, b});
+    }
+    
+    int t = dijkstra();
+    printf(&quot;%d\n&quot;, t);
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="bellman-ford算法">Bellman-Ford算法</h3>
+<ul>
+<li>
+<p><strong>适合存在负边权的最短路，而且最短路不一定存在（例如存在负权回路）</strong></p>
+</li>
+<li>
+<pre><code>for 1 ~ n
+	for 所有边 a, b, w
+		dist[b] = min(dist[b], dist[a] + w);
+</code></pre>
+</li>
+</ul>
+<h4 id="求有边数限制的最短路">求有边数限制的最短路</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你求出从1号点到n号点的最多经过k条边的最短距离，如果无法从1号点走到n号点，输出impossible。</p>
+<p>注意：图中可能 <strong>存在负权回路</strong> 。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数n，m，k。</p>
+<p>接下来m行，每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示从1号点到n号点的最多经过k条边的最短距离。</p>
+<p>如果不存在满足条件的路径，则输出“impossible”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n,k≤500,<br>
+1≤m≤10000,<br>
+任意边长的绝对值不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3 1
+1 2 1
+2 3 1
+1 3 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Bellman-Ford.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 21:30:56
+ * @brief Bellman-Ford算法求有边数限制的最短路
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 510, M = 10010;
+
+int n, m, k;
+int dist[N], backup[N];
+
+struct Edge {
+    int a;
+    int b;
+    int w;
+} edge[M];
+
+int bellman_ford() {
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    for (int i = 0; i &lt; k; i++) {
+        // 做数组拷贝，防止在下面的更新操作中被串联更新
+        memcpy(backup, dist, sizeof dist);
+        for (int j = 0; j &lt; m; j++) {
+            auto e = edge[j];
+            dist[e.b] = min(dist[e.b], backup[e.a] + e.w);
+        }
+    }
+    // 这里不直接写等于无穷：是因为有可能距离无穷的那个节点在里层的for循环会更新下一个无穷的节点
+    if (dist[n] &gt; 0x3f3f3f3f / 2)
+        return -1;
+    else
+        return dist[n];
+}
+
+int main() {
+
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    // 读入m条边
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, w;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; w;
+        edge[i] = {a, b, w};
+    }
+
+    int t = bellman_ford();
+    if (t == -1)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="spfa算法">SPFA算法</h3>
+<ul>
+<li>
+<p>spfa求最短路算法其实是对Bellman-Ford算法改进，在Bellman-Ford算法中<code>dist[b] = min(dist[b], dist[a] + w);</code>，如果dist[a]没有变小，那么这个操作一定会是无效的操作，spfa算法就是在这里利用BFS进行优化</p>
+</li>
+<li>
+<pre><code>queue &lt;-- 1;
+while queue 不空
+	t = q.front();
+	q.pop();
+	更新t的所有出边(如果被更新，就再加到队列去更新别人)
+</code></pre>
+</li>
+</ul>
+<h4 id="spfa求最短路">SPFA求最短路</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你求出1号点到n号点的最短距离，如果无法从1号点走到n号点，则输出impossible。</p>
+<p>数据保证不存在负权回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n和m。</p>
+<p>接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示1号点到n号点的最短距离。</p>
+<p>如果路径不存在，则输出”impossible”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n,m≤105,<br>
+图中涉及边长绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3
+1 2 5
+2 3 -3
+1 3 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file SPFA.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 21:07:47
+ * @brief SPFA算法求最短路
+ *          在Bellman-Ford算法中dist[b] = min(dist[b], dist[a] + w);
+ *          如果dist[a]没有变小，那么这个操作一定会是无效的操作
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 100010;
+// 第一个位置存储编号，第二个位置存储边权
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;PII&gt; g[N];
+int dist[N];
+bool st[N];
+
+int spfa() {
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    queue&lt;int&gt; q;
+    q.push(1);
+    st[1] = true;
+    // 利用BFS的思想优化Bellman-Ford算法就是SPFA
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        st[t] = false;
+
+        for (int i = 0; i &lt; g[t].size(); i++) {
+            int j = g[t][i].first;
+            int w = g[t][i].second;
+            // 队列中存的就是那些变小的节点：更新过谁，我再拿谁更新别人
+            if (dist[j] &gt; dist[t] + w) {
+                dist[j] = dist[t] + w;
+                if (!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return dist[n];
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        // 加一条从a到b的边，边权为c
+        g[a].push_back({b, c});
+    }
+
+    int t = spfa();
+
+    if (t == 0x3f3f3f3f)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h4 id="spfa判断负环">SPFA判断负环</h4>
+<p>给定一个n个点m条边的有向图，图中可能存在重边和自环， <strong>边权可能为负数</strong>。</p>
+<p>请你判断图中是否存在负权回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n和m。</p>
+<p>接下来m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。</p>
+<p><strong>输出格式</strong></p>
+<p>如果图中<strong>存在</strong>负权回路，则输出“Yes”，否则输出“No”。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤2000,<br>
+1≤m≤10000,<br>
+图中涉及边长绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3
+1 2 -1
+2 3 4
+3 1 -4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>Yes
+</code></pre>
+<ul>
+<li>更新dist[x]时候，同时记录cnt[x]，记录每个节点最短路的边数 cnt[x] &gt;= n 表示经过了n + 1个点，说明有环的存在</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file SPFA-hasCircle.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-07-08 22:28:12
+ * @brief SPFA判断回路里面是否有负环
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int N = 2010, M = 10010;
+typedef pair&lt;int, int&gt; PII;
+
+int n, m;
+vector&lt;PII&gt; g[N];
+int dist[N];
+// 记录最短路的边数，cnt[x] &gt;= n 表示有环
+int cnt[N];
+bool st[N];
+
+bool spfa() {
+    queue&lt;int&gt; q;
+    // 将所有点都入队：因为以前只是求固定一个点
+    // 但存在负权回路的时候，不一定所有点都能经过负权回路
+    for (int i = 1; i &lt;= n; i++) {
+        st[i] = true;
+        q.push(i);
+    }
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        // 出队了进行标记，没有在队列里面
+        st[t] = false;
+
+        for (int i = 0; i &lt; g[t].size(); i++) {
+            int j = g[t][i].first;
+            int w = g[t][i].second;
+            // 当前需要更新
+            if (dist[j] &gt; dist[t] + w) {
+                dist[j] = dist[t] + w;
+                cnt[j] = cnt[t] + 1;
+                // 最短路的边数 &gt;= n 表示存在环
+                if (cnt[j] &gt;= n)
+                    return true;
+                if (!st[j]) {
+                    st[j] = true;
+                    q.push(j);
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a].push_back({b, c});
+    }
+
+    if (spfa())
+        cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+}
+</code></pre>
+</br>
+<h3 id="floyd算法">Floyd算法</h3>
+<p>对于一个各边权值均大于零的有向图，对于每一个顶点 i ≠ j，求出顶点i与顶点j之间最短路径和最短路径长度</p>
+<figure data-type="image" tabindex="7"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvia5i8cj30lj0boq6i.jpg" alt="image-20200708230636736" loading="lazy"></figure>
+<pre><code class="language-c++">/**
+ * @file Floyd.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-30 00:42:40
+ * @brief Floyd算法：多源最短路算法：动态规划思想
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 210;
+
+int n, m;
+// d[i][j] 存储所有边，执行完floyd算法存的就是i到j的最短距离
+int d[N][N];
+
+// 求多源汇最短路floyd算法
+void floyd() {
+    for (int k = 1; k &lt;= n; k++) {
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= n; j++)
+                // 上一层：从i出发只经过i ~ k - 1 到j的距离
+                // d[i][k] + d[k][j] 经过k的距离
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+        }
+    }
+}
+</code></pre>
+</br>
+<h2 id="最小生成树">最小生成树</h2>
+<blockquote>
+<p>对于带权连通图G（每条边上的权值为大于零的实数），可能有多颗不同的生成树</p>
+<p>每棵生成树的所有边的权值之和可能不同</p>
+<p>其中权值之和最小的生成树称为图的最小生成树</p>
+</blockquote>
+<h3 id="prim算法适合稠密图">Prim算法(适合稠密图)</h3>
+<p>给定一个n个点m条边的无向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>求最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p>给定一张边带权的无向图G=(V, E)，其中V表示图中点的集合，E表示图中边的集合，n=|V|，m=|E|。</p>
+<p>由V中的全部n个顶点和E中n-1条边构成的无向连通子图被称为G的一棵生成树，其中边的权值之和最小的生成树被称为无向图G的最小生成树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>接下来m行，每行包含三个整数u，v，w，表示点u和点v之间存在一条权值为w的边。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，若存在最小生成树，则输出一个整数，表示最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤500,<br>
+1≤m≤10^5,<br>
+图中涉及边的边权的绝对值均不超过10000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>4 5
+1 2 1
+1 3 2
+1 4 3
+2 3 2
+3 4 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvimiw0oj30oi0j0wnt.jpg" alt="image-20200709150633120" loading="lazy"></figure>
+<ul>
+<li>核心思想：让一棵小树长大</li>
+<li>从顶点开始，找距离树最近的边的点加进来（贪心思想）</li>
+<li>从未加到树中的顶点选一个距离树最小距离的点加进来，直到所有点都加进来</li>
+<li><strong>时间复杂度O(n^2)</strong></li>
+</ul>
+<pre><code>S：当前连通块的点集
+dist[i]:表示点i到最集合的距离
+
+dist初始化为正无穷
+for 1 ~ n
+	t = 集合外距离最近的点
+	用 t 来更新其他点到集合的距离
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Prim.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-29 22:02:16
+ * @brief Prim算法
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 510;
+const int M = 100010;
+const int INF = 0x3f3f3f3f;
+
+int n, m;
+int dist[N];
+bool st[N];
+int g[N][N];
+
+int prim() {
+    // prim算法中dist[j]表示当前点到集合的距离
+    memset(dist, 0x3f, sizeof dist);
+    int res = 0;
+    for (int i = 0; i &lt; n; i++) {
+        // 找到距离集合最近的点
+        int t = -1;
+        for (int j = 1; j &lt;= n; j++) {
+            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))
+                t = j;
+        }
+        st[t] = true;
+        // 不是第一个点且dist[t]为正无穷的情况,说明没有找到
+        if (i != 0 &amp;&amp; dist[t] == INF)
+            return INF;
+        // 放在前面，防止有环的出现
+        if (i != 0)
+            res += dist[t];
+        // 用t更新其他点到集合的距离
+        for (int j = 1; j &lt;= n; j++) {
+            // Dijkstra算法找的是距起点的距离
+            // Prim算法找的是距离集合的距离
+            dist[j] = min(dist[j], g[t][j]);
+        }
+    }
+    return res;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    memset(g, 0x3f, sizeof g);
+
+    while (m--) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+
+    int t = prim();
+    if (t == INF)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; t &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="kruskal算法适合边稀疏图">Kruskal算法(适合边稀疏图)</h3>
+<p>给定一个n个点m条边的无向图，图中可能存在重边和自环，边权可能为负数。</p>
+<p>求最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p>给定一张边带权的无向图G=(V, E)，其中V表示图中点的集合，E表示图中边的集合，n=|V|，m=|E|。</p>
+<p>由V中的全部n个顶点和E中n-1条边构成的无向连通子图被称为G的一棵生成树，其中边的权值之和最小的生成树被称为无向图G的最小生成树。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。</p>
+<p>接下来m行，每行包含三个整数u，v，w，表示点u和点v之间存在一条权值为w的边。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，若存在最小生成树，则输出一个整数，表示最小生成树的树边权重之和，如果最小生成树不存在则输出impossible。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤10^5,<br>
+1≤m≤2∗10^5,<br>
+图中涉及边的边权的绝对值均不超过1000。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>4 5
+1 2 1
+1 3 2
+1 4 3
+2 3 2
+3 4 4
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvizuablj30nd08a425.jpg" alt="image-20200709150942941" loading="lazy"></figure>
+<ul>
+<li>核心思想：将森林合并成树</li>
+<li><strong>将所有边从小到大排序（最慢的一步O(mlog m)）</strong></li>
+<li>枚举每一条边，a -&gt; b，权重c，a和b不连通，将这条边加到集合当中(并查集)</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 200010;
+
+int n ,m;
+int p[N];
+
+struct Edge {
+    int a, b, w;
+    // 重载小于号，方便排序
+    bool operator&lt; (const Edge&amp; e) const {
+        return w &lt; e.w;
+    }
+}edges[N];
+
+// 并查集找祖宗节点
+int find(int x) {
+    if (p[x] != x) 
+        p[x] = find(p[x]);
+    return p[x];
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        edges[i] = {a, b, c};
+    }
+    // 对边按权值大小排序
+    sort(edges, edges + m);
+    
+    // 初始化并查集
+    for (int i = 1; i &lt;= n; i++) 
+        p[i] = i;
+    
+    int res = 0, cnt = 0;
+    // 枚举每一条边
+    for (int i = 0; i &lt; m; i++) {
+        int a = edges[i].a;
+        int b = edges[i].b;
+        int w = edges[i].w;
+        
+        // 找是否在一个集合中
+        a = find(a);
+        b = find(b);
+        
+        // 没有在一个集合当中，要再a和b之间加一条边, 边权已经排序，直接加入权值
+        if (a != b) {
+            p[a] = b;
+            res += w;
+            cnt++;
+        }
+    }
+    
+    if (cnt &lt; n - 1)
+        cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h2 id="拓扑排序"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805343043829760">拓扑排序</a></h2>
+<p>对一个<strong>有向无环图G</strong>进行拓扑排序，<strong>是将G中所有顶点排成一个线性序列，使得图中任意一对顶点u和v，若边&lt;u,v&gt;∈E(G)，则u在线性序列中出现在v之前</strong>。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 NN 和 MM，分别表示有向图的点和边的数量。</p>
+<p>接下来 MM 行，每行给出一条边的起点和终点。</p>
+<p>点的编号从 11 到 NN。</p>
+<p>再一行包含一个整数 KK，表示询问次数。</p>
+<p>接下来 KK 行，每行包含一个所有点的排列。</p>
+<p>一行中的数字用空格隔开。</p>
+<p><strong>输出格式</strong></p>
+<p>在一行中输出所有不是拓扑序列的询问序列的编号。</p>
+<p>询问序列编号从 00 开始。</p>
+<p>行首和行尾不得有多余空格，保证存在至少一个解。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤N≤1000,<br>
+1≤M≤10000,<br>
+1≤K≤100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 8
+1 2
+1 3
+5 2
+5 4
+2 3
+2 6
+3 4
+6 4
+5
+1 5 2 3 6 4
+5 1 2 6 3 4
+5 1 2 3 6 4
+5 2 1 6 3 4
+1 2 3 4 5 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 4
+</code></pre>
+<pre><code class="language-c++">/**
+ * @file Test.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-14 21:11:37
+ * @brief 判断拓扑排序
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 1010, M = 10010;
+struct Edge {
+    int a;
+    int b;
+} e[M];
+int n, m;
+// 记录路径中的下标
+int pos[N];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        e[i].a = a;
+        e[i].b = b;
+    }
+
+    int k;
+    cin &gt;&gt; k;
+    vector&lt;int&gt; res;
+    for (int i = 0; i &lt; k; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            int x;
+            cin &gt;&gt; x;
+            pos[x] = j;
+        }
+
+        bool success = true;
+        for (int j = 0; j &lt; m; j++) {
+            if (pos[e[j].b] &lt; pos[e[j].a]) {
+                success = false;
+                break;
+            }
+        }
+        if (!success)
+            res.push_back(i);
+    }
+    if (res.size() &gt; 0) {
+        cout &lt;&lt; res[0];
+        for (int i = 1; i &lt; res.size(); i++)
+            cout &lt;&lt; ' ' &lt;&lt; res[i];
+    }
+    return 0;
+}
+</code></pre>
+</br>
+<h2 id="特殊图">特殊图</h2>
+</br>
+<h3 id="二分图">二分图</h3>
+<p>二分图，是图论中的一种特殊模型。设<code>G=(V,E)</code>是一个<strong>无向图</strong>，如果顶点V可分割为两个互不相交的子集<code>(A,B)</code>，并且图中的每条边<code>（i，j）</code>所关联的两个顶点i和j分别属于这两个不同的顶点集<code>(i in A,j in B)</code>，则称图G为一个二分图。简单来说，如果图中点可以被分为两组，并且使得所有边都跨越组的边界，则这就是一个二分图。准确地说**：把一个图的顶点划分为两个不相交子集 ，使得每一条边都分别连接两个集合中的顶点。如果存在这样的划分，则此图为一个二分图**</p>
+<h4 id="染色法判定二分图">染色法判定二分图</h4>
+<ul>
+<li>充要条件：<strong>一个图是二分图当且仅当图中不含奇数环</strong></li>
+<li>判定是否是一个二分图：染色法</li>
+</ul>
+<figure data-type="image" tabindex="10"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvjioqcxj30pt09fwf9.jpg" alt="image-20200709153406616" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+vector&lt;int&gt; g[N];
+int color[N];
+
+bool dfs(int u, int c) {
+    color[u] = c;
+    // 遍历所有的点
+    for (int i = 0; i &lt; g[u].size(); i++) {
+        int j = g[u][i];
+        // 没有染色就去dfs染色
+        if (!color[j]) {
+            // 递归调用：1变2, 2变1的过程
+            if (!dfs(j, 3 - c))
+                return false;
+        }
+        // 染色且颜色相同，就表示不是二分图
+        else if (color[j] == c)
+            return false;
+    }
+    
+    return true;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 无向图：两条边都要加
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    
+    bool flag = true;
+    for(int i = 1; i &lt;= n; i++) {
+        // 该点没有染色，就开始dfs开始染色
+        if (!color[i]) {
+            if (!dfs(i, 1)) {
+                flag = false;
+                break;
+            }
+        }
+    }
+    
+    if (flag) 
+        cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    
+    return 0;
+}
+</code></pre>
+<h4 id="匈牙利算法求二分图最大匹配">匈牙利算法求二分图最大匹配</h4>
+<p>给定一个二分图，其中左半部包含n1个点（编号1<sub>n1），右半部包含n2n2个点（编号1</sub>n2），二分图共包含m条边。</p>
+<p>数据保证任意一条边的两个端点都不可能在同一部分中。</p>
+<p>请你求出二分图的最大匹配数。</p>
+<p>二分图的匹配：给定一个二分图G，在G的一个子图M中，M的边集{E}中的任意两条边都不依附于同一个顶点，则称M是一个匹配。</p>
+<p>二分图的最大匹配：所有匹配中包含边数最多的一组匹配被称为二分图的最大匹配，其边数即为最大匹配数。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含三个整数 n1、 n2和 m。</p>
+<p>接下来m行，每行包含两个整数u和v，表示左半部点集中的点u和右半部点集中的点v之间存在一条边。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示二分图的最大匹配数。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n1,n2≤500,<br>
+1≤u≤n1,<br>
+1≤v≤n2,<br>
+1≤m≤10^5</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>2 2 4
+1 1
+1 2
+2 1
+2 2
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2
+</code></pre>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/96229700">如何理解匈牙利算法</a></li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 510;
+
+int n1, n2, m;
+vector&lt;int&gt; g[N];
+bool st[N];
+// match[j]表示右边集合匹配左边集合点的编号
+int match[N];
+
+bool find(int x) {
+    
+    for(int i = 0; i &lt; g[x].size(); i++) {
+        int j = g[x][i];
+        if (!st[j]) {
+            st[j] = true;
+            // 当没有任何匹配的时候或者匹配到左边集合的点可以匹配到别的节点
+            if (match[j] == 0 || find(match[j])) {
+                match[j] = x;
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    cin &gt;&gt; n1 &gt;&gt; n2 &gt;&gt; m;
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        // 只用存一条有向边
+        g[a].push_back(b);
+    }
+    
+    int res = 0;
+    
+    // 只用枚举左边的集合
+    for (int i = 1; i &lt;= n1; i++) {
+        // 每次都要清空：目的是针对左边不同的节点我们需要尝试去匹配所有和他相连的节点，即使匹配的节点已经被匹配过
+        memset(st, false, sizeof st);
+        if (find(i))
+            res++;
+    }
+    
+    cout &lt;&lt; res &lt;&lt; endl;
+    
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="欧拉图">欧拉图</h3>
+<ul>
+<li>
+<p>欧拉路径是图中的一条路径，该<strong>路径满足恰好访问每个边一次</strong></p>
+</li>
+<li>
+<p>欧拉回路是<strong>一条在同一顶点处开始和结束的欧拉路径</strong></p>
+</li>
+<li>
+<p><strong>如果一个连通图的所有顶点的度数都为偶数，那么这个连通图具有欧拉回路，且这个图被称为欧拉图</strong></p>
+</li>
+<li>
+<p>如果一个连通图中有两个顶点的度数为奇数，其他顶点的度数为偶数，那么所有欧拉路径都从其中一个度数为奇数的顶点开始，并在另一个度数为奇数的顶点结束</p>
+</li>
+<li>
+<p><strong>具有欧拉路径但不具有欧拉回路的图被称为半欧拉图</strong></p>
+</li>
+</ul>
+<h4 id="欧拉路径"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805349851185152">欧拉路径</a></h4>
+<p><strong>输入格式</strong><br>
+第一行包含两个整数 N 和 M，表示无向图的点和边的数量。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a 和 b 之间存在一条边。</p>
+<p>所有点的编号从 1∼N。</p>
+<p><strong>输出格式</strong><br>
+首先，在第一行按顺序输出点 1∼N 中每个点的度数。</p>
+<p>第二行输出对该图的判断，Eulerian（欧拉图），Semi-Eulerian（半欧拉图），Non-Eulerian（非欧拉图）。</p>
+<p>行尾不得有多余空格。</p>
+<figure data-type="image" tabindex="11"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvk15x08j30wr0bxdh6.jpg" alt="image-20200709222355944" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+const int N = 510;
+
+int n, m;
+//
+bool g[N][N];
+// 记录每个点的度数
+int d[N];
+bool st[N];
+
+// dfs遍历所有点，返回点的个数
+int dfs(int u) {
+    st[u] = true;
+    
+    // 先将自己计算，所以置为1
+    int res = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i] &amp;&amp; g[u][i])
+            res += dfs(i);
+    }
+    
+    return res;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    
+    for (int i = 0; i &lt; m; i++) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a][b] = g[b][a] = true;
+        d[a]++;
+        d[b]++;
+    }
+    
+    int cnt = dfs(1);
+    cout &lt;&lt; d[1];
+    
+    for (int i = 2; i &lt;= n; i++)
+        cout &lt;&lt; ' ' &lt;&lt; d[i];
+    cout &lt;&lt; endl;
+    
+    if (cnt == n) {
+        int s = 0;
+        for (int i = 1; i &lt;= n; i++) 
+            if (d[i] % 2)
+                s++;
+        if (s == 0)
+            cout &lt;&lt; &quot;Eulerian&quot; &lt;&lt; endl;
+        else if (s == 2)
+            cout &lt;&lt; &quot;Semi-Eulerian&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;Non-Eulerian&quot; &lt;&lt; endl;
+        
+    }else
+        cout &lt;&lt; &quot;Non-Eulerian&quot; &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</br>
+<h3 id="哈密顿图">哈密顿图</h3>
+<ul>
+<li>哈密顿回路问题是包含图中每个顶点的简单回路</li>
+<li>哈密顿图是一个无向图，由指定的起点前往指定的终点，途中经过所有其他节点且只经过一次。在图论中是指含有哈密顿回路的图，闭合的<strong>哈密顿路径称作哈密顿回路</strong>（Hamiltonian cycle），<strong>含有图中所有顶点的路径称作哈密顿路径（Hamiltonian path）</strong></li>
+</ul>
+<h4 id="哈密顿回路"><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805351814119424">哈密顿回路</a></h4>
+<p>哈密顿回路问题是找到一个包含图中每个顶点的简单回路。</p>
+<p>这样的回路称为“哈密顿回路”。</p>
+<p>在本题中，你需要做的是判断给定路径是否为哈密顿回路。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含一个整数 N 表示顶点数，一个整数 M 表示给定<strong>无向图</strong>中的边数。</p>
+<p>接下来 M 行，每行包含两个整数 a,b，表示点 a和 b之间存在一条边。</p>
+<p>所有顶点编号从 1 到 N。</p>
+<p>再一行给出整数 KK，表示询问次数。</p>
+<p>接下来 KK 行，每行包含一个询问，格式如下：</p>
+<p>n V1 V2 … Vn</p>
+<p>n 表示给定路径经过的点的数目，Vi 是路径中经过的点。</p>
+<p><strong>输出格式</strong></p>
+<p>对于每个询问，如果是哈密顿回路则在一行输出 <code>YES</code>，否则输出 <code>NO</code>。</p>
+<p><strong>数据范围</strong></p>
+<p>2&lt;N≤200,<br>
+N−1≤M≤N(N−1)/2,<br>
+1≤K≤1000,<br>
+1≤n≤410</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 10
+6 2
+3 4
+1 5
+2 5
+3 1
+4 1
+1 6
+6 3
+1 2
+4 5
+6
+7 5 1 4 3 6 2 5
+6 5 1 4 3 6 2
+9 6 2 1 6 3 4 5 2 6
+4 1 2 5 1
+7 6 1 3 4 5 2 6
+7 6 1 2 5 4 3 1
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>YES
+NO
+NO
+NO
+YES
+NO
+</code></pre>
+<figure data-type="image" tabindex="12"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvkc20vmj30jz0didgh.jpg" alt="image-20200709222610967" loading="lazy"></figure>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+const int N = 210;
+
+bool g[N][N];
+int n, m;
+bool st[N];
+int nodes[N * 2];
+
+bool check(int cnt) {
+    // 起点和终点不一样或者点数小于n + 1
+    if (nodes[0] != nodes[cnt - 1] || cnt != n + 1)
+        return false;
+    memset(st, 0, sizeof st);
+    for (int i = 0; i &lt; cnt - 1; i++) {
+        st[nodes[i]] = true;
+        // 边不存在
+        if (!g[nodes[i]][nodes[i + 1]])
+            return false;
+    }
+    // 所有点都走到了
+    for (int i = 1; i &lt;= n; i++) {
+        if (!st[i])
+            return false;
+    }
+    
+    return true;
+}
+
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    while (m--) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a][b] = g[b][a] = true;
+    }
+    int k;
+    cin &gt;&gt; k;
+    while (k--) {
+        int cnt;
+        cin &gt;&gt; cnt;
+        for (int i = 0; i &lt; cnt; i++) {
+            cin &gt;&gt; nodes[i];
+        }
+        
+        if (check(cnt))
+            cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+        else
+            cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    } 
+}
+</code></pre>
+</br>
+<h2 id="补充">补充</h2>
+</br>
+<h3 id="数组模拟链表">数组模拟链表</h3>
+<figure data-type="image" tabindex="13"><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gglvkosggnj30ev06h0sw.jpg" alt="image-20200607192609858" loading="lazy"></figure>
+<ul>
+<li><code>e[N]</code>：存储节点值value</li>
+<li><code>ne[N]</code>：存储某个节点的next指针</li>
+<li><code>head</code>表示头结点的下标</li>
+<li><code>idx</code>表示已经用到了哪个点</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @file LinkList.cpp
+ * @author Rick (Kay_Rick@outlook.com)
+ * @version 1.0
+ * @date 2020-06-07 19:36:30
+ * @brief 数组模拟链表实现
+ * 
+ * @copyright Copyright (c) 2020 Rick, All Rights Reserved.
+ * 
+ */
+
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 100010;
+
+// head表示头结点的下标
+// e[i]表示节点i的值
+// ne[i]表示节点i的next指针是多少
+// idx表示已经用到了哪个点
+int e[N], ne[N], idx, head;
+
+void init () {
+    head = -1;
+    idx = 0;
+}
+
+/**
+ * @brief 将x插到头结点
+ * @param x 
+ */
+void add_to_head (int x) {
+    e[idx] = x;
+    ne[idx] = head;
+    head = idx++;
+}
+
+/**
+ * @brief 将节点 x 插入到下标为 k 的节点的后面
+ * @param k 
+ * @param x 
+ */
+void add (int k, int x) {
+    e[idx] = x;
+    ne[idx] = ne[k];
+    ne[k] = idx++;
+}
+
+/**
+ * @brief 将下标是k的点后面的点删除
+ * @param k 
+ */
+void remove (int k) {
+    ne[k] = ne[ne[k]];
+}
+</code></pre>
+</br>
+<h3 id="树与图的存储">树与图的存储</h3>
+<p>树是一种特殊的图，与图的存储方式相同。<br>
+对于无向图中的边ab，存储两条有向边a-&gt;b, b-&gt;a。<br>
+因此我们可以只考虑有向图的存储。</p>
+<p>(1) 邻接矩阵：<code>g[a] [b]</code> 存储边a-&gt;b</p>
+<p>(2) 邻接表：可以使用vector来存储 <code>vector &lt;int&gt; g[N]</code></p>
+<pre><code class="language-c++">// 对于每个点k，开一个单链表，存储k所有可以走到的点。h[k]存储这个单链表的头结点
+int h[N], e[N], ne[N], idx;
+
+// 添加一条边a-&gt;b
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+// 初始化
+idx = 0;
+memset(h, -1, sizeof h);
+</code></pre>
+</br>
+<h3 id="并查集">并查集</h3>
+<h4 id="解决什么问题">解决什么问题</h4>
+<ul>
+<li><strong>将两个集合合并</strong></li>
+<li><strong>询问两个元素是否在一个集合当中</strong></li>
+</ul>
+<h4 id="基本原理">基本原理</h4>
+<p>每个集合用一棵树来表示。树根的编号就是整个集合的编号。每个节点存储它的父节点，p[x]表示x的父节点</p>
+<ul>
+<li>
+<p>如何判断树根？</p>
+<pre><code class="language-c++">if (p[x] == x)
+</code></pre>
+</li>
+<li>
+<p>如何求x的集合编号？</p>
+<pre><code class="language-c++">while (p[x] != x)
+    x = p[x];
+</code></pre>
+<p><strong>优化：路径压缩，第一次求祖先节点的时候把所有遍历的点的父节点都设为祖先节点</strong></p>
+<pre><code class="language-c++">// 返回x的祖宗节点 + 路径压缩
+int find (int x) {
+    if (p[x] != x)
+        p[x] = find(p[x]);
+    return p[x];
+}
+</code></pre>
+</li>
+<li>
+<p>如何合并两个集合？</p>
+<pre><code class="language-c++">// p[x]是x的集合编号，p[y]是y的集合编号
+p[x] = y;
+</code></pre>
+</li>
+</ul>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/dvLuOuwSP/" rel="tag">图论</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/I7ONPRk58e/" rel="tag">算法</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/tu-lun-shi-zhan-pian/" rel="prev"> 图论(实战篇)</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/shu-shi-zhan-pian/" rel="next"> 树（实战篇）</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
