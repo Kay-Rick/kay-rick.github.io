@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-09-08T11:36:16.272Z</updated>
+    <updated>2020-11-12T10:04:43.100Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,211 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[浅谈Trie树]]></title>
+        <id>https://kay-rick.github.io/post/qian-tan-trie-shu/</id>
+        <link href="https://kay-rick.github.io/post/qian-tan-trie-shu/">
+        </link>
+        <updated>2020-11-12T10:00:59.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="什么是trie树">什么是Trie树？</h2>
+<p><strong>Trie树又称单词查找树，是一种树形结构。典型应用是用于统计、排序、保存和查找大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计</strong>。</p>
+<p>根节点不包含字符，<strong>除根节点外每一个节点都只包含一个字符</strong>； 从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串； 每个节点的所有子节点包含的字符都不相同。</p>
+<p>它的优点是：<strong>利用字符串的公共前缀来减少查询时间</strong>，最大限度地减少无谓的字符串比较</p>
+<p>例如存储字符串集合：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi mathvariant="normal">，</mi><mi>a</mi><mi>b</mi><mi>c</mi><mi mathvariant="normal">，</mi><mi>a</mi><mi>b</mi><mi>d</mi><mi mathvariant="normal">，</mi><mi>a</mi><mi>b</mi><mi>c</mi><mi>d</mi><mi mathvariant="normal">，</mi><mi>a</mi><mi>b</mi><mi>c</mi><mi>d</mi><mi mathvariant="normal">，</mi><mi>b</mi><mi>c</mi><mi>d</mi><mi mathvariant="normal">，</mi><mi>e</mi><mi>f</mi><mi>g</mi><mi mathvariant="normal">，</mi><mi>h</mi><mi>i</mi><mi>j</mi></mrow><annotation encoding="application/x-tex">{b， abc， abd， abcd， abcd， bcd， efg， hij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span></span></p>
+<div align = "center">
+    <img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201018155017.png" width = "400" height = "400"></img>
+</div>
+<h2 id="trie树基本操作">Trie树基本操作</h2>
+<blockquote>
+<p>这里以字符串为例</p>
+</blockquote>
+<p><strong>理解核心数据结构</strong></p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span> ：用不同的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>值来记录结点，以下标来记录每一个字符的位置，每次插入一个字符，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi><mo>+</mo><mo>+</mo></mrow><annotation encoding="application/x-tex">idx++</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>n</mi><mo>[</mo><mi>N</mi><mo>]</mo><mo>[</mo><mn>26</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">son[N] [26]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">2</span><span class="mord">6</span><span class="mclose">]</span></span></span></span> ：表示当前结点的儿子，其中存放的是子节点对应的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>；<strong>其中第一维是父节点对应的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>，这里的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>代表字符串的总长度，所以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>永远在这个范围之内。第二维的计数是子节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo>(</mo><mo mathvariant="normal">′</mo></msup><msup><mi>a</mi><mo mathvariant="normal">′</mo></msup><msup><mo>−</mo><mo mathvariant="normal">′</mo></msup><msup><mn>0</mn><mo mathvariant="normal">′</mo></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">(&#x27;a&#x27; - &#x27;0&#x27;)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mopen"><span class="mopen">(</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin"><span class="mbin">−</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的值为二维下标</strong>，对于字母而言最多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>26</mn></mrow><annotation encoding="application/x-tex">26</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">6</span></span></span></span>个子结点。比如：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>n</mi><mo>[</mo><mn>1</mn><mo>]</mo><mo>[</mo><mn>0</mn><mo>]</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">son[1] [0]=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>结点的一个值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>的子结点为结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>；如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>n</mi><mo>[</mo><mn>1</mn><mo>]</mo><mo>[</mo><mn>0</mn><mo>]</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">son[1] [0]= 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，则意味着没有值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>子结点</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">cnt[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span> ：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>p</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">cnt[p]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault">p</span><span class="mclose">]</span></span></span></span>标记以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>结尾的字符串的个数。以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">“</mi><mi>a</mi><mi>b</mi><mi>c</mi><mi mathvariant="normal">”</mi></mrow><annotation encoding="application/x-tex">“abc”</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">“</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord">”</span></span></span></span>字符串为例，最后一个字符<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">‘</mi><mi>c</mi><mi mathvariant="normal">’</mi></mrow><annotation encoding="application/x-tex">‘c’</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">‘</span><span class="mord mathdefault">c</span><span class="mord">’</span></span></span></span>对应的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>作为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">cnt</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span></span></span></span>数组的下标。数组的值是该<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>对应的个数</p>
+</li>
+</ul>
+<h3 id="插入">插入</h3>
+<ul>
+<li>遍历字符串的每一个字符
+<ul>
+<li>将字符映射到$ 0 - 25$</li>
+<li>子节点没有该字符，则添加进来</li>
+</ul>
+</li>
+<li>遍历结束，将字符串最后一个位置对应的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>r</mi><mi>i</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">trie</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">e</span></span></span></span>树结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>对应的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">cnt</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span></span></span></span>数组计数++</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+// N受字符串总长度的限制
+const int N = 100010;
+
+int son[N][26];
+int idx;
+int cnt[N];
+char str[N];
+
+/**
+ * @brief 将字符串添加到Trie树中
+ * @param str 
+ */
+void insert (char* str) {
+    int p = 0;
+    for (int i = 0; str[i]; i++) {
+        // 将字符映射到0-25
+        int u = str[i] - 'a';
+        // 没有该字符，添加进来
+        if (!son[p][u])
+            son[p][u] = ++idx;
+        p = son[p][u];
+    }
+    // 此时的p就是str中最后一个字符对应的trie树的位置idx
+    cnt[p]++;
+}
+</code></pre>
+<h3 id="查找">查找</h3>
+<ul>
+<li>遍历字符串的每一个字符，如果其中任一个字符没有在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>r</mi><mi>i</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Trie</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">e</span></span></span></span>树中找到相应结点则返回<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></li>
+<li>遍历结束，返回该字符串最后一个字符对应<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">cnt</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span></span></span></span>数组的值</li>
+</ul>
+<pre><code class="language-c++">/**
+ * @brief 查找字符串str出现的次数
+ * @param str 
+ * @return int 
+ */
+int query (char* str) {
+    int p = 0;
+    for (int i = 0; str[i]; i++) {
+        int u = str[i] - 'a';
+        if (!son[p][u])
+            return 0;
+        p = son[p][u];
+    }
+    return cnt[p];
+}
+</code></pre>
+<h2 id="最大异或对">最大异或对</h2>
+<p>在给定的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>个整数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mn>1</mn></msub><mi mathvariant="normal">，</mi><msub><mi>A</mi><mn>2</mn></msub><mo>…</mo><mo>…</mo><msub><mi>A</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">A_{1}，A_{2}……A_{N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>中选出两个进行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">xor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>（异或）运算，得到的结果最大是多少？</p>
+<p><strong>输入格式</strong></p>
+<p>第一行输入一个整数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span></p>
+<p>第二行输入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>个整数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mn>1</mn></msub><mi mathvariant="normal">～</mi><msub><mi>A</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">A_{1}～A_{N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">～</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数表示答案。</p>
+<p><strong>数据范围</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>N</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup><mo separator="true">,</mo><mn>0</mn><mo>≤</mo><msub><mi>A</mi><mi>i</mi></msub><mo>&lt;</mo><msup><mn>2</mn><mn>31</mn></msup></mrow><annotation encoding="application/x-tex">1≤ N ≤10^5,
+0≤ A_{i}&lt;2^{31}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.008548em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3
+1 2 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3
+</code></pre>
+<h3 id="暴力枚举">暴力枚举</h3>
+<p>算法时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int a[N];
+int n;
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i  = 0; i &lt; n; i++) 
+        cin &gt;&gt; a[i];
+    
+    int res = 0;
+    for (int i = 0; i &lt; n; i++) 
+        for (int j = 0; j &lt; n; j++)
+            res = max(res, a[i] ^ a[j]);
+   	
+    cout &lt;&lt; res &lt;&lt; endl;
+}
+</code></pre>
+<h3 id="使用trie树优化">使用Trie树优化</h3>
+<ul>
+<li>
+<p>优化目标：当我们去枚举每一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的时候，我们相当于要从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mn>1</mn></msub><mo>−</mo><msub><mi>A</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A_{1} - A_{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>之间选出一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">A_{j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>使得异或值最大，那么就相当于在我们选的时候，用Trie树进行优化</p>
+</li>
+<li>
+<p>对于每一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>我们都可以写成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span>位<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>进制的形式  <span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><munder><mn>11010101010...0101110</mn><mo stretchy="true">⎵</mo></munder><mn>32</mn></munder></mrow><annotation encoding="application/x-tex">\underbrace{11010101010...0101110}_{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.943548em;vertical-align:-1.299108em;"></span><span class="mord munder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6444400000000001em;"><span style="top:-1.700892em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.0000000000000004em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.64444em;"><span class="svg-align" style="top:-2.352em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.548em;min-width:1.6em;"><span class="brace-left" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.648em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.299108em;"><span></span></span></span></span></span></span></span></span>，然后将每个数加进Trie树里面，  我们要做的就是<strong>从最高位开始尽可能找到不同的那个结点往下走</strong>，每走一步，就会减去一半的规模，所以最后的时间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n log_{2} n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+</li>
+</ul>
+<div align = "center">
+    <image src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201112163612.png" width = "300" height = "300"></image>
+</div>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 100010, M = 3100010;
+
+int son[M][2], idx;
+int n;
+int a[N];
+
+void insert(int x) {
+    int p = 0;
+    for (int i = 30; i &gt;= 0; i--) {
+        // x &gt;&gt; i &amp; 1：从高位开始取
+        int u = son[p][x &gt;&gt; i &amp; 1];
+        if (!u)
+            son[p][x &gt;&gt; i &amp; 1] = ++idx;
+        p = son[p][x &gt;&gt; i &amp; 1];
+    }
+}
+
+int query(int x) {
+    int p = 0, res = 0; 
+    for (int i = 30; i &gt;= 0; i--) {
+        // 从高位开始尽量寻找不同，这样异或出来是最大的
+        int u = x &gt;&gt; i &amp; 1;
+        if (son[p][!u]) {
+            res += 1 &lt;&lt; i;
+            p = son[p][!u];
+        }
+        else
+            p = son[p][u];
+    }
+    return res;
+}
+
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i];
+        insert(a[i]);
+    }
+    
+    int res = 0;
+    for (int i = 0; i &lt; n; i++) 
+        res = max(res, query(a[i]));
+    cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[栈、队列]]></title>
         <id>https://kay-rick.github.io/post/zhan-dui-lie/</id>
@@ -739,7 +944,7 @@ using namespace std;
  * @param array 
  * @param n 
  */
-void bullleSort (int array[], int n) {
+void bubbleSort (int array[], int n) {
     // 开始进行遍历 ==&gt;控制判断的次数
     for (int i = 0; i &lt; n; i++) {
         bool flag = false;  // 记录有无数据交换
@@ -7551,726 +7756,6 @@ finally {
 <li>JDBC 连接数据库时使用 <code>Class.forName()</code>通过反射加载数据库的驱动程序</li>
 <li>Spring XML配置方法进行装在Bean</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java基础篇（一）]]></title>
-        <id>https://kay-rick.github.io/post/java-ji-chu-pian-yi/</id>
-        <link href="https://kay-rick.github.io/post/java-ji-chu-pian-yi/">
-        </link>
-        <updated>2020-03-25T12:26:26.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>本篇主要涉及Java基础部分中一些较难以理解的部分，主要涉及到 内部类、包装类、String相关、异常等</p>
-</blockquote>
-<h2 id="内部类">内部类</h2>
-<h3 id="非静态内部类">(非)静态内部类</h3>
-<pre><code class="language-Java">public class TestInnerClass {	
-public static void main(String[] args) {
-		Face f = new Face();
-		//非静态内部类，必须要先创建外部类，再创建内部类
-    	Face.Nose n = f.new Nose();
-    	n.breath();
-		//静态内部类，不必先创建外部类再创建内部类
-		Face.Ear e = new Face.Ear();    
-    	e.listen();
-	}	
-	}
-
-	class Face{
-	// 外部类的属性
-	String type = &quot;瓜子脸&quot;;
-	static String color = &quot;Red&quot;;
-
-	/**
-   * 非静态内部类：必须要先创建外部类，再创建内部类，可以看成是一个对象的成员属性
- 	*/
-	class Nose{
-    	//内部类不能定义成static的方法和属性
-    	String type;
-    	void breath(){
-        	System.out.println(Face.this.type);  //内部类可以调用外部类的内容
-       	 System.out.println(&quot;呼吸&quot;);
-    	}
-	}
-
-/**
- * 静态内部类：当一个静态内部类存在，并不一定存在对应的外部类对象
- */
-static class Ear{
-    //静态内部类的实例方法不能直接访问外部类的实例方法，因为外部类不一定存在
-    void listen(){
-        System.out.println(color); //可访问内部类的静态属性
-        System.out.println(&quot;听&quot;);
-    }
-}
-}
-
-</code></pre>
-<p>输出结果如下</p>
-<pre><code>瓜子脸
-呼吸
-Red
-听
-</code></pre>
-<p>从结果我们可以看出：<br>
-内部类既可以访问自身的数据域，也可以访问他的外围类对象的数据域(如：<strong>Face.this.type</strong>)<br>
-编写内部类构造器这一方面，可以使用语法<br>
-<strong>outerObject.new InnerClass(Construction parm);</strong> 例如 <strong>Face.Nose n = f.new Nose();</strong><br>
-特别注意:内部类不能有static方法<br>
-局部类不能用public或private访问说明符进行，它的作用域被限制在声明这个局部类的块中--&gt;优势:对外部世界可以完全隐藏起来</p>
-<h3 id="匿名内部类">匿名内部类</h3>
-<p>将局部内部类进一步深入，假如只创建这个类的一个对象，就不必命名了，这种类被称为“匿名内部类”<br>
-详细用法--&gt;<a href="https://blog.csdn.net/hellocsz/article/details/81974251">Click</a></p>
-</br>
-<h2 id="包装类">包装类</h2>
-<p>java中的数据类型int，double等不是对象，无法通过向上转型获取到Object提供的方法，而像String却可以，只因为String是一个对象而不是一个类型。基本数据类型由于这样的特性，导致无法参与转型，泛型，反射等过程。为了弥补这个缺陷，java提供了包装类。</p>
-<p>具体内容Click-&gt;<a href="https://blog.csdn.net/weixin_40739833/article/details/80093527">here</a></p>
-</br>
-<h2 id="常用类">常用类</h2>
-<h3 id="date类">Date()类</h3>
-<pre><code class="language-Java">public class TestDate {
-  	public static void main(String[] args) {
-      	Date d = new Date(2000);    
-      	System.out.println(d);//Thu Jan 01 08:00:02 CST 1970
-      	System.out.println(d.getTime());//2000
-
-      	Date d2 = new Date();
-      	System.out.println(d2.getTime());//1569572482084
-      	System.out.println(d2.after(d));//true
-  	}
-}
-</code></pre>
-<h3 id="calendar类">Calendar类</h3>
-<pre><code class="language-Java">public class TestCalendar {
-	public static void main(String[] args) {
-
-		//获得日期相关元素
-		Calendar calendar = new GregorianCalendar(2999,10,9,22,10,50);
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);  //获得月份
-		int weekday = calendar.get(Calendar.DAY_OF_WEEK); //星期几
-
-		//System.out.println(year);
-		//System.out.println(month);  //0-11表示对应的月份，0是1月...
-		//System.out.println(weekday); //1-7 1-&gt;星期天
-
-		//设置日期相关元素
-		Calendar calendar2 = new GregorianCalendar();
-		//System.out.println(calendar2);  //不传参数，默认打印出今天的日期
-		calendar2.set(Calendar.YEAR,2020);
-		//System.out.println(calendar2);
-		//日期的计算
-		Calendar calendar3 = new GregorianCalendar();
-		calendar3.add(Calendar.YEAR,-100);//将该时间向前100年，第一个参数控制加减的是年/月/日，第二参数控制加减的大小
-		//System.out.println(calendar3);
-
-		//日期对象和时间对象的转换
-		Date date = calendar3.getTime();
-		Calendar calendar4 = new GregorianCalendar();
-		calendar4.setTime(new Date());
-		printCalendar(calendar4);
-	}
-
-	//打印日期的方法进行封装
-	private static void printCalendar(Calendar calendar){
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1;
-		int date = calendar.get(Calendar.DAY_OF_MONTH);
-		int dayWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-		String dayWeek2 = dayWeek == 0 ? &quot;日&quot; :dayWeek + &quot;&quot;;  //对星期进行处理
-		int hour = calendar.get(Calendar.HOUR);
-		int minute = calendar.get(Calendar.MINUTE);
-		int second = calendar.get(Calendar.SECOND);
-
-		System.out.println(year + &quot;年&quot; + month + &quot;月&quot; + date + &quot;日&quot; + hour + &quot;时&quot; + minute + &quot;分&quot; + second + &quot;秒&quot;
-							+ &quot;  周&quot; + dayWeek2);
-	}
-}
-</code></pre>
-<h3 id="dateformat类">DateFormat类</h3>
-<pre><code class="language-Java">import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
-* @Author: Rick
-* @Date: 2019/1/28 18:38
-* @Description: 测试时间对象和字符串之间的互相转换
-*                DateFormat抽象类的SimpleDateFormat实现类的使用
-*/
-public class TestDateFormat {
-
-	public static void main(String[] args) throws ParseException {
-
-		//把时间对象按照“格式字符串指定的格式”转成相应的字符串
-		DateFormat df = new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);  // SimpleDateFormat()是DateFormat()的子类
-		String str = df.format(new Date(4000000));
-		System.out.println(str);  //   打印已经转化成了的字符串 1970-01-01 09:06:40
-
-		//把字符串按照“格式字符串指定的格式”转成相应的时间对象
-		DateFormat df2 = new SimpleDateFormat(&quot;yyyy年MM月dd日hh时mm分ss秒&quot;);
-		Date date = df2.parse(&quot;2019年01月28日18时54分40秒&quot;);
-		System.out.println(date);  //打印字符串转换成的日期  Mon Jan 28 18:54:40 CST 2019
-
-		//测试其他的格式字符。比如:利用D，获得本时间对象是所处年份的第几天
-		DateFormat df3 = new SimpleDateFormat(&quot;D&quot;);
-		String str3 = df3.format(new Date());
-		System.out.println(str3);  //29
-	}
-}
-</code></pre>
-<h3 id="math类">Math类</h3>
-<pre><code class="language-Java">public class TestMath {
-	public static void main(String[] args) {
-		//取整相关操作
-		System.out.println(Math.ceil(3.2));   //4.0
-		System.out.println(Math.floor(3.2));  //3.0
-		System.out.println(Math.round(3.2));  //3
-		System.out.println(Math.round(3.8));  //4
-
-		//绝对值、开方、幂的操作
-		System.out.println(Math.abs(-45));  //45
-		System.out.println(Math.sqrt(64));  //8.0
-		System.out.println(Math.pow(5,2));  //25.0
-		System.out.println(Math.pow(2,5));  //32.0
-
-		//常量
-		System.out.println(Math.PI);  //3.141592653589793
-		System.out.println(Math.E);   //2.718281828459045
-
-		//随机数
-		System.out.println(Math.random()); // [0,1)之间的随机数
-	}
-}
-</code></pre>
-<h3 id="random类">Random类</h3>
-<pre><code class="language-Java">public class TestRandom {
-	public static void main(String[] args) {
-		Random rand = new Random();
-		System.out.println(rand.nextDouble());  //随机生成[0,1)之间的double类型的数据
-		System.out.println(rand.nextInt());     //随机生成int类型允许范围之内的整型数据
-		System.out.println(rand.nextFloat());   //随机生成[0,1)之间的float类型的数据
-		System.out.println(rand.nextBoolean()); //随机生成false或true
-		System.out.println(rand.nextInt(10));  //随机生成[0,10)之间的int类型的数据
-		System.out.println(20 + rand.nextInt(10));  //随机生成[20,30)之间的int类型的数据
-		System.out.println(20 + (int)(rand.nextDouble() * 10));  //随机生成[20,30)之间的int类型的数据,较为复杂
-	}
-}
-</code></pre>
-</br>
-<h2 id="string-stringbuffer-stringbuilder">String、StringBuffer、StringBuilder</h2>
-<h3 id="string常见问题">String常见问题</h3>
-<ul>
-<li>
-<p><a href="https://mp.weixin.qq.com/s/VBFDIHhPg0MJ-L9DpzbiWw">创建几个对象和intern()方法</a></p>
-</li>
-<li>
-<p><a href="https://mp.weixin.qq.com/s/dr6nCAd0NRdU1CdYYB7cNA">String可能导致内存泄漏</a></p>
-</li>
-<li>
-<p>String长度为什么不可变?</p>
-<p>简单的来说：String类中使用final关键字字符数组保存字符串 <strong>private final char value[]</strong>，所以String对象是不可以变的</p>
-</li>
-</ul>
-<h3 id="stringbuffer和stringbuilder">StringBuffer和StringBuilder</h3>
-<p>StringBuffer和Stringbuilder都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串 <strong>char [] value</strong>但是没有用final关键字修饰，所以这两种对象都是可变的</p>
-<h3 id="三者之间的比较">三者之间的比较</h3>
-<p><strong>1.线程安全性</strong></p>
-<p>String 中的对象是不可变的，也就可以理解为常量，线程安全。<br>
-<strong>AbstractStringBuilder</strong>是StringBuilder 与 StringBuffer 的公共父类，定义了一些字符串的基本操作，如 expandCapacity、append、insert、indexOf 等公共方法。<br>
-StringBuffer 对方法<strong>加了同步锁</strong>或者对调用的方法加了同步锁，所以是<strong>线程安全</strong>的。StringBuilder并没有对方法进行加同步锁，所以是非线程安全</p>
-<p><strong>2.性能</strong></p>
-<p>每次对 String 类型<strong>进行改变</strong>的时候，都会生成一个<strong>新的 String 对象</strong>，然后将指针指向新的 String 对象。StringBuffer 每次都会对 StringBuffer 对象本身进行操作，而不是生成新的对象并改变对象引用。<strong>相同情况下使用 StringBuilder 相比使用 StringBuffer 仅能获得 10%~15% 左右的性能提升，但却要冒多线程不安全的风险。</strong></p>
-<h3 id="三者使用的总结">三者使用的总结</h3>
-<p>操作少量的数据 = <kbd>String</kbd><br>
-<em><strong>单线程</strong></em> 操作字符串缓冲区下操作大量数据 = <kbd>StringBuilder</kbd><br>
-<em><strong>多线程</strong></em> 操作字符串缓冲区下操作大量数据 = <kbd>StringBuffer</kdb></p>
-</br>
-<h2 id="java中的传参机制">Java中的传参机制</h2>
-<p>首先回顾一下在程序设计语言中有关将参数传递给方法（或函数）的一些专业术语。<strong>按值调用(call by value)表示方法接收的是调用者提供的值</strong>，而按<strong>引用调用（call by reference)表示方法接收的是调用者提供的变量地址</strong>。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。 它用来描述各种程序设计语言（不只是Java)中方法参数传递方式。</p>
-<p><strong>Java程序设计语言总是采用按值调用</strong>。也就是说，方法得到的是<font color = #00BFFF>所有参数值的一个拷贝</font>，也就是说，方法不能修改传递给它的任何参数变量的内容。</p>
-<p>参考文章(一 为什么 Java 中只有值传递？) ---&gt;  <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/%E7%AC%AC%E4%B8%80%E5%91%A8%EF%BC%882018-8-7%EF%BC%89.md">Click</a></p>
-</br>
-<h2 id="error-exception-runtimeexception">Error、Exception、RuntimeException</h2>
-<h3 id="三者联系">三者联系</h3>
-<p>首先搞清楚他们三者之间的关系，<strong>Error和Exception都继承自Throwable，而RuntimeException继承Exception。在Java中只有Throwable类型的实例才可被抛出或捕获</strong></p>
-<p>Error类层次结构描述了Java运行时系统内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。</p>
-<p>在设计Java程序时，需要关注Exception的层次结构。这个层次结构又分解为两个分支：一个分支派生于RuntimeException；另一个分支包含其他异常。<strong>程序错误导致的异常属于RuntimeException；而程序本身没有问题，但像I/O错误这类问题导致的异常属于其他异常。</strong></p>
-<p>其中常见的RuntimeException有：</p>
-<ul>
-<li>NullPointerException：见的最多了，其实很简单，一般都是在null对象上调用方法了</li>
-<li>NumberFormatException：继承IllegalArgumentException，字符串转换为数字时出现。比如int i= Integer.parseInt(&quot;ab3&quot;);</li>
-<li>ArrayIndexOutOfBoundsException:数组越界。比如 int[] a=new int[3]; int b=a[3];</li>
-<li>StringIndexOutOfBoundsException：字符串越界。比如 String s=&quot;hello&quot;; char c=s.chatAt(6);</li>
-<li>ClassCastException:类型转换错误。比如 Object obj=new Object(); String s=(String)obj;</li>
-<li>ArithmeticException：算术错误，典型的就是0作为除数的时候。</li>
-<li>IllegalArgumentException：非法参数，在把字符串转换成数字的时候经常出现的一个异常，我们可以在自己的程序中好好利用这个异常。</li>
-</ul>
-<p>Error类或RuntimeException类的所有异常称为<font color = #F08080>非受查异常</font>，所有其他的异常称为<font color = #F08080>受查异常</font></p>
-<h3 id="如何声明异常">如何声明异常</h3>
-<p>如果遇到了无法处理的情况，那么Java方法可以抛出异常。<br>
-例如：</p>
-<pre><code class="language-Java">public FileInputStream(String name) throws FileNotFoundException
-</code></pre>
-<p>这个声明表示这个构造器将根据给定的String参数产生一个FileInputStream对象，但也有可能抛出一个FileNotFoundException异常。如果发生了这种糟糕的情况，构造器将不会初始化一个新的FileInputStream对象，而是抛出一个FileNotFoundException类对象。如果这个方法真的抛出了这样一个异常对象，运行时系统就会开始搜索异常处理器，以便知道如何处理FileNotFoundException对象。</p>
-<p>什么时候使用throws子句声明异常？<strong>通常有以下几种情况</strong></p>
-<ul>
-<li>调用一个受查异常的方法，例如FileInputStream构造器</li>
-<li>程序运行过程中发生错误</li>
-<li>程序出现错误</li>
-<li>Java虚拟机和运行时库出现内部错误</li>
-</ul>
-<p><font color = red>警告</font>  如果在子类中覆盖了一个超类的方法，子类方法中声明的受查异常不能比超类方法中声明的异常更加通用(也就是说：子类方法中可以抛出更特定的异常，或者根本不抛出任何异常)</p>
-<h3 id="如何抛出异常">如何抛出异常</h3>
-<p>首先看一个例子</p>
-<pre><code class="language-Java">	String readData(Scanner in) throws EOFException
-	{
-		...
-		while(...)
-		{
-			if(!in.hasNext())
-			{
-				if(n &lt; len)
-					throw new EOFException();
-			}
-			...
-		}
-		return s;
-	}
-</code></pre>
-<p>因此我们可以看到，对于一个已经存在的异常类，将其抛出很容易<br>
-1.找到一个合适的异常类<br>
-2.创建这个类的一个对象<br>
-3.将对象抛出</p>
-<h3 id="throw和throws关键字对比">throw和throws关键字对比</h3>
-<p>1、throw用在方法体内，上面代码显示了，是直接在main方法体内，throws用在方法声明后面，表示再抛出异常，由该方法的调用者来处理。<br>
-2、<em><strong>throw是具体向外抛异常的，抛出的是一个异常实例</strong></em>，throws声明了是哪种类型的异常，使它的调用者可以捕获这个异常<br>
-3、<em><strong>throw如果执行了，那么一定是抛出了某种异常了，throws表示可能出现，但不一定抛出了异常。</strong></em><br>
-4、同时出现的时候，throws出现在函数头、throw出现在函数体，两种不会由函数去处理，真正的处理由函数的上层调用处理</p>
-<br>
-<p><strong>自定义异常</strong></p>
-<p>2种自定义异常的方法</p>
-<pre><code class="language-Java">/**
- * @Author: Rick
- * @Date: 2019/1/30 17:30
- * @Description: 自定义异常方式
- */
-public class Test02 {
-    public static void main(String[] args) {
-        Person p = new Person();
-        p.setAge(-10);
-    }
-}
-
-class Person{
-    private int age;
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        if(age &lt; 0){
-            try {
-                throw new IllegalException(&quot;年龄不能为负&quot;);
-            } catch (IllegalException e) {
-                e.printStackTrace();
-            }
-        }
-        this.age = age;
-    }
-}
-
-
-//自己定义异常
-// 方式1继承RuntimeException,可以不用在代码中try/catch进行异常处理,遇到异常,程序中断
-class IllegalException extends RuntimeException{
-    public IllegalException(){
-
-    }
-
-    public IllegalException(String msg){
-        super(msg);
-    }
-}
-
-//方式2继承Exception,必须在代码中对异常进行try/catch处理,这样才能通过编译
-class IllegalException extends Exception {
-    public IllegalException() {
-
-    }
-
-    public IllegalException(String msg) {
-        super(msg);
-    }
-}
-</code></pre>
-<p>结果如下：</p>
-<pre><code>Rick_03_Exception.IllegalException: 年龄不能为负
-	at Rick_03_Exception.Person.setAge(Test02.java:25)
-	at Rick_03_Exception.Test02.main(Test02.java:11)
-
-Process finished with exit code 0
-</code></pre>
-<p><strong>NoClassDefFoundError和ClassNotFoundException有什么区别？</strong></p>
-<p><kbd>NoClassDefFoundError</kbd>是当Java虚拟机或ClassLoader实例试图加载某个类，但无法找到该类的定义时抛出此异常<br>
-<kbd>ClassNotFoundException</kbd>是当应用程序试图调用Class.forName(String)通过字符串名加载类，而找不到该类定义时抛出的异常。</p>
-</br>
-<h2 id="equals和的区别">equals()和==的区别</h2>
-<p><font color = red>== </font>: 它的作用是判断两个对象的地址是不是相等。即，判断两个对象是不是同一个对象(<strong>基本数据类型 == 比较的是值，引用数据类型 == 比较的是内存地址</strong>)。</p>
-<p><font color = red>equals() </font>: equals用来比较的是两个对象的内容是否相等，由于<strong>所有的类都是继承自java.lang.Object类的</strong>，所以适用于所有对象，如果没有对该方法进行覆盖的话，调用的仍然是Object类中的方法，而Object中的equals方法返回的却是==的判断。请看Object类中equals方法的源码：</p>
-<pre><code class="language-Java">public boolean equals(Object obj) {
-    return (this == obj);
-}
-</code></pre>
-<p>我们来看一个例子：</p>
-<pre><code class="language-Java">public class Test01 {
-    public static void main(String[] args) {
-    Person p1 = new Person(&quot;Rick&quot;,1001);
-    Person p2 = new Person(&quot;Rick&quot;, 1001);
-    System.out.println(p1.equals(p2)); 		//false
-    }
-}
-
-class Person{
-    String name;
-    int ID;
-
-    public Person() {
-    }
-
-    public Person(String name, int ID) {
-        this.name = name;
-        this.ID = ID;
-    }
-}
-
-</code></pre>
-<p>这里由于没有重写继承java.lang.Object类中的equals()方法，我们比较的是这两个对象的地址(==方法)因此出现的是false</p>
-<p>我们再<strong>重写equals()方法</strong>看下测试结果：</p>
-<pre><code class="language-Java">public class Test02 {
-    public static void main(String[] args) {
-        Student stu1 = new Student(&quot;Rick&quot;,20);
-        Student stu2 = new Student(&quot;Rick&quot;,20);
-        System.out.println(stu1.equals(stu2));      //true
-        System.out.println(stu1 == stu2);       //false
-    }
-}
-
-class Student{
-    String name;
-    int age;
-
-    public Student() {
-    }
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    /**
-     * 重写equals()方法
-     * @param obj
-     * @return
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (this == obj)
-            return true;
-        if (this.getClass() != obj.getClass())
-            return false;
-
-        Student stu = (Student)obj;
-        return (name.equals(stu.name) &amp;&amp; age == stu.age);
-    }
-}
-</code></pre>
-<p>实际上我们再String类型中使用的equals()方法，已经是被重写过了--&gt;<a href="https://www.cnblogs.com/Eason-S/p/5524837.html">参考博文</a></p>
-<pre><code class="language-Java">public class test1 {
-    public static void main(String[] args) {
-        String a = new String(&quot;ab&quot;); // a 为一个引用
-        String b = new String(&quot;ab&quot;); // b为另一个引用,对象的内容一样
-        String aa = &quot;ab&quot;; // 放在常量池中
-        String bb = &quot;ab&quot;; // 从常量池中查找
-        if (aa == bb) // true
-            System.out.println(&quot;aa==bb&quot;);
-        if (a == b) // false，非同一对象
-            System.out.println(&quot;a==b&quot;);
-        if (a.equals(b)) // true
-            System.out.println(&quot;aEQb&quot;);
-        if (42 == 42.0) { // true
-            System.out.println(&quot;true&quot;);
-        }
-    }
-}
-</code></pre>
-<p>在这里我们特别注意创建字符串String时</p>
-<p>String s=&quot;abce&quot;是一种非常特殊的形式,<strong>new 有本质的区别。它是java中唯一不需要new 就可以产生对象的途径</strong>。以String s=&quot;abce&quot;形式赋值在java中叫<strong>直接量</strong>它是在常量池中而不是像new一样放在压缩堆中。这种形式的字符串，在JVM内部发生字符串拘留，即当声明这样的一个字符串后，JVM会在常量池中先查找有有没有一个值为&quot;abcd&quot;的对象,如果有,就会把它赋给当前引用.即原来那个引用和现在这个引用指点向了同一对象,如果没有,则在常量池中新创建一个&quot;abcd&quot;,下一次如果有String s1 = &quot;abcd&quot;;又会将s1指向&quot;abcd&quot;这个对象,即以这形式声明的字符串,只要值相等,任何多个引用都指向同一对象.<br>
-　　<strong>而String s = new String(&quot;abcd&quot;);和其它任何对象一样.每调用一次就产生一个对象，只要它们调用。</strong></p>
-</br>
-<h2 id="hashcode和equals区别">HashCode()和equals()区别</h2>
-<p>推荐阅读：<a href="https://www.cnblogs.com/skywang12345/p/3324958.html">Java hashCode() 和 equals()的若干问题解答</a></p>
-<p><strong>hashCode() 的作用是获取哈希码，也称为散列码；它实际上是返回一个int整数</strong> 。这个哈希码的作用是确定该对象在哈希表中的索引位置。</p>
-<p><strong>hashCode() 定义在JDK的Object.java中，这就意味着Java中的任何类都包含有hashCode() 函数</strong>。<br>
-虽然，每个Java类都包含hashCode() 函数。但是，仅仅当创建并某个“类的散列表”(关于“散列表”见下面说明)时，该类的hashCode() 才有用(作用是：确定该类的每一个对象在散列表中的位置；其它情况下(例如，创建类的单个对象，或者创建类的对象数组等等)，类的hashCode() 没有作用。<br>
-上面的散列表，指的是：Java集合中本质是散列表的类，如HashMap，Hashtable，HashSet。</p>
-<p><strong>HashCode()和equals()的关系</strong></p>
-<p>我们以 <em><strong>类的用途</strong></em> 来将“hashCode() 和 equals()的关系”分2种情况来说明。</p>
-<h3 id="不会创建类对应的散列表">不会创建“类对应的散列表”</h3>
-<p>这里所说的“不会创建类对应的散列表”是说：<font color = #F08080>我们不会在HashSet, Hashtable, HashMap等等这些本质是散列表的数据结构中，用到该类。</font>例如，不会创建该类的HashSet集合。在这种情况下，<strong>该类的“hashCode() 和 equals() ”没有半毛钱关系的！</strong></p>
-<pre><code class="language-Java">import java.util.*;
-import java.lang.Comparable;
-
-/**
-* @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
-*
-* @author skywang
-* @emai kuiwu-wang@163.com
-*/
-public class NormalHashCodeTest{
-	
-	public static void main(String[] args) {
-	// 新建2个相同内容的Person对象，
-	// 再用equals比较它们是否相等
-	Person p1 = new Person(&quot;eee&quot;, 100);
-	Person p2 = new Person(&quot;eee&quot;, 100);
-	Person p3 = new Person(&quot;aaa&quot;, 200);
-	System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
-	System.out.printf(&quot;p1.equals(p3) : %s; p1(%d) p3(%d)\n&quot;, p1.equals(p3), p1.hashCode(), p3.hashCode());
-	
-	}
-
-	/**
-	* @desc Person类。
-	*/
-	private static class Person {
-		int age;
-		String name;
-
-		public Person(String name, int age) {
-			this.name = name;
-			this.age = age;
-		}
-
-		public String toString() {
-			return name + &quot; - &quot; +age;
-		}
-
-		/** 
-		* @desc 覆盖equals方法 
-		*/  
-		public boolean equals(Object obj){  
-			if(obj == null){  
-				return false;  
-			}  
-			
-			//如果是同一个对象返回true，反之返回false  
-			if(this == obj){  
-				return true;  
-			}  
-			
-			//判断是否类型相同  
-			if(this.getClass() != obj.getClass()){  
-				return false;  
-			}  
-			
-			Person person = (Person)obj;  
-			return name.equals(person.name) &amp;&amp; age==person.age;  
-		} 
-	}
-}
-</code></pre>
-<p>得到结果如下：</p>
-<pre><code>p1.equals(p2) : true; p1(1169863946) p2(1901116749)
-p1.equals(p3) : false; p1(1169863946) p3(2131949076)
-</code></pre>
-<p>从结果也可以看出：<strong>p1和p2相等的情况下，hashCode()也不一定相等。</strong><br>
-<br></p>
-<h3 id="会创建类对应的散列表">会创建“类对应的散列表”</h3>
-<p>这里所说的“会创建类对应的散列表”是说：<strong>我们会在HashSet, Hashtable, HashMap等等这些本质是散列表的数据结构中，用到该类。例如，会创建该类的HashSet集合。</strong></p>
-<p>在这种情况下，该类的“hashCode() 和 equals() ”是有关系的：<br>
-1)、如果两个对象相等，那么它们的hashCode()值一定相同。<br>
-这里的相等是指，通过equals()比较两个对象时返回true。<br>
-2)、如果两个对象hashCode()相等，它们并不一定相等。<br>
-因为在散列表中，hashCode()相等，即两个键值对的哈希值相等。然而哈希值相等，并不一定能得出键值对相等。补充说一句：“两个不同的键值对，哈希值相等”，这就是哈希冲突<br>
-我们来看一个例子：</p>
-<pre><code class="language-Java">import java.util.*;
-import java.lang.Comparable;
-
-/**
-* @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
-*
-* @author skywang
-* @emai kuiwu-wang@163.com
-*/
-public class ConflictHashCodeTest1{
-
-	public static void main(String[] args) {
-		// 新建Person对象，
-		Person p1 = new Person(&quot;eee&quot;, 100);
-		Person p2 = new Person(&quot;eee&quot;, 100);
-	Person p3 = new Person(&quot;aaa&quot;, 200);
-
-		// 新建HashSet对象 
-		HashSet set = new HashSet();
-		set.add(p1);
-		set.add(p2);
-	set.add(p3);
-
-		// 比较p1 和 p2， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
-		// 打印set
-		System.out.printf(&quot;set:%s\n&quot;, set);
-}
-
-	/**
-	* @desc Person类。
-	*/
-	private static class Person {
-		int age;
-	String name;
-
-		public Person(String name, int age) {
-			this.name = name;
-			this.age = age;
-	}
-
-		public String toString() {
-			return &quot;(&quot;+name + &quot;, &quot; +age+&quot;)&quot;;
-	}
-
-		/** 
-		* @desc 覆盖equals方法 
-		*/  
-		@Override
-		public boolean equals(Object obj){  
-			if(obj == null){  
-				return false;  
-			}  
-			
-			//如果是同一个对象返回true，反之返回false  
-			if(this == obj){  
-				return true;  
-			}  
-			
-			//判断是否类型相同  
-			if(this.getClass() != obj.getClass()){  
-				return false;  
-			}  
-			
-			Person person = (Person)obj;  
-			return name.equals(person.name) &amp;&amp; age==person.age;  
-		} 
-	}
-}
-</code></pre>
-<p>我们看到结果：</p>
-<pre><code>p1.equals(p2) : true; p1(1169863946) p2(1690552137)
-set:[(eee, 100), (eee, 100), (aaa, 200)]
-</code></pre>
-<p><strong>结果分析：</strong></p>
-<br>
- 我们重写了Person的equals()。但是，很奇怪的发现：HashSet中仍然有重复元素：p1 和 p2。为什么会出现这种情况呢？
-<br>
- <font color = red>这是因为虽然p1 和 p2的内容相等，但是它们的hashCode()不等；所以，HashSet在添加p1和p2的时候，认为它们不相等。</font>
-<br>
-<br>
-下面我们同时覆盖equals() 和 hashCode()方法   
-<pre><code class="language-Java">	import java.util.*;
-import java.lang.Comparable;
-
-/**
-* @desc 比较equals() 返回true 以及 返回false时， hashCode()的值。
-*
-* @author skywang
-* @emai kuiwu-wang@163.com
-*/
-public class ConflictHashCodeTest2{
-
-	public static void main(String[] args) {
-		// 新建Person对象，
-		Person p1 = new Person(&quot;eee&quot;, 100);
-		Person p2 = new Person(&quot;eee&quot;, 100);
-		Person p3 = new Person(&quot;aaa&quot;, 200);
-	Person p4 = new Person(&quot;EEE&quot;, 100);
-
-		// 新建HashSet对象 
-		HashSet set = new HashSet();
-		set.add(p1);
-		set.add(p2);
-	set.add(p3);
-
-		// 比较p1 和 p2， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p2) : %s; p1(%d) p2(%d)\n&quot;, p1.equals(p2), p1.hashCode(), p2.hashCode());
-		// 比较p1 和 p4， 并打印它们的hashCode()
-		System.out.printf(&quot;p1.equals(p4) : %s; p1(%d) p4(%d)\n&quot;, p1.equals(p4), p1.hashCode(), p4.hashCode());
-		// 打印set
-		System.out.printf(&quot;set:%s\n&quot;, set);
-}
-
-	/**
-	* @desc Person类。
-	*/
-	private static class Person {
-		int age;
-	String name;
-
-		public Person(String name, int age) {
-			this.name = name;
-			this.age = age;
-	}
-
-		public String toString() {
-			return name + &quot; - &quot; +age;
-	}
-
-		/** 
-		* @desc重写hashCode 
-		*/  
-		@Override
-		public int hashCode(){  
-			int nameHash =  name.toUpperCase().hashCode();
-			return nameHash ^ age;
-	}
-
-		/** 
-		* @desc 覆盖equals方法 
-		*/  
-		@Override
-		public boolean equals(Object obj){  
-			if(obj == null){  
-				return false;  
-			}  
-			
-			//如果是同一个对象返回true，反之返回false  
-			if(this == obj){  
-				return true;  
-			}  
-			
-			//判断是否类型相同  
-			if(this.getClass() != obj.getClass()){  
-				return false;  
-			}  
-			
-			Person person = (Person)obj;  
-			return name.equals(person.name) &amp;&amp; age==person.age;  
-		} 
-     }
-}
-</code></pre>
-<p>运行结果</p>
-<pre><code>p1.equals(p2) : true; p1(68545) p2(68545)
-p1.equals(p4) : false; p1(68545) p4(68545)
-set:[aaa - 200, eee - 100]
-</code></pre>
-<p><strong>结果分析：</strong></p>
-<p>这下，equals()生效了，HashSet中没有重复元素。<br>
-比较p1和p2，我们发现：它们的hashCode()相等，通过equals()比较它们也返回true。所以，p1和p2被视为相等。<br>
-比较p1和p4，我们发现：虽然它们的hashCode()相等；但是，通过equals()比较它们返回false。所以，p1和p4被视为不相等。</p>
 ]]></content>
     </entry>
 </feed>
