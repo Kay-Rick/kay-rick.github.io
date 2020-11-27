@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-11-26T10:41:14.753Z</updated>
+    <updated>2020-11-27T09:16:05.527Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,186 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[掐死“细节是魔鬼”的二分]]></title>
+        <id>https://kay-rick.github.io/post/qia-si-xi-jie-shi-mo-gui-de-er-fen/</id>
+        <link href="https://kay-rick.github.io/post/qia-si-xi-jie-shi-mo-gui-de-er-fen/">
+        </link>
+        <updated>2020-11-27T09:11:41.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>二分查找是解决很多查找类题目的常用方法，它可以达到O(log n)的时间复杂度。对于浮点数的二分比较简单，但涉及到整数的二分，边界情况的考虑就显得非常重要，思路很简单，细节是魔鬼。这里总结了两套模板对解题有很大的帮助</p>
+</blockquote>
+<p>一般而言，当一个题目出现以下特征，就应该联想到要使用二分查找</p>
+<ul>
+<li>待查找的数组有序或者部分有序</li>
+<li>要求时间复杂度低于O(n)</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>二分查找是解决很多查找类题目的常用方法，它可以达到O(log n)的时间复杂度。对于浮点数的二分比较简单，但涉及到整数的二分，边界情况的考虑就显得非常重要，思路很简单，细节是魔鬼。这里总结了两套模板对解题有很大的帮助</p>
+</blockquote>
+<p>一般而言，当一个题目出现以下特征，就应该联想到要使用二分查找</p>
+<ul>
+<li>待查找的数组有序或者部分有序</li>
+<li>要求时间复杂度低于O(n)</li>
+</ul>
+<!-- more -->
+<h2 id="整数二分">整数二分</h2>
+</br>
+<h3 id="两个模板">两个模板</h3>
+<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201127162410.png" alt="image-20201127162409088" loading="lazy"></figure>
+<ul>
+<li><strong>区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>被划分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>−</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, mid - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[mid, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>时可用</strong></li>
+<li>这里在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的原因是：当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>r</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l = r - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时，由于C++向下取整：导致死循环，所以要加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+</ul>
+<pre><code class="language-c++">int binarySearch_1 (int l, int r) {
+	int l = 0, r = n - 1;
+    while (l &lt; r) {
+        mid = l + r + 1 &gt;&gt; 1;
+        if (check(mid))		// check()判断mid是否满足性质的函数：具体根据题目描述来写
+            l = mid;
+        else
+            r = mid - 1;
+    }
+    return l;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201127162502.png" alt="image-20201127162500907" loading="lazy"></figure>
+<ul>
+<li><strong>区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>被划分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, mid]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mclose">]</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[mid + 1, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>时可用</strong></li>
+</ul>
+<pre><code class="language-c++">int binarySearch_2 (int l, int r) {
+	int l = 0, r = n - 1;
+    while (l &lt; r) {
+        mid = l + r &gt;&gt; 1;
+        if (check(mid))		// check()判断mid是否满足性质的函数：具体根据题目描述来写
+            r = mid;
+        else
+            l = mid + 1;
+    }
+    return l;
+}
+</code></pre>
+</br>
+<h3 id="模板使用技巧">模板使用技巧</h3>
+<p>在做题的过程中</p>
+<ul>
+<li>我们只需要先写<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi><mo>=</mo><mi>l</mi><mo>+</mo><mi>r</mi><mo>&gt;</mo><mo>&gt;</mo><mn>1</mn><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">mid = l + r &gt;&gt; 1;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">;</span></span></span></span></li>
+<li><strong>根据具体题目写好<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>k</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">check()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>函数，找到更新方式，确定到底是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>还是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">r = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span></strong></li>
+<li><strong>若是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，我们只需要在第一个步骤里面把二分时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的取值进行加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></strong></li>
+<li><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，另一边就是$ r = mid - 1$； <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">r = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，另一边就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l = mid + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></strong></li>
+</ul>
+</br>
+<h3 id="例题">例题</h3>
+<p>给定一个按照升序排列的长度为n的整数数组，以及 q 个查询。对于每个查询，返回一个元素k的起始位置和终止位置（位置从0开始计数）。如果数组中不存在该元素，则返回“-1 -1”。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数n和q，表示数组长度和询问个数。第二行包含n个整数（均在1~10000范围内），表示完整数组。接下来q行，每行包含一个整数k，表示一个询问元素。</p>
+<p><strong>输出格式</strong></p>
+<p>共q行，每行包含两个整数，表示所求元素的起始位置和终止位置。如果数组中不存在该元素，则返回“-1 -1”。</p>
+<p><strong>数据范围</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>100000</mn></mrow><annotation encoding="application/x-tex">1≤n≤100000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>q</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">1≤q≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>k</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">1≤k≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 3
+1 2 2 3 3 4
+3
+4
+5
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 4
+5 5
+-1 -1
+</code></pre>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int q[N];
+
+int main() {
+    int n, m;
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; n; i++) 
+        cin &gt;&gt; q[i];
+    
+    while (m--) {
+        int x;
+        cin &gt;&gt; x;
+        
+        int l = 0, r = n - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            // 找左端点：q[mid] &gt;= x确定要找的左端点一定在[l, mid]之间，更新r = mid
+            if (q[mid] &gt;= x)
+                r = mid;
+            // r = mid,对应l就是mid + 1，对应第二个模板，前面mid不需要修改
+            else
+                l = mid + 1;
+        }
+        if (q[l] != x)
+            cout &lt;&lt; &quot;-1 -1&quot; &lt;&lt; endl;
+        else {
+            cout &lt;&lt; l &lt;&lt; ' ';
+            l = 0, r = n - 1;
+            while (l &lt; r) {
+            int mid = l + r + 1 &gt;&gt; 1;
+            // 找右端点：q[mid] &lt;= x确定要找的右端点一定在[mid, r]之间，更新l = mid
+            if (q[mid] &lt;= x)
+                l = mid;
+            // l = mid,对应r就是mid - 1，对应第一个模板，前面mid修改+1
+            else
+                r = mid - 1;
+        }
+        cout &lt;&lt; l &lt;&lt; endl;
+        }
+    }
+    return 0;
+}
+</code></pre>
+</br>
+</br>
+<h2 id="浮点数二分">浮点数二分</h2>
+<p>给定一个浮点数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>，求它的三次方根。</p>
+<p>对于这一类浮点数二分的题目：当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi></mrow><annotation encoding="application/x-tex">r-l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>足够小时，我们就假定已经找完，用公式表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>&gt;</mo><mn>1</mn><mi>e</mi><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">r - l &gt; 1e-6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> ,此时有个精度问题如果要求保留六位小数则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>&gt;</mo><mn>1</mn><mi>e</mi><mo>−</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">r - l &gt; 1e-8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span>，总<strong>要比保留的位数多两位</strong>。</p>
+<p><strong>输入格式</strong></p>
+<p>共一行，包含一个浮点数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，包含一个浮点数，表示问题的解。注意，结果保留6位小数。</p>
+<p><strong>数据范围</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">−</mi><mn>10000</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">−10000≤n≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>1000.00
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>10.000000
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+    double x;
+    cin &gt;&gt; x;
+    double l = -10000, r = 10000;
+    // 通常比要求精度提高2位
+    while (r - l &gt; 1e-8) {
+        double mid = (l + r) / 2;
+        // 浮点数二分不用考虑边界问题
+        if (mid * mid * mid &gt;= x)
+            r = mid;
+        else
+            l = mid;
+    }
+    printf(&quot;%lf\n&quot;, l);
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[高精度算法分析]]></title>
         <id>https://kay-rick.github.io/post/gao-jing-du-suan-fa-fen-xi/</id>
@@ -7017,275 +7197,6 @@ int main() {
     return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java基础篇（四）]]></title>
-        <id>https://kay-rick.github.io/post/java-ji-chu-pian-si/</id>
-        <link href="https://kay-rick.github.io/post/java-ji-chu-pian-si/">
-        </link>
-        <updated>2020-03-25T13:28:02.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>Java内存模型和虚拟机相关内容</p>
-</blockquote>
-<h2 id="java线程内存模型">Java线程内存模型</h2>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zv84vidnj30wd0u0dqz.jpg" alt="image-20191217175041005" style="zoom:50%;" />
-<h3 id="线程私有">线程私有</h3>
-<ul>
-<li>
-<p>程序计数器---&gt;**为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。**程序计数器是唯一一个不会出现OutOfMemoryError的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。</p>
-</li>
-<li>
-<p>虚拟机栈---&gt;<strong>其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。</strong> （实际上，Java虚拟机栈是由一个个栈帧组成，而每个栈帧中都拥有：局部变量表、操作数栈、动态链接、方法出口信息。）</p>
-</li>
-<li>
-<p>本地方法栈---&gt;和虚拟机栈所发挥的作用非常相似，区别是： <strong>虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务</strong></p>
-</li>
-</ul>
-<h3 id="线程共有">线程共有</h3>
-<ul>
-<li>
-<p>堆：Java 堆是所有线程共享的一块内存区域，在虚拟机启动时创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例以及数组都在这里分配内存。</strong></p>
-</li>
-<li>
-<p>新生代(1/3)</p>
-<ul>
-<li>Eden(8/10)</li>
-<li>From Survivor(1/10)</li>
-<li>To Survivor(1/10)</li>
-</ul>
-</li>
-<li>
-<p>老年代(2/3)</p>
-</li>
-<li>
-<p>永久代---&gt;JDK1.8<strong>移除整个永久代，取而代之的是一个叫元空间（Metaspace）的区域（永久代使用的是JVM的堆内存空间，而元空间使用的是物理内存，直接受到本机的物理内存限制）</strong></p>
-</li>
-<li>
-<p>方法区：方法区与 Java 堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。**</p>
-</li>
-<li>
-<p>运行时常量池：<strong>运行时常量池是方法区的一部分</strong>。Class 文件中除了有类的版本、字段、方法、接口等描述信息外，还有常量池信息（用于存放编译期生成的各种字面量和符号引用）</p>
-</li>
-</ul>
-<h3 id="直接内存">直接内存</h3>
-<h2 id="常见垃圾回收算法">常见垃圾回收算法</h2>
-<p><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6.md</a></p>
-<ul>
-<li>
-<p><strong>如何判断对象已经死亡</strong></p>
-<ul>
-<li>
-<p>引用计数法----&gt;<strong>不能解决循环引用问题</strong></p>
-<p>​		给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加 1；当引用失效，计数器就减 1；任何时候计数器为 0 的对象就是不可能再被使用的。<strong>实现简单，效率高</strong></p>
-</li>
-<li>
-<p>GC Roots(可达性分析算法)</p>
-<p>​	<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jh9u01jj30s60jmafy.jpg" alt="image-20191223122314902" style="zoom:50%;" /></p>
-<p>从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，<strong>则证明此对象是不可用的</strong>。</p>
-<p>可作为GC Roots的：<strong>线程栈变量、静态变量、常量池、JNI指针</strong></p>
-</li>
-</ul>
-</li>
-<li>
-<p>常见垃圾回收算法</p>
-<ul>
-<li>
-<p><strong>标记清除(Mark and sweep)</strong></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jopo2u0j30vy0oyae1.jpg" alt="image-20191223123026324" style="zoom: 50%;" />
-<p>首先标记出所有需要回收的对象，<strong>在标记完成后统一回收所有被标记的对象</strong>----&gt;问题：位置不连续产生碎片</p>
-</li>
-<li>
-<p><strong>拷贝算法</strong></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jq7761fj30vs0p0q7r.jpg" alt="image-20191223123151261" style="zoom:50%;" />
-<p>它可以将<strong>内存分为大小相同的两块，每次使用其中的一块</strong>。当这一块的内存使用完后，就将还存活的对象复制到另一块去，<strong>然后再把使用的空间一次清理掉</strong>。这样就使每次的内存回收都是对内存区间的一半进行回收。<strong>没有碎片，效率高，连续</strong>------&gt;<strong>问题：浪费内存</strong></p>
-</li>
-<li>
-<p><strong>标记-压缩(标记整理)</strong></p>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga6jtlfwr9j313e0lygqa.jpg" alt="image-20191223123507134" style="zoom:50%;" />
-<p>标记过程仍然与“标记-清除”算法一样，<strong>但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动</strong>，然后直接清理掉端边界以外的内存。<strong>没有碎片</strong>---&gt;<strong>问题：浪费内存</strong></p>
-</li>
-<li>
-<p><strong>分代收集</strong></p>
-<p>这种算法没有什么新的思想，<strong>只是根据对象存活周期的不同将内存分为几块</strong>。一般将 java 堆分为<strong>新生代和老年代</strong>，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
-<p><strong>比如在新生代中，每次收集都会有大量对象死去，所以可以选择复制算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。</strong></p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="hotspot虚拟机对象揭秘">HotSpot虚拟机对象揭秘</h2>
-<h3 id="对象创建过程">对象创建过程</h3>
-<ul>
-<li>
-<p>类加载检查</p>
-<pre><code>虚拟机遇到一条 new 指令时，首先将去检查这个指令的参数是否能在常量池中定位到这个类的符号引用，并且检查这个符号引用代表的类是否已被加载过、解析和初始化过。如果没有，那必须先执行相应的类加载过程。
-</code></pre>
-</li>
-<li>
-<p>申请内存</p>
-<ul>
-<li>
-<p>指针碰撞</p>
-<p>用于堆内存比较规整</p>
-</li>
-<li>
-<p>空闲列表</p>
-<p>用于堆内存比较零散</p>
-<figure data-type="image" tabindex="1"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1g9zyoumlhkj31nk0eiq6w.jpg" alt="image-20191217195035011" loading="lazy"></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>成员变量赋予默认值</p>
-</li>
-<li>
-<p>调用初始化方法</p>
-<ul>
-<li>
-<p>成员变量按顺序调用</p>
-</li>
-<li>
-<p>初始化成员变量</p>
-</li>
-<li>
-<p>构造方法调用</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="对象内存布局">对象内存布局</h3>
-<p>和虚拟机有关</p>
-<p>以HotSpot为例</p>
-<ul>
-<li>
-<p>对象头markWord</p>
-<ul>
-<li><strong>存储对象自身的自身运行时数据(哈希码、GC分代年龄、锁状态标志等等)</strong></li>
-<li>类型指针----&gt;指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是那个类的实例。</li>
-</ul>
-</li>
-<li>
-<p>实例数据(对象的成员变量)</p>
-</li>
-<li>
-<p>补齐(因为Hotspot虚拟机的自动内存管理系统要求对象<strong>起始地址必须是8字节的整数倍</strong>)</p>
-</li>
-</ul>
-<h3 id="对象的访问定位">对象的访问定位</h3>
-<ul>
-<li>使用句柄：Java堆中将会划分出一块内存来作为句柄池</li>
-</ul>
-<figure data-type="image" tabindex="2"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0tr5oz9tj314i0jo46h.jpg" alt="image-20191218134522761" loading="lazy"></figure>
-<ul>
-<li>直接指针： Java 堆对象的布局中就必须考虑如何放置访问类型数据的相关信息</li>
-</ul>
-<figure data-type="image" tabindex="3"><img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0tsb9nsdj315i0k8jyq.jpg" alt="image-20191218134627510" loading="lazy"></figure>
-<p><strong>使用句柄来访问的最大好处是 reference 中存储的是稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。使用直接指针访问方式最大的好处就是速度快，它节省了一次指针定位的时间开销。</strong></p>
-<h3 id="string类和常量池">String类和常量池</h3>
-<h4 id="string对象的两种创建方式">String对象的两种创建方式</h4>
-<pre><code class="language-Java">String str1 = &quot;abcd&quot;;
-String str2 = new String(&quot;abcd&quot;);
-System.out.println(str1==str2);//false
-</code></pre>
-<ul>
-<li>第一种方式是在常量池中拿对象</li>
-<li>第二种方式是直接在堆内存空间创建一个新的对象。（只要使用了new方法，则一定会在堆内存区域创建新的对象）</li>
-</ul>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0u00la52j312q0hyq4p.jpg" alt="image-20191218135354038" style="zoom:50%;" />
-<h4 id="string类型的常量池">String类型的常量池</h4>
-<ul>
-<li>
-<p>直接使用双引号声明出来的 String 对象会直接存储在常量池中。</p>
-</li>
-<li>
-<p>如果不是用双引号声明的 String 对象，可以使用 String 提供的 intern 方法。String.intern() 是一个 Native 方法，它的作用是：<strong>如果运行时常量池中已经包含一个等于此 String 对象内容的字符串，则返回常量池中该字符串的引用</strong>；如果没有，<strong>则在常量池中创建与此 String 内容相同的字符串，并返回常量池中创建的字符串的引用。</strong></p>
-<pre><code class="language-java">String s1 = new String(&quot;计算机&quot;);
-String s2 = s1.intern();
-String s3 = &quot;计算机&quot;;
-System.out.println(s2);//计算机
-System.out.println(s1 == s2);//false，因为一个是堆内存中的String对象一个是常量池中的String对象，
-System.out.println(s3 == s2);//true，因为两个都是常量池中的String对象字符串拼接
-</code></pre>
-</li>
-<li>
-<p>字符串拼接</p>
-<pre><code class="language-java">String str1 = &quot;str&quot;;
-String str2 = &quot;ing&quot;;
-
-String str3 = &quot;str&quot; + &quot;ing&quot;;		//常量池中的对象
-String str4 = str1 + str2; 			//在堆上创建的新的对象	  
-String str5 = &quot;string&quot;;					//常量池中的对象
-System.out.println(str3 == str4);//false
-System.out.println(str3 == str5);//true
-System.out.println(str4 == str5);//false
-</code></pre>
-<img src="https://tva1.sinaimg.cn/large/006tNbRwly1ga0u4luznqj30u00v9djq.jpg" alt="image-20191218135818700" style="zoom:50%;" />
-</li>
-</ul>
-<h4 id="string-str-new-stringabc创建了几个对象">String str = new String(&quot;abc&quot;)创建了几个对象？</h4>
-<p><strong>2个</strong>  先有<strong>字符串&quot;abc&quot;放入常量池</strong>，然后 <strong>new 了一份字符串&quot;abc&quot;放入Java堆</strong>(字符串常量&quot;abc&quot;在编译期就已经确定放入常量池，而 Java 堆上的&quot;abc&quot;是在运行期初始化阶段才确定)，然后 Java 栈的 str1 指向Java堆上的&quot;abc&quot;。</p>
-<p>验证：</p>
-<pre><code class="language-java">		String s1 = new String(&quot;abc&quot;);// 堆内存的地址值
-		String s2 = &quot;abc&quot;;
-		System.out.println(s1 == s2);// 输出false,因为一个是堆内存，一个是常量池的内存，故两者是不同的。
-		System.out.println(s1.equals(s2));// 输出true
-</code></pre>
-<h2 id="8种基本类型的包装类和常量池">8种基本类型的包装类和常量池</h2>
-<ul>
-<li>
-<p><strong>Java 基本类型的包装类的大部分都实现了常量池技术，即Byte,Short,Integer,Long,Character,Boolean；这5种包装类默认创建了数值[-128，127]的相应类型的缓存数据，但是超出此范围仍然会去创建新的对象。</strong></p>
-</li>
-<li>
-<p><strong>两种浮点数类型的包装类 Float,Double 并没有实现常量池技术。</strong></p>
-</li>
-</ul>
-<p>验证：</p>
-<pre><code class="language-java">Integer i1 = 33;
-Integer i2 = 33;
-System.out.println(i1 == i2);// 输出true
-Integer i11 = 333;
-Integer i22 = 333;
-System.out.println(i11 == i22);// 输出false
-Double i3 = 1.2;
-Double i4 = 1.2;
-System.out.println(i3 == i4);// 输出false
-</code></pre>
-<ul>
-<li>深入理解包装类的装箱拆箱</li>
-</ul>
-<pre><code class="language-java">Integer i1 = 40;
-Integer i2 = 40;
-Integer i3 = 0;
-Integer i4 = new Integer(40);
-Integer i5 = new Integer(40);
-Integer i6 = new Integer(0);
-
-System.out.println(&quot;i1=i2   &quot; + (i1 == i2));
-System.out.println(&quot;i1=i2+i3   &quot; + (i1 == i2 + i3));
-System.out.println(&quot;i1=i4   &quot; + (i1 == i4));
-System.out.println(&quot;i4=i5   &quot; + (i4 == i5));
-System.out.println(&quot;i4=i5+i6   &quot; + (i4 == i5 + i6));   
-System.out.println(&quot;40=i5+i6   &quot; + (40 == i5 + i6));    
-</code></pre>
-<p>输出结果：</p>
-<pre><code>i1=i2   true
-i1=i2+i3   true
-i1=i4   false
-i4=i5   false
-i4=i5+i6   true
-40=i5+i6   true
-</code></pre>
-<ul>
-<li>
-<p>Integer i1=40；Java 在编译的时候会直接将代码封装成Integer i1=Integer.valueOf(40);，从而<strong>使用常量池中的对象</strong>。</p>
-</li>
-<li>
-<p>Integer i4 = new Integer(40);这种情况下<strong>会创建新的对象</strong>。</p>
-</li>
-<li>
-<p>语句i4 == i5 + i6，<strong>因为+这个操作符不适用于Integer对象，首先i5和i6进行自动拆箱操作，进行数值相加</strong>，即i4 == 40。<strong>然后Integer对象无法与数值进行直接比较，所以i4自动拆箱转为int值40</strong>，最终这条语句转为40 == 40进行数值比较。</p>
-</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
