@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>【LeetCode专辑 - 1】二分查找 | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201129155835.png)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">【LeetCode专辑 - 1】二分查找</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-11-29 15:58:43" itemprop="datePublished" pubdate="">2020-11-29</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>LeetCode第一弹：二分相关经典题目刷题笔记，这里所有题目都是按照上一篇文章所分享的模板来解题，思路非常清晰</p>
+</blockquote>
+<p><strong>题目列表</strong></p>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/description/">33. 搜索旋转排序数组</a></li>
+<li><a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/">34. 在排序数组中查找元素的第一个和最后一个位置</a></li>
+<li><a href="https://leetcode-cn.com/problems/sqrtx/description/">69. x-的平方根</a></li>
+<li><a href="https://leetcode-cn.com/problems/search-a-2d-matrix/description/">74. 搜索二维矩阵</a></li>
+<li><a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/">153. 寻找旋转排序数组中的最小值</a></li>
+<li><a href="https://leetcode-cn.com/problems/first-bad-version/description/">278. 第一个错误的版本</a></li>
+<li><a href="https://leetcode-cn.com/problems/valid-perfect-square/description/">367. 有效的完全平方数</a></li>
+<li><a href="https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/">540. 有序数组中的单一元素</a></li>
+<li><a href="https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/">744. 寻找比目标字母大的最小字母</a></li>
+<li><a href="https://leetcode-cn.com/problems/peak-index-in-a-mountain-array/description/">852. 山脉数组的峰顶索引</a></li>
+</ul>
+<h2 id="搜索旋转排序数组">搜索旋转排序数组</h2>
+<ul>
+<li>通过二分找到数组旋转的位置</li>
+<li>判断要查找的数位于哪一段</li>
+<li>在段内进行二分查找</li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    int search(vector&lt;int&gt;&amp; nums, int target) {
+        if (nums.empty())
+            return -1;
+        // 先找到旋转的位置
+        int l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = l + r + 1 &gt;&gt; 1;
+            if (nums[mid] &gt;= nums[0])
+                l = mid;
+            else 
+                r = mid - 1;
+        }
+        // 判断位于哪一段
+        if (target &gt;= nums[0])
+            l = 0;
+        else 
+            l = r + 1, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            if (nums[mid] &gt;= target)
+                r = mid;
+            else 
+                l = mid + 1;
+        }
+        // 这里写nums[l]的话：[1] 0 这个样例会出现问题，没有进入二分，导致 l = r + 1越界
+        if (nums[r] == target)
+            return l;
+        else 
+            return -1;
+    }
+};
+</code></pre>
+<h2 id="在排序数组中查找元素的第一个和最后一个位置">在排序数组中查找元素的第一个和最后一个位置</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) {
+        vector&lt;int&gt; res = {-1, -1};
+        if (nums.size() == 0)
+            return res;
+        int l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            if (nums[mid] &gt;= target)
+                r = mid;
+            else
+                l = mid + 1;
+        }
+        if (nums[l] == target)
+            res[0] = l;
+        l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = l + r + 1 &gt;&gt; 1;
+            if (nums[mid] &lt;= target)
+                l = mid;
+            else
+                r = mid - 1;
+        }
+        if (nums[l] == target)
+            res[1] = l;
+        return res;
+    }
+};
+</code></pre>
+<h2 id="x的平方根">x的平方根</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    int mySqrt(int x) {
+        if (x &lt;= 1)
+            return x;
+        int l = 1, r = x;
+        while (l &lt; r) {
+            // 强行转换成long long类型
+            int mid = l + 1ll + r &gt;&gt; 1;
+            if (mid &lt;= x / mid)
+                l = mid;
+            else 
+                r = mid - 1;
+        }
+        return l;
+    }
+};
+</code></pre>
+<h2 id="搜索二维矩阵">搜索二维矩阵</h2>
+<ul>
+<li>一维坐标转二维的形式进行二分查找</li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    bool searchMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; matrix, int target) {
+        if (matrix.empty() || matrix[0].empty())
+            return false;
+        int n = matrix.size(), m = matrix[0].size();
+        int l = 0, r = n * m - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            // 一维坐标转换成二维坐标
+            if (matrix[mid / m][mid % m] &gt;= target)
+                r = mid;
+            else 
+                l = mid + 1;
+        }
+        return matrix[l / m][l % m] == target;
+    }
+};
+</code></pre>
+<h2 id="寻找旋转排序数组中的最小值">寻找旋转排序数组中的最小值</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    int findMin(vector&lt;int&gt;&amp; nums) {
+        int l = 0, r = nums.size() - 1;
+        if (nums[l] &lt; nums[r])
+            return nums[0];
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            if (nums[mid] &lt; nums[0])
+                r = mid;
+            else
+                l = mid + 1;
+        }
+        return nums[l];
+    }
+};
+</code></pre>
+<h2 id="第一个错误的版本">第一个错误的版本</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    int firstBadVersion(int n) {
+        int l = 1, r = n;
+        while (l &lt; r) {
+            int mid = l + (r - l) / 2;
+            if (isBadVersion(mid))
+                r = mid;
+            else
+                l = mid + 1;
+
+        }
+        return l;
+    }
+};
+</code></pre>
+<h2 id="有效的完全平方数">有效的完全平方数</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    int firstBadVersion(int n) {
+        int l = 1, r = n;
+        while (l &lt; r) {
+            int mid = l + (r - l) / 2;
+            if (isBadVersion(mid))
+                r = mid;
+            else
+                l = mid + 1;
+
+        }
+        return l;
+    }
+};
+</code></pre>
+<h2 id="有序数组中的单一元素">有序数组中的单一元素</h2>
+<ul>
+<li>将两个元素看作一组进行二分，找到边界即为所求</li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    int singleNonDuplicate(vector&lt;int&gt;&amp; nums) {
+        // 给数组末尾添加一个数：只需要保证和数组最后一位不相同即可
+        nums.push_back(nums.back() + 1);
+        int l = 0, r = nums.size() / 2 - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            // 边界一定在mid的左边
+            if (nums[mid * 2] != nums[mid * 2 + 1])
+                r = mid;
+            else
+                l = mid + 1;
+        }
+        return nums[r * 2];
+    }
+};
+</code></pre>
+<h2 id="寻找比目标字母大的最小字母">寻找比目标字母大的最小字母</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    char nextGreatestLetter(vector&lt;char&gt;&amp; letters, char target) {
+        // 二分出第一个大于target的数
+        int l = 0, r = letters.size() - 1;
+        while (l &lt; r) {
+            int mid = l + r &gt;&gt; 1;
+            if (letters[mid] &gt; target)
+                r = mid;
+            else
+                l = mid + 1;
+        }
+        // 说明找奥拉恰好大于target的数，返回即可
+        if (letters[l] &gt; target)
+            return letters[l];
+        // 否则返回第一个字符
+        return letters[0];
+    }
+};
+</code></pre>
+<h2 id="山脉数组的峰顶索引">山脉数组的峰顶索引</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    int peakIndexInMountainArray(vector&lt;int&gt;&amp; A) {
+        int l = 0, r = A.size() - 1;
+        while (l &lt; r) {
+            int mid = l + (r - l) / 2;
+            if (A[mid] &lt;= A[mid + 1])
+                l = mid + 1;
+            else 
+                r = mid;
+        }
+        return l;
+    }
+};
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/8YCLi0-sZ/" rel="tag">LeetCode</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/eYp-gRorc/" rel="tag">二分</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/qia-si-xi-jie-shi-mo-gui-de-er-fen/" rel="next"> 掐死“细节是魔鬼”的二分</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
