@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>【LeetCode专辑 - 2】双指针算法 | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201206172819.png)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">【LeetCode专辑 - 2】双指针算法</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-12-06 17:28:37" itemprop="datePublished" pubdate="">2020-12-06</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>LeetCode第二弹：总结了双指针的经典题目</p>
+</blockquote>
+<p><strong>题目列表</strong></p>
+<ul>
+<li>
+<p><a href="https://leetcode-cn.com/problems/merge-sorted-array/">88. 合并两个有序数组</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/linked-list-cycle/">141. 环形链表</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/">167. 两数之和 II - 输入有序数组</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/reverse-vowels-of-a-string/">345. 反转字符串中的元音字母</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/">524. 通过删除字母匹配到字典里最长单词</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/sum-of-square-numbers/">633. 平方数之和</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/problems/valid-palindrome-ii/">680. 验证回文字符串 Ⅱ</a></p>
+</li>
+</ul>
+<h2 id="合并两个有序数组">合并两个有序数组</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    void merge(vector&lt;int&gt;&amp; nums1, int m, vector&lt;int&gt;&amp; nums2, int n) {
+        int p1 = m - 1, p2 = n - 1;
+        int p = m + n - 1;
+        while (p1 &gt;= 0 &amp;&amp; p2 &gt;= 0) {
+            if (nums1[p1] &gt; nums2[p2])
+                nums1[p--] = nums1[p1--];
+            else 
+                nums1[p--] = nums2[p2--];
+        }
+        while (p2 &gt;= 0)
+            nums1[p--] = nums2[p2--];
+    }
+};
+</code></pre>
+<h2 id="环形链表">环形链表</h2>
+<ul>
+<li>设有两个指针 fast 和 slow，初始时指向头节点。每次移动时，fast向后走两次，slow向后走一次，直到 fast 无法向后走两次</li>
+<li>如果有环的存在，则slow指针一定和fast指针相遇</li>
+</ul>
+<img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201206152608.png" alt="image-20201206152607747" style="zoom:50%;" />
+<ul>
+<li>第一次相遇时，假设慢指针 slow 走了 k 步，那么快指针 fast 一定走了 2k 步，也就是说比 slow 多走了 k 步(也就是环的⻓度)。</li>
+<li>设相遇点距环的起点的距离为 m，那么环的起点距头结点 head 的距离为 k - m，也就是说如果从 head 前进 k - m 步就能到达环起点。</li>
+<li>巧的是，如果从相遇点继续前进 k - m 步，也恰好到达环起点。</li>
+<li>所以，<strong>只要我们把快慢指针中的任一个重新指向 head，然后两个指针同速 前进，k - m 步后就会相遇，相遇之处就是环的起点了</strong>。</li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (head == nullptr || head-&gt;next == nullptr)
+            return false;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast-&gt;next != nullptr &amp;&amp; fast-&gt;next-&gt;next != nullptr) {
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+            if (slow == fast)
+                return true;
+        }
+        return false;
+    }
+};
+</code></pre>
+<h2 id="两数之和-ii-输入有序数组">两数之和 II - 输入有序数组</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; numbers, int target) {
+        vector&lt;int&gt; res;
+        for (int i = 0, j = numbers.size() - 1; i &lt; numbers.size(); i++) {
+            while (i &lt; j &amp;&amp; numbers[i] + numbers[j] &gt; target)
+                j--;
+            if (i &lt; j &amp;&amp; numbers[i] + numbers[j] == target) {
+                res.push_back(i + 1);
+                res.push_back(j + 1);
+                break;
+            }
+        }
+        return res;
+    }
+};
+</code></pre>
+<h2 id="反转字符串中的元音字母">反转字符串中的元音字母</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    string str = &quot;aeiou&quot;;
+
+    bool check(char c) {
+        return str.find(tolower(c)) != -1;
+    }
+
+    string reverseVowels(string s) {
+        for (int i = 0, j = s.size() - 1; i &lt; j; i++, j--) {
+            while (i &lt; j &amp;&amp; !check(s[i]))
+                i++;
+            while (i &lt; j &amp;&amp; !check(s[j]))
+                j--;
+            swap(s[i], s[j]);
+        }
+        return s;
+    }
+};
+</code></pre>
+<h2 id="通过删除字母匹配到字典里最长单词">通过删除字母匹配到字典里最长单词</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 比较函数：返回长度最长且字典顺序最小的字符串
+     * @param a 
+     * @param b 
+     * @return true 
+     * @return false 
+     */
+    static bool cmp(string &amp;a, string &amp;b) {
+      if (a.size() != b.size())
+          return a.size() &gt; b.size();
+      else
+          return a &lt; b;
+    }
+
+    string findLongestWord(string s, vector&lt;string&gt;&amp; d) {
+        if (d.empty())
+            return &quot;&quot;;
+        vector&lt;string&gt; res;
+        // 找到所有的情况
+        for (string str : d) {
+            int i = 0, j = 0;
+            while (j &lt; s.size()) {
+                if (str[i] == s[j])
+                    i++;
+                j++;
+            }
+            if (i == str.size())
+                res.push_back(str);
+        }
+        if (res.empty())
+            return &quot;&quot;;
+        sort(res.begin(), res.end(), cmp);
+        return res[0];
+    }
+};
+</code></pre>
+<h2 id="平方数之和">平方数之和</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        if (c == 0)
+            return true;
+        int low = 0;
+        int high = (int)sqrt(c);
+        while (low &lt;= high) {
+            long long temp = (long long)low * low + high * high;
+            if (temp == c) 
+                return true;
+            else if (temp &gt; c)
+                high--;
+            else 
+                low++;
+        }
+        return false;
+    }
+};
+</code></pre>
+<h2 id="验证回文字符串-ii">验证回文字符串 Ⅱ</h2>
+<pre><code class="language-c++">class Solution {
+  public:
+    bool validPalindrome(string s) {
+        for (int i = 0, j = s.size() - 1; i &lt; j; i++, j--) {
+            if (s[i] != s[j])
+                // 两种情况求“或”
+                return helper(s, i + 1, j) || helper(s, i, j - 1);
+        }
+        return true;
+    }
+    /**
+     * @brief 判断字符串从i ~ j之间是否是回文串
+     * @param s 
+     * @param i 
+     * @param j 
+     * @return true 
+     * @return false 
+     */
+    bool helper(string &amp;s, int i, int j) {
+        bool res = true;
+        while (i &lt; j) {
+            if (s[i] != s[j])
+                res = false;
+            i++;
+            j--;
+        }
+        return res;
+    }
+};
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/bASq1RgcF/" rel="tag">双指针</a>	
+				 
+				<a href="https://kay-rick.github.io/tag/8YCLi0-sZ/" rel="tag">LeetCode</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/tuo-bu-pai-xu/" rel="next"> 拓扑排序</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
