@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-12-05T08:03:53.682Z</updated>
+    <updated>2020-12-06T06:42:32.314Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,186 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[拓扑排序]]></title>
+        <id>https://kay-rick.github.io/post/tuo-bu-pai-xu/</id>
+        <link href="https://kay-rick.github.io/post/tuo-bu-pai-xu/">
+        </link>
+        <updated>2020-12-05T11:14:54.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>对一个有向无环图G进行拓扑排序，<strong>是将G中所有顶点排成一个线性序列，使得图中任意一对顶点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>，若边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>&gt;</mo><mo>∈</mo><mi>E</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">&lt;u,v&gt; ∈ E(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mopen">(</span><span class="mord mathdefault">G</span><span class="mclose">)</span></span></span></span>，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>在线性序列中出现在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>之前</strong>。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。</p>
+</blockquote>
+<h2 id="有向图的拓扑序列">有向图的拓扑序列</h2>
+<p>给定一个n个点m条边的有向图，点的编号是1到n，图中可能存在重边和自环。请输出任意一个该有向图的拓扑序列，如果拓扑序列不存在，则输出-1。若一个由图中所有点构成的序列A满足：对于图中的每条边(x, y)，x在A中都出现在y之前，则称A是该图的一个拓扑序列。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数n和m。接下来m行，每行包含两个整数x和y，表示存在一条从点x到点y的有向边(x, y)。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，如果存在拓扑序列，则输出任意一个合法的拓扑序列即可。</p>
+<p>否则输出-1。</p>
+<p><strong>数据范围</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo separator="true">,</mo><mtext> </mtext><mi>m</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">1≤n,\ m≤10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3 3
+1 2
+2 3
+1 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1 2 3
+</code></pre>
+<ul>
+<li><strong>一个有向无环图，一定至少存在一个入度为0的点</strong></li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201205165635.png" alt="image-20201205165634316" loading="lazy"></figure>
+<ul>
+<li>使用BFS思想：开始让所有入度为0的点入队，在循环过程中，枚举队头元素的所有出边，删掉队头元素（枚举的元素入度减1），如果这些元素入度为0，则加入到队列中，这样不断循环</li>
+</ul>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+// 记录每个点的入度
+int d[N];
+// 记录拓扑排序
+vector&lt;int&gt; res;
+vector&lt;int&gt; g[N];
+
+bool topsort() {
+    queue&lt;int&gt; q;
+    
+    for (int i = 1; i &lt;= n; i++) {
+        if (d[i] == 0) {
+            q.push(i);
+            res.push_back(i);
+        }
+    }
+    while (!q.empty()) {
+        int t = q.front();
+        q.pop();
+        for (int i = 0; i &lt; g[t].size(); i++) {
+            int j = g[t][i];
+            d[j]--;
+            if (d[j] == 0) {
+                q.push(j);
+                res.push_back(j);
+            }
+        }
+    }
+    // 如果有环则说明一定没有加到队列中来
+    return res.size() == n;
+}
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++ ) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        g[a].push_back(b);
+        d[b]++;
+    }
+    
+    if (!topsort())
+        cout &lt;&lt; &quot;-1&quot; &lt;&lt; endl;
+    else {
+        for (int i = 0; i &lt; res.size(); i++)
+            cout &lt;&lt; res[i] &lt;&lt; ' ';
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="判断拓扑排序序列">判断拓扑排序序列</h2>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 N 和 M，分别表示有向图的点和边的数量。接下来 M 行，每行给出一条边的起点和终点。点的编号从 1 到 N。再一行包含一个整数 K，表示询问次数。接下来 K 行，每行包含一个所有点的排列。一行中的数字用空格隔开。</p>
+<p><strong>输出格式</strong></p>
+<p>在一行中输出所有不是拓扑序列的询问序列的编号。询问序列编号从 0 开始。行首和行尾不得有多余空格，保证存在至少一个解。</p>
+<p><strong>数据范围</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>N</mi><mo>≤</mo><mn>1000</mn><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>M</mi><mo>≤</mo><mn>10000</mn><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>K</mi><mo>≤</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">1≤N≤1000,
+1≤M≤10000,
+1≤K≤100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>6 8
+1 2
+1 3
+5 2
+5 4
+2 3
+2 6
+3 4
+6 4
+5
+1 5 2 3 6 4
+5 1 2 6 3 4
+5 1 2 3 6 4
+5 2 1 6 3 4
+1 2 3 4 5 6
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>3 4
+</code></pre>
+<ul>
+<li>使用数组存储序列下标</li>
+<li>枚举每条边：判断起点下标是否都小于终点下标</li>
+</ul>
+<pre><code class="language-c++">#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+const int N = 1010, M = 10010;
+struct Edge {
+    int a;
+    int b;
+} e[M];
+int n, m;
+// 记录路径中的下标
+int pos[N];
+
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; m; i++) {
+        int a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        e[i].a = a;
+        e[i].b = b;
+    }
+
+    int k;
+    cin &gt;&gt; k;
+    vector&lt;int&gt; res;
+    for (int i = 0; i &lt; k; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            int x;
+            cin &gt;&gt; x;
+            pos[x] = j;
+        }
+
+        bool success = true;
+        for (int j = 0; j &lt; m; j++) {
+            if (pos[e[j].b] &lt; pos[e[j].a]) {
+                success = false;
+                break;
+            }
+        }
+        if (!success)
+            res.push_back(i);
+    }
+    if (res.size() &gt; 0) {
+        cout &lt;&lt; res[0];
+        for (int i = 1; i &lt; res.size(); i++)
+            cout &lt;&lt; ' ' &lt;&lt; res[i];
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[重温DFS&BFS]]></title>
         <id>https://kay-rick.github.io/post/chong-wen-dfsandbfs/</id>
@@ -2277,177 +2457,6 @@ class MyStack {
             return q.empty();
         }
 };
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[你还在用结构体操作链表吗？]]></title>
-        <id>https://kay-rick.github.io/post/ni-huan-zai-yong-jie-gou-ti-cao-zuo-lian-biao-ma/</id>
-        <link href="https://kay-rick.github.io/post/ni-huan-zai-yong-jie-gou-ti-cao-zuo-lian-biao-ma/">
-        </link>
-        <updated>2020-09-06T14:58:19.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>在算法考试中遇到链表的题目时，我们通常都不会使用结构体的方法来操作链表，对于C++而言，我们会频繁申请内存空间非常费时，因此我们可以考虑使用数组来实现链表。</p>
-</blockquote>
-<h2 id="单链表">单链表</h2>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906152538.png" width = "500" height = "200"></img></div>
-<ul>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">e[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span>：存储节点值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">value</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">ne[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span>：存储某个节点的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针（下个值在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span>数组中的下标）</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">head</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span></span></span></span>表示头结点的下标</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>表示已经用到了哪个点</li>
-</ul>
-</br>
-<h3 id="初始化">初始化</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-
-using namespace std;
-
-const int N = 100010;
-
-int e[N], ne[N], idx, head;
-
-/**
- * @brief 初始化
- */
-void init () {
-    head = -1;
-    idx = 0;
-}
-</code></pre>
-</br>
-<h3 id="插入到头节点">插入到头节点</h3>
-<ul>
-<li>初始化当前节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span></li>
-<li>当前节点的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针指向头结点</li>
-<li>头结点重新指向当前结点，并使<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi><mo>+</mo><mo>+</mo></mrow><annotation encoding="application/x-tex">idx++</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></li>
-</ul>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906153216.png" width = "600" height = "200"></img></div>
-<pre><code class="language-c++">/**
- * @brief 将x插到头结点
- * @param x 
- */
-void add_to_head (int x) {
-    // 初始化当前节点
-    e[idx] = x;
-    // 当前节点的next指针指向头节点
-    ne[idx] = head;
-    // 头节点重新指向当前节点，并使idx++（当前节点用过）
-    head = idx++;
-}
-</code></pre>
-</br>
-<h3 id="插入结点">插入结点</h3>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906154145.png" width = "600" height = "250"></img></div>
-<ul>
-<li>初始化当前结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span></li>
-<li>当前节点的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针指向下标为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>的结点的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针</li>
-<li>下标为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>的结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针指向当前结点，并使<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi><mo>+</mo><mo>+</mo></mrow><annotation encoding="application/x-tex">idx++</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></li>
-</ul>
-<pre><code class="language-c++">/**
- * @brief 将节点 x 插入到下标为 k 的节点的后面
- * @param k 
- * @param x 
- */
-void add (int k, int x) {
-    e[idx] = x;
-    ne[idx] = ne[k];
-    ne[k] = idx++;
-}
-</code></pre>
-</br>
-<h3 id="删除节点">删除节点</h3>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906155030.png" width = "600" height = "300"></img></div>
-<pre><code class="language-c++">/**
- * @brief 将下标是k的点后面的点删除
- * @param k 
- */
-void remove (int k) {
-    ne[k] = ne[ne[k]];
-}
-</code></pre>
-</br>
-<h3 id="遍历">遍历</h3>
-<pre><code class="language-c++">for (int i = head; i != -1; i = ne[i])
-        cout &lt;&lt; e[i] &lt;&lt; ' ';
-    cout &lt;&lt; endl;
-</code></pre>
-</br>
-<h2 id="双链表">双链表</h2>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906164449.png" width = "600" height = "200"></img></div>
-<ul>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">e[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span>：存储节点值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">value</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">r[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span>：存储某个节点右边的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针（右边的值在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span>数组中的下标）</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>[</mo><mi>N</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">l[N]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">]</span></span></span></span>：存储某个节点左边的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span>指针（左边的值在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span>数组中的下标）</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>表示已经用到了哪个点</li>
-</ul>
-</br>
-<h3 id="初始化-2">初始化</h3>
-<ul>
-<li>初始化的时候一开始相当于就有两个结点，左端点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">head</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span></span></span></span>右端点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>i</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">tail</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>开始</li>
-</ul>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-
-using namespace std;
-
-const int N = 100010;
-
-int e[N], l[N], r[N], idx;
-
-/**
- * @brief 初始化
- */
-void init() {
-    // 左端点head为0
-    l[1] = 0;
-    // 右端点tail为1
-    r[0] = 1;
-    idx = 2;
-}
-</code></pre>
-</br>
-<h3 id="插入节点">插入节点</h3>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906171043.png" width = "600" height = "300"></img></div>
-<ul>
-<li>初始化当前节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span></li>
-<li>当前节点的左指针指向节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span></li>
-<li>当前节点的右指针指向节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>原来的右节点</li>
-<li>结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>原来的右节点的左指针指向当前节点</li>
-<li>结点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>的右指针指向当前节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">idx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span>，并使<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>x</mi><mo>+</mo><mo>+</mo></mrow><annotation encoding="application/x-tex">idx++</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></li>
-</ul>
-<pre><code class="language-c++">/**
- * @brief 在节点a的右边插入一个数x
- * @param a 
- * @param x 
- */
-void insert (int a, int x) {
-    e[idx] = x;
-    l[idx] = a;
-    r[idx] = r[a];
-    l[r[a]] = idx;
-    r[a] = idx++;
-}
-</code></pre>
-</br>
-<h3 id="删除节点-2">删除节点</h3>
-<div align = "center"><img src = "https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20200906172604.png" width = "650" height = "300"></img></div>
-<pre><code class="language-c++">/**
- * @brief 删除节点a
- * @param a 
- */
-void remove (int a) {
-    l[r[a]] = l[a];
-    r[l[a]] = r[a];
-}
-</code></pre>
-</br>
-<h3 id="遍历-2">遍历</h3>
-<ul>
-<li>初始化是以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>为两个空点加入双链表，所以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>的右边就是第一个点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>[</mo><mn>0</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">r[0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的左边就是最后一个点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>[</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">l[1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span></span></span></span></li>
-</ul>
-<pre><code class="language-c++">for (int i = r[0]; i != 1; i = r[i]) 
-    cout &lt;&lt; e[i] &lt;&lt; ' ';
-cout &lt;&lt; endl;
 </code></pre>
 ]]></content>
     </entry>
