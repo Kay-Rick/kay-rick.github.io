@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-12-09T12:24:38.503Z</updated>
+    <updated>2020-12-13T11:54:28.067Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,391 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[【LeetCode专辑 - 3】链表]]></title>
+        <id>https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/</id>
+        <link href="https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/">
+        </link>
+        <updated>2020-12-13T11:45:10.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>链表是一种非常基础的数据结构，其中算法的题目难度一般都不是很大，重点在于画图理解、处理好边界条件和保留相关节点信息防止遍历后找不到所需节点</p>
+</blockquote>
+<p><strong>题目列表</strong></p>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">19. 删除链表的倒数第N个节点</a></li>
+<li><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/">21. 合并两个有序链表</a></li>
+<li><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/">24. 两两交换链表中的节点</a></li>
+<li><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/">83. 删除排序链表中的重复元素</a></li>
+<li><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160. 相交链表</a></li>
+<li><a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a></li>
+<li><a href="https://leetcode-cn.com/problems/palindrome-linked-list/">234. 回文链表</a></li>
+<li><a href="https://leetcode-cn.com/problems/odd-even-linked-list/">328. 奇偶链表</a></li>
+<li><a href="https://leetcode-cn.com/problems/add-two-numbers-ii/">445. 两数相加 II</a></li>
+<li><a href="https://leetcode-cn.com/problems/split-linked-list-in-parts/">725. 分隔链表</a></li>
+</ul>
+<h2 id="删除链表的倒数第n个节点">删除链表的倒数第N个节点</h2>
+<ul>
+<li>先统计链表中有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span></span></span></span>个结点</li>
+<li>找到倒数第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个节点</li>
+<li>删除<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>=</mo><mi>p</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">p-&gt;next = p-&gt;next-&gt;next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span></li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        auto dummy = new ListNode(-1);
+        dummy-&gt;next = head;
+        // 记录链表一共有多少个节点
+        int sum = 0;
+        while (head != nullptr) {
+            sum++;
+            head = head-&gt;next;
+        }
+        // 找到倒数第 n + 1个节点
+        auto p = dummy;
+        for (int i = 0 ; i &lt; sum - n; i++)
+            p = p-&gt;next;
+        p-&gt;next = p-&gt;next-&gt;next;
+        return dummy-&gt;next;
+    }
+};
+</code></pre>
+<h2 id="合并两个有序链表">合并两个有序链表</h2>
+<h3 id="双指针">双指针</h3>
+<ul>
+<li><strong>关键在于定义虚拟头结点，防止返回结果找不到头结点</strong></li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr)
+            return l2;
+        if (l2 == nullptr)
+            return l1; 
+        // 定义虚拟头结点
+        ListNode* dummy = new ListNode(-1);
+        ListNode* tail = dummy;
+        // 归并
+        while (l1 != nullptr &amp;&amp; l2 != nullptr) {
+            if (l1-&gt;val &lt; l2-&gt;val) {
+                tail-&gt;next = l1;
+                l1 = l1-&gt;next;
+            }
+            else {
+                tail-&gt;next = l2;
+                l2 = l2-&gt;next;
+            }
+            tail = tail-&gt;next;
+        }
+        if (l1 != nullptr) 
+            tail-&gt;next = l1;
+        if (l2 != nullptr)
+            tail-&gt;next = l2;
+        // 返回链表：不返回虚拟头结点
+        return dummy-&gt;next;
+    }
+};
+</code></pre>
+<h3 id="递归">递归</h3>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if (l1 == nullptr)
+            return l2;
+        if (l2 == nullptr)
+            return l1;
+
+        if (l1-&gt;val &lt; l2-&gt;val) {
+            l1-&gt;next = mergeTwoLists(l1-&gt;next, l2);
+            return l1;
+        } else {
+            l2-&gt;next = mergeTwoLists(l1, l2-&gt;next);
+            return l2;
+        }
+    }
+};
+</code></pre>
+<h2 id="两两交换链表中的节点">两两交换链表中的节点</h2>
+<ul>
+<li>注意这里和反转链表的区别：<strong>两两交换相邻的节点</strong></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>每次指向要交换两个结点的前一个结点</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201213190243.png" alt="image-20201213190242011" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head-&gt;next == nullptr)
+            return head;
+        // 建立虚拟头结点
+        auto dummy = new ListNode(-1);
+        dummy-&gt;next = head;
+        auto p = dummy;
+        while (p-&gt;next != nullptr &amp;&amp; p-&gt;next-&gt;next != nullptr) {
+            auto a = p-&gt;next;
+            auto b = p-&gt;next-&gt;next;
+            p-&gt;next = b;
+            a-&gt;next = b-&gt;next;
+            b-&gt;next = a;
+            p = a;
+        }
+        return dummy-&gt;next;
+    }
+};
+</code></pre>
+<h2 id="删除排序链表中的重复元素">删除排序链表中的重复元素</h2>
+<ul>
+<li><strong>找到结点值相同的结点删除<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>=</mo><mi>p</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>−</mo><mo>&gt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">p-&gt;next = p-&gt;next-&gt;next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span></span></span></span></strong></li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == nullptr || head-&gt;next == nullptr)
+            return head;
+        auto p = head;
+        while (p-&gt;next != nullptr) {
+            if (p-&gt;val == p-&gt;next-&gt;val) {
+                p-&gt;next = p-&gt;next-&gt;next;
+            }
+            else 
+                p = p-&gt;next;
+        }
+        return head;
+    }
+};
+</code></pre>
+<h2 id="相交链表">相交链表</h2>
+<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201213163950.png" alt="image-20201213163845701" loading="lazy"></figure>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">headA</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">A</span></span></span></span>走到尾结点的时候，将指针指向<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">headB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span>往前走；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">headB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span>走到尾结点的时候，将指针指向<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">headA</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">A</span></span></span></span>往前走</li>
+<li>走到相交点的时候：走的总路程都是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mn>1</mn><mo>+</mo><mi>L</mi><mn>2</mn><mo>+</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">L1 + L2 + L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">L</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">L</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span></span></span></span></li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == nullptr || headB == nullptr)
+            return nullptr;
+        ListNode* pa = headA;
+        ListNode* pb = headB;
+        while (pa != pb) {
+            if (pa == nullptr)
+                pa = headB;
+            else 
+                pa = pa-&gt;next;
+            if (pb == nullptr)
+                pb = headA;
+            else 
+                pb = pb-&gt;next;
+        }
+        return pa;
+    }
+};
+</code></pre>
+<h2 id="反转链表">反转链表</h2>
+<h3 id="迭代">迭代</h3>
+<figure data-type="image" tabindex="3"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201213170315.png" alt="image-20201213170315084" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr)
+            return nullptr;
+        ListNode* p = head;
+        ListNode* q = head-&gt;next;
+        while (q != nullptr) {
+            ListNode* temp = q-&gt;next;
+            // 改变指针走向
+            q-&gt;next = p;
+            // 顺次往后移动
+            p = q;
+            q = temp;
+        }
+        head-&gt;next = nullptr;
+        return p;
+    }
+};
+</code></pre>
+<h3 id="递归-2">递归</h3>
+<pre><code class="language-c++">class Solution {
+public:
+    ListNode *reverseList(ListNode *head) {
+        if (head == nullptr || head-&gt;next == nullptr)
+            return head;
+        ListNode *tail = reverseList(head-&gt;next);
+        head-&gt;next-&gt;next = head;
+        head-&gt;next = nullptr;
+        return tail;
+    }
+};
+</code></pre>
+<h2 id="回文链表">回文链表</h2>
+<ul>
+<li>要使用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>的空间来做：那么我们就不能遍历时候将节点值存储下来去判断</li>
+<li>先统计链表中节点的个数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>a</mi><mi>l</mi><mi>f</mi><mo>=</mo><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">half = n/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">2</span></span></span></span>向下取整是链表的一半（向下取整目的为了无需判断奇偶数的影响，跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>−</mo><mi>h</mi><mi>a</mi><mi>l</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">n - half</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>步一定是后一半的头结点）</li>
+<li>从头结点开始跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>−</mo><mi>h</mi><mi>a</mi><mi>l</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">n - half</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>步找到后一半的头结点</li>
+<li>将后半部分反转<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi>a</mi><mi>l</mi><mi>f</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">half - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>次（反转链表操作）</li>
+<li>双指针判断是否是回文链表</li>
+<li>将后半部分链表恢复（否则过不了LeetCode评测）</li>
+</ul>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        // 记录链表一共有多少个结点
+        int n = 0;
+        auto p = head;
+        while (p != nullptr) {
+            p = p-&gt;next;
+            n++;
+        }
+        if (n &lt;= 1)
+            return true;
+        int half = n / 2;
+        auto a = head;
+        // 跳 n - half次到后面一半的头结点
+        for (int i = 0; i &lt; n - half; i++)
+            a = a-&gt;next;
+        auto b = a-&gt;next;
+        // 翻转 half - 1 次
+        for (int i = 0; i &lt; half - 1; i++) {
+            auto c = b-&gt;next;
+            b-&gt;next = a;
+            a = b;
+            b = c;
+        }
+        // 双指针判断是否回文链表
+        p = head;
+        auto q = a;
+        bool res = true;
+        for (int i = 0; i &lt; half; i++) {
+            if (p-&gt;val != q-&gt;val) {
+                res = false;
+                break;
+            }
+            p = p-&gt;next;
+            q = q-&gt;next;
+        }
+        // 将链表恢复：再次翻转 half - 1 次
+        auto tail = a;
+        b = a-&gt;next;
+        for (int i = 0; i &lt; half - 1; i++) {
+            auto c = b-&gt;next;
+            b-&gt;next = a;
+            a = b;
+            b = c;
+        }
+        tail-&gt;next = nullptr;
+
+        return res;
+    }
+};
+</code></pre>
+<h2 id="奇偶链表">奇偶链表</h2>
+<figure data-type="image" tabindex="4"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201213193347.png" alt="image-20201213193345885" loading="lazy"></figure>
+<pre><code class="language-C++">class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if (head == nullptr || head-&gt;next == nullptr)
+            return head;
+        auto odd = head, evenhead = head-&gt;next, even = evenhead;
+        while (even != nullptr &amp;&amp; even-&gt;next != nullptr) {
+            odd-&gt;next = odd-&gt;next-&gt;next;
+            even-&gt;next = even-&gt;next-&gt;next;
+            odd = odd-&gt;next;
+            even = even-&gt;next;
+        }
+        odd-&gt;next = evenhead;
+        return head;
+    }
+};
+</code></pre>
+<h2 id="两数相加-ii">两数相加 II</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    /**
+     * @brief 高精度加法
+     * @param a 
+     * @param b 
+     * @return vector&lt;int&gt; 
+     */
+    static vector&lt;int&gt; add(vector&lt;int&gt;&amp; a, vector&lt;int&gt;&amp; b) {
+        vector&lt;int&gt; c;
+        int t = 0;
+        for (int i = 0; i &lt; a.size() || i &lt; b.size(); i++) {
+            if (i &lt; a.size())
+                t += a[i];
+            if (i &lt; b.size())
+                t += b[i];
+            c.push_back(t % 10);
+            t /= 10;
+        }
+        if (t &gt; 0)
+            c.push_back(1);
+        return c;
+    }
+
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector&lt;int&gt; v1, v2, res;
+        while (l1 != nullptr) {
+            v1.push_back(l1-&gt;val);
+            l1 = l1-&gt;next;
+        }
+        while (l2 != nullptr) {
+            v2.push_back(l2-&gt;val);
+            l2 = l2-&gt;next;
+        }
+        reverse(v1.begin(), v1.end());
+        reverse(v2.begin(), v2.end());
+        res = add(v1, v2);
+        auto dummy = new ListNode(-1), p = dummy;
+        for (int i = res.size() - 1; i &gt;= 0; i--) {
+            p-&gt;next = new ListNode(res[i]);
+            p = p-&gt;next;
+        }
+        return dummy-&gt;next;
+    }
+};
+</code></pre>
+<h2 id="分隔链表">分隔链表</h2>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;ListNode*&gt; splitListToParts(ListNode* root, int k) {
+        vector&lt;ListNode*&gt; res;
+        int n = 0;
+        auto p = root;
+        while (p != nullptr) {
+            n++;
+            p = p-&gt;next;
+        }
+        int a = n / k;
+        int b = n % k;
+        p = root;
+        // b个组元素是 a + 1个
+        for (int i = 0; i &lt; b; i++) {
+            auto dummy = new ListNode(-1), q = dummy;
+            for (int i = 0; i &lt; a + 1; i++) {
+                q-&gt;next = new ListNode(p-&gt;val);
+                q = q-&gt;next;
+                p = p-&gt;next;
+            }
+            res.push_back(dummy-&gt;next);
+        }
+        // k - b个组元素是 a 个
+        for (int i = 0; i &lt; k - b; i++) {
+            auto dummy = new ListNode(-1), q = dummy;
+            for (int i = 0; i &lt; a; i++) {
+                q-&gt;next = new ListNode(p-&gt;val);
+                q = q-&gt;next;
+                p = p-&gt;next;
+            }
+            res.push_back(dummy-&gt;next);
+        } 
+        while (res.size() &lt; k) 
+            res.push_back(nullptr);
+        
+        return res;
+    }
+};
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[从微分积分看前缀和差分]]></title>
         <id>https://kay-rick.github.io/post/cong-wei-fen-ji-fen-kan-qian-zhui-he-chai-fen/</id>
@@ -2183,122 +2568,6 @@ int main() {
     return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[浅谈MySQL索引]]></title>
-        <id>https://kay-rick.github.io/post/qian-tan-mysql-suo-yin/</id>
-        <link href="https://kay-rick.github.io/post/qian-tan-mysql-suo-yin/">
-        </link>
-        <updated>2020-11-25T13:28:29.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>在前天的面试中，和面试官聊了聊MySQL索引的部分问题，面试官给我讲了很多，下来后查阅了相关资料并做了一个整理</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>在前天的面试中，和面试官聊了聊MySQL索引的部分问题，面试官给我讲了很多，下来后查阅了相关资料并做了一个整理</p>
-</blockquote>
-<!-- more -->
-<p>Reference：</p>
-<ul>
-<li><a href="https://mp.weixin.qq.com/s/Sl0GZeKLJfPOyfWV6iDk1w">为什么 MySQL 使用 B+ 树？</a></li>
-<li><a href="https://mp.weixin.qq.com/s/XC5T0WnNC0schcuoV8wPxw">理解MySQL索引底层数据结构</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/39293940">MySQL聚集索引和非聚集索引</a></li>
-<li><a href="https://www.cnblogs.com/s-b-b/p/8334593.html">聚集索引和非聚集索引的总结</a></li>
-</ul>
-<h2 id="聚集索引非聚集索引">聚集索引&amp;非聚集索引</h2>
-<p>聚集（clustered）索引，也叫聚簇索引：<strong>数据行的物理顺序与列值（一般是主键的那一列）的逻辑顺序相同，一个表中只能拥有一个聚集索引</strong>。通常：如果我们定义id为主键时，建立了聚集索引。数据行的物理顺序与列值得顺序相同。如果我们查询id比较靠后的数据，那么这行数据的地址在磁盘中的物理地址也会比较靠后。而且由于物理排列顺序方式与聚集索引的顺序相同，索引也就只能建立一个聚集索引。</p>
-<p>非聚集（unclustered）索引：<strong>该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引</strong>。其实按照定义，除了聚集索引以外的索引都是非聚集索引。</p>
-<blockquote>
-<p>理解聚集索引和非聚集索引可通过对比汉语字典的索引。汉语字典提供了两类检索汉字的方式，第一类是拼音检索（前提是知道该汉字读音），比如拼音为cheng的汉字排在拼音chang的汉字后面，根据拼音找到对应汉字的页码，这就是我们通常所说的字典序；第二类是部首笔画检索，根据笔画找到对应汉字，查到汉字对应的页码。<strong>拼音检索就是聚集索引，因为存储的记录（数据库中是行数据、字典中是汉字的详情记录）是按照该索引排序的；笔画索引，虽然笔画相同的字在笔画索引中相邻，但是实际存储页码却不相邻</strong>。</p>
-</blockquote>
-<h3 id="创建索引">创建索引</h3>
-<p>如果不创建索引，系统会自动创建一个隐含列作为表的聚集索引。</p>
-<p>聚集索引一般是表中的主键索引，如果表中没有显示指定主键，则会选择表中的第一个不允许为NULL的唯一索引，如果还是没有的话，就采用Innodb存储引擎为每行数据内置的6字节ROWID作为聚集索引</p>
-<pre><code class="language-sql">create table student (
-    `id` INT UNSIGNED AUTO_INCREMENT,
-    `name` VARCHAR(255),
-    `score` INT UNSIGNED,
-    PRIMARY KEY(`id`),
-    KEY(`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code></pre>
-<p><strong>最好还是在创建表的时候添加聚集索引，由于聚集索引的物理顺序上的特殊性，因此如果再在上面创建索引的时候会根据索引列的排序移动全部数据行上面的顺序，会非常地耗费时间以及性能</strong></p>
-<h3 id="查找分析">查找分析</h3>
-<p>该表中主键id是该表的聚集索引、name为非聚集索引；表中的每行数据都是按照聚集索引id排序存储的；比如要查找name='Arla'和name='Arle'的两个同学，他们在name索引表中位置可能是相邻的，但是实际存储位置可能差的很远。<strong>name索引表节点按照name排序，检索的是每一行数据的主键。聚集索引表按照主键id排序，检索的是每一行数据的真实内容</strong>。</p>
-<p><strong>非聚集索引的二次查询（回表）</strong></p>
-<p>非聚集索引叶节点仍然是索引节点，只是有一个指针指向对应的数据块，此如果使用非聚集索引查询，<strong>而查询列中包含了其他该索引没有覆盖的列，那么他还要进行第二次的查询，查询节点上对应的数据行的数据</strong>。</p>
-<p>比如：</p>
-<pre><code class="language-sql">select * from student where name = 'Arle'
-</code></pre>
-<p>查询name='Arle'的记录时，score列没有索引覆盖，需要二次查询。<strong>首相通过name索引表查找到Arle的主键id（可能有多个主键id，因为有重名的同学），再根据主键id的聚集索引找到相应的行记录</strong></p>
-<p><strong>如何解决非聚集索引的二次查询问题？</strong></p>
-<p><strong>复合索引（覆盖索引）</strong>：建立两列以上的索引，即可查询复合索引里的列的数据而不需要进行回表二次查询，如index(col1, col2)，执行下面的语句</p>
-<h3 id="查找比较">查找比较</h3>
-<pre><code class="language-sql">select * from student where id &gt; 5000 and id &lt; 20000
-</code></pre>
-<p>根据id进行范围查询，因为(5000, 20000)范围内的记录在磁盘上按顺序存储，顺序读取磁盘很快就能读到这批数据</p>
-<pre><code class="language-sql">select * from student where name &gt; 'Alie' and name &lt; 'John'
-</code></pre>
-<p>查询（'Alie', 'John'）范围内的记录，主键id分布可能是离散的1，100，20001，5000.....；增加了随机读取数据页几率；所以普通索引的范围查询效率被聚集索引甩开几条街都不止；非聚集索引的精确查询效率还是可以的，比聚集索引查询只增加了一次IO开销</p>
-<h3 id="总结">总结</h3>
-<ol>
-<li>使用聚集索引的查询效率要比非聚集索引的效率要高，但是如果需要频繁去改变聚集索引的值，写入性能并不高，因为需要移动对应数据的物理位置。</li>
-<li>非聚集索引在查询的时候可以的话就避免二次查询，这样性能会大幅提升。</li>
-<li>不是所有的表都适合建立索引，只有数据量大表才适合建立索引，且建立在选择性高的列上面性能会更好。</li>
-</ol>
-<h2 id="索引底层数据结构分析">索引底层数据结构分析</h2>
-<p>索引（Index）是帮助MySQL高效获取数据的数据结构。索引的本质：索引是数据结构，而且是实现了高级查找算法的数据结构 索引一般以文件形式存储在磁盘上，索引检索需要磁盘I/O操作</p>
-<h3 id="hash索引">Hash索引</h3>
-<ul>
-<li>如果是等值查询，哈希索引明显有绝对优势。 <strong>前提：键值唯一</strong></li>
-<li>哈希索引没办法完成范围查询检索</li>
-<li>哈希索引也没办法利用索引完成排序，以及like ‘xxx%’ 这样的部分模糊查询</li>
-<li>哈希索引也不支持多列联合索引的</li>
-<li>在有大量重复键值情况下，哈希索引的效率也最左前缀原则是极低的，因为存在哈希碰撞问题</li>
-</ul>
-<h3 id="b-tree索引">B Tree索引</h3>
-<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201125201001.png" alt="image-20201125201000142" loading="lazy"></figure>
-<ul>
-<li>度(Degree)-节点的数据存储个数</li>
-<li>叶子节点具有相同的深度</li>
-<li><strong>叶子节点的指针为空</strong></li>
-<li>节点中的数据key从左到右递增排列</li>
-</ul>
-<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201125204922.png" alt="image-20201125204921591" loading="lazy"></figure>
-<p>假如我们要查找id=28的用户信息，那么我们在上图B树中查找的流程如下：</p>
-<ul>
-<li>先找到根节点也就是页1，<strong>判断28在键值17和35之间，我们那么我们根据页1中的指针p2找到页3</strong></li>
-<li>将28和页3中的键值相比较，28在26和30之间，我们根据页3中的指针p2找到页8</li>
-<li>将28和页8中的键值相比较，发现有匹配的键值28，键值28对应的用户信息为(28,bv)</li>
-</ul>
-<h3 id="b-tree索引-2">B+ Tree索引</h3>
-<figure data-type="image" tabindex="3"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201125201038.png" alt="image-20201125201037623" loading="lazy"></figure>
-<ul>
-<li><strong>非叶子节点不存储data，只存储key，可以增大度</strong>：之所以这么做是因为在<strong>数据库中页的大小是固定的，innodb中页的默认大小是16KB。如果不存储数据，那么就会存储更多的键值，相应的树的阶数（节点的子节点树）就会更大，树就会更矮更胖，如此一来我们查找数据进行磁盘的IO次数有会再次减少，数据查询的效率也会更快</strong></li>
-<li>叶子节点不存储指针</li>
-<li>顺序访问指针，提高区间访问的性能</li>
-</ul>
-<p>因为B+树索引的所有数据均存储在叶子节点，而且数据是按照顺序排列的。那么B+树使得范围查找，排序查找，分组查找以及去重查找变得异常简单。而B树因为数据分散在各个节点，要实现这一点是很不容易的。</p>
-<p><strong>B+树索引就是innodb中B+树索引真正的实现方式</strong></p>
-<h3 id="查询分析">查询分析</h3>
-<figure data-type="image" tabindex="4"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201125210904.png" alt="image-20201125210903932" loading="lazy"></figure>
-<pre><code class="language-sql">select * from user where id &gt;= 18 and id &lt; 40
-</code></pre>
-<p>其中id是主键</p>
-<ul>
-<li>一般根节点都是常驻内存的，也就是说页1已经在内存中了，此时不需要到磁盘中读取数据，直接从内存中读取即可。从内存中读取到页1，要查找这个id&gt;=18 and id &lt;40或者范围值，我们首先需要找到id=18的键值。<strong>从页1中我们可以找到键值18，此时我们需要根据指针p2，定位到页3</strong></li>
-<li>要从页3中查找数据，我们就需要拿着p2指针去磁盘中进行读取页3。从磁盘中读取页3后将页3放入内存中，然后进行查找，<strong>我们可以找到键值18，然后再拿到页3中的指针p1，定位到页8</strong></li>
-<li>同样的页8页不在内存中，我们需要再去磁盘中将页8读取到内存中。将页8读取到内存中后。因为页中的数据是链表进行连接的，而且<strong>键值是按照顺序存放的，此时可以根据二分查找法定位到键值18</strong>。此时因为已经到数据页了，此时我们已经找到一条满足条件的数据了，就是键值18对应的数据。因为是范围查找，而且此时所有的数据又都存在叶子节点，并且是有序排列的，<strong>那么我们就可以对页8中的键值依次进行遍历查找并匹配满足条件的数据。我们可以一直找到键值为22的数据，然后页8中就没有数据了，此时我们需要拿着页8中的p指针去读取页9中的数据（叶子结点之间有指针链接）</strong></li>
-<li>因为页9不在内存中，就又会加载页9到内存中，并通过和页8中一样的方式进行数据的查找，直到将页12加载到内存中，发现41大于40，此时不满足条件。那么查找到此终止</li>
-<li>最终我们找到满足条件的所有数据为：(18,kl),(19,kl),(22,hj),(24,io),(25,vg),(29,jk),(31,jk),(33,rt),(34,ty),(35,yu),(37,rt),(39,rt)。总共12条记录</li>
-</ul>
-<figure data-type="image" tabindex="5"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201125211405.png" alt="image-20201125211404609" loading="lazy"></figure>
-<h3 id="总结-2">总结</h3>
-<ul>
-<li>哈希虽然能够提供 <code>O(1)</code> 的单数据行操作性能，但是对于范围查询和排序却无法很好地支持，最终导致全表扫描；</li>
-<li>B 树能够在非叶节点中存储数据，但是这也导致在查询连续数据时可能会带来更多的随机 I/O，而 B+ 树的所有叶节点可以通过指针相互连接，能够减少顺序遍历时产生的额外随机 I/O；</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
