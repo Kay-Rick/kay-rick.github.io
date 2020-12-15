@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-12-13T11:54:28.067Z</updated>
+    <updated>2020-12-15T07:47:32.279Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,559 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[函数式编程与lambda表达式（进阶篇）]]></title>
+        <id>https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi-jin-jie-pian/</id>
+        <link href="https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi-jin-jie-pian/">
+        </link>
+        <updated>2020-12-15T07:33:13.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>在基础篇中，我们介绍了lambda表达式的使用和四种主要的函数式接口，其实lambda表达式还有很多应用的地方，例如方法引用、集合的forEach操作和强大的Stream流式编程</p>
+</blockquote>
+<h2 id="方法引用与-lambda">方法引用与 lambda</h2>
+<ul>
+<li>
+<p>方法引用可以让我们直接访问类的实例或者方法，在 lambda 只是执行一个方法的时候，就可以不用 lambda 的编写方式，而用方法引用的方式：实例/类::方法。这样不仅代码更加的紧凑，而且可以增加代码的可读性。</p>
+</li>
+<li>
+<p>当我们要传递给lambda体的操作已经有实现的方法了，可以使用方法引用，方法引用可以看做是lambda表达式深层次的表达。</p>
+</li>
+<li>
+<p>要求：<strong>实现接口的抽象方法的参数列表和返回值类型，必须与方法引用的方法的参数列表和返回值类型保持一致</strong></p>
+</li>
+</ul>
+<p><strong>::操作符</strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>b</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi><mo>:</mo><mo>:</mo><mi>i</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>M</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">object::instanceMethod</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>:</mo><mo>:</mo><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>M</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Class::staticMethod</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>:</mo><mo>:</mo><mi>i</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>M</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Class::instanceMethod</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span></span></span></span></li>
+</ul>
+<p>前两种情况</p>
+<pre><code class="language-java">@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+static class User {
+    private String name;
+    private Integer age;
+}
+
+public static List&lt;User&gt; userList = new ArrayList&lt;&gt;();
+static {
+    userList.add(new User(&quot;A&quot;, 26));
+    userList.add(new User(&quot;B&quot;, 18));
+    userList.add(new User(&quot;C&quot;, 23));
+    userList.add(new User(&quot;D&quot;, 19));
+}
+
+/**
+ * 测试方法引用
+ */
+@Test
+public void methodRef() {
+    User[] userArr = new User[userList.size()];
+    userList.toArray(userArr);
+    // User::getAge 调用 getAge 方法
+    Arrays.sort(userArr, Comparator.comparing(User::getAge));
+    for (User user : userArr) 
+        System.out.println(user);
+}
+</code></pre>
+<p>我们得到结果</p>
+<pre><code>{ name='B', age='18'}
+{ name='D', age='19'}
+{ name='C', age='23'}
+{ name='A', age='26'}
+</code></pre>
+</br>
+</br>
+<h2 id="foreach-与-lambda">forEach 与 lambda</h2>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>带来了新的遍历方式，<strong>Java 8 为集合增加了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">forEach</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span></span></span></span>方法，它可以接受函数接口进行操作</strong>。下面看一下 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>的集合遍历方式。</p>
+<p>为什么可以进行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi><mo>+</mo><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">forEach + lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>表达式遍历？</p>
+<pre><code class="language-java">public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; {
+
+}
+public interface Iterable&lt;T&gt; {
+    default void forEach(Consumer&lt;? super T&gt; action) {
+        Objects.requireNonNull(action);
+        for (T t : this) {
+            action.accept(t);
+        }
+    }
+}
+</code></pre>
+<p>我们看到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">Collection</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span></span></span></span>集合接口继承了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Iterable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>接口，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Iterable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>接口中有默认实现方法<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>)</mo><mi mathvariant="normal">，</mi><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">forEach(Consumer action)，forEach</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span></span></span></span>中需要传入实现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Consumer</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>这个函数式接口的实现类，那么我们自然可以使用lambda表达式进行集合的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">forEach</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span></span></span></span>遍历</p>
+<pre><code class="language-java">@Test
+public void foreachTest() {
+    List&lt;String&gt; skills = Arrays.asList(&quot;Java&quot;, &quot;Golang&quot;, &quot;C++&quot;, &quot;C&quot;, &quot;Python&quot;);
+    // 使用 lambda 之前
+    for (String skill : skills) {
+        System.out.print(skill + &quot;,&quot;);
+    }
+    System.out.println();
+    // 使用 lambda 之后
+    // 方式1,forEach lambda
+    skills.forEach((skill) -&gt; System.out.print(skill + &quot;,&quot;));
+    System.out.println();
+    // 方式2，forEach 方法引用
+    skills.forEach(System.out::print);
+}
+</code></pre>
+<p>我们得到结果如下</p>
+<pre><code>Java,Golang,C++,C,Python,
+Java,Golang,C++,C,Python,
+JavaGolangC++CPython
+</code></pre>
+</br>
+</br>
+<h2 id="stream-与-lambda">Stream 与 lambda</h2>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">Stream</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span></span></span></span>使用一种<strong>类似用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>Q</mi><mi>L</mi></mrow><annotation encoding="application/x-tex">SQL</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">Q</span><span class="mord mathdefault">L</span></span></span></span>语句从数据库查询数据的直观方式来提供一种对Java​集合运算和表达的高阶抽象</strong>。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mi>A</mi><mi>P</mi><mi>I</mi></mrow><annotation encoding="application/x-tex">Stream API</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span></span></span></span>可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。<br>
+得益于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>的引入，让 Java 8 中的流式操作成为可能，Java 8 提供了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">stream</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span></span></span></span>类用于获取数据流。<br>
+这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。元素流在管道中经过**中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)**得到前面处理的结果</p>
+<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201215152826.png" alt="image-20201215152824768" loading="lazy"></figure>
+<h3 id="创建stream">创建Stream</h3>
+<p>数据源来源可以是集合、数组、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>I</mi><mi mathvariant="normal">/</mi><mi>O</mi><mtext> </mtext><mi>c</mi><mi>h</mi><mi>a</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">I/O \ channel</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>、产生器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">generator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>等</p>
+<pre><code class="language-java">/**
+ * 创建Stream：
+ *      通过集合
+ *      Stream.of()
+ *      Arrays.stream()
+ */
+@Test
+public void test1() {
+    List&lt;User&gt; users = UserData.getUsers();
+    // 通过集合来创建Stream
+    Stream&lt;User&gt; stream = users.stream();
+    // 获得并行流
+    Stream&lt;User&gt; parallelStream = users.parallelStream();
+    // 通过Stream.of()来创建Stream
+    Stream&lt;String&gt; stream1 = Stream.of(&quot;A&quot;, &quot;B&quot;,&quot;C&quot;, &quot;D&quot;);
+    // 通过Arrays.stream()来创建
+    Integer[] arrs = new Integer[]{1, 2, 3, 4, 5, 6};
+    Stream&lt;Integer&gt; stream2 = Arrays.stream(arrs);
+    // 创建无限流
+    // public static&lt;T&gt; Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f)
+    Stream.iterate(0, t -&gt; t + 2).limit(10).forEach(System.out::println);
+    System.out.println(&quot;----------------&quot;);
+    // public static&lt;T&gt; Stream&lt;T&gt; generate(Supplier&lt;T&gt; s)
+    Stream.generate(Math::random).limit(10).forEach(System.out::println);
+}
+</code></pre>
+</br>
+<h3 id="中间操作">中间操作</h3>
+<p>多个中间操作可以连接起来形成一个流水线，除非流水线上出发终止操作。否则中间操作不会执行任何的处理，而在终止操作时一次性全部处理，称为“惰性求值”</p>
+<h4 id="筛选和切片">筛选和切片</h4>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>l</mi><mi>t</mi><mi>e</mi><mi>r</mi><mo>(</mo><mi>P</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>e</mi><mtext> </mtext><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">filter(Predicate\  p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span>：接收lambda，从流中排除某些元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">distinct()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>：筛选，通过流所生成元素的<code>hashCode()</code>和<code>equals()</code>去除重复元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi><mi>m</mi><mi>i</mi><mi>t</mi><mo>(</mo><mi>l</mi><mi>o</mi><mi>n</mi><mi>g</mi><mtext> </mtext><mi>m</mi><mi>a</mi><mi>x</mi><mi>S</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">limit(long\ maxSize)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span><span class="mclose">)</span></span></span></span>：截断流，使其元素不超过给定数量</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>k</mi><mi>i</mi><mi>p</mi><mo>(</mo><mi>l</mi><mi>o</mi><mi>n</mi><mi>g</mi><mtext> </mtext><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">skip(long\ n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">i</span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace"> </span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>：跳过元素，返回一个扔掉了前 <code>n</code> 个元素的流，若流中元素不足 <code>n</code> 个，则返回一个空流</li>
+</ul>
+<p>测试</p>
+<pre><code class="language-java">/**
+ * 筛选和切片
+ * limit(), distinct(), filter(), skip()
+ */
+@Test
+public void test2() {
+    Stream&lt;Integer&gt; stream = Stream.of(6, 4, 6, 7, 3, 9, 8, 10, 12, 14, 14);
+    Stream&lt;Integer&gt; newStream = stream.filter(s -&gt; s &gt; 5) // 6 6 7 9 8 10 12 14 14(筛选出 &gt; 5 的元素)
+            .distinct() // 6 7 9 8 10 12 14 (去重)
+            .skip(2) // 9 8 10 12 14 (跳过前两个)
+            .limit(2); // 9 8 (截断前两个)
+    newStream.forEach(System.out::println); // 终止操作
+}
+</code></pre>
+<h4 id="映射">映射</h4>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mo>(</mo><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mtext> </mtext><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">map(Function\ f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>M</mi><mi>a</mi><mi>p</mi><mo>(</mo><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mtext> </mtext><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">flatMap(Function\ f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>：接收一个函数作为参数，将流中每个值斗转成另一个流，然后把所有流连成一个流</li>
+</ul>
+<p>测试</p>
+<pre><code class="language-java">/**
+ * 映射map()， flatMap()
+ */
+@Test
+public void test3() {
+    List&lt;String&gt; list = Arrays.asList(&quot;a,b,c&quot;, &quot;1,2,3&quot;);
+    // 将每个元素转换成一个新的不带逗号的元素
+    Stream&lt;String&gt; stream1 = list.stream().map(s -&gt; s.replaceAll(&quot;,&quot;, &quot;&quot;));
+    stream1.forEach(System.out::println);   // abc 123
+    System.out.println(&quot;--------------&quot;);
+    Stream&lt;String&gt; stream2 = list.stream().flatMap(s -&gt; {
+        String[] split = s.split(&quot;,&quot;);
+        return Arrays.stream(split);
+    });
+    stream2.forEach(System.out::println);   // a b c 1 2 3
+}
+</code></pre>
+<h4 id="排序">排序</h4>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>e</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">sorted()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>：产生一个新流，其中按自然顺序排序</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>e</mi><mi>d</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mi>o</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">sorted(Comparator\ com)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>：产生一个新流，其中按比较器顺序排序</li>
+</ul>
+<p>测试</p>
+<pre><code class="language-java">/**
+ * 排序sort()
+ */
+@Test
+public void test4() {
+    List&lt;String&gt; list = Arrays.asList(&quot;aa&quot;, &quot;ff&quot;, &quot;dd&quot;);
+    //String 类自身已实现Compareable接口
+    list.stream().sorted().forEach(System.out::println);// aa dd ff
+    
+    User u1 = new User(&quot;aa&quot;, 10);
+    User u2 = new User(&quot;bb&quot;, 20);
+    User u3 = new User(&quot;aa&quot;, 30);
+    User u4 = new User(&quot;dd&quot;, 40);
+    List&lt;User&gt; users = Arrays.asList(u1, u2, u3, u4);
+    
+    //自定义排序：先按姓名升序，姓名相同则按年龄升序
+    users.stream().sorted((o1, o2) -&gt; {
+        if (o1.getName().equals(o2.getName()))
+            return o1.getAge() - o2.getAge();
+        else
+            return o1.getName().compareTo(o2.getName());
+    }).forEach(System.out::println);
+}
+</code></pre>
+</br>
+<h3 id="终止操作">终止操作</h3>
+<p>终止操作会从流的流水线生成结果。其结果可以使任何不适流的值，例如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">、</mi><mi>I</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>g</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">List、Integer</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">L</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">、</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>，甚至是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>o</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">void</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">o</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>。并且流进行了终止操作后，不能再次使用</p>
+<h4 id="匹配与查找">匹配与查找</h4>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>l</mi><mi>l</mi><mi>M</mi><mi>a</mi><mi>t</mi><mi>c</mi><mi>h</mi><mo>(</mo><mi>P</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>e</mi><mtext> </mtext><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">allMatch(Predicate\ p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span>：检查是否匹配所有元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>y</mi><mi>M</mi><mi>a</mi><mi>t</mi><mi>c</mi><mi>h</mi><mo>(</mo><mi>P</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>e</mi><mtext> </mtext><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">anyMatch(Predicate\ p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span>：检查是否至少匹配一个元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>M</mi><mi>a</mi><mi>t</mi><mi>c</mi><mi>h</mi><mo>(</mo><mi>P</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>t</mi><mi>e</mi><mtext> </mtext><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">noneMatch(Predicate\ p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span>：检查是否没有匹配所有元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>F</mi><mi>i</mi><mi>r</mi><mi>s</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">findFirst()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>：返回第一个元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>A</mi><mi>n</mi><mi>y</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">findAny()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">A</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>：返回当前流任意元素</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>：返回流中元素的总个数</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">max(Comparator\ c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mclose">)</span></span></span></span>：返回流中元素最大值</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">min(Comparator\ c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mclose">)</span></span></span></span>：返回流中元素最小值</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>E</mi><mi>a</mi><mi>c</mi><mi>h</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">forEach(Consumer\ c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mclose">)</span></span></span></span>：内部迭代</li>
+</ul>
+<pre><code class="language-java">/**
+ * 匹配和查找
+ */
+@Test
+public void test5() {
+    List&lt;Integer&gt; list = Arrays.asList(1, 2, 3, 4, 5);
+
+    boolean allMatch = list.stream().allMatch(e -&gt; e &gt; 10); // false
+    boolean noneMatch = list.stream().noneMatch(e -&gt; e &gt; 10); // true
+    boolean anyMatch = list.stream().anyMatch(e -&gt; e &gt; 4); // true
+
+    Integer findFirst = list.stream().findFirst().get(); // 1
+    Integer findAny = list.stream().findAny().get(); // 1
+
+    long count = list.stream().count(); //5
+    Integer max = list.stream().max(Integer::compareTo).get(); //5
+    Integer min = list.stream().min(Integer::compareTo).get(); //1　
+    
+    list.stream().forEach(System.out::println); // 1 2 3 4 5
+}
+</code></pre>
+<h4 id="规约">规约</h4>
+<p>首先我们看一下<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">BinaryOperator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">BiFunction</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span></span></span></span>的接口信息</p>
+<pre><code class="language-java">@FunctionalInterface
+public interface BinaryOperator&lt;T&gt; extends BiFunction&lt;T,T,T&gt; {
+    ...
+}
+
+@FunctionalInterface
+public interface BiFunction&lt;T, U, R&gt; {
+    R apply(T t, U u);
+    ...
+}
+</code></pre>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">BinaryOperator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>这个接口继承<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&lt;</mo><mi>T</mi><mo separator="true">,</mo><mi>T</mi><mo separator="true">,</mo><mi>T</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">BiFunction&lt;T, T, T&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span>接口，当我们向<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">BinaryOperator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>接口实现类传入一个参数类型为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的参数，就相当于我们传入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mi>i</mi><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">BiFunction</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span></span></span></span>这个接口两个类型都为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>的参数，返回类型也是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，这样就方便我们理解其<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">reduce</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span></span></span></span>的下面操作</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>a</mi><mi>l</mi><mo>&lt;</mo><mi>T</mi><mo>&gt;</mo><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi><mo>(</mo><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Optional&lt;T&gt; reduce(BinaryOperator\ accumulator)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>：第一次执行时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">accumulator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>函数的第一个参数为流中的第一个元素，第二个参数为流中元素的第二个元素；第二次执行时，第一个参数为第一次函数执行的结果，第二个参数为流中的第三个元素；依次类推。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi><mo>(</mo><mi>T</mi><mtext> </mtext><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo separator="true">,</mo><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">T reduce(T\ identity, BinaryOperator\ accumulator)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>：流程跟上面一样，只是第一次执行时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">accumulator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>函数的第一个参数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">identity</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，而第二个参数为流中的第一个元素。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>U</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi><mo>(</mo><mi>U</mi><mtext> </mtext><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo separator="true">,</mo><mi>B</mi><mi>i</mi><mi>F</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&lt;</mo><mi>U</mi><mo separator="true">,</mo><mo>?</mo><mtext> </mtext><mi>s</mi><mi>u</mi><mi>p</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>T</mi><mo separator="true">,</mo><mi>U</mi><mo>&gt;</mo><mtext> </mtext><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo separator="true">,</mo><mi>B</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi>O</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mi>o</mi><mi>m</mi><mi>b</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U reduce(U\ identity,BiFunction&lt;U, ?\ super\ T, U&gt;\ accumulator,BinaryOperator\ combiner)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mclose">?</span><span class="mspace"> </span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace"> </span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>：在串行流<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">Stream</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span></span></span></span>中，该方法跟第二个方法一样，即第三个参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>m</mi><mi>b</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">combiner</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>不会起作用。在并行流<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>l</mi><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">parallelStream</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span></span></span></span>中,我们知道流被<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi><mi>k</mi><mtext> </mtext><mi>j</mi><mi>o</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">fork\ join</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">o</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span>出多个线程进行执行，此时<strong>每个线程的执行流程就跟第二个方法<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi><mo>(</mo><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo separator="true">,</mo><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">reduce(identity,accumulator)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>一样，而第三个参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>m</mi><mi>b</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">combiner</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>函数，则是将每个线程的执行结果当成一个新的流，然后使用第一个方法<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>c</mi><mi>e</mi><mo>(</mo><mi>a</mi><mi>c</mi><mi>c</mi><mi>u</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">reduce(accumulator)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span><span class="mord mathdefault">u</span><span class="mord mathdefault">c</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span></span></span>流程进行规约</strong></li>
+</ul>
+<p>测试</p>
+<pre><code class="language-java">/**
+ * 规约reduce()
+ */
+@Test
+public void test6() {
+    List&lt;Integer&gt; list = Arrays.asList(1, 2, 3, 4, 5);
+    Integer reduce1 = list.stream().reduce(0, (t1, t2) -&gt; t1 + t2);
+    System.out.println(&quot;list总和：&quot;+ reduce1); // 15
+    System.out.println(&quot;--------------&quot;);
+    User u1 = new User(&quot;aa&quot;, 10);
+    User u2 = new User(&quot;bb&quot;, 20);
+    User u3 = new User(&quot;aa&quot;, 30);
+    User u4 = new User(&quot;dd&quot;, 40);
+    List&lt;User&gt; users = Arrays.asList(u1, u2, u3, u4);
+    // 计算年龄总和
+    Optional&lt;Integer&gt; reduce2 = users.stream().map(User::getAge).reduce(Integer::sum);
+    System.out.println(&quot;年龄总和：&quot; + reduce2);
+    System.out.println(&quot;-------------&quot;);
+    Integer reduce3 = list.parallelStream().reduce(0, (x1, x2) -&gt; {
+        System.out.println(&quot;parallelStream accumulator: x1:&quot; + x1 + &quot; x2:&quot; + x2); 
+        return x1 - x2;
+    }, (x1, x2) -&gt; {
+        System.out.println(&quot;parallelStream combiner: x1:&quot; + x1 + &quot; x2:&quot; + x2);
+        return x1 * x2;
+    });
+    System.out.println(reduce3);    // -120
+}
+</code></pre>
+<h4 id="收集">收集</h4>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mo>(</mo><mi>C</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi><mtext> </mtext><mi>c</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">collect(Collector\ c)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mclose">)</span></span></span></span>：将流转换为其他形式。接收一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Collector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>接口的实现，用于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">Stream</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span></span></span></span>中元素做汇总的方法（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mi>o</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Collector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>接口中方法的实现决定了如何对流执行收集的操作：如收集到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">、</mi><mi>S</mi><mi>e</mi><mi>t</mi><mi mathvariant="normal">、</mi><mi>M</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">List、Set、Map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">L</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">、</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">、</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>）</li>
+</ul>
+<pre><code class="language-java">/**
+ * 收集collect()
+ */
+@Test
+public void test7() {
+    User s1 = new User(&quot;aa&quot;, 10);
+    User s2 = new User(&quot;bb&quot;, 20);
+    User s3 = new User(&quot;cc&quot;, 10);
+    List&lt;User&gt; list = Arrays.asList(s1, s2, s3);
+
+    // 装成list
+    List&lt;Integer&gt; ageList = list.stream().map(User::getAge).collect(Collectors.toList()); // [10, 20, 10]
+    System.out.println(ageList); // [10, 20, 10]
+    // 转成set
+    Set&lt;Integer&gt; ageSet = list.stream().map(User::getAge).collect(Collectors.toSet()); 
+    System.out.println(ageSet); // [20, 10]
+    // 转成map,注:key不能相同，否则报错
+    Map&lt;String, Integer&gt; userMap = list.stream().collect(Collectors.toMap(User::getName, User::getAge)); // {cc=10, bb=20, aa=10}
+    System.out.println(userMap);
+}
+</code></pre>
+</br>
+</br>
+<h2 id="lambda总结">lambda总结</h2>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>d</mi><mi>b</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lamdba</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord mathdefault">a</span></span></span></span>结合函数接口，方法引用，类型推导以及流式操作，可以让代码变得更加简洁紧凑，也可以借此开发出更加强大且支持并行计算的程序，函数编程也为 Java 带来了新的程序设计方式。但是缺点也很明显，在实际的使用过程中可能会发现调式困难，测试表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>d</mi><mi>b</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lamdba</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord mathdefault">a</span></span></span></span>的遍历性能并不如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">for</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的性能高。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[函数式编程与lambda表达式（基础篇）]]></title>
+        <id>https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi/</id>
+        <link href="https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi/">
+        </link>
+        <updated>2020-12-15T06:57:17.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>Java 8 早已经在2014 年 3月 18日发布，毫无疑问 Java 8 对 Java 来说绝对算得上是一次重大版本更新，它包含了十多项语言、库、工具、JVM 等方面的新特性。<br>
+比如提供了语言级的匿名函数，也就是被官方称为 lambda 的表达式语法（外界也称为闭包，lambda 的引入也让流式操作成为可能，减少了代码编写的复杂性），比如函数式接口，方法引用，重复注解。再比如 Optional 预防空指针，Stearm 流式操作，LocalDateTime 时间操作等。</p>
+</blockquote>
+<h2 id="为什么使用lambda表达式">为什么使用lambda表达式？</h2>
+<ul>
+<li><strong>减少代码编写的复杂性</strong></li>
+<li>让流式操作称为可能<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mtext> </mtext><mi>A</mi><mi>P</mi><mi>I</mi></mrow><annotation encoding="application/x-tex">Stream\ API</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mspace"> </span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span></span></span></span></li>
+</ul>
+<pre><code class="language-java">@Test
+public void createLambda() throws InterruptedException {
+    // 使用 Lambda 之前
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println(&quot;JDK8 之前的线程创建&quot;);
+        }
+    };
+    new Thread(runnable).start();
+    // 使用 lambda 之后
+    Runnable runnable1Jdk8 = () -&gt; System.out.println(&quot;JDK8 之后的线程创建&quot;);
+    new Thread(runnable1Jdk8).start();
+    // 更加紧凑的方式
+    new Thread(() -&gt; System.out.println(&quot;JDK8 之后的线程创建&quot;)).start();
+}
+</code></pre>
+<p>可以发现 Java 8 中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>碰到了函数接口<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Runnable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>，自动推断了要运行的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>u</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">run</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span></span></span></span>方法，不仅省去了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>u</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">run</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span></span></span></span>方法的编写，也代码变得更加紧凑</p>
+</br>
+</br>
+<h2 id="lambda表达式的使用">lambda表达式的使用</h2>
+<pre><code>1. (params) -&gt; expression
+2. (params) -&gt; {statements;}
+</code></pre>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">-&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span> : 分割<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>参数和处理语句</li>
+<li>左边：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>形参列表：其实就是<strong>接口中抽象方法的形参列表</strong></li>
+<li>右边：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>体：重写的抽象方法体</li>
+</ul>
+<h3 id="无参数无返回值">无参数无返回值</h3>
+<pre><code class="language-java">public void test1() {
+    Runnable r1 = new Runnable(){
+        @Override
+        public void run() {
+            System.out.println(&quot;Rick&quot;);
+        }
+    };
+    r1.run();
+    System.out.println(&quot;---------------&quot;);
+    Runnable r2 = () -&gt; System.out.println(&quot;Rick&quot;);
+    r2.run();
+}
+
+</code></pre>
+<h3 id="lambda需要一个参数但是没有返回值">lambda需要一个参数，但是没有返回值</h3>
+<pre><code class="language-java">public void test2() {
+    Consumer&lt;String&gt; con1 = new Consumer&lt;String&gt;(){
+
+        @Override
+        public void accept(String t) {
+            System.out.println(t);
+        }
+        
+    };
+    con1.accept(&quot;Rick&quot;);
+    System.out.println(&quot;-----------------------&quot;);
+    Consumer&lt;String&gt; con2 = (String t) -&gt; {
+        System.out.println(t);
+    };
+    con2.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="数据类型可以省略可由编译器推断得出">数据类型可以省略，可由编译器推断得出</h3>
+<pre><code class="language-java">public void test3() {
+    Consumer&lt;String&gt; con3 = (t) -&gt; {
+        System.out.println(t);
+    };
+    con3.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="lamdba只需要一个参数时小括号可省略">lamdba只需要一个参数时，小括号可省略</h3>
+<pre><code class="language-java">public void test4() {
+    Consumer&lt;String&gt; con4 = t -&gt; {
+        System.out.println(t);
+    };
+    con4.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="lambda需要不止一个参数且有返回值">lambda需要不止一个参数，且有返回值</h3>
+<pre><code class="language-java">public void test5() {   
+    Comparator&lt;Integer&gt; com = new Comparator&lt;Integer&gt;(){
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return Integer.compare(o1, o2);
+        }
+    };
+    System.out.println(com.compare(12, 14));
+    System.out.println(&quot;---------------&quot;);
+    Comparator&lt;Integer&gt; com5 = (o1, o2) -&gt; {
+        return Integer.compare(o1, o2);
+    };
+    System.out.println(com5.compare(12, 14));
+}
+
+</code></pre>
+<h3 id="当lambda体只有一条语句时return与大括号若有都可省略">当lambda体只有一条语句时，return与大括号若有，都可省略</h3>
+<pre><code class="language-java">public void test6() {
+    Comparator&lt;Integer&gt; com6 = (o1, o2) -&gt; Integer.compare(o1, o2);
+    System.out.println(com6.compare(12, 14));
+}
+</code></pre>
+</br>
+</br>
+<h2 id="函数式接口">函数式接口</h2>
+<p>Java 中的函数接口在使用时，可以隐式的转换成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>表达式，在Java 8中已经有很多接口已经声明为函数接口，如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo separator="true">,</mo><mi>C</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo separator="true">,</mo><mi>C</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Runnable, Callable, Comparator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>等。<br>
+我们来看<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Runnable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>接口：</p>
+<pre><code class="language-java">@FunctionalInterface
+public interface Runnable {
+    public abstract void run();
+}
+</code></pre>
+<p>那么什么样子的接口才是函数接口呢？有一个很简单的定义</p>
+<ul>
+<li>只有一个抽象函数的接口，函数接口使用注解 <code>@FunctionalInterface</code> 进行声明（注解声明不是必须的，如果没有注解，也是只有一个抽象函数，依旧会被认为是函数接口，并且该接口是一个编译级别的注解，用于检测函数式接口是否有错而已）</li>
+<li>多一个或者少一个抽象函数都不能定义为函数接口。<strong>但是，函数式接口里是可以包含默认方法、静态方法和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mi>b</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Object</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span></span></span></span>里的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>u</mi><mi>b</mi><mi>l</mi><mi>i</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">public</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span></span></span></span>方法，因为这些方法就不是抽象方法了，其有默认实现</strong>，所以是符合函数式接口的定义</li>
+<li>如果使用了函数接口注解又不止一个抽象函数，那么编译器会拒绝编译。函数接口在使用时候可以隐式的转换成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>表达式</li>
+</ul>
+</br>
+<h3 id="消费性接口consumer接收一个参数t没有返回值">消费性接口Consumer：接收一个参数T，没有返回值</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Consumer&lt;T&gt; {
+    void accept(T t);
+    ...
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test1() {
+    StringBuilder sb = new StringBuilder(&quot;Hello &quot;);
+    Consumer&lt;StringBuilder&gt; consumer = (str) -&gt; str.append(&quot;World!&quot;);
+    consumer.accept(sb);
+    System.out.println(sb);     // Hello World!
+}
+</code></pre>
+</br>
+<h3 id="供给型接口supplier不接受任何参数但有返回值">供给型接口Supplier：不接受任何参数但有返回值</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Supplier&lt;T&gt; {
+    T get();
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test2() {
+    Supplier&lt;String&gt; supplier = () -&gt; &quot;Hello World!&quot;;
+    System.out.println(supplier.get());     // Hello World!
+}
+</code></pre>
+</br>
+<h3 id="断言性接口predicate判断方法的参数是否符合断言">断言性接口Predicate：判断方法的参数是否符合断言</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Predicate&lt;T&gt; {
+    boolean test(T t);
+    ...
+}
+</code></pre>
+<p>测试过滤字符串</p>
+<pre><code class="language-java">@Test
+public void test3() {
+    List&lt;String&gt; list = Arrays.asList(&quot;ABC&quot;, &quot;ADR&quot;, &quot;CDK&quot;, &quot;ABU&quot;);
+    System.out.println(filterString(list, new Predicate&lt;String&gt;(){
+        @Override
+        public boolean test(String t) {
+            return t.contains(&quot;A&quot;);
+        }
+    }));
+    System.out.println(&quot;------------------&quot;);
+    // (s) -&gt; s.contains(&quot;A&quot;)) ：筛选出含有A
+    System.out.println(filterString(list, (s) -&gt; s.contains(&quot;A&quot;)));
+}
+
+/**
+ * 过滤列表中的字符串
+ * @param list
+ * @param pr
+ * @return
+ */
+public List&lt;String&gt; filterString (List&lt;String&gt; list, Predicate&lt;String&gt; pr) {
+    List&lt;String&gt; res = new ArrayList&lt;&gt;();
+    for (String str : list) {
+        if (pr.test(str)) 
+            res.add(str);
+    }
+    return res;
+}
+</code></pre>
+</br>
+<h3 id="功能性接口function接收一个功能参数t并返回一个功能结果r">功能性接口Function：接收一个功能参数T，并返回一个功能结果R</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Function&lt;T, R&gt; {
+    R apply(T t);
+    ...
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test4() {
+    Function&lt;String, String&gt; function = (s1) -&gt; s1 + &quot;World!&quot;;
+    System.out.println(function.apply(&quot;Hello &quot;));
+}
+</code></pre>
+</br>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【LeetCode专辑 - 3】链表]]></title>
         <id>https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/</id>
@@ -2145,428 +2698,6 @@ public:
         return l;
     }
 };
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[掐死“细节是魔鬼”的二分]]></title>
-        <id>https://kay-rick.github.io/post/qia-si-xi-jie-shi-mo-gui-de-er-fen/</id>
-        <link href="https://kay-rick.github.io/post/qia-si-xi-jie-shi-mo-gui-de-er-fen/">
-        </link>
-        <updated>2020-11-27T09:11:41.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>二分查找是解决很多查找类题目的常用方法，它可以达到O(log n)的时间复杂度。对于浮点数的二分比较简单，但涉及到整数的二分，边界情况的考虑就显得非常重要，思路很简单，细节是魔鬼。这里总结了两套模板对解题有很大的帮助</p>
-</blockquote>
-<p>一般而言，当一个题目出现以下特征，就应该联想到要使用二分查找</p>
-<ul>
-<li>待查找的数组有序或者部分有序</li>
-<li>要求时间复杂度低于O(n)</li>
-</ul>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>二分查找是解决很多查找类题目的常用方法，它可以达到O(log n)的时间复杂度。对于浮点数的二分比较简单，但涉及到整数的二分，边界情况的考虑就显得非常重要，思路很简单，细节是魔鬼。这里总结了两套模板对解题有很大的帮助</p>
-</blockquote>
-<p>一般而言，当一个题目出现以下特征，就应该联想到要使用二分查找</p>
-<ul>
-<li>待查找的数组有序或者部分有序</li>
-<li>要求时间复杂度低于O(n)</li>
-</ul>
-<!-- more -->
-<h2 id="整数二分">整数二分</h2>
-</br>
-<h3 id="两个模板">两个模板</h3>
-<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201127162410.png" alt="image-20201127162409088" loading="lazy"></figure>
-<ul>
-<li><strong>区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>被划分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>−</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, mid - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[mid, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>时可用</strong></li>
-<li>这里在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的原因是：当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>r</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l = r - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时，由于C++向下取整：导致死循环，所以要加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
-</ul>
-<pre><code class="language-c++">int binarySearch_1 (int l, int r) {
-	int l = 0, r = n - 1;
-    while (l &lt; r) {
-        mid = l + r + 1 &gt;&gt; 1;
-        if (check(mid))		// check()判断mid是否满足性质的函数：具体根据题目描述来写
-            l = mid;
-        else
-            r = mid - 1;
-    }
-    return l;
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201127162502.png" alt="image-20201127162500907" loading="lazy"></figure>
-<ul>
-<li><strong>区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>被划分为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, mid]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mclose">]</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[mid + 1, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>时可用</strong></li>
-</ul>
-<pre><code class="language-c++">int binarySearch_2 (int l, int r) {
-	int l = 0, r = n - 1;
-    while (l &lt; r) {
-        mid = l + r &gt;&gt; 1;
-        if (check(mid))		// check()判断mid是否满足性质的函数：具体根据题目描述来写
-            r = mid;
-        else
-            l = mid + 1;
-    }
-    return l;
-}
-</code></pre>
-</br>
-<h3 id="模板使用技巧">模板使用技巧</h3>
-<p>在做题的过程中</p>
-<ul>
-<li>我们只需要先写<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi><mo>=</mo><mi>l</mi><mo>+</mo><mi>r</mi><mo>&gt;</mo><mo>&gt;</mo><mn>1</mn><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">mid = l + r &gt;&gt; 1;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">;</span></span></span></span></li>
-<li><strong>根据具体题目写好<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>k</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">check()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>函数，找到更新方式，确定到底是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>还是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">r = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span></strong></li>
-<li><strong>若是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，我们只需要在第一个步骤里面把二分时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的取值进行加<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></strong></li>
-<li><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">l = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，另一边就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r = mid - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>； <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">r = mid</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span></span></span></span>的情况，另一边就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>d</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l = mid + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></strong></li>
-</ul>
-</br>
-<h3 id="例题">例题</h3>
-<p>给定一个按照升序排列的长度为n的整数数组，以及 q 个查询。对于每个查询，返回一个元素k的起始位置和终止位置（位置从0开始计数）。如果数组中不存在该元素，则返回“-1 -1”。</p>
-<p><strong>输入格式</strong></p>
-<p>第一行包含整数n和q，表示数组长度和询问个数。第二行包含n个整数（均在1~10000范围内），表示完整数组。接下来q行，每行包含一个整数k，表示一个询问元素。</p>
-<p><strong>输出格式</strong></p>
-<p>共q行，每行包含两个整数，表示所求元素的起始位置和终止位置。如果数组中不存在该元素，则返回“-1 -1”。</p>
-<p><strong>数据范围</strong></p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>100000</mn></mrow><annotation encoding="application/x-tex">1≤n≤100000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>q</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">1≤q≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>k</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">1≤k≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
-<p><strong>输入样例：</strong></p>
-<pre><code>6 3
-1 2 2 3 3 4
-3
-4
-5
-</code></pre>
-<p><strong>输出样例：</strong></p>
-<pre><code>3 4
-5 5
--1 -1
-</code></pre>
-<pre><code class="language-c++">#include&lt;iostream&gt;
-
-using namespace std;
-
-const int N = 100010;
-
-int q[N];
-
-int main() {
-    int n, m;
-    cin &gt;&gt; n &gt;&gt; m;
-    for (int i = 0; i &lt; n; i++) 
-        cin &gt;&gt; q[i];
-    
-    while (m--) {
-        int x;
-        cin &gt;&gt; x;
-        
-        int l = 0, r = n - 1;
-        while (l &lt; r) {
-            int mid = l + r &gt;&gt; 1;
-            // 找左端点：q[mid] &gt;= x确定要找的左端点一定在[l, mid]之间，更新r = mid
-            if (q[mid] &gt;= x)
-                r = mid;
-            // r = mid,对应l就是mid + 1，对应第二个模板，前面mid不需要修改
-            else
-                l = mid + 1;
-        }
-        if (q[l] != x)
-            cout &lt;&lt; &quot;-1 -1&quot; &lt;&lt; endl;
-        else {
-            cout &lt;&lt; l &lt;&lt; ' ';
-            l = 0, r = n - 1;
-            while (l &lt; r) {
-            int mid = l + r + 1 &gt;&gt; 1;
-            // 找右端点：q[mid] &lt;= x确定要找的右端点一定在[mid, r]之间，更新l = mid
-            if (q[mid] &lt;= x)
-                l = mid;
-            // l = mid,对应r就是mid - 1，对应第一个模板，前面mid修改+1
-            else
-                r = mid - 1;
-        }
-        cout &lt;&lt; l &lt;&lt; endl;
-        }
-    }
-    return 0;
-}
-</code></pre>
-</br>
-</br>
-<h2 id="浮点数二分">浮点数二分</h2>
-<p>给定一个浮点数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>，求它的三次方根。</p>
-<p>对于这一类浮点数二分的题目：当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi></mrow><annotation encoding="application/x-tex">r-l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>足够小时，我们就假定已经找完，用公式表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>&gt;</mo><mn>1</mn><mi>e</mi><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">r - l &gt; 1e-6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> ,此时有个精度问题如果要求保留六位小数则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>&gt;</mo><mn>1</mn><mi>e</mi><mo>−</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">r - l &gt; 1e-8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span>，总<strong>要比保留的位数多两位</strong>。</p>
-<p><strong>输入格式</strong></p>
-<p>共一行，包含一个浮点数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>。</p>
-<p><strong>输出格式</strong></p>
-<p>共一行，包含一个浮点数，表示问题的解。注意，结果保留6位小数。</p>
-<p><strong>数据范围</strong></p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">−</mi><mn>10000</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">−10000≤n≤10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
-<p><strong>输入样例：</strong></p>
-<pre><code>1000.00
-</code></pre>
-<p><strong>输出样例：</strong></p>
-<pre><code>10.000000
-</code></pre>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-
-using namespace std;
-
-int main() {
-    double x;
-    cin &gt;&gt; x;
-    double l = -10000, r = 10000;
-    // 通常比要求精度提高2位
-    while (r - l &gt; 1e-8) {
-        double mid = (l + r) / 2;
-        // 浮点数二分不用考虑边界问题
-        if (mid * mid * mid &gt;= x)
-            r = mid;
-        else
-            l = mid;
-    }
-    printf(&quot;%lf\n&quot;, l);
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[高精度算法分析]]></title>
-        <id>https://kay-rick.github.io/post/gao-jing-du-suan-fa-fen-xi/</id>
-        <link href="https://kay-rick.github.io/post/gao-jing-du-suan-fa-fen-xi/">
-        </link>
-        <updated>2020-11-26T10:38:31.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>高精度运算：是指参与运算的数(加数，减数，因子……）范围大大超出了标准数据类型（整型，实型）能表示的范围的运算。例如，求两个20000位的数的和。这时，就要用到高精度算法了</p>
-</blockquote>
-<h2 id="高精度加法">高精度加法</h2>
-<ul>
-<li>
-<p>若<code>t1</code>表示第一个数当前位数的大小，<code>t2</code>表示第二个数当前位数的大小，<code>t</code>表示进位数</p>
-</li>
-<li>
-<p>从个位数开始进行相加，使用<code>t</code>记录<code>(t1 + t2 + next)</code>得出的结果，<code>t % 10</code>为该位数确定好的元素，进行下一个位数操作时，需要<code>t /= 10</code></p>
-</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201126165634.png" alt="image-20201126165633273" loading="lazy"></figure>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-const int N = 1e6 + 10;
-
-vector&lt;int&gt; add(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B){
-    vector&lt;int&gt; C;
-    int t = 0;
-    for (int i = 0; i &lt; A.size() || i &lt; B.size(); i++) {
-        if (i &lt; A.size())
-            t += A[i];
-        if (i &lt; B.size())
-            t += B[i];
-        C.push_back(t % 10);
-        t /= 10;
-    }
-    if (t &gt; 0)
-        C.push_back(1);
-    return C;
-}
-
-int main() {
-    string a, b;
-    cin &gt;&gt; a &gt;&gt; b;
-    // 高精度数据反向存储在数组中
-    vector&lt;int&gt; A, B;
-    for (int i = a.size() - 1; i &gt;= 0; i--)
-        A.push_back(a[i] - '0');
-    for (int i = b.size() - 1; i &gt;= 0; i--) 
-        B.push_back(b[i] - '0');
-    vector&lt;int&gt; result = add(A, B);
-    
-    for (int i = result.size() - 1; i &gt;= 0; i--)
-        cout &lt;&lt; result[i];
-    cout &lt;&lt; endl;
-    return 0;
-}
-</code></pre>
-</br>
-<h2 id="高精度减法">高精度减法</h2>
-<ul>
-<li>
-<p>我们先比较A和B的大小，我们始终用大的数减去小的数</p>
-</li>
-<li>
-<p>对于<code>t = A[i] - B[i] - t</code>； 可以拆为 <code>t = A[i] - t</code>如果<code>B[i]</code>合法，再<code>t -= B[i]</code>这么两步来做</p>
-</li>
-<li>
-<p>去掉高位中的0</p>
-</li>
-</ul>
-<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201126171552.png" alt="image-20201126171551272" loading="lazy"></figure>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-// 判断A &gt;= B是否满足
-bool cmp(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B) {
-    if (A.size() != B.size())
-        return A.size() &gt; B.size();
-    else {
-        for (int i = A.size() - 1; i &gt;= 0; i--) 
-            if (A[i] != B[i])
-                return A[i] &gt; B[i];
-    }
-    return true;
-}
-
-vector&lt;int&gt; sub(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B) {
-    vector&lt;int&gt; C;
-    // 借位
-    int t = 0;
-    for (int i = 0; i &lt; A.size(); i++) {
-        t = A[i] - t;
-        // 如果合法
-        if (i &lt; B.size())
-            t -= B[i];
-        // A[i] 这一位够减，没有产生借位
-        if (t &gt;= 0) {
-            C.push_back(t);
-            t = 0;
-        }
-        else {
-            C.push_back(t + 10);
-            t = 1;
-        }
-    }
-    // 去掉高位中的0
-    while (C.size() &gt; 1 &amp;&amp; C.back() == 0)
-        C.pop_back();
-    return C;
-}
-
-int main() {
-    string a, b;
-    cin &gt;&gt; a &gt;&gt; b;
-    vector&lt;int&gt; A, B;
-    for (int i = a.size() - 1; i &gt;= 0; i--)
-        A.push_back(a[i] - '0');
-    for (int i = b.size() - 1; i &gt;= 0; i--)
-        B.push_back(b[i] - '0');
-    
-    // A &gt;= B的情况
-    if (cmp(A, B)) {
-        vector&lt;int&gt; C = sub(A, B);
-        for (int i = C.size() - 1; i &gt;= 0; i--)
-            cout &lt;&lt; C[i];
-    }
-    else {
-        vector&lt;int&gt; C = sub(B, A);
-        cout &lt;&lt; '-';
-        for (int i = C.size() - 1; i &gt;= 0; i--)
-            cout &lt;&lt; C[i];
-    }
-    cout &lt;&lt; endl;
-    return 0;
-}
-</code></pre>
-</br>
-<h2 id="高精度乘法">高精度乘法</h2>
-<ul>
-<li>
-<p>模拟乘法规则，从A的个位到高位与B相乘，乘得的结果放入t中，则此位的数为<code>t % 10</code>。把<code>t / 10</code>剩余给下一个高位</p>
-</li>
-<li>
-<p>若遍历完整个<code>A</code>，<code>t &gt; 0</code>，则表示还有剩余的数，则需要将剩余的数继续补到下一个高位</p>
-</li>
-<li>
-<p>删除高位出现的<code>0</code></p>
-</li>
-</ul>
-<figure data-type="image" tabindex="3"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201126181813.png" alt="image-20201126181812485" loading="lazy"></figure>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-vector&lt;int&gt; mul(vector&lt;int&gt;&amp; A, int b) {
-    vector&lt;int&gt; C;
-    int t = 0;
-    for (int i = 0; i &lt; A.size() || t; i++) {
-        // 有可能在乘b之后出现进位要多加一位，因此需要判断
-        if (i &lt; A.size())
-            t += A[i] * b;
-        C.push_back(t % 10);
-        t /= 10;
-    }
-    // 删除高位0
-    while (C.size() &gt; 1 &amp;&amp; C.back() == 0)
-        C.pop_back();
-    return C;
-}
-
-int main() {
-    string a;
-    int b;
-    cin &gt;&gt; a &gt;&gt; b;
-    vector&lt;int&gt; A, result;
-    
-    for (int i = a.size() - 1; i &gt;= 0; i--)
-        A.push_back(a[i] - '0');
-    result = mul(A, b);
-    
-    for (int i = result.size() - 1; i &gt;= 0; i--)
-        cout &lt;&lt; result[i];
-    cout &lt;&lt; endl;
-    return 0;
-}
-</code></pre>
-</br>
-<h2 id="高精度除法">高精度除法</h2>
-<ul>
-<li>模拟除法规则，从高位到底位与除数进行相除，除得的余数放入<code>t</code>中，则此位的数为<code>t / 10</code>，把剩余的<code>t % 10</code>给下一个底位</li>
-<li>若遍历完整个<code>A</code>，需要将最靠左的且为<code>0</code>的高位全部去除掉</li>
-</ul>
-<figure data-type="image" tabindex="4"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201126183438.png" alt="image-20201126183437238" loading="lazy"></figure>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-
-vector&lt;int&gt; div(vector&lt;int&gt;&amp; A, int b, int&amp; r) {
-    vector&lt;int&gt; C;
-    // 除法是从最高位开始除
-    for (int i = A.size() - 1; i &gt;= 0; i--) {
-        r = r * 10 + A[i];
-        C.push_back(r / b);
-        r %= b; 
-    }
-    // 与我们逆向存储数据相反，为了统一，reverse
-    reverse(C.begin(), C.end());
-    // 去除高位的0
-    while (C.size() &gt; 1 &amp;&amp; C.back() == 0)
-        C.pop_back();
-    return C;
-}
-
-
-int main() {
-    string a;
-    int b;
-    cin &gt;&gt; a &gt;&gt; b;
-    vector&lt;int&gt; A;
-    for (int i = a.size() - 1; i &gt;= 0; i--) 
-        A.push_back(a[i] - '0');
-    int r = 0;
-    vector&lt;int&gt; result = div(A, b, r);
-    for (int i = result.size() - 1; i &gt;= 0; i--)
-        cout &lt;&lt; result[i];
-    cout &lt;&lt; endl &lt;&lt; r &lt;&lt; endl;
-    return 0;
-}
 </code></pre>
 ]]></content>
     </entry>

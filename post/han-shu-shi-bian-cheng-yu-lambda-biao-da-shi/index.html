@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>函数式编程与lambda表达式（基础篇） | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20201215153029.png)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">函数式编程与lambda表达式（基础篇）</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-12-15 14:57:17" itemprop="datePublished" pubdate="">2020-12-15</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>Java 8 早已经在2014 年 3月 18日发布，毫无疑问 Java 8 对 Java 来说绝对算得上是一次重大版本更新，它包含了十多项语言、库、工具、JVM 等方面的新特性。<br>
+比如提供了语言级的匿名函数，也就是被官方称为 lambda 的表达式语法（外界也称为闭包，lambda 的引入也让流式操作成为可能，减少了代码编写的复杂性），比如函数式接口，方法引用，重复注解。再比如 Optional 预防空指针，Stearm 流式操作，LocalDateTime 时间操作等。</p>
+</blockquote>
+<h2 id="为什么使用lambda表达式">为什么使用lambda表达式？</h2>
+<ul>
+<li><strong>减少代码编写的复杂性</strong></li>
+<li>让流式操作称为可能<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi><mtext> </mtext><mi>A</mi><mi>P</mi><mi>I</mi></mrow><annotation encoding="application/x-tex">Stream\ API</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mspace"> </span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span></span></span></span></li>
+</ul>
+<pre><code class="language-java">@Test
+public void createLambda() throws InterruptedException {
+    // 使用 Lambda 之前
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println(&quot;JDK8 之前的线程创建&quot;);
+        }
+    };
+    new Thread(runnable).start();
+    // 使用 lambda 之后
+    Runnable runnable1Jdk8 = () -&gt; System.out.println(&quot;JDK8 之后的线程创建&quot;);
+    new Thread(runnable1Jdk8).start();
+    // 更加紧凑的方式
+    new Thread(() -&gt; System.out.println(&quot;JDK8 之后的线程创建&quot;)).start();
+}
+</code></pre>
+<p>可以发现 Java 8 中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>碰到了函数接口<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Runnable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>，自动推断了要运行的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>u</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">run</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span></span></span></span>方法，不仅省去了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>u</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">run</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span></span></span></span>方法的编写，也代码变得更加紧凑</p>
+</br>
+</br>
+<h2 id="lambda表达式的使用">lambda表达式的使用</h2>
+<pre><code>1. (params) -&gt; expression
+2. (params) -&gt; {statements;}
+</code></pre>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">-&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span> : 分割<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>参数和处理语句</li>
+<li>左边：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>形参列表：其实就是<strong>接口中抽象方法的形参列表</strong></li>
+<li>右边：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>体：重写的抽象方法体</li>
+</ul>
+<h3 id="无参数无返回值">无参数无返回值</h3>
+<pre><code class="language-java">public void test1() {
+    Runnable r1 = new Runnable(){
+        @Override
+        public void run() {
+            System.out.println(&quot;Rick&quot;);
+        }
+    };
+    r1.run();
+    System.out.println(&quot;---------------&quot;);
+    Runnable r2 = () -&gt; System.out.println(&quot;Rick&quot;);
+    r2.run();
+}
+
+</code></pre>
+<h3 id="lambda需要一个参数但是没有返回值">lambda需要一个参数，但是没有返回值</h3>
+<pre><code class="language-java">public void test2() {
+    Consumer&lt;String&gt; con1 = new Consumer&lt;String&gt;(){
+
+        @Override
+        public void accept(String t) {
+            System.out.println(t);
+        }
+        
+    };
+    con1.accept(&quot;Rick&quot;);
+    System.out.println(&quot;-----------------------&quot;);
+    Consumer&lt;String&gt; con2 = (String t) -&gt; {
+        System.out.println(t);
+    };
+    con2.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="数据类型可以省略可由编译器推断得出">数据类型可以省略，可由编译器推断得出</h3>
+<pre><code class="language-java">public void test3() {
+    Consumer&lt;String&gt; con3 = (t) -&gt; {
+        System.out.println(t);
+    };
+    con3.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="lamdba只需要一个参数时小括号可省略">lamdba只需要一个参数时，小括号可省略</h3>
+<pre><code class="language-java">public void test4() {
+    Consumer&lt;String&gt; con4 = t -&gt; {
+        System.out.println(t);
+    };
+    con4.accept(&quot;Rick&quot;);
+}
+
+</code></pre>
+<h3 id="lambda需要不止一个参数且有返回值">lambda需要不止一个参数，且有返回值</h3>
+<pre><code class="language-java">public void test5() {   
+    Comparator&lt;Integer&gt; com = new Comparator&lt;Integer&gt;(){
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return Integer.compare(o1, o2);
+        }
+    };
+    System.out.println(com.compare(12, 14));
+    System.out.println(&quot;---------------&quot;);
+    Comparator&lt;Integer&gt; com5 = (o1, o2) -&gt; {
+        return Integer.compare(o1, o2);
+    };
+    System.out.println(com5.compare(12, 14));
+}
+
+</code></pre>
+<h3 id="当lambda体只有一条语句时return与大括号若有都可省略">当lambda体只有一条语句时，return与大括号若有，都可省略</h3>
+<pre><code class="language-java">public void test6() {
+    Comparator&lt;Integer&gt; com6 = (o1, o2) -&gt; Integer.compare(o1, o2);
+    System.out.println(com6.compare(12, 14));
+}
+</code></pre>
+</br>
+</br>
+<h2 id="函数式接口">函数式接口</h2>
+<p>Java 中的函数接口在使用时，可以隐式的转换成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>表达式，在Java 8中已经有很多接口已经声明为函数接口，如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo separator="true">,</mo><mi>C</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo separator="true">,</mo><mi>C</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Runnable, Callable, Comparator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">o</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>等。<br>
+我们来看<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Runnable</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span>接口：</p>
+<pre><code class="language-java">@FunctionalInterface
+public interface Runnable {
+    public abstract void run();
+}
+</code></pre>
+<p>那么什么样子的接口才是函数接口呢？有一个很简单的定义</p>
+<ul>
+<li>只有一个抽象函数的接口，函数接口使用注解 <code>@FunctionalInterface</code> 进行声明（注解声明不是必须的，如果没有注解，也是只有一个抽象函数，依旧会被认为是函数接口，并且该接口是一个编译级别的注解，用于检测函数式接口是否有错而已）</li>
+<li>多一个或者少一个抽象函数都不能定义为函数接口。<strong>但是，函数式接口里是可以包含默认方法、静态方法和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mi>b</mi><mi>j</mi><mi>e</mi><mi>c</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">Object</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span></span></span></span>里的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>u</mi><mi>b</mi><mi>l</mi><mi>i</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">public</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span></span></span></span>方法，因为这些方法就不是抽象方法了，其有默认实现</strong>，所以是符合函数式接口的定义</li>
+<li>如果使用了函数接口注解又不止一个抽象函数，那么编译器会拒绝编译。函数接口在使用时候可以隐式的转换成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span></span></span></span>表达式</li>
+</ul>
+</br>
+<h3 id="消费性接口consumer接收一个参数t没有返回值">消费性接口Consumer：接收一个参数T，没有返回值</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Consumer&lt;T&gt; {
+    void accept(T t);
+    ...
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test1() {
+    StringBuilder sb = new StringBuilder(&quot;Hello &quot;);
+    Consumer&lt;StringBuilder&gt; consumer = (str) -&gt; str.append(&quot;World!&quot;);
+    consumer.accept(sb);
+    System.out.println(sb);     // Hello World!
+}
+</code></pre>
+</br>
+<h3 id="供给型接口supplier不接受任何参数但有返回值">供给型接口Supplier：不接受任何参数但有返回值</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Supplier&lt;T&gt; {
+    T get();
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test2() {
+    Supplier&lt;String&gt; supplier = () -&gt; &quot;Hello World!&quot;;
+    System.out.println(supplier.get());     // Hello World!
+}
+</code></pre>
+</br>
+<h3 id="断言性接口predicate判断方法的参数是否符合断言">断言性接口Predicate：判断方法的参数是否符合断言</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Predicate&lt;T&gt; {
+    boolean test(T t);
+    ...
+}
+</code></pre>
+<p>测试过滤字符串</p>
+<pre><code class="language-java">@Test
+public void test3() {
+    List&lt;String&gt; list = Arrays.asList(&quot;ABC&quot;, &quot;ADR&quot;, &quot;CDK&quot;, &quot;ABU&quot;);
+    System.out.println(filterString(list, new Predicate&lt;String&gt;(){
+        @Override
+        public boolean test(String t) {
+            return t.contains(&quot;A&quot;);
+        }
+    }));
+    System.out.println(&quot;------------------&quot;);
+    // (s) -&gt; s.contains(&quot;A&quot;)) ：筛选出含有A
+    System.out.println(filterString(list, (s) -&gt; s.contains(&quot;A&quot;)));
+}
+
+/**
+ * 过滤列表中的字符串
+ * @param list
+ * @param pr
+ * @return
+ */
+public List&lt;String&gt; filterString (List&lt;String&gt; list, Predicate&lt;String&gt; pr) {
+    List&lt;String&gt; res = new ArrayList&lt;&gt;();
+    for (String str : list) {
+        if (pr.test(str)) 
+            res.add(str);
+    }
+    return res;
+}
+</code></pre>
+</br>
+<h3 id="功能性接口function接收一个功能参数t并返回一个功能结果r">功能性接口Function：接收一个功能参数T，并返回一个功能结果R</h3>
+<pre><code class="language-java">@FunctionalInterface
+public interface Function&lt;T, R&gt; {
+    R apply(T t);
+    ...
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test4() {
+    Function&lt;String, String&gt; function = (s1) -&gt; s1 + &quot;World!&quot;;
+    System.out.println(function.apply(&quot;Hello &quot;));
+}
+</code></pre>
+</br>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/_oVxR5i5U/" rel="tag">Java</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi-jin-jie-pian/" rel="prev"> 函数式编程与lambda表达式（进阶篇）</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/" rel="next"> 【LeetCode专辑 - 3】链表</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
