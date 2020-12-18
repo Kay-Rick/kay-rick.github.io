@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-12-17T12:19:38.851Z</updated>
+    <updated>2020-12-18T09:06:38.683Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -16,14 +16,6 @@
         <link href="https://kay-rick.github.io/post/lao-ji-chang-yong-wei-yun-suan/">
         </link>
         <updated>2020-12-17T12:06:27.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>关于位运算，在我们算法题目中是一个很常用的技巧，通常我们要用到的场景就是：给定某个数n，二进制表示中，第k位是多少？</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>关于位运算，在我们算法题目中是一个很常用的技巧，通常我们要用到的场景就是：给定某个数n，二进制表示中，第k位是多少？</p>
-</blockquote>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[巧用“离散化”处理]]></title>
