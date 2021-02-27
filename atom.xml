@@ -2,14 +2,28 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2020-12-24T11:49:47.504Z</updated>
+    <updated>2021-02-27T03:55:06.733Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
     <subtitle>Stay Foolish</subtitle>
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Rick</rights>
+    <rights>All rights reserved 2021, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[深入理解AES加密算法]]></title>
+        <id>https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/">
+        </link>
+        <updated>2021-02-27T03:53:08.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[深入理解DES加密算法]]></title>
+        <id>https://kay-rick.github.io/post/shen-ru-li-jie-des-jia-mi-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/shen-ru-li-jie-des-jia-mi-suan-fa/">
+        </link>
+        <updated>2021-02-26T03:59:00.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[找父亲-并查集算法]]></title>
         <id>https://kay-rick.github.io/post/zhao-fu-qin-bing-cha-ji-suan-fa/</id>
@@ -105,36 +119,6 @@
 ]]></summary>
         <content type="html"><![CDATA[<blockquote>
 <p>链表是一种非常基础的数据结构，其中算法的题目难度一般都不是很大，重点在于画图理解、处理好边界条件和保留相关节点信息防止遍历后找不到所需节点</p>
-</blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[从微分积分看前缀和差分]]></title>
-        <id>https://kay-rick.github.io/post/cong-wei-fen-ji-fen-kan-qian-zhui-he-chai-fen/</id>
-        <link href="https://kay-rick.github.io/post/cong-wei-fen-ji-fen-kan-qian-zhui-he-chai-fen/">
-        </link>
-        <updated>2020-12-09T12:17:30.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>前缀和差分互为逆运算，他们关系很像数学中的微分和积分。这两种算法能有效解决数组某段区间的和以及对某段区间加上一个同一个数的问题，下面介绍其应用场景及模板方法。</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>前缀和差分互为逆运算，他们关系很像数学中的微分和积分。这两种算法能有效解决数组某段区间的和以及对某段区间加上一个同一个数的问题，下面介绍其应用场景及模板方法。</p>
-</blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【LeetCode专辑 - 2】双指针算法]]></title>
-        <id>https://kay-rick.github.io/post/leetcode-zhuan-ji-2-shuang-zhi-zhen-suan-fa/</id>
-        <link href="https://kay-rick.github.io/post/leetcode-zhuan-ji-2-shuang-zhi-zhen-suan-fa/">
-        </link>
-        <updated>2020-12-06T09:28:37.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>LeetCode第二弹：总结了双指针的经典题目</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>LeetCode第二弹：总结了双指针的经典题目</p>
 </blockquote>
 ]]></content>
     </entry>
