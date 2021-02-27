@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>设计模式-工厂方法 | Rick</title>	
+
+<link rel="stylesheet" href="https://kay-rick.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://kay-rick.github.io/media/css/night.css";
+
+            display = "https://kay-rick.github.io/media/css/night.css";   
+      
+            display = "https://kay-rick.github.io/media/css/day.css";
+
+            display = "https://kay-rick.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(https://kay-rick.oss-cn-beijing.aliyuncs.com/img/20210227120743.png)"
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://kay-rick.github.io" rel="home">Rick</a></h1>
+										
+					<h2 class="site-description">Stay Foolish</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> Index</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> Archives</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> Tags</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> About</a></li>
+	
+    
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+			
+<a  href="https://github.com/Kay-Rick" target="_blank" ><i class="iconfont icon-github"></i></a>
+ 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">设计模式-工厂方法</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2021-02-27 12:09:22" itemprop="datePublished" pubdate="">2021-02-27</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<blockquote>
+<p>Factory Method：再工厂方法设计模式中：父类决定实例的生成方式，但不决定所要生成的具体的类，具体的处理让子类负责</p>
+</blockquote>
+</br>
+<h2 id="uml">UML</h2>
+<figure data-type="image" tabindex="1"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/image-20210210145007493.png" alt="image-20210210145007493" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>创建者<code>Factory</code></strong></p>
+<p>负责具体生成<code>Product</code>角色的抽象类，<code>Factory</code>角色对于实际负责生成实例的<code>ConcreteFactorty</code>角色一无所知，它唯一知道的是<strong>要调用<code>Product</code>角色和生成实例的方法（<code>factoryMethod</code>）就可以生成<code>Product</code>实例</strong></p>
+</li>
+<li>
+<p><strong>产品<code>Product</code></strong><br>
+是一个抽象类，它定义了在Factory Method模式中生成哪些实例所持有的接口（API），具体处理由子类<code>ConcreteProduct</code>决定</p>
+</li>
+<li>
+<p><strong>具体的产品<code>ConcreteProduct</code></strong></p>
+<p><code>ConcreteProduct</code>角色属于加工这一方，他决定了具体的产品</p>
+</li>
+<li>
+<p><strong>具体的创建者<code>ConcreteFactory</code></strong></p>
+<p><code>ConcreteFactory</code>角色属于加工这一方，它负责生成具体的产品</p>
+</li>
+</ul>
+</br>
+<h2 id="sample">Sample</h2>
+</br>
+<p>我们以生成身份ID卡为例，一共有四个类：</p>
+<p><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/image-20210210152516916.png" alt="image-20210210152516916" loading="lazy"><br>
+</br></p>
+<h3 id="factory">Factory</h3>
+</br>
+<pre><code class="language-java">public abstract class Factory {
+    
+    /**
+     * 使用了一系列抽象工厂方法来创建产品，方法实现由具体的工厂来完成
+     */
+    public final Product create(String owner) {
+        Product product = createProduct(owner);
+        registerProduct(product);
+        return product;
+    }
+    
+    /**
+     * 制造产品
+     * @param owner
+     * @return
+     */
+    protected abstract Product createProduct(String owner);
+
+    /**
+     * 注册产品
+     * @param product
+     * @return
+     */
+    protected abstract void registerProduct(Product product);
+}
+</code></pre>
+</br>
+<h3 id="product">Product</h3>
+</br>
+<pre><code class="language-java">public abstract class Product {
+    public abstract void use();
+}
+</code></pre>
+</br>
+<h3 id="concretefactory">ConcreteFactory</h3>
+</br>
+<pre><code class="language-java">public class IDCardFactory extends Factory {
+
+    private List&lt;String&gt; owners = new ArrayList&lt;&gt;();
+    
+    @Override
+    protected Product createProduct(String owner) {
+        return new IDCard(owner);
+    }
+
+    @Override
+    protected void registerProduct(Product product) {
+        owners.add(((IDCard)product).getOwner());
+    }
+    
+    public List&lt;String&gt; getOwners() {
+        return owners;
+    }
+}
+</code></pre>
+</br>
+<h3 id="concreteproduct">ConcreteProduct</h3>
+</br>
+<pre><code class="language-java">public class IDCard extends Product {
+
+    private String owner;
+
+    public IDCard(String owner) {
+        System.out.println(&quot;制作&quot; + owner + &quot;的ID卡&quot;);
+        this.owner = owner;
+    }
+    
+    @Override
+    public void use() {
+        System.out.println(&quot;使用&quot; + owner + &quot;的ID卡&quot;);
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
+}
+</code></pre>
+</br>
+<h3 id="test">Test</h3>
+</br>
+<pre><code class="language-java">public class Test {
+    public static void main(String[] args) {
+        Factory factory = new IDCardFactory();
+        Product card1 = factory.create(&quot;Rick&quot;);
+        Product card2 = factory.create(&quot;Kay&quot;);
+        card1.use();
+        card2.use();
+    }
+}
+</code></pre>
+</br>
+<h2 id="system-suitability">System Suitability</h2>
+</br>
+<p>工厂方法非常适用以下情况：</p>
+<ul>
+<li>当一个类不知道它所必须创建的对象的类的时候</li>
+<li>当一个类希望由它的子类来指定它所创建的对象的时候</li>
+<li>当类将创建对象的职责委托给多个帮助子类中的某一个，并且希望帮助子类是代理者这一信息局部化的时候</li>
+</ul>
+<p>在实际业务开发中可以对业务进行优化：<strong>避免创建者与具体的产品逻辑耦合，满足单一职责、每一个业务逻辑实现都在所属自己的类中完成，满足开闭原则，无需更改使用调用方法就可以在程序中引入新的产品类型</strong>。</p>
+<p>我们来看一个具体的业务场景：在互联网营销场景下我们经常会给客户返利积分，最后通过积分在兑换商品，那么我们模拟积分兑换中的发放多种类型的商品，假设我们由下面两种类型的商品接口</p>
+<ul>
+<li>优惠券：CardService中<code>CouponResult sendCoupon(String uId, String couponNumber, String uuid)</code></li>
+<li>实物商品：GoodsService中<code>Boolean deliverGoods(DeliverReq req)</code></li>
+</ul>
+<p>我们发现：接口<strong>返回类型不同，入参不同，另外可能会随着后续的业务的发展，会新增其他种商品类型</strong>。如果我们不考虑任何扩展性，那么对这几种奖励发放只需使用if-else语句判断，调用不同接口即可满足需求。</p>
+<p><strong>但是在经过多次迭代和拓展之后，代码的维护和重构成本将变得非常高，测试回归验证时间长</strong>。这种场景我们考虑使用工厂方法对代码进行进一步优化</p>
+<figure data-type="image" tabindex="2"><img src="https://kay-rick.oss-cn-beijing.aliyuncs.com/img/image-20210210212315933.png" alt="image-20210210212315933" loading="lazy"></figure>
+<ul>
+<li><code>StoreFactory</code>：定义一个工厂类，在工厂类里面按照类型实现各种商品的服务：当id是1时表示是优惠劵发放，id是2时表示是实物商品发放</li>
+</ul>
+<pre><code class="language-java">public class StoreFactory {
+
+    public StoreInterface getService(Integer id) {
+        if (null == id)
+            return null;
+        if (1 == id)
+            return new CardService();
+        if (2 == id)
+            return new GoodsService();
+        throw new RuntimeException(&quot;不存在商品服务信息&quot;);
+    }
+}
+</code></pre>
+<ul>
+<li><code>StoreInterface</code>：统一发奖接口，所有奖品无论是实物、虚拟还是第三方，都需要我们的程序实现此接口进行处理，以保证最终入参出参的统一性。<strong>接口入参包括：用户ID、奖品ID、业务ID以及扩展字段用于处理发放实物商品时的收货地址</strong></li>
+</ul>
+<pre><code class="language-java">public interface StoreInterface {
+    
+    void sendGift(String uid, String giftId, String bizId, Map&lt;String, String&gt; extmap) throws Exception;
+
+}
+</code></pre>
+<ul>
+<li><code>CardCommonService</code>和<code>GoodsCommonService</code>实现奖品发放接口：实现接口中的方法，在<strong>方法中调用原有接口的方法，并对出参和入参进行封装适配现在的接口（代码中没有展现具体CardService和GoodsService）</strong></li>
+<li>在统一了入参及出参后，调用方不在需要关心奖品发放的内部逻辑，按照统一的方式处理即可</li>
+</ul>
+<pre><code class="language-java">public class GoodsCommonService implements StoreInterface {
+    
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    // 模拟注入
+    private GoodsService goodsService = new GoodsService();
+    
+    @Override
+    public void sendGift(String uid, String giftId, String bizId, Map&lt;String, String&gt; extmap) throws Exception {
+        DeliverReq deliverReq = new DeliverReq();
+        deliverReq.setUserName(queryUserName(uId));
+        deliverReq.setUserPhone(queryUserPhoneNumber(uId));
+        deliverReq.setSku(commodityId);
+        deliverReq.setOrderId(bizId);
+        deliverReq.setConsigneeUserName(extMap.get(&quot;consigneeUserName&quot;));
+        deliverReq.setConsigneeUserPhone(extMap.get(&quot;consigneeUserPhone&quot;));
+        deliverReq.setConsigneeUserAddress(extMap.get(&quot;consigneeUserAddress&quot;));
+        // 真正调用原有接口方法
+        Boolean isSuccess = goodsService.deliverGoods(deliverReq);
+        logger.info(&quot;请求参数[实物商品] =&gt; uId：{} commodityId：{} bizId：{} extMap：{}&quot;, uId, commodityId, bizId, JSON.toJSON(extMap));
+        logger.info(&quot;测试结果[实物商品]：{}&quot;, isSuccess);
+        if (!isSuccess) throw new RuntimeException(&quot;实物商品发放失败&quot;);
+    }
+    
+    private String queryUserName(String uId) {
+        return &quot;Rick&quot;;
+    }
+    private String queryUserPhoneNumber(String uId) {
+        return &quot;15200101232&quot;;
+    }
+    
+}
+</code></pre>
+<pre><code class="language-java">public class CardCommonService implements StoreInterface {
+    
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+    // 模拟注入
+	private CardService CardService = new CardService();
+    
+    @Override
+    public void sendGift(String uid, String giftId, String bizId, Map&lt;String, String&gt; extmap) throws Exception {
+        String mobile = queryUserMobile(uId);
+        // 正在调用原来接口
+        CardService.grantToken(mobile, bizId);
+        logger.info(&quot;请求参数[优惠劵] =&gt; uId：{} commodityId：{} bizId：{} extMap：{}&quot;, uId, commodityId, bizId, JSON.toJSON(extMap));
+        logger.info(&quot;测试结果[优惠劵]：success&quot;);
+    }
+    
+}
+</code></pre>
+<p><strong>测试</strong>：该工厂方法完美适应了需求，如果再加入新的奖品类型也会很轻松适配，代码可维护性大大提高</p>
+<pre><code class="language-java">@Test
+public void test1() throws Exception {
+    
+    StoreFactory storeFactory = new StoreFactory();
+    
+    // 1. 优惠劵发放
+    StoreInterface cardService = storeFactory.getService(1);
+    cardService.sendGift(&quot;10001&quot;, &quot;EGM1023938910232121323432&quot;, &quot;791098764902132&quot;, null);
+    
+    // 2. 实物商品发放
+    StoreInterface goodsService = storeFactory.getService(2);
+    Map&lt;String,String&gt; extMap = new HashMap&lt;String,String&gt;();
+    extMap.put(&quot;consigneeUserName&quot;, &quot;Rick&quot;);
+    extMap.put(&quot;consigneeUserPhone&quot;, &quot;15200292123&quot;);
+    extMap.put(&quot;consigneeUserAddress&quot;, &quot;北京市朝阳区&quot;);
+    goodsService.sendGift(&quot;10001&quot;, &quot;9820198721311&quot;, &quot;1023000020112221113&quot;, extMap);
+    
+}
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+				<a href="https://kay-rick.github.io/tag/guWzQ5Uq0/" rel="tag">设计模式</a>	
+				 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/" rel="next"> 深入理解AES加密算法</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://kay-rick.github.io/images/avatar.png" ></div>
+ 
+	<div class="author-description"><div class="author-title"><div class="author-link" rel="author">Rick</div></div>
+
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '13249550a4b467fa7760',
+    clientSecret: 'd7e052bf16ec669a7bcb0ca4f105f28778abd99a',
+    repo: 'blogtalk',
+    owner: 'Kay-Rick',
+    admin: ['Kay-Rick'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://kay-rick.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://kay-rick.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

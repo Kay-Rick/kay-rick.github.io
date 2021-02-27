@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kay-rick.github.io</id>
     <title>Rick</title>
-    <updated>2021-02-27T03:59:00.173Z</updated>
+    <updated>2021-02-27T05:51:36.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kay-rick.github.io"/>
     <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://kay-rick.github.io/images/avatar.png</logo>
     <icon>https://kay-rick.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[设计模式-工厂方法]]></title>
+        <id>https://kay-rick.github.io/post/she-ji-mo-shi-gong-han-fang-fa/</id>
+        <link href="https://kay-rick.github.io/post/she-ji-mo-shi-gong-han-fang-fa/">
+        </link>
+        <updated>2021-02-27T04:09:22.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[深入理解AES加密算法]]></title>
         <id>https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/</id>
@@ -104,21 +111,6 @@
         <content type="html"><![CDATA[<blockquote>
 <p>Java 8 早已经在2014 年 3月 18日发布，毫无疑问 Java 8 对 Java 来说绝对算得上是一次重大版本更新，它包含了十多项语言、库、工具、JVM 等方面的新特性。<br>
 比如提供了语言级的匿名函数，也就是被官方称为 lambda 的表达式语法（外界也称为闭包，lambda 的引入也让流式操作成为可能，减少了代码编写的复杂性），比如函数式接口，方法引用，重复注解。再比如 Optional 预防空指针，Stearm 流式操作，LocalDateTime 时间操作等。</p>
-</blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【LeetCode专辑 - 3】链表]]></title>
-        <id>https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/</id>
-        <link href="https://kay-rick.github.io/post/leetcode-zhuan-ji-3-lian-biao/">
-        </link>
-        <updated>2020-12-13T11:45:10.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>链表是一种非常基础的数据结构，其中算法的题目难度一般都不是很大，重点在于画图理解、处理好边界条件和保留相关节点信息防止遍历后找不到所需节点</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>链表是一种非常基础的数据结构，其中算法的题目难度一般都不是很大，重点在于画图理解、处理好边界条件和保留相关节点信息防止遍历后找不到所需节点</p>
 </blockquote>
 ]]></content>
     </entry>
