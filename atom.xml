@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://kay-rick.github.io</id>
+    <title>Rick</title>
+    <updated>2023-05-18T13:48:00.323Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://kay-rick.github.io"/>
+    <link rel="self" href="https://kay-rick.github.io/atom.xml"/>
+    <subtitle>Stay Foolish</subtitle>
+    <logo>https://kay-rick.github.io/images/avatar.png</logo>
+    <icon>https://kay-rick.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, Rick</rights>
+    <entry>
+        <title type="html"><![CDATA[设计模式-工厂方法]]></title>
+        <id>https://kay-rick.github.io/post/she-ji-mo-shi-gong-han-fang-fa/</id>
+        <link href="https://kay-rick.github.io/post/she-ji-mo-shi-gong-han-fang-fa/">
+        </link>
+        <updated>2021-02-27T04:09:22.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[深入理解AES加密算法]]></title>
+        <id>https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/shen-ru-li-jie-aes-jia-mi-suan-fa/">
+        </link>
+        <updated>2021-02-27T03:53:08.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[深入理解DES加密算法]]></title>
+        <id>https://kay-rick.github.io/post/shen-ru-li-jie-des-jia-mi-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/shen-ru-li-jie-des-jia-mi-suan-fa/">
+        </link>
+        <updated>2021-02-26T03:59:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[找父亲-并查集算法]]></title>
+        <id>https://kay-rick.github.io/post/zhao-fu-qin-bing-cha-ji-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/zhao-fu-qin-bing-cha-ji-suan-fa/">
+        </link>
+        <updated>2020-12-20T10:09:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[牢记常用位运算]]></title>
+        <id>https://kay-rick.github.io/post/lao-ji-chang-yong-wei-yun-suan/</id>
+        <link href="https://kay-rick.github.io/post/lao-ji-chang-yong-wei-yun-suan/">
+        </link>
+        <updated>2020-12-17T12:06:27.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[巧用“离散化”处理]]></title>
+        <id>https://kay-rick.github.io/post/qiao-yong-chi-san-hua-chu-li/</id>
+        <link href="https://kay-rick.github.io/post/qiao-yong-chi-san-hua-chu-li/">
+        </link>
+        <updated>2020-12-17T12:05:01.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>离散化的本质就是映射，专门用于处理<strong>数据的值域比较大，个数比较少</strong>的情况，这时候我们的做法就是离散化：将这些间隔很大的点，映射到相邻的数组元素中，减少对空间的需求，也减少计算量。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>离散化的本质就是映射，专门用于处理<strong>数据的值域比较大，个数比较少</strong>的情况，这时候我们的做法就是离散化：将这些间隔很大的点，映射到相邻的数组元素中，减少对空间的需求，也减少计算量。</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[区间合并问题]]></title>
+        <id>https://kay-rick.github.io/post/qu-jian-he-bing-wen-ti/</id>
+        <link href="https://kay-rick.github.io/post/qu-jian-he-bing-wen-ti/">
+        </link>
+        <updated>2020-12-17T12:03:52.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>区间合并是一类比较经典的问题：将一部分有交集的区间进行合并，这里就区间合并算法做一个简单的分析</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>区间合并是一类比较经典的问题：将一部分有交集的区间进行合并，这里就区间合并算法做一个简单的分析</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[掐死KMP算法]]></title>
+        <id>https://kay-rick.github.io/post/qia-si-kmp-suan-fa/</id>
+        <link href="https://kay-rick.github.io/post/qia-si-kmp-suan-fa/">
+        </link>
+        <updated>2020-12-15T14:05:52.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[函数式编程与lambda表达式（进阶篇）]]></title>
+        <id>https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi-jin-jie-pian/</id>
+        <link href="https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi-jin-jie-pian/">
+        </link>
+        <updated>2020-12-15T07:33:13.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>在基础篇中，我们介绍了lambda表达式的使用和四种主要的函数式接口，其实lambda表达式还有很多应用的地方，例如方法引用、集合的forEach操作和强大的Stream流式编程</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>在基础篇中，我们介绍了lambda表达式的使用和四种主要的函数式接口，其实lambda表达式还有很多应用的地方，例如方法引用、集合的forEach操作和强大的Stream流式编程</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[函数式编程与lambda表达式（基础篇）]]></title>
+        <id>https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi/</id>
+        <link href="https://kay-rick.github.io/post/han-shu-shi-bian-cheng-yu-lambda-biao-da-shi/">
+        </link>
+        <updated>2020-12-15T06:57:17.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>Java 8 早已经在2014 年 3月 18日发布，毫无疑问 Java 8 对 Java 来说绝对算得上是一次重大版本更新，它包含了十多项语言、库、工具、JVM 等方面的新特性。<br>
+比如提供了语言级的匿名函数，也就是被官方称为 lambda 的表达式语法（外界也称为闭包，lambda 的引入也让流式操作成为可能，减少了代码编写的复杂性），比如函数式接口，方法引用，重复注解。再比如 Optional 预防空指针，Stearm 流式操作，LocalDateTime 时间操作等。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>Java 8 早已经在2014 年 3月 18日发布，毫无疑问 Java 8 对 Java 来说绝对算得上是一次重大版本更新，它包含了十多项语言、库、工具、JVM 等方面的新特性。<br>
+比如提供了语言级的匿名函数，也就是被官方称为 lambda 的表达式语法（外界也称为闭包，lambda 的引入也让流式操作成为可能，减少了代码编写的复杂性），比如函数式接口，方法引用，重复注解。再比如 Optional 预防空指针，Stearm 流式操作，LocalDateTime 时间操作等。</p>
+</blockquote>
+]]></content>
+    </entry>
+</feed>
